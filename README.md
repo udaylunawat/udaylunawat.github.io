@@ -3,7 +3,7 @@
 </h3>
 
 <h3 align="center">
-  <a href="I design websites by CTRL+C  CTRL+V"></a>
+  <a>I design websites by CTRL+C  CTRL+V.</a>
 </h3>
 
 
