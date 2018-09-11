@@ -4,7 +4,7 @@
 
 <h3 align="center">
   <a>I design websites with two things in mind.</a> <br/>
-   <a>CTRL+C  CTRL+V</a>
+   <a>CTRL+C  &  CTRL+V</a>
 </h3>
 
 
