@@ -2,7 +2,11 @@
   <a href="https://udaylunawat.github.io/">udaylunawat.github.io</a>
 </h3>
 
-I design websites by CTRL+C  CTRL+V
+<h3 align="center">
+  <a href="I design websites by CTRL+C  CTRL+V"></a>
+</h3>
+
+
 
 ![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
 
