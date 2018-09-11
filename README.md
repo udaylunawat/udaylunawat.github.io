@@ -3,7 +3,7 @@
 </h3>
 
 <h3 align="center">
-  <a>I design websites with two things in mind.</a>
+  <a>I design websites with two things in mind.</a> <br/>
    <a>CTRL+C  CTRL+V</a>
 </h3>
 
