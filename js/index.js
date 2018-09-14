@@ -1,6 +1,6 @@
 particlesJS("particles-js", {
   particles: {
-    number: { value: 200, density: { enable: true, value_area: 800 } },
+    number: { value: 150, density: { enable: true, value_area: 2500 } },
     color: { value: "#ffffff" },
     shape: {
       type: "circle",
@@ -20,7 +20,7 @@ particlesJS("particles-js", {
     },
     line_linked: {
       enable: true,
-      distance: 140,
+      distance: 80,
       color: "#1758b6",
       opacity: 0.28,
       width: 0.8
