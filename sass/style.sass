@@ -1,0 +1,325 @@
+$color: (main: #8d9e78, sub: #3d405b, func: #e07a5f, reverse: #fcfcfc, line: #cdcdcd)
+$base: (bg: #eee, border: #bbb, preset: #555)
+$wapper-w: 870px
+$wapper-base: 225px
+$wapper-func: $wapper-w - $wapper-base
+@mixin size($w, $h)
+  width: $w
+  height: $h
+*
+  outline: none
+body, html
+  margin: 0
+  background: map-get($base, bg)
+  font-family: Ubuntu
+  letter-spacing: .65px
+  font-size: 15px
+  color: map-get($base, preset)
+  cursor: default
+a
+  text-decoration: none
+  color: map-get($base, preset)
+  display: block
+  transition-duration: .3s
+ul
+  list-style-type: none
+  padding: 0
+h3
+  color: map-get($color, sub)
+  margin: 10px 0
+  text-transform: uppercase
+  font-size: 18px
+.resume
+  width: $wapper-w
+  background: #fbfbfb
+  margin: 20px auto
+  border: 1px solid map-get($base, border)
+  box-shadow: 0 0 20px -3px map-get($base, border)
+  position: relative
+  display: flex
+  &::before
+    content: ''
+    +size(100%, 6px)
+    background: map-get($color, main)
+    position: absolute
+    bottom: 0
+    left: 0
+  &::after
+    content: ''
+    display: block
+    clear: both
+  .base, .func
+    box-sizing: border-box
+    float: left
+    > div
+      padding-bottom: 10px
+      &:last-of-type
+        padding-bottom: 0
+  .base
+    width: $wapper-base
+    padding: 30px 10px
+    background: rgba(map-get($base, bg), .6)
+    .profile
+      background: map-get($color, main)
+      padding: 10px 15px 5px 15px
+      margin: -30px -15px 45px -15px
+      position: relative
+      z-index: 2
+      &::after
+        content: ''
+        position: absolute
+        background: map-get($color, main)
+        +size(100%, 30px)
+        bottom: -15px
+        left: 0
+        transform: skewY(-5deg)
+        z-index: -1
+      .photo
+        img
+          width: 100%
+          height: 100%
+          transform: scale(0.8,0.8)
+      .info
+        text-align: center
+        color: map-get($color, reverse)
+        .name
+          margin-top: 7px
+          margin-bottom: 0
+          font-size: 1.8em
+          font-weight: normal
+    .contact
+      div
+        line-height: 24px
+        a:hover
+          color: map-get($color, func)
+          span::after
+            width: 100%
+        &:hover
+          i
+            color: map-get($color, func)
+        i
+          color: map-get($color, main)
+          +size(20px, 20px)
+          font-size: 20px
+          text-align: center
+          margin-right: 15px
+          transition-duration: .3s
+        span
+          position: relative
+          &::after
+            content: ''
+            position: absolute
+            background: map-get($color, func)
+            height: 1px
+            width: 0
+            bottom: 0
+            left: 0
+            transition-duration: .3s
+    .follow
+      .box
+        text-align: center
+        vertical-align: middle
+        a
+          display: inline-block
+          vertical-align: text-bottom
+          &:hover i
+            background: map-get($color, func)
+            border-radius: 5px
+            transform: rotate(45deg) scale(.8)
+            &::before
+              transform: rotate(-45deg) scale(1.5)
+        i
+          display: inline-block
+          font-size: 30px
+          background: map-get($color, main)
+          +size(60px, 60px)
+          border-radius: 50%
+          line-height: 60px
+          color: map-get($color, reverse)
+          margin: 0 10px 10px 10px
+          transition-duration: .3s
+          &::before
+            transition-duration: .3s
+          &.fa::before
+            display: block
+  .func
+    width: $wapper-func
+    padding: 30px 25px
+    &:hover
+      > div
+        transition-duration: .3s
+        &:hover
+          h3
+            letter-spacing: 1.6px
+            i
+              transform: scale(1.2)
+        &:not(:hover)
+          opacity: .5
+    h3
+      transition-duration: .3s
+      margin-top: 0
+      i
+        color: map-get($color, reverse)
+        background: map-get($color, main)
+        +size(42px, 42px)
+        font-size: 20px
+        line-height: 42px
+        border-radius: 50%
+        text-align: center
+        vertical-align: middle
+        margin-right: 8px
+        transition-duration: .3s
+    .work, .edu
+      float: left
+      small
+        display: block
+        opacity: .7
+      ul li
+        position: relative
+        margin-left: 15px
+        padding-left: 25px
+        padding-bottom: 15px
+        &:hover
+          &::before
+            animation: circle 1.2s infinite
+          span
+            color: map-get($color, func)
+          @keyframes circle
+            from
+              box-shadow: 0 0 0 0px rgba(map-get($color, sub), 1)
+            to
+              box-shadow: 0 0 0 6px rgba(map-get($color, sub), 0)
+        &:first-of-type
+          &::before
+            +size(10px, 10px)
+            left: -2px
+        &:last-of-type
+          padding-bottom: 3px
+          &::after
+            border-radius: 1.5px
+        &::before, &::after
+          content: ''
+          display: block
+          position: absolute
+        &::before
+          +size(7px, 7px)
+          border: 3px solid map-get($color, sub)
+          background: map-get($color, reverse)
+          border-radius: 50%
+          left: 0
+          z-index: 1
+        &::after
+          +size(3px, 100%)
+          background: map-get($color, sub)
+          left: 5px
+          top: 0
+        span
+          transition-duration: .3s
+    .work
+      width: 42%
+    .edu
+      width: 58%
+    .skills
+      &-prog
+        clear: both
+        ul
+          margin-left: 15px
+          li
+            margin-bottom: 8px
+            display: flex
+            align-items: center
+            transition-duration: .3s
+            &:hover
+              color: map-get($color, func)
+              .skills-bar .bar
+                background: map-get($color, func)
+                box-shadow: 0 0 0 1px map-get($color, func)
+            span
+              display: block
+              width: 120px
+            .skills-bar
+              background: map-get($color, line)
+              height: 2px
+              width: calc(100% - 120px)
+              position: relative
+              border-radius: 2px
+              .bar
+                position: absolute
+                top: -1px
+                height: 4px
+                background: map-get($color, main)
+                box-shadow: 0 0 0 map-get($color, main)
+                border-radius: 5px
+                // transition-duration: .3s
+                // use jquery add css transition-duration
+      &-soft
+        ul
+          display: flex
+          justify-content: space-between
+          text-align: center
+          li
+            position: relative
+            &:hover
+              svg .cbar
+                stroke: map-get($color, func)
+                stroke-width: 4px
+              span, small
+                transform: scale(1.2)
+            svg
+              width: 95%
+              fill: transparent
+              transform: rotate(-90deg)
+              circle
+                stroke-width: 1px
+                stroke: map-get($color, line)
+              .cbar
+                stroke-width: 3px
+                stroke: map-get($color, main)
+                stroke-linecap: round
+                // transition-duration: .3s
+                // use jquery add css transition-duration
+            .soft-info
+            span, small
+              position: absolute
+              display: block
+              width: 100%
+              top: 52%
+              transition-duration: .3s
+            span
+              top: 40%
+    .interests
+      &-items
+        box-sizing: border-box
+        padding: 15px
+        margin-top: 25px
+        width: 100%
+        border: 1px solid map-get($color, line)
+        text-align: center
+        display: flex
+        justify-content: space-between
+        div
+          display: inline-block
+          +size(80px, 80px)
+          &:hover
+            i
+              transform: scale(1.2)
+            span
+              color: map-get($color, func)
+              transition-duration: .3s
+          i
+            font-size: 45px
+            width: 60px
+            height: 60px
+            line-height: 60px
+            color: map-get($color, main)
+            transition-duration: .3s
+            &.guitar
+              display: block
+              margin: 0 auto
+              svg
+                +size(50px, 50px)
+                margin-top: 5px
+                fill: map-get($color, main)
+          span
+            display: block
+          
