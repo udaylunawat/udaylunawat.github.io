@@ -47,7 +47,7 @@ particlesJS("particles-js", {
         enable: true,
         density_auto: true,
         density_area: 400 // nb_particles = particles.nb * (canvas width *  canvas height / 1000) / density_area
-      }
+      },
     },
     modes: {
       grab: { distance: 400, line_linked: { opacity: 1 } },
