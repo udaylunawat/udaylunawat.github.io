@@ -2,7 +2,6 @@
 body {
   margin: 0;
   font: normal 75% Arial, Helvetica, sans-serif;
-  height: 100%
 }
 canvas {
   display: block;
