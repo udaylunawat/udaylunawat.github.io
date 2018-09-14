@@ -12,7 +12,7 @@ canvas {
   width: 100%;
   height: 100%;
   background-color: #000000;
-  background-image: url("http://getwallpapers.com/wallpaper/full/e/8/5/25971.jpg");
+  background-image: url("http://getwallpapers.com/wallpaper/full/e/8/5/25971.jpg") no-repeat center center fixed;;
   background-repeat: ;
   background-size: ;
   background-position: ;
