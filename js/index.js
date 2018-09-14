@@ -22,8 +22,8 @@ particlesJS("particles-js", {
       enable: true,
       distance: 140,
       color: "#1758b6",
-      opacity: 0.15222773268810127,
-      width: 0.9470220103698914
+      opacity: 0.28,
+      width: 0.8
     },
     move: {
       enable: true,
@@ -40,7 +40,7 @@ particlesJS("particles-js", {
     detect_on: "canvas",
     events: {
       onhover: { enable: true, mode: "bubble" },
-      onclick: { enable: true, mode: "repulse" },
+      onclick: { enable: true, mode: "push" },
       resize: true
     },
     modes: {
