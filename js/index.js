@@ -1,5 +1,6 @@
 particlesJS("particles-js", {
   particles: {
+    nb: 80,
     number: { value: 150, density: { enable: true, value_area: 1600 } },
     color: { value: "#ffffff" },
     shape: {
@@ -41,7 +42,12 @@ particlesJS("particles-js", {
     events: {
       onhover: { enable: true, mode: "bubble" },
       onclick: { enable: true, mode: "push" },
-      resize: true
+      resize: true,
+      onresize: {
+        enable: true,
+        density_auto: true,
+        density_area: 400 // nb_particles = particles.nb * (canvas width *  canvas height / 1000) / density_area
+      }
     },
     modes: {
       grab: { distance: 400, line_linked: { opacity: 1 } },
