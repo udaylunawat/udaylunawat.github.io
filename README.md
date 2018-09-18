@@ -2,7 +2,7 @@
   <a href="https://udaylunawat.github.io/">udaylunawat.github.io</a>
 </h3>
 <h3 align="center">
-  <a>This website is cuurently a work in progress. For more info on me & especially my projects please refer to my <a href="https://drive.google.com/open?id=10JVuk7tbhA6_pnrD-OhPOCYkWv643SO7">Resume</a> for now.</a> <br/>
+  <a>This website is cuurently a work in progress. For more info on me & especially my projects please refer to my <a href="https://drive.google.com/open?id=1e8-CZKKvUJOw4yfIcrRcWXwJlZYfFWy9">Resume</a> for now.</a> <br/>
 </h3>
 <h3 align="center">
   <a>I designed this website with two things in mind.</a> <br/>
