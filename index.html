@@ -15,6 +15,8 @@ body {
 }
 
 #myVideo {
+  max-width: 100%;
+  height: auto;
   position: fixed;
   right: 0;
   bottom: 0;
@@ -71,7 +73,7 @@ a:active {
 }
 </style>
 </head>
-<body>
+<body bgcolor="black">
 
 <video autoplay muted loop preload="auto" id="myVideo">
   <source src="ready.mp4" type="video/mp4">
@@ -80,9 +82,9 @@ a:active {
 
 <div class="content">
   <div id="overlay" onclick="off()">
-  <h1>Hello World</h1>
+  <h1> > Hello World</h1>
   <p>Thank you for Visiting.<br/>The portfolio is currently a work in progress.<br/>
-    For more information about me you can <a href="https://drive.google.com/open?id=12x0R9nv6x-7ePE9-CEqj42nBmoQuQhUP">click here </a></div></p>
+    For more information about me you can <a href="https://drive.google.com/open?id=12x0R9nv6x-7ePE9-CEqj42nBmoQuQhUP">click here </a>.</div></p>
   <!-- <button id="myBtn" onclick="myFunction()">Pause</button> -->
 </div>
 
@@ -100,6 +102,9 @@ function myFunction() {
   }
 }
 </script>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+<script  src="js/index.js"></script>
 
 </body>
 </html>
