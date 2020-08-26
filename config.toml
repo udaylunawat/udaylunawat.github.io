@@ -1,5 +1,5 @@
 ######################## default configuration ####################
-baseURL = "https://examplesite.com"
+baseURL = "https://udaylunawat.github.io"
 title = "Uday Lunawat | Data Science Portfolio"
 theme = "uday"
 # disable language
