@@ -27,8 +27,8 @@ hero:
 fullscreen_nav:
   enable : true
   bg_image : "images/backgrounds/full-nav-bg2.jpg"
-  first_name : "Uday Lunawat"
-  # last_name : "I Breathe DATA"
+  # first_name : "Uday Lunawat"
+  last_name : "I Breathe Data"
   
 
 ########################### About ##################################
