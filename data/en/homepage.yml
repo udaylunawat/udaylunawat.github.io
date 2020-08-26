@@ -26,7 +26,7 @@ fullscreen_nav:
   enable : true
   bg_image : "images/backgrounds/full-nav-bg2.jpg"
   # first_name : "Uday Lunawat"
-  last_name : "I breathe data"
+  last_name : "I Breathe DATA"
   
 
 ########################### About ##################################
@@ -66,25 +66,25 @@ experience:
 
 
 ############################### Skill #################################
-skill:
-  enable : true
-  title : "SKILL"
-  skill_list:
-    # skill item loop
-    - name : "Machine Learning"
-      parcentage : "90%"
+# skill:
+#   enable : true
+#   title : "SKILL"
+#   skill_list:
+#     # skill item loop
+#     - name : "Machine Learning"
+#       parcentage : "90%"
       
-    # skill item loop
-    - name : "Deep Learning"
-      parcentage : "85%"
+#     # skill item loop
+#     - name : "Deep Learning"
+#       parcentage : "85%"
       
-    # skill item loop
-    - name : "Data analysis"
-      parcentage : "90%"
+#     # skill item loop
+#     - name : "Data analysis"
+#       parcentage : "90%"
       
-    # skill item loop
-    - name : "Statistics"
-      parcentage : "80%"
+#     # skill item loop
+#     - name : "Statistics"
+#       parcentage : "80%"
 
 
 ################################### Service ##############################3
