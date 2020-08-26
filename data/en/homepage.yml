@@ -7,6 +7,8 @@ hero:
     - "Machine Learning Engineer"
     - "Data analyst"
     - "Data visualization"
+    - "Data cleaner"
+    - "Python Programmer"
 
   # slider background image loop
   slider_image:
@@ -25,8 +27,8 @@ hero:
 fullscreen_nav:
   enable : true
   bg_image : "images/backgrounds/full-nav-bg2.jpg"
-  # first_name : "Uday Lunawat"
-  last_name : "I Breathe DATA"
+  first_name : "Uday Lunawat"
+  # last_name : "I Breathe DATA"
   
 
 ########################### About ##################################
@@ -34,7 +36,7 @@ about:
   enable : true
   image : "images/backgrounds/uday.jpg"
   title : "KNOW MORE <br> ABOUT ME"
-  content : "Helping Machines *take over the world*, **Epoch by Epoch**."
+  content : "Helping Machines *take over the world*, <br>**Epoch by Epoch**."
   # button
   button:
     enable : true
