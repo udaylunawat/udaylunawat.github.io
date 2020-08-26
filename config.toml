@@ -4,7 +4,7 @@ title = "Uday Lunawat | Data Science Portfolio"
 theme = "uday"
 # disable language
 disableLanguages = ['fr'] # disable language from here
-
+cannonifyURLs = true
 ############################# Plugins ##############################
 
 # CSS Plugins
