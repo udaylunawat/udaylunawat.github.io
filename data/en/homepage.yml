@@ -32,7 +32,7 @@ fullscreen_nav:
 ########################### About ##################################
 about:
   enable : true
-  image : "images/backgrounds/potrait3.jpg"
+  image : "images/backgrounds/uday.jpg"
   title : "KNOW MORE <br> ABOUT ME"
   content : "Helping Machines *take over the world*, **Epoch by Epoch**."
   # button
