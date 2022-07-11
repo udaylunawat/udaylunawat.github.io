@@ -6,7 +6,7 @@ let timeline = gsap.timeline();
 headerName.addEventListener("mouseover", () => {
     timeline.from(chars, {opacity: 1, scale: 1, duration: 1, ease: "back"})
         .to(chars, {
-            "--font-weight": 900,
+            "--font-weight": 1200,
             ease: "power",
             duration: 0.5,
             stagger: {

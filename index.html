@@ -2,7 +2,7 @@
 <html lang="en-us"><head>
   <meta charset="utf-8">
   <title>Uday Lunawat | Data Science Portfolio</title>
-
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <!-- mobile responsive meta -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="I seldom end up where I wanted to go, but almost always end up where I need to be.">
@@ -33,7 +33,6 @@
   <!-- Main Stylesheet -->
 
   <link rel="stylesheet" href="css/style.min.css" media="screen">
-
   <!--Favicon-->
   <!-- <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon"> -->
   <link rel="icon" href="images/favicon.png" type="image/x-icon">
@@ -46,9 +45,6 @@
 
 </div>
 <!-- preloader end -->
-
-
-
 
 
 <section class="header" id="1">
@@ -115,16 +111,20 @@
           <div class="full-nav-content">
             <div class="name">
               <!-- <div class="first-name">I Breathe Data</div> -->
-            <div class="author">
-                <span class="char">b</span>
-                <span class="char">r</span>
-                <span class="char">e</span>
-                <span class="char">a</span>
-                <span class="char">t</span>
-                <span class="char">h</span>
-                <span class="char">e</span>
-                <span class="char" id="poof">!</span>
-            </div>
+
+              <body>
+                <div class="author">
+                  <span class="char">b</span>
+                  <span class="char">r</span>
+                  <span class="char">e</span>
+                  <span class="char">a</span>
+                  <span class="char">t</span>
+                  <span class="char">h</span>
+                  <span class="char">e</span>
+                  <span class="char" id="poof">!</span>
+                </div>
+              </body>
+
               <div >Talk to me about</div>
               <div class="occupation">
                 <span >
@@ -245,6 +245,7 @@
 
 
     <div class="row experience-skill">
+
       <div class="col-lg-6 col-sm-6 col-md-6 experience-text wow fadeInUp" data-wow-duration="1.5s">
         <h1 class="text-holder wow fadeInUp" data-wow-duration="1.5s"> EXPERIENCE</h1>
         <ul class="experience-chart">
@@ -500,9 +501,6 @@
   </div>
 </section>
 
-
-
-
   <!-- =============================
       Start Contact
   =============================== -->
@@ -574,7 +572,12 @@
 <script type="text/javascript" src="plugins/validator.min.js"></script>
 <script type="text/javascript" src="plugins/imagesloaded.pkgd.min.js"></script>
 <!-- <script type="text/javascript" src="plugins/custom.js"></script> -->
-<script src="js/breathe.js"></script>
+
+<!-- Breathe animation -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.3.4/gsap.min.js'></script>
+<script  src="js/breathe.js"></script>
+
+<!-- WordArt animation -->
 <script src="//cdn.wordart.com/wordart.min.js" async defer></script>
 
 <!-- Main Script -->

@@ -1,6 +1,7 @@
 /*--------------------------------
    Start Preloader & General Styling
 ----------------------------------*/
+@import "breathe.css";
 
 html {
   height: 100%;
@@ -1814,4 +1815,3 @@ Start About Me
     margin-bottom: 10px;
   }
 }
-
