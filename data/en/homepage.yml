@@ -5,10 +5,10 @@ hero:
   # animated text loop
   occupations:
     - "Machine Learning Engineer"
-    - "Data analyst"
-    - "Data visualization"
-    - "Data cleaner"
-    - "Python Programmer"
+    - "Data Analyst"
+    - "Data Visualization"
+    - "Data Engineer"
+    - "Python Engineer"
 
   # slider background image loop
   slider_image:
@@ -29,7 +29,7 @@ fullscreen_nav:
   bg_image : "images/backgrounds/full-nav-bg2.jpg"
   # first_name : "Uday Lunawat"
   last_name : "I Breathe Data"
-  
+
 
 ########################### About ##################################
 about:
@@ -53,13 +53,13 @@ experience:
       company : "Freelance & Contract"
       duration : "2019-Present"
       content : "Lorem ipsum"
-      
+
     # experience item loop
     - name : "Systems Engineer"
       company : "Infosys Ltd."
       duration : "2018-2019"
       content : "Lorem Ipsum"
-      
+
     # experience item loop
     - name : "Analytics Intern"
       company : "Tata Consultancy Services Ltd."
@@ -75,15 +75,15 @@ experience:
 #     # skill item loop
 #     - name : "Machine Learning"
 #       parcentage : "90%"
-      
+
 #     # skill item loop
 #     - name : "Deep Learning"
 #       parcentage : "85%"
-      
+
 #     # skill item loop
 #     - name : "Data analysis"
 #       parcentage : "90%"
-      
+
 #     # skill item loop
 #     - name : "Statistics"
 #       parcentage : "80%"
@@ -97,23 +97,23 @@ experience:
 #     # service item loop
 #     - name : "Machine Learning"
 #       image : "images/icons/web-development.png"
-      
+
 #     # service item loop
 #     - name : "Graphic Design"
 #       image : "images/icons/graphic-design.png"
-      
+
 #     # service item loop
 #     - name : "Computer Vision Management"
 #       image : "images/icons/dbms.png"
-      
+
 #     # service item loop
 #     - name : "Software Development"
 #       image : "images/icons/software-development.png"
-      
+
 #     # service item loop
 #     - name : "Digital Marketing"
 #       image : "images/icons/marketing.png"
-      
+
 #     # service item loop
 #     - name : "Mobile App Development"
 #       image : "images/icons/mobile-app.png"
@@ -133,92 +133,92 @@ call_to_action:
 ############################# portfolio ################################
 portfolio:
   enable : true
-  title : "PORTFOLIO"
+  title : "Portfolio"
   portfolio_list:
     # portfolio item loop
     - name : <span style="font-family:Papyrus; font-size:1em;">ALPR System</span>
       image : "images/portfolio/alpr-resized.png"
       date : "Aug 2020"
       category : "Deep Learning"
-      
+
     # portfolio item loop
     - name : <span style="font-family:Papyrus; font-size:1em;"><small>Automated Application Screening</small></span>
       image : "images/portfolio/dc-heart.png"
       date : "July 2019"
       category : "Machine Learning"
-      
+
     # portfolio item loop
     - name :  <span style="font-family:Papyrus; font-size:1em;">Sports Analytics</span>
       image : images/portfolio/sports.jpg
       date : "Apr 2018"
       category : "Data Analysis"
-      
+
     # # portfolio item loop
     # - name : "Project <br> Title"
     #   image : "images/portfolio/item4.jpg"
     #   date : "Feb 2018"
     #   category : "Machine Learning"
-      
+
     # # portfolio item loop
     # - name : "Project <br> Title"
     #   image : "images/portfolio/item5.jpg"
     #   date : "Feb 2018"
     #   category : "Machine Learning"
-      
+
     # # portfolio item loop
     # - name : "Project <br> Title"
     #   image : "images/portfolio/item6.jpg"
     #   date : "Feb 2018"
     #   category : "Machine Learning"
-      
+
     # # portfolio item loop
     # - name : "Project <br> Title"
     #   image : "images/portfolio/item7.jpg"
     #   date : "Feb 2018"
     #   category : "Data Analysis"
-      
+
     # # portfolio item loop
     # - name : "Project <br> Title"
     #   image : "images/portfolio/item8.jpg"
     #   date : "Feb 2018"
     #   category : "Data Analysis"
-      
+
     # # portfolio item loop
     # - name : "Project <br> Title"
     #   image : "images/portfolio/item9.jpg"
     #   date : "Feb 2018"
     #   category : "Computer Vision"
-      
+
     # # portfolio item loop
     # - name : "Project <br> Title"
     #   image : "images/portfolio/item10.jpg"
     #   date : "Feb 2018"
     #   category : "Computer Vision"
-      
+
     # # portfolio item loop
     # - name : "Project <br> Title"
     #   image : "images/portfolio/item11.jpg"
     #   date : "Feb 2018"
     #   category : "Natural Language Processing"
-      
+
     # # portfolio item loop
     # - name : "Project <br> Title"
     #   image : "images/portfolio/item12.jpg"
     #   date : "Feb 2018"
     #   category : "Data Analysis"
-      
+
     # # portfolio item loop
     # - name : "Project <br> Title"
     #   image : "images/portfolio/item13.jpg"
     #   date : "Feb 2018"
     #   category : "Data Analysis"
-      
+
     # # portfolio item loop
     # - name : "Project <br> Title"
     #   image : "images/portfolio/item14.jpg"
     #   date : "Feb 2018"
     #   category : "Data Analysis"
-      
+
     # # portfolio item loop
     # - name : "Project <br> Title"
     #   image : "images/portfolio/item15.jpg"
@@ -237,14 +237,14 @@ testimonial:
       designation : "CEO, RANDOM COMPANY"
       content : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores ad,
                 omnis totam iusto quia? Excepturi itaque quaerat, quia unde delectus rem error dignissimos in iusto."
-                
+
     # slider item loop
     - name : "Peter Parker"
       image : "images/clients/client2.jpg"
       designation : "CEO, RANDOM COMPANY"
       content : "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores ad,
                 omnis totam iusto quia? Excepturi itaque quaerat, quia unde delectus rem error dignissimos in iusto."
-                
+
     # slider item loop
     - name : "Jessica Jones"
       image : "images/clients/client3.jpg"
@@ -261,17 +261,17 @@ funfacts:
     - name : "HANDS TO WORK"
       image : "images/icons/works.png"
       count : "100"
-      
+
     # funfacts item loop
     - name : "HAPPY CLIENT"
       image : "images/icons/happy.png"
       count : "200"
-      
+
     # funfacts item loop
     - name : "FINISHED PROJECT"
       image : "images/icons/project.png"
       count : "250"
-      
+
     # funfacts item loop
     - name : "CUPS OF COFFEE"
       image : "images/icons/coffee.png"
