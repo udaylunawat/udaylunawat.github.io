@@ -1,7 +1,7 @@
 /*--------------------------------
    Start Preloader & General Styling
 ----------------------------------*/
-
+@import "breathe.css";
 
 html {
   height: 100%;
@@ -1440,25 +1440,7 @@ textarea.form-control::-webkit-input-placeholder,
   text-align: center;
   color: #fff;
 }
-.author {
-  display: flex;
-  /* font-family: $google-font-source-sans; */
-  font-size: 4rem;
-  .char {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      /* font-family: $google-font-heebo; */
-      font-variation-settings: "wght" var(--font-weight, 100);
-      color: #FFF;
-  }
-  #poof {
-      visibility: hidden;
-  }
-}
-.author:hover {
-  cursor: pointer;
-}
+
 @media (max-width: 550px) and (min-height: 501px) {
   .introduction {
     font-size: 45px;
@@ -1816,4 +1798,3 @@ Start About Me
     margin-bottom: 10px;
   }
 }
-

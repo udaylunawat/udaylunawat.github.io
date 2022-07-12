@@ -8,7 +8,7 @@ headerName.addEventListener("mouseover", () => {
         .to(chars, {
             "--font-weight": 800,
             ease: "power",
-            duration: 2.0,
+            duration: 0.5,
             stagger: {
                 each: 0.1,
                 repeat: -1,
