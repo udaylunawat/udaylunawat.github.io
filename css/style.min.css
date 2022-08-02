@@ -1151,6 +1151,9 @@ ul.experience-chart h4 {
   transform: translateX(-150px);
   -webkit-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
+  background-color:tomato;
+  font-family:'Josefin Sans';
+  font-size:0.7em;
 }
 .item-caption h2 {
   font-size: 32px;
