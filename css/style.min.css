@@ -3,6 +3,16 @@
 ----------------------------------*/
 @import "breathe.css";
 
+@font-face {
+  font-family: 'Asap';
+  src: url(../fonts/Asap-Regular.ttf);
+}
+
+@font-face {
+  font-family: 'Josefin Sans';
+  src: url(../fonts/JosefinSans-Regular.ttf);
+}
+
 html {
   height: 100%;
 }
@@ -12,7 +22,31 @@ html {
 }
 
 body {
-  font-family: rubik, sans-serif;
+  font-family: 'Asap', sans-serif;
+  height: 100%;
+}
+
+.no-js body {
+  overflow: visible;
+}
+
+.all-container {
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  height: 100%;
+}
+
+
+html {
+  height: 100%;
+}
+
+* {
+  outline: none;
+}
+
+body {
+  font-family: 'Asap', sans-serif;
   height: 100%;
 }
 
@@ -22,20 +56,15 @@ body {
   border-bottom: 1px dashed #212121;
 }
 
-
 .content a:hover {
   border-bottom: 1px solid #212121;
   text-decoration: none;
 }
+
 s body {
   overflow: visible;
 }
 
-.all-container {
-  opacity: 0;
-  -ms-filter: "alpha(opacity=0)";
-  height: 100%;
-}
 .no-js .all-container {
   opacity: 1;
 }
@@ -230,7 +259,7 @@ s body {
   height: 100%;
   color: #fff;
   font-size: 30px;
-  font-family: rubik, sans-serif !important;
+  font-family: 'Josefin Sans', sans-serif !important;
   font-weight: 300;
   z-index: 10;
 }
@@ -255,7 +284,7 @@ s body {
   margin-top: 18px;
   text-decoration: none;
   color: #fff;
-  font-family: rubik, sans-serif;
+  font-family: 'Asap', sans-serif;
   font-size: 19px;
   font-weight: 500;
   border: 2px solid #fff;
@@ -333,7 +362,7 @@ input:checked + label span:last-child {
   display: none;
   z-index: 11;
   color: #fff;
-  font-family: rubik, sans-serif;
+  font-family: 'Josefin Sans', sans-serif;
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
@@ -447,7 +476,7 @@ input:checked + label span:last-child {
 }
 .fullscreen-nav-holder a {
   color: #fff;
-  font-family: rubik, sans-serif;
+  font-family: 'Asap', sans-serif;
   font-size: 20px;
   font-weight: 500;
   text-decoration: none;
@@ -1125,13 +1154,13 @@ ul.experience-chart h4 {
 }
 .item-caption h2 {
   font-size: 32px;
-  font-family: rubik, sans-serif;
+  font-family: 'Asap', sans-serif;
   font-weight: 700;
   padding-left: 13px;
 }
 .item-caption p {
   padding-left: 16px;
-  font-family: rubik, sans-serif;
+  font-family: 'Asap', sans-serif;
   font-weight: 500;
 }
 .item-created {
@@ -1164,7 +1193,7 @@ ul.experience-chart h4 {
   margin-top: 25px;
   text-decoration: none;
   color: #6f6f6f;
-  font-family: rubik, sans-serif;
+  font-family: 'Asap', sans-serif;
   font-size: 17px;
   font-weight: 500;
   border: 2px solid #6f6f6f;
