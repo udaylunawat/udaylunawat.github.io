@@ -48,7 +48,7 @@
 
 <section class="header" id="1">
   <div class="logo">
-    <img class="img-fluid" src="/images/logo.png" alt="Uday Lunawat | Data Science Portfolio">
+    <img class="img-fluid" loading="lazy" src="/images/logo.png" alt="Uday Lunawat | Data Science Portfolio">
   </div>
   <div class="slider-prev-button slider-button">
     <i class="fa fa-angle-left"></i>
@@ -59,9 +59,9 @@
 
   <div class="owl-carousel owl-full-width owl-theme" id="background-slide">
 
-    <div class="slider"><img class="img-fluid" src="https://i.imgur.com/ZRpiB8P.jpg" alt="slider-background"></div>
-    <div class="slider"><img class="img-fluid" src="https://i.imgur.com/4rI8G8a.jpg" alt="slider-background"></div>
-    <div class="slider"><img class="img-fluid" src="https://i.imgur.com/eq1dWSc.png" alt="slider-background"></div>
+    <div class="slider"><img class="img-fluid" style="background-image: url('https://i.imgur.com/ZRpiB8P.jpg');" loading="lazy" alt="slider-background"></div>
+    <div class="slider"><img class="img-fluid" style="background-image: url('https://i.imgur.com/4rI8G8a.jpg');" loading="lazy" alt="slider-background"></div>
+    <div class="slider"><img class="img-fluid" style="background-image: url('https://i.imgur.com/eq1dWSc.png');" loading="lazy" alt="slider-background"></div>
 
   </div>
   <div class="container">
@@ -103,7 +103,7 @@
       <span></span>
     </label>
   </div>
-  <div class="fullscreen-nav-container" style="background-image: url('https://i.imgur.com/2D53fhZ.jpg');">
+  <div class="fullscreen-nav-container" loading="lazy" style="background-image: url('https://i.imgur.com/2D53fhZ.jpg');">
     <div class="container-fluid">
       <div class="full-nav-container row">
         <div class="full-nav-holder">
@@ -333,15 +333,16 @@
       </div>
       <div class="col-lg-10 col-md-10 col-sm-10 col-10 mx-auto">
         <div class="row filtr-container wow fadeInUp list" data-wow-duration="1.5s">
+
           <div class="col-lg-4 col-md-6 col-sm-6 col-12 filtr-item" data-category="1">
             <div class="item-holder">
               <a href="https://media.giphy.com/media/dCRs0OrXbSNmtMRA25/giphy.gif" title="ALPR for India">
-              <img src="https://media.giphy.com/media/dCRs0OrXbSNmtMRA25/giphy.gif" alt="item1"  width="300" height="300">
+              <img src="https://media.giphy.com/media/dCRs0OrXbSNmtMRA25/giphy.gif" loading="lazy" alt="item1"  width="300" height="300">
                 <div class="item-caption">
                   <h2><span style="font-family:Rubik; font-size:0.7em;">ALPR System</span></h2>
                   <!-- <p>Deep Learning<br><br></p> -->
                   </br></br>
-                  <p style="background-color:tomato;" href = "https://github.com/udaylunawat/Automatic-License-Plate-Recognition">Deep Learning - CV</p>
+                  <p style="background-color:tomato;" href="https://github.com/udaylunawat/Automatic-License-Plate-Recognition">Deep Learning - CV</p>
                   <div class="item-created">Aug 2020</div>
                 </div>
               </a>
@@ -351,13 +352,32 @@
           <div class="col-lg-4 col-md-6 col-sm-6 col-12 filtr-item" data-category="2">
             <div class="item-holder">
               <a href="https://i.imgur.com/SsORpFx.png" title="Donors Choose">
-              <img src="https://i.imgur.com/SsORpFx.png" alt="item2" width="300" height="300">
+              <img src="https://i.imgur.com/SsORpFx.png" loading="lazy" alt="item2" width="300" height="300">
                 <div class="item-caption">
                   <h2><span style="font-family:Rubik; font-size:0.7em;">Automated Application Screening</span></h2>
                   <!-- <p>Machine Learning</p> -->
                   </br></br>
-                  <p style="background-color:tomato;" href = "https://github.com/udaylunawat/Automatic-License-Plate-Recognition">Machine Learning - NLP</p>
+                  <p style="background-color:tomato;" href="https://github.com/udaylunawat/Automatic-License-Plate-Recognition">Machine Learning - NLP</p>
                   <div class="item-created">Mar 2018</div>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 col-sm-6 col-12 filtr-item" data-category="1">
+            <div class="item-holder">
+              <a href="https://i.imgur.com/SsORpFx.png" title="Rock Classification">
+              <img src="https://i.imgur.com/SsORpFx.png" loading="lazy" alt="item2" width="300" height="300">
+                <div class="item-caption">
+                  <h2>
+                    <span style="font-family:Rubik; font-size:0.5em;">
+                      Rock Classification Telegram Bot
+                    </span>
+                  </h2>
+                  <!-- <p>Classified Igneous, Sedimentary and Metamorphic Rocks and deployed on Telegram API.</p> -->
+                  </br></br>
+                  <p style="background-color:tomato;" href="https://github.com/udaylunawat/Whats-this-rock">Machine Learning - CV</p>
+                  <div class="item-created">May 2022</div>
                 </div>
               </a>
             </div>
@@ -365,13 +385,34 @@
 
           <div class="col-lg-4 col-md-6 col-sm-6 col-12 filtr-item" data-category="3">
             <div class="item-holder">
+              <a href="https://i.imgur.com/SsORpFx.png" title="Factory Data Pipeline deployed on Tableau">
+              <img src="https://i.imgur.com/SsORpFx.png" loading="lazy" alt="item2" width="300" height="300">
+                <div class="item-caption">
+                  <h2>
+                    <span style="font-family:Rubik; font-size:0.7em;">
+                      Factory data pipeline
+                    </span>
+                  </h2>
+                  <!-- <p>Factory realtime data consumed from Box Cloud Platform, cleaned and transformed into Tableau Data Warehouse.</p> -->
+                  </br></br>
+                  <p style="background-color:tomato;" href="https://github.com/udaylunawat/factory-pipeline">Data Vizualization - NLP</p>
+                  <div class="item-created">Apr 2021</div>
+                </div>
+              </a>
+            </div>
+          </div>
+
+
+
+          <div class="col-lg-4 col-md-6 col-sm-6 col-12 filtr-item" data-category="2">
+            <div class="item-holder">
               <a href="https://i.imgur.com/uq11zuz.jpg" title="Sports Analytics">
-              <img src="https://i.imgur.com/uq11zuz.jpg" alt="item3" width="300" height="300">
+              <img src="https://i.imgur.com/uq11zuz.jpg" loading="lazy" alt="item3" width="300" height="300">
                 <div class="item-caption">
                   <h2><span style="font-family:Rubik; font-size:0.7em;">Sports Analytics</span></h2>
                   <!-- <p>Data Analytics</p> -->
                   </br></br>
-                  <p style="background-color:tomato;" href = "https://github.com/udaylunawat/Automatic-License-Plate-Recognition">Data Analytics - NLP</p>
+                  <p style="background-color:tomato;" href="https://github.com/udaylunawat/FIFA-VS-REALITY-">Data Analytics - NLP</p>
                   <div class="item-created">Feb 2018</div>
                 </div>
               </a>
@@ -380,13 +421,17 @@
 
           <div class="col-lg-4 col-md-6 col-sm-6 col-12 filtr-item" data-category="1">
             <div class="item-holder">
-              <a href="https://i.imgur.com/BH5cW2G.gif" title="Covid Xray Classifier and Dashboard">
-              <img src="https://i.imgur.com/BH5cW2G.gif" alt="item3"  width="300" height="300">
+              <a href="https://github.com/udaylunawat/Covid-19-Radiology" title="Covid Xray Classifier and Dashboard">
+              <img src="https://i.imgur.com/BH5cW2G.gif" loading="lazy" alt="item3"  width="300" height="300">
                 <div class="item-caption">
-                  <h2><span style="font-family:Rubik; font-size:0.7em;">Covid-19</span></h2>
+                  <h2>
+                    <span style="font-family:Rubik; font-size:0.55em;">
+                      Covid-19 Dashboard and Classifier
+                    </span>
+                  </h2>
                   <!-- <p>Deep Learning</p> -->
                   </br></br>
-                  <p style="background-color:tomato;" href = "https://github.com/udaylunawat/Automatic-License-Plate-Recognition">Deep Learning - CV</p>
+                  <p style="background-color:tomato;" href="https://github.com/udaylunawat/Covid-19-Radiology">Deep Learning - CV</p>
                   <div class="item-created">Sept 2020</div>
                 </div>
               </a>
