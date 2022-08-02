@@ -724,7 +724,7 @@ input:checked + label span:last-child {
   font-weight: 400;
 }
 .about-me {
-  background: #fff;
+  background: #141414;
   padding: 125px 0 70px;
 }
 .about-me-text h1 {
@@ -903,7 +903,7 @@ ul.experience-chart h4 {
   -webkit-border-radius: 22px;
 }
 .services {
-  background: #fff;
+  background: #141414;
   padding: 70px 0;
 }
 .services-heading {
@@ -1021,7 +1021,7 @@ ul.experience-chart h4 {
   padding: 8px 17px;
 }
 .portfolio {
-  background: #fff;
+  background: #141414;
   padding: 70px 0;
 }
 .portfolio h1 {
@@ -1179,7 +1179,7 @@ ul.experience-chart h4 {
   text-decoration: none;
 }
 .testimonials {
-  background: #fff;
+  background: #141414;
   padding: 70px 0;
 }
 .owl-carousel {
