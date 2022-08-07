@@ -417,7 +417,7 @@ input:checked + label span:last-child {
 .occupation {
   font-size: 18px;
   font-weight: 400;
-  height: 30px;
+  height: 90px;
   overflow: hidden;
 }
 .occupation span {
@@ -1151,9 +1151,9 @@ ul.experience-chart h4 {
   transform: translateX(-150px);
   -webkit-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
-  background-color:tomato;
+  /* background-color:tomato; */
   font-family:'Josefin Sans';
-  font-size:0.7em;
+  font-size:0.9em;
 }
 .item-caption h2 {
   font-size: 32px;
