@@ -6,11 +6,13 @@
 @font-face {
   font-family: 'Asap';
   src: url(../fonts/Asap-Regular.ttf);
+  font-display: swap;
 }
 
 @font-face {
   font-family: 'Josefin Sans';
   src: url(../fonts/JosefinSans-Regular.ttf);
+  font-display: swap;
 }
 
 html {
