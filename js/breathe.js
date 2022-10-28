@@ -20,4 +20,4 @@ headerName.addEventListener("mouseover", () => {
                 yoyo: true
             }
         });
-});
+}, {passive: true});
