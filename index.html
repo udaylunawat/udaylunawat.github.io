@@ -19,15 +19,12 @@
     <!-- plugins -->
 
     <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css" />
-    <link rel="stylesheet" href="plugins/fontawesome/font-awesome.min.css" />
-    <link rel="stylesheet" href="plugins/hover/hover.css">
-    <link rel="stylesheet" href="plugins/magnific-popup/magnific-popup.css" />
+    <link rel="stylesheet" href="plugins/fontawesome/font-awesome.min.css" defer/>
+    <link rel="stylesheet" href="plugins/hover/hover.css" defer />
+    <link rel="stylesheet" href="plugins/magnific-popup/magnific-popup.css" defer/>
     <link rel="stylesheet" href="plugins/owl-carousel/owl.carousel.min.css" />
-    <link
-      rel="stylesheet"
-      href="plugins/owl-carousel/owl.theme.default.min.css"
-    />
-    <link rel="stylesheet" href="plugins/text-animation/text-animation.css" />
+    <link rel="stylesheet" href="plugins/owl-carousel/owl.theme.default.min.css" defer/>
+    <link rel="stylesheet" href="plugins/text-animation/text-animation.css" defer/>
 
     <!-- ============== Fonts ============== -->
     <!-- <link href="https://fonts.googleapis.com/css?family=Asap:400,500,700%7CJosefin+Sans:400,600,700" rel="stylesheet"
@@ -53,7 +50,7 @@
     <section class="header" id="1">
       <div class="logo">
         <img
-          style="object-fit: contain; height: 150px"
+          style="object-fit: scale-down;"
           src="/images/logo.webp"
           alt="Uday Lunawat | Data Science Portfolio"
         />
@@ -754,8 +751,6 @@
                     src="images/clients/PedramHabibi2.webp"
                     loading="lazy"
                     alt="Pedram H"
-                    width="80%"
-                    height="80%"
                   />
                   <h2>Pedram H.</h2>
                   <span>CS Professor, Toronto</span>
@@ -778,8 +773,6 @@
                     src="images/clients/sky200.webp"
                     loading="lazy"
                     alt="Mengyu Yang"
-                    width="80%"
-                    height="80%"
                   />
                   <h2>Mengyu Y.</h2>
                   <span>Computer Vision, NYU</span>
@@ -800,8 +793,6 @@
                     src="images/clients/prasannarangam200.webp"
                     loading="lazy"
                     alt="Prasanna Rangam"
-                    width="80%"
-                    height="80%"
                   />
                   <h2>Prasanna R.</h2>
                   <span>Computer Vision & Dashboarding, Detroit</span>
@@ -956,32 +947,30 @@
     <!-- JS Plugins -->
 
     <script src="plugins/jQuery/jquery.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js'/>
     <script src="plugins/bootstrap/bootstrap.min.js"></script>
-    <script src="plugins/wow.min.js"></script>
-    <script src="plugins/text-animation/text-animation.js"></script>
-    <script src="plugins/jquery.waypoints.min.js"></script>
-    <script src="plugins/filterizr/jquery.filterizr.min.js"></script>
-    <script src="plugins/magnific-popup/jquery.magnific-popup.min.js"></script>
-    <script src="plugins/owl-carousel/owl.carousel.min.js"></script>
-    <!-- don't defer, otherwise it won't let images load -->
-    <script type="text/javascript" src="plugins/countUp.min.js"></script>
-    <script type="text/javascript" src="plugins/validator.min.js"></script>
-    <script
-      type="text/javascript"
-      src="plugins/imagesloaded.pkgd.min.js"
-    ></script>
-    <!-- <script type="text/javascript" src="plugins/custom.js"></script> -->
+    <script src="plugins/wow.min.js" defer></script>
+    <script src="plugins/text-animation/text-animation.js" defer></script>
+    <script src="plugins/jquery.waypoints.min.js" defer></script>
+    <script src="plugins/filterizr/jquery.filterizr.min.js" defer></script>
+    <script src="plugins/magnific-popup/jquery.magnific-popup.min.js" defer></script>
+    <script src="plugins/owl-carousel/owl.carousel.min.js" ></script>
+    // <!-- don't , otherwise it won't let images load -->
+    <script type="text/javascript" src="plugins/countUp.min.js" defer></script>
+    <script type="text/javascript" src="plugins/validator.min.js" defer></script>
+    <script type="text/javascript" src="plugins/imagesloaded.pkgd.min.js" defer></script>
+    // <script type="text/javascript" src="plugins/custom.js"></script>
 
     <!-- Breathe animation -->
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.3.4/gsap.min.js"></script>
-    <script defer src="js/breathe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.3.4/gsap.min.js" defer></script>
+    <script src="js/breathe.js" defer></script>
 
     <!-- WordArt animation -->
-    <script defer src="https://cdn.wordart.com/wordart.min.js"></script>
+    <script src="https://cdn.wordart.com/wordart.min.js" defer></script>
 
     <!-- Main Script -->
 
-    <script src="js/script.min.js"></script>
+    <script src="js/script.min.js" defer></script>
 
     <!-- google analitycs -->
   </body>
