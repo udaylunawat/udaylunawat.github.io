@@ -1204,11 +1204,6 @@ textarea.form-control {
 .nav-link:hover {
   text-decoration: none;
 }
-.nav-fill .nav-item {
-  -ms-flex: 1 1 auto;
-  flex: 1 1 auto;
-  text-align: center;
-}
 @-webkit-keyframes progress-bar-stripes {
   from {
     background-position: 1rem 0;
@@ -1504,10 +1499,6 @@ textarea.form-control {
   -ms-flex-direction: row !important;
   flex-direction: row !important;
 }
-.flex-fill {
-  -ms-flex: 1 1 auto !important;
-  flex: 1 1 auto !important;
-}
 .align-items-start {
   -ms-flex-align: start !important;
   align-items: flex-start !important;
@@ -1552,10 +1543,6 @@ textarea.form-control {
   .flex-sm-row {
     -ms-flex-direction: row !important;
     flex-direction: row !important;
-  }
-  .flex-sm-fill {
-    -ms-flex: 1 1 auto !important;
-    flex: 1 1 auto !important;
   }
   .align-items-sm-start {
     -ms-flex-align: start !important;
@@ -1603,10 +1590,6 @@ textarea.form-control {
     -ms-flex-direction: row !important;
     flex-direction: row !important;
   }
-  .flex-md-fill {
-    -ms-flex: 1 1 auto !important;
-    flex: 1 1 auto !important;
-  }
   .align-items-md-start {
     -ms-flex-align: start !important;
     align-items: flex-start !important;
@@ -1652,10 +1635,6 @@ textarea.form-control {
   .flex-lg-row {
     -ms-flex-direction: row !important;
     flex-direction: row !important;
-  }
-  .flex-lg-fill {
-    -ms-flex: 1 1 auto !important;
-    flex: 1 1 auto !important;
   }
   .align-items-lg-start {
     -ms-flex-align: start !important;
