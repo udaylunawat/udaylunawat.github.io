@@ -1055,11 +1055,26 @@ ul.experience-chart h4 {
   background: #141414;
   padding: 70px 0;
 }
+
+.portfolio-container h1 {
+  position: relative;
+  text-align: center;
+  color: #6f6f6f;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+.portfolio-container h1:before {
+  content: "";
+  height: 5px;
+  background: #6f6f6f;
+  position: absolute;
+  top: -18px;
+}
 .portfolio h1 {
   color: #6f6f6f;
   text-align: center;
   font-weight: 700;
-  letter-spacing: 4px;
+  letter-spacing: 2px;
   position: relative;
 }
 .portfolio h1:before {
@@ -1067,9 +1082,7 @@ ul.experience-chart h4 {
   height: 5px;
   background: #6f6f6f;
   position: absolute;
-  top: -15px;
-  left: 46.5%;
-  right: 46.5%;
+  top: -18px;
 }
 .filtering {
   width: 100%;
@@ -1172,7 +1185,7 @@ ul.experience-chart h4 {
   text-decoration: none;
   position: absolute;
   bottom: 16px;
-  left: 17px;
+  left: 30px;
   background: #6f6f6f;
   padding: 5px 10px;
 }
@@ -1253,6 +1266,7 @@ ul.experience-chart h4 {
   font-size: 26px;
   margin-top: 25px;
   margin-bottom: 2px;
+  color: #ffffff;
 }
 .single-testimonial span {
   display: block;
