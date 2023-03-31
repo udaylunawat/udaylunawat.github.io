@@ -850,14 +850,14 @@ ul.experience-chart li:after {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  border: 2px solid #4d4d4d;
-  background: #fff;
+  border: 2px solid #ffffff;
+  background: #000000;
   content: "";
   -webkit-transition: all 0.3s;
-  transition: all 0.7s;
+  transition: all 0.4s;
 }
 ul.experience-chart li:hover:after {
-  background: #4d4d4d;
+  background: #c9c9c9;
 }
 ul.experience-chart h4 {
   font-size: 19px;
@@ -875,7 +875,7 @@ ul.experience-chart h4 {
 }
 .single-experience {
   position: relative;
-  top: -2px;
+  top: -3px;
 }
 .skill-progress-bar {
   margin-top: 41px;
