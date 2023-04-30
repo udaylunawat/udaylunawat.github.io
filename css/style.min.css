@@ -775,7 +775,7 @@ input:checked + label span:last-child {
 }
 .about-me-text p {
   color: #6f6f6f;
-  font-size: 16px;
+  font-size: 26px;
 }
 .download-cv {
   text-decoration: none;
@@ -842,6 +842,12 @@ ul.experience-chart li {
 ul.experience-chart li:last-child {
   padding-bottom: 0;
 }
+
+ul.no-style {
+  list-style: none;
+  padding-left: 0;
+}
+
 ul.experience-chart li:after {
   position: absolute;
   top: -1px;
@@ -864,7 +870,11 @@ ul.experience-chart h4 {
   margin-top: 0;
   margin-bottom: 4px;
   font-weight: 700;
-  color: #4d4d4d;
+  color: #8f8f8f;
+}
+.job-title {
+  text-align: center;
+  /* Add any other styles you want to apply to the h4 element here */
 }
 .experience-chart li span {
   font-weight: 700;
