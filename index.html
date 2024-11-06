@@ -18,8 +18,8 @@
   <link rel="stylesheet" href="plugins/fontawesome/font-awesome.min.css" defer />
   <link rel="stylesheet" href="plugins/hover/hover.css" defer />
   <link rel="stylesheet" href="plugins/magnific-popup/magnific-popup.css" defer />
-  <link rel="stylesheet" href="plugins/owl-carousel/owl.carousel.min.css" />
-  <link rel="stylesheet" href="plugins/owl-carousel/owl.theme.default.min.css" defer />
+  <!-- <link rel="stylesheet" href="plugins/owl-carousel/owl.carousel.min.css" />
+  <link rel="stylesheet" href="plugins/owl-carousel/owl.theme.default.min.css" defer /> -->
   <link rel="stylesheet" href="plugins/text-animation/text-animation.css" defer />
 
   <!-- ============== Fonts ============== -->
@@ -42,12 +42,16 @@
       <img src="images/preloader.gif" alt="preloader">
     </div> -->
   <!-- preloader end -->
-
+  
+  
   <section class="header" id="1">
+    <!-- Particles.js container -->
+    <div id="particles-js"></div>
+
     <div class="logo">
       <img style="object-fit: scale-down;" src="/images/logo.webp" alt="Uday Lunawat | Data Science Portfolio" />
     </div>
-    <div class="slider-prev-button slider-button">
+    <!-- <div class="slider-prev-button slider-button">
       <i class="fa fa-angle-left"></i>
     </div>
     <div class="slider-next-button slider-button">
@@ -61,7 +65,7 @@
       <div class="slider">
         <img class="img-fluid" src="images/backgrounds/lines.webp" loading="lazy" alt="slider-background" />
       </div>
-    </div>
+    </div> -->
     <div class="container">
       <div class="row content">
         <div class="col-lg-8 col-lg-offset-2 col-sm-8 col-sm-offset-2 head-container">
@@ -292,19 +296,19 @@
                 <br />
                 <p>
                   • Led the implementation of a Human-in-the-Loop system to enhance machine learning model accuracy through continuous human feedback integration, improving model performance and reliability.</br>
-                  • Managed and deployed annotation and training pipelines using <img alt="Label Studio Badge"
-                    src="https://img.shields.io/badge/Label_Studio-black?style=flat-square&logo=label-studio&logoColor=white" />,
+                  • Managed and deployed annotation and training pipelines using <img alt="LabelStudio Badge"
+                  src="https://img.shields.io/badge/Label_Studio-FF5733?style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJMMiA3djEwbDEwIDUgMTAtNVY3TDEyIDJ6IiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==" />,
                   <img alt="FastAPI Badge"
-                    src="https://img.shields.io/badge/FastAPI-black?style=flat-square&logo=fastapi&logoColor=white" />,
+                    src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" />,
                   <img alt="Docker Badge"
-                    src="https://img.shields.io/badge/Docker-black?style=flat-square&logo=docker&logoColor=white" />, and collaborative tools such as <img alt="Miro Badge"
-                    src="https://img.shields.io/badge/Miro-black?style=flat-square&logo=miro&logoColor=white" /> to streamline the machine learning workflow and enhance team collaboration.</br>
+                    src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" />, and collaborative tools such as <img alt="Miro Badge"
+                    src="https://img.shields.io/badge/Miro-050038?style=flat-square&logo=miro&logoColor=white" /> to streamline the machine learning workflow and enhance team collaboration.</br>
                   • Implemented comprehensive CICD image scanning solutions using <img alt="Trivy Badge"
-                    src="https://img.shields.io/badge/Trivy-black?style=flat-square&logo=trivy&logoColor=white" />,
+                    src="https://img.shields.io/badge/Trivy-1904DA?style=flat-square&logo=aqua&logoColor=white" />,
                   seamlessly integrating with <img alt="Google Cloud Platform Badge"
-                    src="https://img.shields.io/badge/Google_Cloud_Platform-black?style=flat-square&logo=google-cloud&logoColor=white" /> and 
+                    src="https://img.shields.io/badge/Google_Cloud-4285F4?style=flat-square&logo=google-cloud&logoColor=white" /> and 
                   <img alt="Microsoft Azure Badge"
-                    src="https://img.shields.io/badge/Azure-black?style=flat-square&logo=azure&logoColor=white" />,
+                    src="https://img.shields.io/badge/Cloud-Azure-0078D4?style=flat-square&logo=microsoftazure&logoColor=white" />,
                   to identify and mitigate vulnerabilities, ensuring robust security and compliance in the continuous integration and deployment process.</br>
                 </p>
               </div>
@@ -312,75 +316,51 @@
             
             <li>
               <div class="single-experience">
-                <h4 class="job-title">Machine Learning Engineer MLOps<br />Chugani [Feb 2022 - May 2023]</h4>
+                <h4 class="job-title">Machine Learning Engineer MLOps<br />Chugani [2022 - 2023]</h4>
                 <br />
                 <p>
-                  • Developed a real-time liveliness service with features like <img alt="Face Detection Badge"
-                    src="https://img.shields.io/badge/Face_Detection-black?style=flat-square&logo=face-detection&logoColor=white" />,
-                  <img alt="Face Recognition Badge"
-                    src="https://img.shields.io/badge/Face_Recognition-black?style=flat-square&logo=face-recognition&logoColor=white" />, and matching, achieving low latency (150ms).</br>
-                  • Enhanced MLOps with <img alt="Annotation Tools Badge"
-                    src="https://img.shields.io/badge/Annotation_Tools-black?style=flat-square&logo=annotation-tools&logoColor=white" />,
-                  <img alt="Model Registry Badge"
-                    src="https://img.shields.io/badge/Model_Registry-black?style=flat-square&logo=model-registry&logoColor=white" />,
-                  monitoring, training, and other best practices implementation.</br>
-                  • Streamlined the development process by transitioning from individual notebooks to modularized scripts, facilitating better version control, collaboration, autodocumentation, and integration into the production environment.</br>
-                  • Developed and proposed the MVP.</br>
+                  • Developed a real-time liveliness service with <img alt="Face Detection Badge" src="https://img.shields.io/badge/Face_Detection-black?style=flat-square&logo=face-detection&logoColor=white" />, 
+                    <img alt="Face Recognition Badge" src="https://img.shields.io/badge/Face_Recognition-black?style=flat-square&logo=face-recognition&logoColor=white" />, and matching capabilities, achieving low latency of 150 ms. Integrated with <img alt="AWS Badge" src="https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=amazon-aws&logoColor=white" /> for optimized deployment.</br>
+                    
+                  • Enhanced MLOps using <img alt="Annotation Tools Badge" src="https://img.shields.io/badge/Annotation_Tools-black?style=flat-square&logo=annotation-tools&logoColor=white" />, 
+                    <img alt="Model Registry Badge" src="https://img.shields.io/badge/Model_Registry-black?style=flat-square&logo=model-registry&logoColor=white" />, 
+                    <img alt="MLflow Badge" src="https://img.shields.io/badge/MLflow-0194E2?style=flat-square&logo=mlflow&logoColor=white" /> for versioning, monitoring, and training, ensuring efficient model management.</br>
+                    
+                  • Streamlined the development workflow by transitioning from individual notebooks to modularized scripts, enhancing collaboration, version control, and auto-documentation with <img alt="nbdev Badge" src="https://img.shields.io/badge/Docs-nbdev-black?style=flat-square&logo=fastai&logoColor=white" /> and integrating with <img alt="TensorFlow Badge" src="https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=tensorflow&logoColor=white" /> and <img alt="Label Studio Badge" src="https://img.shields.io/badge/Label_Studio-FF5733?style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJMMiA3djEwbDEwIDUgMTAtNVY3TDEyIDJ6IiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==" /> to support data annotation and model training at scale.</br>
                 </p>
               </div>
             </li>
             
-
             <li>
               <div class="single-experience">
-                <h4 class="job-title">Machine Learning, Analytics & ETL Engineer<br />Major Fortune Top 10 Tech Company [2021 - 2022]</h4>
+                <h4 class="job-title">Machine Learning Engineer<br /><a href="#">Yang</a> [2019 - 2022]</h4>
                 <br />
-                <p>
-                  • Streamlined complex Data Science problem statements for clients.</br>
-                  • Expertly deployed multiple projects on the <img alt="Google Cloud Platform Badge"
-                    src="https://img.shields.io/badge/Google_Cloud_Platform-black?style=flat-square&logo=google-cloud&logoColor=white" />
-                  through the use of <img alt="Google Cloud Platform Badge"
-                    src="https://img.shields.io/badge/Docker-black?style=flat-square&logo=docker&logoColor=white" />
-                  and Cloud run technologies, and deployed using <img alt="Streamlit Badge"
-                    src="https://img.shields.io/badge/streamlit-black?style=flat-square&logo=streamlit&logoColor=white" />.</br>
-                  • Developed data pipelines and automated workflows.</br>
-                  • Conducted extensive documentation using <img alt="nbdev Badge"
-                    src="https://img.shields.io/badge/Docs-nbdev-black?style=flat-square&logo=fastai&logoColor=white" />
-                  platform.</br>
-                  • Learned the intricacies of MLOps with <img alt="Weights & Biases Badge"
-                    src="https://img.shields.io/badge/MLOps-Weights%20%26%20Biases-black?style=flat-square&logo=weightsandbiases?style=flat-square&logoColor=black&style=flat-square.png" />
-                  to keep track of your hyperparameters, system metrics, and predictions so as to compare models live,
-                  and share findings.</br>
-                  • Launched an educational Crypto App <img alt="FLutter Badge"
-                  src="https://img.shields.io/badge/flutter-black?style=flat-square&logo=flutter&logoColor=white" /> on the Apple ios store and Google play store.<br />
-                </p>
-              </div>
-            </li>
-
-
-            <li>
-              <div class="single-experience">
-                <h4 class="job-title">Machine Learning Engineer<br />Consultant [2019 - 2020]</h4>
-                <br />
-                <p>
-                  • Streamlined complex Data Science problem statements for clients.</br>
-                  • Expertly deployed multiple projects on the <img alt="Google Cloud Platform Badge"
-                    src="https://img.shields.io/badge/Google_Cloud_Platform-black?style=flat-square&logo=google-cloud&logoColor=white" />
-                  through the use of <img alt="Google Cloud Platform Badge"
-                    src="https://img.shields.io/badge/Docker-black?style=flat-square&logo=docker&logoColor=white" />
-                  and Cloud run technologies, and deployed using <img alt="Streamlit Badge"
-                    src="https://img.shields.io/badge/streamlit-black?style=flat-square&logo=streamlit&logoColor=white" />.</br>
-                  • Developed data pipelines and automated workflows.</br>
-                  • Conducted extensive documentation using <img alt="nbdev Badge"
-                    src="https://img.shields.io/badge/Docs-nbdev-black?style=flat-square&logo=fastai&logoColor=white" />
-                  platform.</br>
-                  • Learned the intricacies of MLOps with <img alt="Weights & Biases Badge"
-                    src="https://img.shields.io/badge/MLOps-Weights%20%26%20Biases-black?style=flat-square&logo=weightsandbiases?style=flat-square&logoColor=black&style=flat-square.png" />
-                  to keep track of your hyperparameters, system metrics, and predictions so as to compare models live,
-                  and share findings.</br>
-                  • Launched an educational Crypto App <img alt="FLutter Badge"
-                  src="https://img.shields.io/badge/flutter-black?style=flat-square&logo=flutter&logoColor=white" /> on the Apple ios store and Google play store.<br />
-                </p>
+            
+                <div style="padding-left: 15px;">
+                  <h4 class="sub-job-title">Machine Learning, Analytics & ETL Engineer – <img alt="Apple Badge" src="https://img.shields.io/badge/Apple-333333?style=flat-square&logo=apple&logoColor=white" /></h4>
+                  <p class="job-duration">2021 - 2022</p>
+                  <p>
+                    • Addressed complex data science challenges by creating tailored solutions for clients.</br>
+                    • Deployed projects using <img alt="Google Cloud Platform Badge" src="https://img.shields.io/badge/Cloud-Google_Cloud-4285F4?style=flat-square&logo=google-cloud&logoColor=white" />,
+                      <img alt="Docker Badge" src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" />,
+                      and <img alt="Streamlit Badge" src="https://img.shields.io/badge/streamlit-FF4B4B?style=flat-square&logo=streamlit&logoColor=white" /> for interactive application deployment.</br>
+                    • Developed data pipelines, automated workflows, and created extensive documentation using <img alt="nbdev Badge" src="https://img.shields.io/badge/Docs-nbdev-black?style=flat-square&logo=fastai&logoColor=white" />.</br>
+                    • Enhanced MLOps practices using <img alt="Weights & Biases Badge" src="https://img.shields.io/badge/MLOps-Weights%20%26%20Biases-yellow?style=flat-square&logo=weightsandbiases?style=flat-square&logoColor=black&style=flat-square.png" />, allowing real-time model comparison and metric tracking.</br>
+                    • Built and published an educational crypto app using <img alt="Flutter Badge" src="https://img.shields.io/badge/flutter-02569B?style=flat-square&logo=flutter&logoColor=white" /> on both iOS and Android platforms.
+                  </p>
+                </div>
+            
+                <div style="padding-left: 15px;">
+                  <h4 class="sub-job-title">Machine Learning Consultant</h4>
+                  <p class="job-duration">2019 - 2020</p>
+                  <p>
+                    • Collaborated closely with developers and researchers across 12 countries, focusing on cross-functional ML applications.</br>
+                    • Applied human activity recognition techniques to improve user experience in interactive applications.</br>
+                    • Utilized <img alt="TensorFlow Badge" src="https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=tensorflow&logoColor=white" /> with <img alt="Google Cloud Platform Badge" src="https://img.shields.io/badge/Google_Cloud-4285F4?style=flat-square&logo=google-cloud&logoColor=white" /> for scalable model training and deployment.</br>
+                    • Worked with TTS frameworks like NVIDIA Nemo and Google Wavenet for Deepfake voice cloning applications, pushing the boundaries of interactive media technologies.
+                  </p>
+                </div>
+            
               </div>
             </li>
 
@@ -390,16 +370,16 @@
                 <br />
                 <p>
                   • Deployed various Machine Learning and Deep Learning models on multiple cloud platforms including <img alt="Google Cloud Platform Badge"
-                    src="https://img.shields.io/badge/-Google_Cloud_Platform-black?style=flat-square&logo=google-cloud&logoColor=white" />
+                    src="https://img.shields.io/badge/-Google_Cloud_Platform-4285F4?style=flat-square&logo=google-cloud&logoColor=white" />
                   and <img alt="AWS Badge"
-                    src="https://img.shields.io/badge/-AWS-black?style=flat-square&logo=docker&logoColor=white" /><br />
+                    src="https://img.shields.io/badge/-AWS-232F3E?style=flat-square&logo=docker&logoColor=white" /><br />
                   • Developed models using <img alt="Tensorflow Badge"
-                    src="https://img.shields.io/badge/-tensorflow-black?style=flat-square&logo=Tensorflow&logoColor=white" />
+                    src="https://img.shields.io/badge/-tensorflow-FF6F00?style=flat-square&logo=Tensorflow&logoColor=white" />
                   and <img alt="Python Badge"
-                    src="https://img.shields.io/badge/-Python-black?style=flat-square&logo=Python&logoColor=white" />
+                    src="https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=Python&logoColor=white" />
                   programming languages.<br />
                   • Managed code using <img alt="Git Badge"
-                    src="https://img.shields.io/badge/-Git-000000?style=flat-square&logo=git&logoColor=white" /> version
+                    src="https://img.shields.io/badge/-Git-232F3E?style=flat-square&logo=git&logoColor=white" /> version
                   control system.
                 </p>
               </div>
@@ -412,7 +392,7 @@
                 <p>
                   • Completed a highly-coveted internship at Tata Consultancy Services, where I worked on complex Data
                   analytics <img alt="Tableau Badge"
-                    src="https://img.shields.io/badge/-Tableau-black?style=flat-square&logo=Tableau&logoColor=white" />
+                    src="https://img.shields.io/badge/-Tableau-E97627?style=flat-square&logo=Tableau&logoColor=white" />
                   projects for a leading industry player.
                 </p>
               </div>
@@ -424,7 +404,7 @@
           <div style="height: 100%" data-wordart-src="//cdn.wordart.com/json/71oo7gz2iex7"></div>
         </div> -->
         <div class="col-lg-6 col-sm-6 col-13 experience wow fadeInUp" data-wow-duration="1.5s">
-          <div style="height: 2000px" data-wordart-src="//cdn.wordart.com/json/71oo7gz2iex7"></div>
+          <div style="height: 1500px" data-wordart-src="//cdn.wordart.com/json/71oo7gz2iex7"></div>
         </div>
       </div>
     </div>
@@ -834,8 +814,75 @@
   <!-- Main Script -->
 
   <script src="js/script.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+  <script>
+    particlesJS('particles-js', {
+        particles: {
+            number: {
+                value: 80,
+                density: {
+                    enable: true,
+                    value_area: 800
+                }
+            },
+            color: {
+                value: '#ffffff'
+            },
+            shape: {
+                type: 'circle'
+            },
+            opacity: {
+                value: 0.5,
+                random: false
+            },
+            size: {
+                value: 3,
+                random: true
+            },
+            line_linked: {
+                enable: true,
+                distance: 150,
+                color: '#ffffff',
+                opacity: 0.4,
+                width: 1
+            },
+            move: {
+                enable: true,
+                speed: 6,
+                direction: 'none',
+                random: false,
+                straight: false,
+                out_mode: 'out',
+                bounce: false
+            }
+        },
+        interactivity: {
+            detect_on: 'window', // Changed from 'canvas' to 'window'
+            events: {
+                onhover: {
+                    enable: true,
+                    mode: 'repulse'
+                },
+                onclick: {
+                    enable: true,
+                    mode: 'push'
+                },
+                resize: true
+            },
+            modes: {
+                repulse: {
+                    distance: 100,
+                    duration: 0.4
+                },
+                push: {
+                    particles_nb: 4
+                }
+            }
+        },
+        retina_detect: true
+    });
+  </script>
 
-  <!-- google analitycs -->
 </body>
 
 </html>

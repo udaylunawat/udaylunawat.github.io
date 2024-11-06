@@ -1856,3 +1856,35 @@ Start About Me
     margin-bottom: 10px;
   }
 }
+
+
+
+
+
+/* Particles and Header Styling */
+#particles-js {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
+
+.header {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.logo {
+  position: relative;
+  z-index: 2;
+}
+
+/* Optional: Add some opacity to particles background for better visibility */
+#particles-js {
+  background-color: rgba(0, 0, 0, 0.9);
+}
