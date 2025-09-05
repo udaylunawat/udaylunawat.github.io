@@ -1,915 +1,612 @@
 <!DOCTYPE html>
-<html lang="en-us">
-
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Uday Lunawat | Data Science Portfolio</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <!-- mobile responsive meta -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=10" />
-  <meta name="description"
-    content="I seldom end up where I wanted to go, but almost always end up where I need to be." />
-  <meta name="author" content="uday" />
-  <meta name="generator" content="Hugo 0.101.0" />
-
-  <!-- plugins -->
-
-  <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css" />
-  <link rel="stylesheet" href="plugins/fontawesome/font-awesome.min.css" defer />
-  <link rel="stylesheet" href="plugins/hover/hover.css" defer />
-  <link rel="stylesheet" href="plugins/magnific-popup/magnific-popup.css" defer />
-  <!-- <link rel="stylesheet" href="plugins/owl-carousel/owl.carousel.min.css" />
-  <link rel="stylesheet" href="plugins/owl-carousel/owl.theme.default.min.css" defer /> -->
-  <link rel="stylesheet" href="plugins/text-animation/text-animation.css" defer />
-
-  <!-- ============== Fonts ============== -->
-  <!-- <link href="https://fonts.googleapis.com/css?family=Asap:400,500,700%7CJosefin+Sans:400,600,700" rel="stylesheet"
-    defer> -->
-
-  <!-- commented as it hides the social media icons -->
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"> -->
-
-  <!-- Main Stylesheet -->
-  <link rel="stylesheet" href="css/style.min.css" media="screen" />
-
-  <!--Favicon-->
-  <!-- <link rel="icon" href="images/favicon.webp" type="image/x-icon"> -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uday Lunawat - Portfolio</title>
+    <link rel="stylesheet" href="src/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Oswald:wght@200;300;400;500;600;700&family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;1,100;1,200;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css"> 
 </head>
 
 <body>
-  <!-- preloader start -->
-  <!-- <div class="preloader">
-      <img src="images/preloader.gif" alt="preloader">
-    </div> -->
-  <!-- preloader end -->
-  
-  
-  <section class="header" id="1">
-    <!-- Particles.js container -->
-    <div id="particles-js"></div>
+<div id="particles-js"></div>
+<div class="canvas-container" id="canvas">
+    <canvas></canvas>
+</div>
 
-    <div class="logo">
-      <img style="object-fit: scale-down;" src="/images/logo.webp" alt="Uday Lunawat | Data Science Portfolio" />
-    </div>
-    <!-- <div class="slider-prev-button slider-button">
-      <i class="fa fa-angle-left"></i>
-    </div>
-    <div class="slider-next-button slider-button">
-      <i class="fa fa-angle-right"></i>
-    </div>
+<div class="color-background" id="colorBackground">
+</div>
 
-    <div class="owl-carousel owl-full-width owl-theme" id="background-slide">
-      <div class="slider">
-        <img class="img-fluid" src="images/backgrounds/brain.webp" loading="lazy" alt="slider-background" />
+<img class="nav-open-icon" id="open-icon" src="./src/img/menu-icon.svg" alt="" onclick="showMenu()">
+<nav class="main-nav" id="menu">
+    <img class="nav-close-icon" id="close-icon" src="./src/img/close-icon.svg" alt="" onclick="hideMenu()">
+    <ul>
+        <li><a href="#homeTitle" onclick="hideMenu()">Home</a></li>
+        <li><a href="#about" onclick="hideMenu()">About</a></li>
+        <li><a href="#credentials" onclick="hideMenu()">Credentials</a></li>
+        <li><a href="#skills" onclick="hideMenu()">Skills</a></li>
+        <li><a href="#projects" onclick="hideMenu()">Projects</a></li>
+        <li><a href="#contact" onclick="hideMenu()">CONTAct /<span>resume</span></a></li>
+    </ul>
+</nav>
+
+<!----------- HOME -------->
+
+<section class="home" id="homeTitle">
+    <div class="wrapper">
+      <div class="home-grid">
+        <h4 id="homeTitle1">Senior Machine Learning Engineer</h4>
+        <h4 id="homeTitle2">Agentic AI</h4>
+        <!-- <h4 id="homeTitle3">MLOPS</h4> -->
       </div>
-      <div class="slider">
-        <img class="img-fluid" src="images/backgrounds/lines.webp" loading="lazy" alt="slider-background" />
-      </div>
-    </div> -->
-    <div class="container">
-      <div class="row content">
-        <div class="col-lg-8 col-lg-offset-2 col-sm-8 col-sm-offset-2 head-container">
-          <div class="head-holder">
-            <h1 class="introduction">Uday Lunawat</h1>
-            <div class="animated-text">
-              <strong class="cd-headline clip">
-                <span class="cd-words-wrapper">
-                  <b class="is-visible">Machine Learning</b>
-                  <b>Data analysis</b>
-                  <b>Data visualization</b>
-                  <b>Computer Vision</b>
-                  <b>Deep Learning</b>
-                  <b>Natural Language Processing</b>
-                  <b>Artificial Intelligence</b>
-                </span>
-              </strong>
-            </div>
+      <h1>Uday Lunawat</h1>
+      <p class="tagline">
+        Building scalable, production-ready AI solutions across Computer Vision, NLP, and Generative AI.
+      </p>
+    </div>
+  </section>
+  
 
-            <a class="hireMe" href="#6">HIRE ME</a>
-          </div>
+
+
+
+
+<!--------- ABOUT ---------->
+
+<section class="about" id="about">
+    <div class="wrapper">
+      <div class="text-box">
+        <h2>
+          <img src="./src/img/icon-rocket.svg" alt="Rocket icon">
+          Passion
+        </h2>
+        <p>
+          I am a Senior Machine Learning Engineer with over 6 years of experience delivering 
+          <em>enterprise-grade AI & MLOps solutions</em>.  
+          <br><br>
+          My journey spans from <strong>Computer Vision and NLP models</strong> to 
+          <strong>Agentic AI frameworks</strong> that orchestrate autonomous multi-agent systems.  
+          I’ve built pipelines handling everything from <em>annotation, model training, deployment, monitoring, and CI/CD automation</em> across AWS and GCP.
+          <br><br>
+          What excites me most is <strong>open-source MLOps</strong>—standardizing workflows, optimizing deployments,
+          and making AI systems truly production-ready. I thrive when scaling ideas from
+          prototype to real-world impact.
+        </p>
+      </div>
+    </div>
+  </section>
+  
+
+<!--------- CREDENTIALS ---------->
+
+<section class="credentials" id="credentials">
+    <h2>Experience & Education</h2>
+  
+    <div class="credentials-grid">
+      <!-- Row 1: Fractal (left) — Divider (center) — HCL (right) -->
+      <div class="wrapper left">
+        <div class="text-box">
+          <h3>Senior ML Engineer (Agentic Gen AI) – Fractal</h3>
+          <h4>Nov 2024 – Present · Pune</h4>
+          <p>
+            Leading development of a <strong>multi-agent framework</strong> using LangGraph &amp; LangChain.<br><br>
+            – Designed <strong>tool onboarding & metadata lifecycle</strong> for 200+ autonomous agents<br>
+            – Built Jenkins-powered CI/CD pipelines for 3000+ deployments on GCP<br>
+            – Integrated Langfuse &amp; New Relic for monitoring &amp; observability
+          </p>
         </div>
       </div>
-    </div>
-
-    <div class="navigation-icon">
-      <input id="burger" type="checkbox" />
-      <label for="burger" class="burger-menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </label>
-    </div>
-    <div class="fullscreen-nav-container" loading="preload"
-      style="background-image: url('images/backgrounds/artface.webp')">
-      <div class="container-fluid">
-        <div class="full-nav-container row">
-          <div class="full-nav-holder">
-            <div class="full-nav-content">
-              <div class="name">
-                <!-- <div class="first-name">I Breathe Data</div> -->
-
-                <div id="breathe" , class="author">
-                  <span class="char">B</span>
-                  <span class="char">r</span>
-                  <span class="char">e</span>
-                  <span class="char">a</span>
-                  <span class="char">t</span>
-                  <span class="char">h</span>
-                  <span class="char">e</span>
-                  <span class="char" id="poof">!</span>
-                </div>
-
-                <div>Talk to me about</div>
-                <div class="occupation">
-                  <span>
-                    Optimization<br />
-                    Philosophies<br />
-                    Hacks<br />
-                    Automation<br />
-                    Movies<br />
-                    Life<br />
-                    Paradoxes<br />
-                    Data<br />
-                    AI<br />
-                    Make the world a better place<br />
-                  </span>
-                </div>
-              </div>
-              <div class="fulscreen-nav">
-                <div class="fullscreen-nav-holder">
-                  <div><a href="#1" class="turn-home">HOME</a></div>
-                  <div><a href="#2">ABOUT ME</a></div>
-                  <div><a href="#3">SERVICES</a></div>
-                  <div><a href="#4">PORTFOLIO</a></div>
-                  <div><a href="#5">TESTIMONIALS</a></div>
-                  <div><a href="#6">CONTACT</a></div>
-                </div>
-              </div>
-              <div class="full-nav-icon-holder">
-                <div class="full-nav-icons">
-                  <div>
-                    <a href="https://wa.me/&#43;917887576672"><i class="fa fa-whatsapp"></i></a>
-                  </div>
-                  <div>
-                    <a href="https://twitter.com/udaylunawat/"><i class="fa fa-twitter"></i></a>
-                  </div>
-                  <div>
-                    <a href="https://stackoverflow.com/users/9292995/dracarys3"><i class="fa fa-stack-overflow"></i></a>
-                  </div>
-                  <div>
-                    <a href="https://www.linkedin.com/in/uday-lunawat/"><i class="fa fa-linkedin"></i></a>
-                  </div>
-                  <div>
-                    <a href="https://github.com/udaylunawat/"><i class="fa fa-github"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+  
+      <div class="center-divider">
+        <svg width="100" height="100" class="desktop-svg">
+          <line x1="0" y1="100" x2="100" y2="0" stroke="#ffffff37"/>
+          <line x1="0" y1="0" x2="100" y2="100" stroke="#ffffff37"/>
+        </svg>
+        <svg class="mobile-svg" width="100" height="100">
+          <line x1="50" y1="0" x2="50" y2="100" stroke="#ffffff37"/>
+          <line x1="0" y1="50" x2="100" y2="50" stroke="#ffffff37"/>
+        </svg>
+      </div>
+  
+      <div class="wrapper right">
+        <div class="text-box">
+          <h3>Senior ML Engineer (MLOps) – HCL</h3>
+          <h4>2024 · Bangalore</h4>
+          <p>
+            Implemented <strong>Human-in-the-Loop pipelines</strong> for real-time feedback.<br><br>
+            – Automated <strong>annotation pipelines</strong> with Label Studio + FastAPI<br>
+            – Set up CI/CD image scanning with Trivy for GCP &amp; Azure deployments<br>
+            – Optimized reliability with MLFlow &amp; Seldon Core
+          </p>
+        </div>
+      </div>
+  
+      <!-- Row 2: Chugani (left) — Divider (center) — Yang (right) -->
+      <div class="wrapper left">
+        <div class="text-box">
+          <h3>ML Engineer (MLOps) – Chugani</h3>
+          <h4>2022 - 2023 · Remote</h4>
+          <p>
+            Developed a <strong>real-time liveliness detection service</strong> with MTCNN + FaceNet.<br><br>
+            – Transitioned workflow from notebooks → modular MLOps pipelines<br>
+            – Implemented model registry, monitoring, and retraining workflows<br>
+            – Managed a team of 4 engineers &amp; 5 annotators for AWS pipelines
+          </p>
+        </div>
+      </div>
+  
+      <div class="center-divider">
+        <svg width="100" height="100" class="desktop-svg">
+          <line x1="0" y1="100" x2="100" y2="0" stroke="#ffffff37"/>
+          <line x1="0" y1="0" x2="100" y2="100" stroke="#ffffff37"/>
+        </svg>
+        <svg class="mobile-svg" width="100" height="100">
+          <line x1="50" y1="0" x2="50" y2="100" stroke="#ffffff37"/>
+          <line x1="0" y1="50" x2="100" y2="50" stroke="#ffffff37"/>
+        </svg>
+      </div>
+  
+      <div class="wrapper right">
+        <div class="text-box">
+          <h3>ML &amp; ETL Engineer – Yang</h3>
+          <h4>2019 – 2022 · Remote</h4>
+          <p>
+            Built AI &amp; ETL solutions powering Apple’s smart factory operations.<br><br>
+            – Designed a <strong>24/7 automated IPQC Audit system</strong> saving ~200 hours weekly<br>
+            – Created <strong>real-time Tableau dashboards</strong> across 20+ vendor sites<br>
+            – Collaborated with developers across 12 countries
+          </p>
+        </div>
+      </div>
+  
+      <!-- Row 3: Education (left) — Divider (center) — Certifications (right) -->
+      <div class="wrapper left">
+        <div class="text-box">
+          <h3>Education</h3>
+          <p>
+            🎓 <strong>B.Tech in Information Technology</strong> – RCOEM, Nagpur (2014–2018)<br>
+            🎓 <strong>Diploma in Computer Engineering</strong> – Shri Sai Polytechnic (2011–2014)
+          </p>
+        </div>
+      </div>
+  
+      <div class="center-divider">
+        <svg width="100" height="100" class="desktop-svg">
+          <line x1="0" y1="100" x2="100" y2="0" stroke="#ffffff37"/>
+          <line x1="0" y1="0" x2="100" y2="100" stroke="#ffffff37"/>
+        </svg>
+        <svg class="mobile-svg" width="100" height="100">
+          <line x1="50" y1="0" x2="50" y2="100" stroke="#ffffff37"/>
+          <line x1="0" y1="50" x2="100" y2="50" stroke="#ffffff37"/>
+        </svg>
+      </div>
+  
+      <div class="wrapper right">
+        <div class="text-box">
+          <h3>Certifications</h3>
+          <p>
+            📜 AppliedAI Course<br>
+            📜 PySpark &amp; Data Engineering (<a href="https://drive.google.com/file/d/1jT354cGLbs9ZUIO4jf71Qiy5wZDAVQKI/view" target="_blank">View</a>)<br>
+            📜 Codecademy – Python &amp; Data Science
+          </p>
         </div>
       </div>
     </div>
   </section>
-  <!-- =============================
-   End Header
-=============================== -->
 
-  <!-- =============================
-  Start Menu
-=============================== -->
-  <section class="menu" id="menu">
-    <nav>
-      <!-- desktop-menu -->
-      <div class="menu-container">
-        <div class="desktop-menu" id="desktop-menu">
-          <div class="menu-item hvr-underline-from-left 1">
-            <a href="#1">Home</a>
-          </div>
-          <div class="menu-item hvr-underline-from-left 2">
-            <a href="#2">About Me</a>
-          </div>
-          <div class="menu-item hvr-underline-from-left 3">
-            <a href="#3">Services</a>
-          </div>
-          <div class="menu-item hvr-underline-from-left 4">
-            <a href="#4">Portfolio</a>
-          </div>
-          <div class="menu-item hvr-underline-from-left 5">
-            <a href="#5">Testimonials</a>
-          </div>
-          <div class="menu-item hvr-underline-from-left 6">
-            <a href="#6">Contact</a>
-          </div>
-        </div>
-        <!-- /desktop-menu -->
+<!--------- SKILLS ---------->
 
-        <!-- mobile-menu -->
-        <div class="mobile-menu">
-          <a class="menu-link">
-            <div class="mobile-menu-nav">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-          </a>
-          <!-- <div class="mobile-menu-logo"><a href="#"><img class="img-fluid" src="images/3.gif" alt="Logo"></a></div> -->
-          <div class="menu-slider">
-            <nav>
-              <ul class="mobile-menu-list">
-                <li class="hvr-shutter-out-vertical mobile-menu-item 1">
-                  <a href="#1">Home</a>
-                </li>
-                <li class="hvr-shutter-out-vertical mobile-menu-item 2">
-                  <a href="#2">About Me</a>
-                </li>
-                <li class="hvr-shutter-out-vertical mobile-menu-item 3">
-                  <a href="#3">Services</a>
-                </li>
-                <li class="hvr-shutter-out-vertical mobile-menu-item 4">
-                  <a href="#4">Portfolio</a>
-                </li>
-                <li class="hvr-shutter-out-vertical mobile-menu-item 5">
-                  <a href="#5">Testimonials</a>
-                </li>
-                <li class="hvr-shutter-out-vertical mobile-menu-item 6">
-                  <a href="#6">Contact</a>
-                </li>
-              </ul>
-              <div class="mobile-menu-icons">
-                <div>
-                  <a href="https://wa.me/&#43;917887576672"><i class="fa fa-whatsapp"></i></a>
-                </div>
-                <div>
-                  <a href="https://twitter.com/udaylunawat/"><i class="fa fa-twitter-square"></i></a>
-                </div>
-                <div>
-                  <a href="https://www.instagram.com/udaylunawat/"><i class="fa fa-instagram"></i></a>
-                </div>
-                <div>
-                  <a href="https://stackoverflow.com/users/9292995/dracarys3"><i
-                      class="fa fa-stack-overflow-square"></i></a>
-                </div>
-                <div>
-                  <a href="https://github.com/udaylunawat/"><i class="fa fa-github-square"></i></a>
-                </div>
-              </div>
-            </nav>
-          </div>
+<section class="skills" id="skills">
+    <h2>Skills</h2>
+    <div class="wrapper grid">
+      <div class="flex-container"><i class="devicon-python-plain"></i><p>Python</p></div>
+      <div class="flex-container"><i class="devicon-docker-plain"></i><p>Docker</p></div>
+      <!-- <div class="flex-container"><i class="devicon-kubernetes-plain"></i><p>Kubernetes · Kubeflow</p></div> -->
+      <div class="flex-container"><i class="devicon-googlecloud-plain"></i><p>GCP</p></div>
+      <div class="flex-container"><i class="devicon-amazonwebservices-original"></i><p>AWS</p></div>
+      <div class="flex-container"><i class="devicon-tensorflow-original"></i><p>TensorFlow · XGBoost · scikit-learn</p></div>
+      <div class="flex-container"><i class="devicon-github-original"></i><p>CI/CD (Jenkins, GitHub Actions)</p></div>
+      <div class="flex-container"><i class="devicon-postgresql-plain"></i><p>PostgreSQL · MongoDB · MySQL · Redis</p></div>
+      <div class="flex-container"><i class="devicon-fastapi-plain"></i><p>FastAPI · Flask · Streamlit</p></div>
+      <div class="flex-container"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/apacheairflow/apacheairflow-plain-wordmark.svg" /><p>Airflow · ETL Pipelines</p></div>
+      <div class="flex-container"><i class="devicon-minitab-plain"></i><p>Tableau · Dask · Plotly</p></div>
+      <div class="flex-container"><i class="devicon-pandas-original"></i><p>Pandas · Numpy</p></div>
+      <div class="flex-container"><i class="devicon-git-plain"></i><p>Git · Version Control</p></div>
+      <div class="flex-container"><i class="devicon-terraform-plain"></i><p>Cloud Infra</p></div>
+      <div class="flex-container"><i class="devicon-jupyter-plain"></i><p>Jupyter · Notebook Workflows</p></div>
+      <div class="flex-container"><i class="devicon-linux-plain"></i><p>Linux · Shell Scripting</p></div>
+      <!-- <div class="flex-container"><i class="devicon-html5-plain"></i><p>HTML · CSS · Web Apps</p></div> -->
+      <!-- Add more as needed -->
+    </div>
+</section>
+  
+
+<!-------- PROJECTS -------->
+
+<section class="projects" id="projects">
+    <div class="wrapper flex-container">
+      <h2>Projects</h2>
+  
+      <div class="flex-container project-with-link">
+        <div class="img-container">
+            <img class="symbolic-icon" src="./src/img/icon-rocket.svg" alt="RockReveal AI">
+          <!-- <img src="./src/img/valkyrie.gif" alt="RockReveal AI"> -->
         </div>
+        <div class="text-box">
+          <h4 class="tags">
+            <span>Python</span><span>Telegram Bot</span><span>MLOps</span><span>W&B</span>
+          </h4>
+          <h3><a href="https://github.com/udaylunawat/Whats-this-rock" target="_blank">RockReveal AI</a></h3>
+        </div>
+        <p>
+          Image classification deployed as a Telegram bot. Integrated Weights & Biases for experiment & artifact tracking and a simple MLOps workflow for continuous improvements.
+        </p>
+        <button class="secondary-btn" onclick="window.open('https://github.com/udaylunawat/Whats-this-rock','_blank')">
+          See repo
+          <img src="src/img/icon-open.svg" alt="">
+        </button>
       </div>
-    </nav>
+  
+      <div class="flex-container even project-with-link">
+        <div class="img-container">
+          <img class="symbolic-icon" src="./src/img/vision-icon.svg" alt="ALPR">
+        </div>
+        <div class="text-box">
+          <h4 class="tags">
+            <span>Computer Vision</span><span>Deployment</span><span>Streamlit</span>
+          </h4>
+          <h3><a href="https://github.com/udaylunawat/Automatic-License-Plate-Recognition" target="_blank">Automatic License Plate Recognition (ALPR)</a></h3>
+        </div>
+        <p>
+          High-accuracy ALPR system with end-to-end pipeline and a Streamlit web app for demo and deployment.
+        </p>
+        <button class="secondary-btn" onclick="window.open('https://github.com/udaylunawat/Automatic-License-Plate-Recognition','_blank')">
+          See repo
+          <img src="src/img/icon-open.svg" alt="">
+        </button>
+      </div>
+  
+      <div class="flex-container project-with-link">
+        <div class="img-container">
+          <img class="symbolic-icon" src="./src/img/pagers-icon.svg" alt="Liveliness Detection">
+        </div>
+        <div class="text-box">
+          <h4 class="tags">
+            <span>MTCNN</span><span>FaceNet</span><span>AWS</span>
+          </h4>
+          <h3><a href="https://github.com/udaylunawat/Data-Science-Projects" target="_blank">Real-Time Liveliness Detection</a></h3>
+        </div>
+        <p>
+          Anti-spoofing pipeline (MTCNN + FaceNet) optimized for low-latency deployment on AWS with pruning/quantization applied.
+        </p>
+        <button class="secondary-btn" onclick="window.open('https://github.com/udaylunawat/Data-Science-Projects','_blank')">
+          See repo
+          <img src="src/img/icon-open.svg" alt="">
+        </button>
+      </div>
+  
+      <div class="flex-container even project-with-link">
+        <div class="img-container">
+          <img class="symbolic-icon" src="./src/img/planet-icon.svg" alt="Covid X-ray Analysis">
+        </div>
+        <div class="text-box">
+          <h4 class="tags">
+            <span>Deep Learning</span><span>Healthcare</span><span>Deployment</span>
+          </h4>
+          <h3><a href="https://github.com/udaylunawat/Covid-19-Radiology" target="_blank">Covid-19 X‑ray Analysis</a></h3>
+        </div>
+        <p>
+          Real-time deep learning classifier for X‑ray images, with notebooks and deployment tooling for evaluation and demo.
+        </p>
+        <button class="secondary-btn" onclick="window.open('https://github.com/udaylunawat/Covid-19-Radiology','_blank')">
+          See repo
+          <img src="src/img/icon-open.svg" alt="">
+        </button>
+      </div>
+  
+      <div class="flex-container project-with-link">
+        <div class="img-container">
+          <img class="symbolic-icon" src="./src/img/medbot-icon.svg" alt="Idea Generator">
+        </div>
+        <div class="text-box">
+          <h4 class="tags">
+            <span>OpenAI</span><span>Prompting</span><span>Python</span>
+          </h4>
+          <h3><a href="https://github.com/udaylunawat/Idea_Generator" target="_blank">Idea Generator (OpenAI)</a></h3>
+        </div>
+        <p>
+          Creative idea generator using OpenAI models, demonstrating prompt engineering and a lightweight UI for generation workflows.
+        </p>
+        <button class="secondary-btn" onclick="window.open('https://github.com/udaylunawat/Idea_Generator','_blank')">
+          See repo
+          <img src="src/img/icon-open.svg" alt="">
+        </button>
+      </div>
+  
+      <div class="flex-container even project-with-link">
+        <div class="img-container">
+          <img class="symbolic-icon" src="./src/img/kernel-logo.svg" alt="Other ML Projects">
+        </div>
+        <div class="text-box">
+          <h4 class="tags">
+            <span>Notebooks</span><span>ML Experiments</span><span>Data Pipelines</span>
+          </h4>
+          <h3><a href="https://github.com/udaylunawat/Data-Science-Projects" target="_blank">Other ML / DS Projects</a></h3>
+        </div>
+        <p>
+          Collection of experimental projects, notebooks and demos covering model prototyping, data pipelines and visualization.
+        </p>
+        <button class="secondary-btn" onclick="window.open('https://github.com/udaylunawat/Data-Science-Projects','_blank')">
+          See repos
+          <img src="src/img/icon-open.svg" alt="">
+        </button>
+      </div>
+  
+    </div>
   </section>
-  <!-- =============================
-  End Menu
-=============================== -->
 
-  <section class="about-me" id="2">
-    <div class="container">
-      <div class="row about-me-holder">
-        <div class="col-lg-6 col-md-6 col-sm-6 about-me-text d-flex align-self-center">
-          <div class="text-holder wow fadeInUp" data-wow-duration="1.5s">
-            <h1>
-              KNOW MORE <br/>
-              ABOUT ME
-            </h1><br/>
+<!------------ CONTACT ------------->
+
+
+<section class="contact" id="contact">
+    <h2>Contact</h2>
+    <div class="wrapper">
+      <div class="flex-container">
+        <div class="flex-container">
+          <div class="img-container">
+            <img src="./src/img/uday.webp" alt="Photo of Uday Lunawat" class="profile-photo">
+          </div>
+          <div class="contact-col">
             <p>
-              Helping Machines, <em>take over the world</em>,
-            </br><strong>Epoch by Epoch</strong>.
+              I am eager to join your team and contribute my expertise in Agentic GenAI, MLOps and production grade AI experience.
+              <br><br>
+              Find me at:
             </p>
-            <a href="https://github.com/udaylunawat" class="download-cv hvr-icon-hang">
-              View Profile &nbsp; &nbsp; &nbsp;</a>
-          </div>
-        </div>
-
-        <div class="col-lg-6 col-md-6 col-sm-6 col-9 about-me-images wow fadeInUp" data-wow-duration="1.5s">
-          <img src="images/backgrounds/uday.webp" alt="about-me" width="100%" height="100%" />
-        </div>
-      </div>
-
-      <div class="row experience-skill">
-        <div class="col-lg-6 col-sm-6 col-11 experience .about-me-text fadeInUp" data-wow-duration="1.5s">
-          <h3>EXPERIENCE</h3>
-          <ul class="experience-chart">
-
-            <li>
-              <div class="single-experience">
-                <h4 class="job-title">
-                  Senior Machine Learning Engineer (Agentic Gen AI)<br />
-                  <a href="https://fractal.ai/" target="_blank">Fractal AI</a> [Nov 2024 – Present]
-                </h4>
-                <br />
-                <p>
-                  <strong>Tech Stack:</strong>
-                  <img alt="Python" src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" />
-                  <img alt="GCP" src="https://img.shields.io/badge/GCP-4285F4?style=flat-square&logo=google-cloud&logoColor=white" />
-                  <img alt="LangGraph" src="https://img.shields.io/badge/LangGraph-FFB300?style=flat-square&logo=python&logoColor=white" />
-                  <img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" />
-                  <img alt="Jenkins" src="https://img.shields.io/badge/Jenkins-D24939?style=flat-square&logo=jenkins&logoColor=white" />
-                  <img alt="SQLModel" src="https://img.shields.io/badge/SQLModel-3776AB?style=flat-square&logo=python&logoColor=white" />
-                  <img alt="Alembic" src="https://img.shields.io/badge/Alembic-4B8BBE?style=flat-square&logo=python&logoColor=white" />
-                  <br />
-                  • Improved and maintained a Multi-Agent Framework using <strong>LangGraph</strong>, enabling model-agnostic and multi-model interactions.<br />
-                  • Implemented robust database migration strategies with <strong>Alembic</strong> for seamless schema evolution and version control.<br />
-                  • Integrated <strong>Langfuse</strong> for efficient tracking and management of artifacts.<br />
-                  • Deployed scalable applications on <strong>Google Cloud Platform (GCP)</strong> leveraging <strong>VertexAI</strong> and <strong>Cloud Run</strong>.<br />
-                  • Established CI/CD pipelines using <strong>Jenkins</strong> to automate workflows and enhance productivity.<br />
-                </p>
-              </div>
-            </li>
-
-            <li>
-              <div class="single-experience">
-                <h4 class="job-title">Senior Technical Lead<br /><a href="https://www.hcltech.com/" target="_blank">HCLTech</a> [2024]</h4>
-                <br />
-                <p>
-                  • Led the implementation of a Human-in-the-Loop system to enhance machine learning model accuracy through continuous human feedback integration, improving model performance and reliability.</br>
-                  • Managed and deployed annotation and training pipelines using <img alt="LabelStudio Badge"
-                  src="https://img.shields.io/badge/Label_Studio-FF5733?style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJMMiA3djEwbDEwIDUgMTAtNVY3TDEyIDJ6IiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==" />,
-                  <img alt="FastAPI Badge"
-                    src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" />,
-                  <img alt="Docker Badge"
-                    src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" />, and collaborative tools such as <img alt="Miro Badge"
-                    src="https://img.shields.io/badge/Miro-050038?style=flat-square&logo=miro&logoColor=white" /> to streamline the machine learning workflow and enhance team collaboration.</br>
-                  • Implemented comprehensive CICD image scanning solutions using <img alt="Trivy Badge"
-                    src="https://img.shields.io/badge/Trivy-1904DA?style=flat-square&logo=aqua&logoColor=white" />,
-                  seamlessly integrating with <img alt="Google Cloud Platform Badge"
-                    src="https://img.shields.io/badge/Google_Cloud-4285F4?style=flat-square&logo=google-cloud&logoColor=white" /> and 
-                  <img alt="Microsoft Azure Badge"
-                    src="https://img.shields.io/badge/Cloud-Azure-0078D4?style=flat-square&logo=microsoftazure&logoColor=white" />,
-                  to identify and mitigate vulnerabilities, ensuring robust security and compliance in the continuous integration and deployment process.</br>
-                </p>
-              </div>
-            </li>
-            
-            <li>
-              <div class="single-experience">
-                <h4 class="job-title">Machine Learning Engineer MLOps<br />Chugani [2022 - 2023]</h4>
-                <br />
-                <p>
-                  • Developed a real-time liveliness service with <img alt="Face Detection Badge" src="https://img.shields.io/badge/Face_Detection-black?style=flat-square&logo=face-detection&logoColor=white" />, 
-                    <img alt="Face Recognition Badge" src="https://img.shields.io/badge/Face_Recognition-black?style=flat-square&logo=face-recognition&logoColor=white" />, and matching capabilities, achieving low latency of 150 ms. Integrated with <img alt="AWS Badge" src="https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=amazon-aws&logoColor=white" /> for optimized deployment.</br>
-                    
-                  • Enhanced MLOps using <img alt="Annotation Tools Badge" src="https://img.shields.io/badge/Annotation_Tools-black?style=flat-square&logo=annotation-tools&logoColor=white" />, 
-                    <img alt="Model Registry Badge" src="https://img.shields.io/badge/Model_Registry-black?style=flat-square&logo=model-registry&logoColor=white" />, 
-                    <img alt="MLflow Badge" src="https://img.shields.io/badge/MLflow-0194E2?style=flat-square&logo=mlflow&logoColor=white" /> for versioning, monitoring, and training, ensuring efficient model management.</br>
-                    
-                  • Streamlined the development workflow by transitioning from individual notebooks to modularized scripts, enhancing collaboration, version control, and auto-documentation with <img alt="nbdev Badge" src="https://img.shields.io/badge/Docs-nbdev-black?style=flat-square&logo=fastai&logoColor=white" /> and integrating with <img alt="TensorFlow Badge" src="https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=tensorflow&logoColor=white" /> and <img alt="Label Studio Badge" src="https://img.shields.io/badge/Label_Studio-FF5733?style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJMMiA3djEwbDEwIDUgMTAtNVY3TDEyIDJ6IiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==" /> to support data annotation and model training at scale.</br>
-                </p>
-              </div>
-            </li>
-            
-            <li>
-              <div class="single-experience">
-                <h4 class="job-title">Machine Learning Engineer<br /><a href="#">Yang</a> [2019 - 2022]</h4>
-                <br />
-            
-                <div style="padding-left: 15px;">
-                  <h4 class="sub-job-title">Machine Learning, Analytics & ETL Engineer – <img alt="Apple Badge" src="https://img.shields.io/badge/Apple-333333?style=flat-square&logo=apple&logoColor=white" /></h4>
-                  <p class="job-duration">2021 - 2022</p>
-                  <p>
-                    • Addressed complex data science challenges by creating tailored solutions for clients.</br>
-                    • Deployed projects using <img alt="Google Cloud Platform Badge" src="https://img.shields.io/badge/Cloud-Google_Cloud-4285F4?style=flat-square&logo=google-cloud&logoColor=white" />,
-                      <img alt="Docker Badge" src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" />,
-                      and <img alt="Streamlit Badge" src="https://img.shields.io/badge/streamlit-FF4B4B?style=flat-square&logo=streamlit&logoColor=white" /> for interactive application deployment.</br>
-                    • Developed data pipelines, automated workflows, and created extensive documentation using <img alt="nbdev Badge" src="https://img.shields.io/badge/Docs-nbdev-black?style=flat-square&logo=fastai&logoColor=white" />.</br>
-                    • Enhanced MLOps practices using <img alt="Weights & Biases Badge" src="https://img.shields.io/badge/MLOps-Weights%20%26%20Biases-yellow?style=flat-square&logo=weightsandbiases?style=flat-square&logoColor=black&style=flat-square.png" />, allowing real-time model comparison and metric tracking.</br>
-                    • Built and published an educational crypto app using <img alt="Flutter Badge" src="https://img.shields.io/badge/flutter-02569B?style=flat-square&logo=flutter&logoColor=white" /> on both iOS and Android platforms.
-                  </p>
-                </div>
-            
-                <div style="padding-left: 15px;">
-                  <h4 class="sub-job-title">Machine Learning Consultant</h4>
-                  <p class="job-duration">2019 - 2020</p>
-                  <p>
-                    • Collaborated closely with developers and researchers across 12 countries, focusing on cross-functional ML applications.</br>
-                    • Applied human activity recognition techniques to improve user experience in interactive applications.</br>
-                    • Utilized <img alt="TensorFlow Badge" src="https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=tensorflow&logoColor=white" /> with <img alt="Google Cloud Platform Badge" src="https://img.shields.io/badge/Google_Cloud-4285F4?style=flat-square&logo=google-cloud&logoColor=white" /> for scalable model training and deployment.</br>
-                    • Worked with TTS frameworks like NVIDIA Nemo and Google Wavenet for Deepfake voice cloning applications, pushing the boundaries of interactive media technologies.
-                  </p>
-                </div>
-            
-              </div>
-            </li>
-
-            <li>
-              <div class="single-experience">
-                <h4 class="job-title">Systems Engineer Intern<br /><a href="https://www.infosys.com/" target="_blank">Infosys</a> [2018 -2019]</h4>
-                <br />
-                <p>
-                  • Deployed various Machine Learning and Deep Learning models on multiple cloud platforms including <img alt="Google Cloud Platform Badge"
-                    src="https://img.shields.io/badge/-Google_Cloud_Platform-4285F4?style=flat-square&logo=google-cloud&logoColor=white" />
-                  and <img alt="AWS Badge"
-                    src="https://img.shields.io/badge/-AWS-232F3E?style=flat-square&logo=docker&logoColor=white" /><br />
-                  • Developed models using <img alt="Tensorflow Badge"
-                    src="https://img.shields.io/badge/-tensorflow-FF6F00?style=flat-square&logo=Tensorflow&logoColor=white" />
-                  and <img alt="Python Badge"
-                    src="https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=Python&logoColor=white" />
-                  programming languages.<br />
-                  • Managed code using <img alt="Git Badge"
-                    src="https://img.shields.io/badge/-Git-232F3E?style=flat-square&logo=git&logoColor=white" /> version
-                  control system.
-                </p>
-              </div>
-            </li>
-
-            <li>
-              <div class="single-experience">
-                <h4 class="job-title">Analytics Intern<br /><a href="https://www.infosys.com/" target="_blank">Tata Consultancy Services Ltd. </a> [2018]</h4>
-                <br />
-                <p>
-                  • Completed a highly-coveted internship at Tata Consultancy Services, where I worked on complex Data
-                  analytics <img alt="Tableau Badge"
-                    src="https://img.shields.io/badge/-Tableau-E97627?style=flat-square&logo=Tableau&logoColor=white" />
-                  projects for a leading industry player.
-                </p>
-              </div>
-            </li>
-
-          </ul>
-        </div>
-        <!-- <div style="width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center;">
-          <div style="height: 100%" data-wordart-src="//cdn.wordart.com/json/71oo7gz2iex7"></div>
-        </div> -->
-        <div class="col-lg-6 col-sm-6 col-13 experience wow fadeInUp" data-wow-duration="1.5s">
-          <div style="height: 1500px" data-wordart-src="//cdn.wordart.com/json/71oo7gz2iex7"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="services" id="3">
-    <div class="need-service fadeInUp wow text-center" data-wow-duration="1.5s"
-      style="background-image: url('images/backgrounds/need-service.webp')">
-      <h1 style="color: white">Want to get in touch?</h1>
-
-      <a href="#6">Drop me a message</a>
-    </div>
-  </section>
-
-  <!-- =============================
-    Start Portfolio
-=============================== -->
-  <section class="portfolio" id="4">
-    <div class="container-fluid text-center">
-      <div class="row portfolio-holder text-center">
-        <div class="testimonials-container col-lg-8 offset-lg-2">
-          <h1 class="wow fadeInUp" data-wow-duration="1.5s">PORTFOLIO</h1>
-        </div>
-        <div class="filtering wow fadeInUp" data-wow-duration="1.5s">
-          <ul class="portfolio-navigation">
-            <li data-filter="all" class="hvr-sweep-to-right active">
-              All Items
-            </li>
-            <li data-filter="1" class="hvr-sweep-to-right">Deep Learning</li>
-            <li data-filter="2" class="hvr-sweep-to-right">
-              Machine Learning
-            </li>
-            <li data-filter="3" class="hvr-sweep-to-right">
-              Data Analytics & Viz
-            </li>
-            <li data-filter="4" class="hvr-sweep-to-right">
-              Computer Vision
-            </li>
-            <li data-filter="5" class="hvr-sweep-to-right">NLP</li>
-            <li data-filter="6" class="hvr-sweep-to-right">
-              Data Engineering
-            </li>
-          </ul>
-        </div>
-        <div class="col-lg-10 col-md-10 col-sm-10 col-10 mx-auto">
-          <div class="row filtr-container wow fadeInUp list" data-wow-duration="1.5s">
-            <div class="col-lg-4 col-md-6 col-sm-6 col-12 filtr-item" data-category="1,3,4,6">
-              <div class="item-holder">
-                <a href="images/alpr.mp4" loading="lazy" title="ALPR for India">
-                    <img style="
-                        background-size: cover; /* Resize the image to cover the entire container */
-                        background-position: center; /* Center the image within the container */
-                        height: 300px;
-                        border: 1px solid #000000;
-                        border-radius: 4px;
-                        padding: 5px;
-                      " src="images/alpr.webp" loading="lazy" alt="ALPR" />
-                  <div class="item-caption">
-                    <h2>
-                      <a target="_blank" href="https://github.com/udaylunawat/Automatic-License-Plate-Recognition">
-                        <span style="font-size: 20px">ALPR System</span></a>
-                    </h2>
-                    <!-- <p>Deep Learning<br><br></p> -->
-                    <br /><br />
-                    <p style="color: whitesmoke; text-align: left">
-                      Deep Learning - CV
-                    </p>
-                    <div class="item-created">Aug 2020</div>
-                  </div>
-                </a>
-              </div>
+            <div class="flex-container">
+              <a href="mailto:udaylunawat@gmail.com"><button class="secondary-btn">udaylunawat@gmail.com</button></a>
+              <a href="tel:+917020901969"><button class="secondary-btn">(+91) 70209 01969</button></a>
+              <a href="https://www.linkedin.com/in/uday-lunawat" target="_blank"><button class="secondary-btn">LinkedIn</button></a>
+              <a href="https://github.com/udaylunawat" target="_blank"><button class="secondary-btn">Github</button></a>
+              <a href="https://udaylunawat.github.io" target="_blank" style="margin-left:12px;">
+                <button class="secondary-btn">Portfolio</button>
+              </a>
             </div>
-
-            <div class="col-lg-4 col-md-6 col-sm-6 col-12 filtr-item" data-category="2,3,5">
-              <div class="item-holder">
-                <a href="images/DonorsChoose.webp" loading="lazy" title="Donors Choose">
-                    <img style="
-                        object-fit: contain;
-                        height: 300px;
-                        border: 1px solid #000000;
-                        border-radius: 4px;
-                        padding: 5px;
-                      " src="images/DonorsChoose.webp" loading="lazy" ; alt="Donors Choose" ; />
-                  <div class="item-caption">
-                    <h2>
-                      <a target="_blank"
-                        href="https://github.com/udaylunawat/Data-Science-Projects/tree/master/11%20-%20GBDT%20donors%20choose">
-                        <span style="font-size: 20px">Automated Application Screening</span></a>
-                    </h2>
-                    <!-- <p>Machine Learning</p> -->
-                    <br /><br />
-                    <p style="color: whitesmoke; text-align: left">
-                      Machine Learning - NLP
-                    </p>
-                    <div class="item-created">Mar 2018</div>
-                    <br />
-                  </div>
-                </a>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 col-sm-6 col-12 filtr-item" data-category="1,4,6">
-              <div class="item-holder">
-                <a href="https://pub.mdpi-res.com/mathematics/mathematics-07-00755/article_deploy/html/images/mathematics-07-00755-g003.png?1566916631"
-                  loading="lazy" title="Rock Classification">
-                    <img style="
-                        object-fit: contain;
-                        height: 300px;
-                        border: 1px solid #000000;
-                        border-radius: 4px;
-                        padding: 5px;
-                      "
-                    src="https://pub.mdpi-res.com/mathematics/mathematics-07-00755/article_deploy/html/images/mathematics-07-00755-g003.png?1566916631"
-                    loading="lazy" alt="Rocks" />
-                  <div class="item-caption">
-                    <h2>
-                      <a target="_blank" href="https://udaylunawat.github.io/Whats-this-rock/">
-                        <span style="font-size: 20px">
-                          Rock Classification Telegram Bot
-                        </span></a>
-                    </h2>
-                    <!-- <p>Classified Igneous, Sedimentary and Metamorphic Rocks and deployed on Telegram API.</p> -->
-                    <br /><br />
-                    <p style="color: whitesmoke; text-align: left">
-                      Machine Learning - CV
-                    </p>
-                    <div class="item-created">May 2022</div>
-                  </div>
-                </a>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 col-sm-6 col-12 filtr-item" data-category="3,6">
-              <div class="item-holder">
-                <a href="https://www.analyticsinsight.net/wp-content/uploads/2021/11/Big-Data-Analytics-in-Manufacturing-is-Projected-to-Hit-US11.jpg"
-                  loading="lazy" title="Factory Data Pipeline deployed on Tableau">
-                    <img style="
-                        object-fit: contain;
-                        height: 300px;
-                        border: 1px solid #000000;
-                        border-radius: 4px;
-                        padding: 5px;
-                      "
-                    src="https://www.analyticsinsight.net/wp-content/uploads/2021/11/Big-Data-Analytics-in-Manufacturing-is-Projected-to-Hit-US11.jpg"
-                    loading="lazy" alt="Data Pipeline" />
-                  <div class="item-caption">
-                    <h2>
-                      <a target="_blank" href="https://github.com/udaylunawat/factory-pipeline">
-                        <span style="font-size: 20px">
-                          Factory data pipeline
-                        </span></a>
-                    </h2>
-                    <!-- <p>Factory realtime data consumed from Box Cloud Platform, cleaned and transformed into Tableau Data Warehouse.</p> -->
-                    <br /><br />
-                    <p style="color: whitesmoke; text-align: left">
-                      Data Vizualization - NLP
-                    </p>
-                    <div class="item-created">Apr 2021</div>
-                  </div>
-                </a>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 col-sm-6 col-12 filtr-item" data-category="2,3,5">
-              <div class="item-holder">
-                <a href="https://soccerment.com/wp-content/uploads/2020/05/Soccerment_FootballAnalytics-2-1024x536.png"
-                  loading="lazy" title="Sports Analytics">
-                    <img style="
-                        object-fit: contain;
-                        height: 300px;
-                        border: 1px solid #000000;
-                        border-radius: 4px;
-                        padding: 5px;
-                      "
-                    src="https://soccerment.com/wp-content/uploads/2020/05/Soccerment_FootballAnalytics-2-1024x536.png"
-                    loading="lazy" alt="Sports" />
-                  <div class="item-caption">
-                    <h2>
-                      <a target="_blank" href="https://github.com/udaylunawat/FIFA-VS-REALITY-"><span
-                          style="font-size: 20px">Sports Analytics</span></a>
-                    </h2>
-                    <br /><br />
-                    <p style="color: whitesmoke; text-align: left">
-                      Data Analytics - NLP
-                    </p>
-                    <div class="item-created">Feb 2018</div>
-                  </div>
-                </a>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 col-sm-6 col-12 filtr-item" data-category="1,3,4">
-              <div class="item-holder">
-                <a href="images/covid.mp4" loading="lazy" target="_blank" title="Covid Xray Classifier and Dashboard">
-                    <img style="
-                        background-size: cover; /* Resize the image to cover the entire container */
-                        background-position: center; /* Center the image within the container */
-                        height: 300px;
-                        border: 1px solid #000000;
-                        border-radius: 4px;
-                        padding: 5px;
-                      " src="images/covid.webp" loading="lazy" alt="Covid" />
-                  <div class="item-caption">
-                    <h2>
-                      <a target="_blank" href="https://github.com/udaylunawat/Covid-19-Radiology"
-                        style="font-size: 20px; text-align: left">
-                        Covid-19 Dashboard and Classifier</a>
-                    </h2>
-                    <!-- <p>Deep Learning</p> -->
-                    <br /><br />
-                    <p style="color: whitesmoke; text-align: left">
-                      Deep Learning - CV
-                    </p>
-                    <div class="item-created">Sept 2020></div>
-                  </div>
-                </a>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-      <button class="loadmore" id="next">Load More</button>
-    </div>
-  </section>
-  <!-- =============================
-    End Portfolio
-=============================== -->
-
-  <!-- =============================
-  Start Testimonials
-=============================== -->
-  <!-- <section class="testimonials" id="5">
-    <div class="container">
-      <div class="row">
-        <div class="testimonials-container col-lg-8 offset-lg-2">
-          <h1 class="wow fadeInUp" data-wow-duration="1.5s">TESTIMONIALS</h1>
-          <div class="owl-carousel owl-theme wow fadeInUp" data-wow-duration="1.5s">
-            <div class="single-testimonial">
-              <div class="testimonial-holder">
-                <img class="img" src="images/clients/PedramHabibi2.webp" loading="lazy" alt="Pedram H" />
-                <h2>Pedram H.</h2>
-                <span>CS Professor, Toronto</span>
-                <p>
-                  <i class="fa fa-quote-left"></i> Uday is extremely
-                  professional and knowledgable in AI, has helped me come up
-                  with complex solutions for our project and models which
-                  others found difficult! He is also very polite,
-                  understanding and easy to work with, which is hard to come
-                  by! I definitely see myself working with him long term! I
-                  highly recommend! <i class="fa fa-quote-right"></i>
-                </p>
-              </div>
-            </div>
-
-            <div class="single-testimonial">
-              <div class="testimonial-holder">
-                <img class="img-fluid" src="images/clients/sky200.webp" loading="lazy" alt="Mengyu Yang" />
-                <h2>Mengyu Y.</h2>
-                <span>Computer Vision, NYU</span>
-                <p>
-                  <i class="fa fa-quote-left"></i> We have worked on various
-                  Data Science problems such as End to End pipelines,
-                  Engineering, Visualization and Machine Learning together for
-                  more than 500+ hrs which speaks about the dependability I
-                  have by itself. <i class="fa fa-quote-right"></i>
-                </p>
-              </div>
-            </div>
-
-            <div class="single-testimonial">
-              <div class="testimonial-holder">
-                <img class="img-fluid" src="images/clients/prasannarangam200.webp" loading="lazy"
-                  alt="Prasanna Rangam" />
-                <h2>Prasanna R.</h2>
-                <span>Computer Vision & Dashboarding, Detroit</span>
-                <p>
-                  <i class="fa fa-quote-left"></i> An amazing freelancer to
-                  work with, we added a lot of additional work to the original
-                  scope which was all completed within very reasonable time.
-                  he has an incredible understanding of AI/ML and gave us
-                  great insight into how to improve our vision. We will work
-                  with Uday in the near future and would highly recommend.
-                  <i class="fa fa-quote-right"></i>
-                </p>
-              </div>
-            </div>
-
-            <div class="single-testimonial">
-              <div class="testimonial-holder">
-                <h2>Sheena B.</h2>
-                <span>Natural Language Processing, Mumbai</span>
-                <p>
-                  <i class="fa fa-quote-left"></i> Worked with Uday for Human
-                  Activity Detection using Machine Learning project. His
-                  principle for work is setting reasonable expectations and
-                  knock them out of the park. Delightful!<i class="fa fa-quote-right"></i>
-                </p>
-              </div>
-            </div>
-
-            <div class="single-testimonial">
-              <div class="testimonial-holder">
-                <h2>Anton K.</h2>
-                <span>RPA Developer, EY, Ukraine</span>
-                <p>
-                  <i class="fa fa-quote-left"></i> I'd Quote Albert Einstein -
-                  "If you can't explain it simply, you don't understand it
-                  well enough.". And Uday breaks down every concept to it's
-                  granular level and makes sure that there's no stones left
-                  turned. <i class="fa fa-quote-right"></i>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section> -->
-
-  <!-- =============================
-      Start Contact
-  =============================== -->
-  <section class="contact" id="6">
-    <div class="container">
-      <div class="row">
-        <div class="contact-holder col-lg-8 offset-lg-2 col-sm-8 offset-sm-2">
-          <h1 class="wow fadeInUp" data-wow-duration="1.5s">SAY HELLO!</h1>
-          <form method="POST" action="https://formspree.io/f/udaylunawat@gmail.com" data-toggle="validator">
-            <div class="form-container row wow fadeInUp" data-wow-duration="1.5s">
-              <div class="form-group col-lg-6">
-                <input class="form-control" type="text" name="username" id="username" placeholder="Name" required />
-                <div class="help-block with-errors"></div>
-              </div>
-              <div class="form-group col-lg-6">
-                <input class="form-control" type="email" id="email" name="email" placeholder="Email" required />
-                <div class="help-block with-errors"></div>
-              </div>
-              <div class="form-group col-lg-12">
-                <textarea class="form-control" name="message" id="message" rows="12" placeholder="Message"></textarea>
-                <div class="help-block with-errors"></div>
-              </div>
-              <div class="form-group col-lg-12 sub-button">
-                <button class="submit form-control hvr-icon-push" type="submit" value="send">
-                  Submit
+  
+            <div style="margin-top:12px;">
+              <a href="./src/Uday_Lunawat_Resume.pdf" download target="_blank">
+                <button>
+                  DOWNLOAD RESUME
+                  <img src="./src/img/pdf-icon.svg" alt="">
                 </button>
-              </div>
+              </a>
+              
             </div>
-          </form>
-        </div>
-      </div>
-      <div class="row">
-        <div class="footer col-lg-10 offset-lg-1">
-          <hr />
-          <ul class="footer-icons list-inline">
-            <li>
-              <a href="https://twitter.com/udaylunawat"><i class="fa fa-twitter"></i></a>
-            </li>
-            <li>
-              <a href="https://github.com/udaylunawat"><i class="fa fa-github"></i></a>
-            </li>
-            <li>
-              <a href="https://www.linkedin.com/in/uday-lunawat"><i class="fa fa-linkedin"></i></a>
-            </li>
-            <li>
-              <a href="https://stackoverflow.com/users/9292995/dracarys3"><i class="fa fa-stack-overflow"></i></a>
-            </li>
-            <li>
-              <a href="https://wa.me/&#43;917887576672"><i class="fa fa-whatsapp"></i></a>
-            </li>
-          </ul>
-          <div class="to-top">
-            <a href="#home"><i class="fa fa-chevron-up"></i></a>
           </div>
         </div>
+  
+        <div class="contact-form-container contact-col">
+          <h4>Let's connect</h4>
+          <div class="contact-form">
+            <form
+            action="https://formspree.io/f/mvgbvdbq"
+            method="POST"
+          >
+            <label>
+              Your email:
+              <input type="email" name="email">
+            </label>
+            <label>
+              Your message:
+              <textarea name="message"></textarea>
+            </label>
+            <!-- your other form fields go here -->
+            <button type="submit">Send</button>
+          </form>
+          </div>
+        </div>
+  
       </div>
     </div>
   </section>
 
-  <a href="#home" class="scroll-up hvr-icon-up"></a>
+<!------------ FOOTER ------------->
 
-  <!-- JS Plugins -->
+<!-- <section class="footer">
+</section> -->
 
-  <script src="plugins/jQuery/jquery.min.js"></script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js' />
-  </script>
-  <script src="plugins/bootstrap/bootstrap.min.js"></script>
-  <script src="plugins/wow.min.js" defer></script>
-  <script src="plugins/text-animation/text-animation.js" defer></script>
-  <script src="plugins/jquery.waypoints.min.js" defer></script>
-  <script src="plugins/filterizr/jquery.filterizr.min.js" defer></script>
-  <script src="plugins/magnific-popup/jquery.magnific-popup.min.js" defer></script>
-  <script src="plugins/owl-carousel/owl.carousel.min.js"></script>
-  // <!-- don't , otherwise it won't let images load -->
-  <script type="text/javascript" src="plugins/countUp.min.js" defer></script>
-  <script type="text/javascript" src="plugins/validator.min.js" defer></script>
-  <script type="text/javascript" src="plugins/imagesloaded.pkgd.min.js" defer></script>
-  <!-- <script type="text/javascript" src="plugins/custom.js"></script> -->
 
-  <!-- Breathe animation -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.3.4/gsap.min.js" defer></script>
-  <script src="js/breathe.js" defer></script>
+<!----JavaScript for toggle menu---->
+<script>
+    const menu = document.getElementById("menu");
+    const closeIcon = document.getElementById("close-icon");
+    const openIcon = document.getElementById("open-icon");
 
-  <!-- WordArt animation -->
-  <script src="https://cdn.wordart.com/wordart.min.js" defer></script>
+    function showMenu() {
+        menu.style.opacity = 1;
+        menu.style.zIndex = 22;
+        openIcon.style.display = 'none';
+        closeIcon.style.display = 'block';
+    }
+    function hideMenu() {
+        menu.style.opacity = 0;
+        menu.style.zIndex = -1;
+        closeIcon.style.display = 'none';
+        openIcon.style.display = 'block';
+    }
+</script> 
 
-  <!-- Main Script -->
+<script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.net.min.js"></script>
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+<script>
+  VANTA.NET({
+    el: "#particles-js",
+    color: 0x00ffff,
+    backgroundColor: 0x000000,
+    points: 12.00,
+    maxDistance: 20.00,
+    spacing: 18.00
+  })
+</script>
 
-  <script src="js/script.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
-  <script>
-    particlesJS('particles-js', {
-        particles: {
-            number: {
-                value: 80,
-                density: {
-                    enable: true,
-                    value_area: 800
-                }
-            },
-            color: {
-                value: '#ffffff'
-            },
-            shape: {
-                type: 'circle'
-            },
-            opacity: {
-                value: 0.5,
-                random: false
-            },
-            size: {
-                value: 3,
-                random: true
-            },
-            line_linked: {
-                enable: true,
-                distance: 150,
-                color: '#ffffff',
-                opacity: 0.4,
-                width: 1
-            },
-            move: {
-                enable: true,
-                speed: 6,
-                direction: 'none',
-                random: false,
-                straight: false,
-                out_mode: 'out',
-                bounce: false
-            }
+
+<!-- Background fade out and other scroll animations -->
+<script src="./src/scroll-animations.js" type="module"></script>
+
+<!---- JavaScript for scrolling to sections smoothly ---->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Smooth scrolling for anchor links
+      const smoothScrollLinks = document.querySelectorAll("a[href^='#']");
+      const scrollMargin = 0;
+  
+      smoothScrollLinks.forEach(function(link) {
+        link.addEventListener("click", function(e) {
+          e.preventDefault();
+  
+          const target = document.querySelector(this.hash);
+          if (target) {
+            const targetOffset = target.offsetTop;
+            window.scrollTo({
+              top: targetOffset - scrollMargin,
+              behavior: "smooth",
+            });
+          }
+        });
+      });
+    });
+</script>
+
+<script>
+    particlesJS("particles-js", {
+      "particles": {
+        "number": { "value": 10 },
+        "color": { "value": "#ffffff" },
+        "shape": { "type": "circle" },
+        "opacity": { "value": 0.2 },
+        "size": { "value": 3 },
+        "line_linked": {
+          "enable": true,
+          "distance": 400,
+          "color": "#ffffff",
+          "opacity": 0.1,
+          "width": 1
         },
-        interactivity: {
-            detect_on: 'window', // Changed from 'canvas' to 'window'
-            events: {
-                onhover: {
-                    enable: true,
-                    mode: 'repulse'
-                },
-                onclick: {
-                    enable: true,
-                    mode: 'push'
-                },
-                resize: true
-            },
-            modes: {
-                repulse: {
-                    distance: 100,
-                    duration: 0.4
-                },
-                push: {
-                    particles_nb: 4
-                }
-            }
-        },
-        retina_detect: true
+        "move": { "enable": true, "speed": 2 }
+      },
+      "interactivity": {
+        "events": {
+          "onhover": { "enable": true, "mode": "repulse" },
+          "onclick": { "enable": true, "mode": "push" }
+        }
+      },
+      "retina_detect": true
     });
   </script>
+  
 
+<!-- Animated background -->
+<script src="./src/background.js" type="module"></script>
+<!-- Shaders for animated background -->
+<script id="snoise-function" type="x-shader/x-vertex">
+    vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+    vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+    vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
+
+    float snoise(vec2 v) {
+        const vec4 C = vec4(0.211324865405187,  // (3.0-sqrt(3.0))/6.0
+                            0.366025403784439,  // 0.5*(sqrt(3.0)-1.0)
+                            -0.577350269189626,  // -1.0 + 2.0 * C.x
+                            0.024390243902439); // 1.0 / 41.0
+        vec2 i  = floor(v + dot(v, C.yy) );
+        vec2 x0 = v -   i + dot(i, C.xx);
+        vec2 i1;
+        i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+        vec4 x12 = x0.xyxy + C.xxzz;
+        x12.xy -= i1;
+        i = mod289(i); // Avoid truncation effects in permutation
+        vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 ))
+            + i.x + vec3(0.0, i1.x, 1.0 ));
+
+        vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
+        m = m*m ;
+        m = m*m ;
+        vec3 x = 2.0 * fract(p * C.www) - 1.0;
+        vec3 h = abs(x) - 0.5;
+        vec3 ox = floor(x + 0.5);
+        vec3 a0 = x - ox;
+        m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
+        vec3 g;
+        g.x  = a0.x  * x0.x  + h.x  * x0.y;
+        g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+        return 130.0 * dot(m, g);
+    }
+</script>
+<script id="vertex-shader" type="x-shader/x-vertex">
+    uniform float u_time;
+    uniform vec2 u_randomisePosition;
+
+    varying float vDistortion;
+    varying float xDistortion;
+    varying vec2 vUv;
+
+    void main() {
+        vUv = uv;
+        vDistortion = snoise(vUv.xx * 3. - u_randomisePosition * 0.15);
+        xDistortion = snoise(vUv.yy * 1. - u_randomisePosition * 0.05);
+        vec3 pos = position;
+        pos.z += (vDistortion * 35.);
+        pos.x += (xDistortion * 25.);
+
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+    }
+</script>
+<script id="fragment-shader" type="x-shader/x-fragment">
+    
+    vec3 rgb(float r, float g, float b) {
+        return vec3(r / 255., g / 255., b / 255.);
+    }
+
+    vec3 rgb(float c) {
+        return vec3(c / 255., c / 255., c / 255.);
+    }
+
+    uniform vec3 u_bg;
+    uniform vec3 u_bgMain;
+    uniform vec3 u_color1;
+    uniform vec3 u_color2;
+    uniform float u_time;
+
+    varying vec2 vUv;
+    varying float vDistortion;
+
+    void main() {
+        vec3 bg = rgb(u_bg.r, u_bg.g, u_bg.b);
+        vec3 c1 = rgb(u_color1.r, u_color1.g, u_color1.b);
+        vec3 c2 = rgb(u_color2.r, u_color2.g, u_color2.b);
+        vec3 bgMain = rgb(u_bgMain.r, u_bgMain.g, u_bgMain.b);
+
+        float noise1 = snoise(vUv + u_time * 0.08);
+        float noise2 = snoise(vUv * 2. + u_time * 0.1);
+
+        vec3 color = bg;
+        color = mix(color, c1, noise1 * 0.6);
+        color = mix(color, c2, noise2 * .4);
+
+        color = mix(color, mix(c1, c2, vUv.x), vDistortion);
+
+        float border = smoothstep(0.1, 0.6, vUv.x);
+
+        color = mix(color, bgMain, 1. -border);
+
+        gl_FragColor = vec4(color, 1.0);
+    }
+</script>
+
+    
 </body>
 
 </html>
