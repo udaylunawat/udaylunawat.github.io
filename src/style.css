@@ -378,8 +378,10 @@ section.home {
 }
 
 .home h1 {
-    width: min-content;
-}
+    font-size: 5.5rem;
+    line-height: 1.1;         /* tighter than default */
+    margin-bottom: 0.2rem;    /* minimal gap under name */
+  }
 
 .home > svg {
     display: none;
@@ -425,6 +427,12 @@ section.home {
 .home .wrapper svg {
     grid-area: line;
 }
+
+.home .tagline {
+    margin-top: 0;            /* remove browser default gap */
+    margin-bottom: 0.8rem;    /* smaller gap before credibility */
+    line-height: 1.35;        /* improves readability */
+  }
 
 @media screen and (min-width: 600px) {
     .home h1 {
@@ -979,7 +987,71 @@ section.projects .wrapper .text-box {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 5; /* keeps it behind everything */
+    z-index: 5;
     pointer-events: none;
   }
   
+/* Minimal & clean experience cards */
+.credentials-grid {
+    display: grid;
+    grid-template-columns: 1fr 80px 1fr; /* left, divider, right */
+    gap: 28px 40px;
+    align-items: start;
+  }
+  
+  .job-card {
+    padding: 20px 22px;
+    background: rgba(255,255,255,0.01); /* subtle */
+    border: 1px solid rgba(255,255,255,0.03);
+    border-radius: 6px;
+    min-height: 120px;
+  }
+  
+  /* Title and date — date sits under title, smaller and muted */
+  .job-card h3 {
+    margin: 0 0 6px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+  }
+  .job-card .dates {
+    margin: 0 0 10px;
+    font-size: 0.92rem;
+    color: rgba(255,255,255,0.68);
+    font-weight: 500;
+  }
+  
+  /* Description — single short paragraph, minimalistic */
+  .job-card p {
+    margin: 0 0 10px;
+    line-height: 1.45;
+    color: rgba(255,255,255,0.9);
+    font-size: 0.98rem;
+  }
+  
+  /* Inline badges for high-impact metrics (compact) */
+  .badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-size: 0.82rem;
+    padding: 6px 8px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.03);
+    color: rgba(255,255,255,0.95);
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+  
+  /* Keep divider centered, but hide on small screens to avoid overlap */
+  .center-divider { display: flex; align-items:center; justify-content:center; }
+  @media (max-width: 980px) {
+    .credentials-grid { grid-template-columns: 1fr; gap: 18px; }
+    .center-divider { display: none; }
+    .job-card { padding: 14px; }
+  }
+  
+  .symbolic-icon {
+    filter: grayscale(100%) brightness(70%);
+  }
+
