@@ -999,16 +999,56 @@
         card.hasClickHandler = true;
         card.style.cursor = 'pointer';
 
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchStartTime = 0;
+        let isScrolling = false;
+
         // Mouse click
         card.addEventListener('click', (e) => {
-          e.preventDefault();
-          openProjectModal(projectId);
+          if (!isScrolling) {
+            e.preventDefault();
+            openProjectModal(projectId);
+          }
         });
 
-        // Touch support for mobile
+        // Touch support for mobile - improved to allow horizontal scrolling
         card.addEventListener('touchstart', (e) => {
-          e.preventDefault();
-          openProjectModal(projectId);
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+          touchStartTime = Date.now();
+          isScrolling = false;
+        }, { passive: true });
+
+        card.addEventListener('touchmove', (e) => {
+          if (!touchStartX || !touchStartY) return;
+
+          const touchCurrentX = e.touches[0].clientX;
+          const touchCurrentY = e.touches[0].clientY;
+          const deltaX = Math.abs(touchCurrentX - touchStartX);
+          const deltaY = Math.abs(touchCurrentY - touchStartY);
+
+          // If horizontal movement is greater than vertical, or significant horizontal movement
+          if (deltaX > deltaY && deltaX > 10) {
+            isScrolling = true;
+          }
+        }, { passive: true });
+
+        card.addEventListener('touchend', (e) => {
+          const touchEndTime = Date.now();
+          const touchDuration = touchEndTime - touchStartTime;
+
+          // Only open modal if it's a quick tap (not a scroll) and not marked as scrolling
+          if (!isScrolling && touchDuration < 300) {
+            e.preventDefault();
+            openProjectModal(projectId);
+          }
+
+          // Reset touch tracking
+          touchStartX = 0;
+          touchStartY = 0;
+          touchStartTime = 0;
+          isScrolling = false;
         }, { passive: false });
 
         // Keyboard support
