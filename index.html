@@ -187,158 +187,174 @@
 
 <!-------- PROJECTS -------->
 
+<!-- Project Modal -->
+<div id="project-modal" class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button class="modal-close" onclick="closeProjectModal()">
+        <img src="./src/img/close-icon.svg" alt="Close">
+      </button>
+    </div>
+    <div class="modal-body">
+      <div id="modal-content-container" class="blog-content">
+        <!-- Project content will be loaded here -->
+      </div>
+    </div>
+  </div>
+</div>
+
 <section class="projects" id="projects">
-    <div class="wrapper flex-container">
+    <div class="wrapper">
       <h2>Projects</h2>
-  
-      <!-- RockReveal AI -->
-      <div class="flex-container project-with-link">
-        <div class="img-container">
-            <img class="symbolic-icon" src="./src/img/icon-rocket.svg" alt="RockReveal AI">
-        </div>
-        <div class="text-box">
-          <h4 class="tags"><span>Python</span><span>Telegram Bot</span><span>MLOps</span><span>W&B</span></h4>
-          <h3><a href="https://github.com/udaylunawat/Whats-this-rock" target="_blank">RockReveal AI</a></h3>
-        </div>
-        <p>
-          Image classification deployed as a Telegram bot. Integrated Weights & Biases for experiment & artifact tracking and a simple MLOps workflow for continuous improvements.
-        </p>
 
-        <!-- live stars placeholder -->
-        <p class="project-stats" id="stats-Whats-this-rock">⭐ — · 🍴 —</p>
+      <!-- Infinite Scroll Gallery -->
+      <div class="infinite-gallery">
+        <div class="gallery-container">
+          <div class="gallery-grid" id="gallery-grid">
+          <!-- Original Projects -->
+          <div class="gallery-item project-with-link" data-project="rockreveal-ai">
+            <div class="gallery-card">
+              <div class="img-container">
+                  <img class="symbolic-icon" src="./src/img/icon-rocket.svg" alt="RockReveal AI">
+              </div>
+              <div class="text-box">
+                <h4 class="tags"><span>Python</span><span>Telegram Bot</span><span>MLOps</span><span>W&B</span></h4>
+                <h3>RockReveal AI</h3>
+              </div>
+              <p>
+                Image classification deployed as a Telegram bot. Integrated Weights & Biases for experiment & artifact tracking and a simple MLOps workflow for continuous improvements.
+              </p>
+              <button class="secondary-btn">
+                View Details
+                <img src="src/img/icon-open.svg" alt="">
+              </button>
+            </div>
+          </div>
 
-        <button class="secondary-btn" onclick="window.open('https://github.com/udaylunawat/Whats-this-rock','_blank')">
-          See repo
-          <img src="src/img/icon-open.svg" alt="">
-        </button>
+          <div class="gallery-item project-with-link" data-project="alpr">
+            <div class="gallery-card">
+              <div class="img-container">
+                <img class="symbolic-icon" src="./src/img/vision-icon.svg" alt="ALPR">
+              </div>
+              <div class="text-box">
+                <h4 class="tags"><span>Computer Vision</span><span>Deployment</span><span>Streamlit</span></h4>
+                <h3>Automatic License Plate Recognition (ALPR)</h3>
+              </div>
+              <p>
+                High-accuracy ALPR system with end-to-end pipeline and a Streamlit web app for demo and deployment.
+              </p>
+              <button class="secondary-btn">
+                View Details
+                <img src="src/img/icon-open.svg" alt="">
+              </button>
+            </div>
+          </div>
+
+          <div class="gallery-item project-with-link" data-project="liveliness-detection">
+            <div class="gallery-card">
+              <div class="img-container">
+                <img class="symbolic-icon" src="./src/img/pagers-icon.svg" alt="Liveliness Detection">
+              </div>
+              <div class="text-box">
+                <h4 class="tags"><span>MTCNN</span><span>FaceNet</span><span>AWS</span></h4>
+                <h3>Real-Time Liveliness Detection</h3>
+              </div>
+              <p>
+                Anti-spoofing pipeline (MTCNN + FaceNet) optimized for low-latency deployment on AWS with pruning/quantization applied.
+              </p>
+              <button class="secondary-btn">
+                View Details
+                <img src="src/img/icon-open.svg" alt="">
+              </button>
+            </div>
+          </div>
+
+          <div class="gallery-item project-with-link" data-project="covid-xray">
+            <div class="gallery-card">
+              <div class="img-container">
+                <img class="symbolic-icon" src="./src/img/planet-icon.svg" alt="Covid X-ray Analysis">
+              </div>
+              <div class="text-box">
+                <h4 class="tags"><span>Deep Learning</span><span>Healthcare</span><span>Deployment</span></h4>
+                <h3>Covid-19 X-ray Analysis</h3>
+              </div>
+              <p>
+                Real-time deep learning classifier for X-ray images, with notebooks and deployment tooling for evaluation and demo.
+              </p>
+              <button class="secondary-btn">
+                View Details
+                <img src="src/img/icon-open.svg" alt="">
+              </button>
+            </div>
+          </div>
+
+          <div class="gallery-item project-with-link" data-project="agentic-data-analysis">
+            <div class="gallery-card">
+              <div class="img-container">
+                <img class="symbolic-icon" src="./src/img/ai-agent.png" alt="Agentic Data Analysis">
+              </div>
+              <div class="text-box">
+                <h4 class="tags"><span>Agentic</span><span>Google ADK</span><span>Data Analysis</span></h4>
+                <h3>Agentic Data Analysis (Google ADK)</h3>
+              </div>
+              <p>
+                Autonomous data-analysis agents that automate EDA, visualization, and report generation — implemented as a folder inside Data-Science-Projects.
+              </p>
+              <button class="secondary-btn">
+                View Details
+                <img src="src/img/icon-open.svg" alt="">
+              </button>
+            </div>
+          </div>
+
+          <div class="gallery-item project-with-link" data-project="pdf2podcast">
+            <div class="gallery-card">
+              <div class="img-container">
+                <img class="symbolic-icon" src="./src/img/podcast-grey.png" alt="PDF2Podcast">
+              </div>
+              <div class="text-box">
+                <h4 class="tags"><span>Generative AI</span><span>TTS</span><span>Productivity</span></h4>
+                <h3>PDF2Podcast</h3>
+              </div>
+              <p>
+                Extracts text from PDFs and converts to podcast-style audio using TTS + summarization, with demo scripts and deployment notes inside the parent repo.
+              </p>
+              <button class="secondary-btn">
+                View Details
+                <img src="src/img/icon-open.svg" alt="">
+              </button>
+            </div>
+          </div>
+
+          <div class="gallery-item project-with-link" data-project="other-ml-projects">
+            <div class="gallery-card">
+              <div class="img-container">
+                <img class="symbolic-icon" src="./src/img/kernel-logo.svg" alt="Other ML Projects">
+              </div>
+              <div class="text-box">
+                <h4 class="tags"><span>Notebooks</span><span>ML Experiments</span><span>Data Pipelines</span></h4>
+                <h3>Other ML / DS Projects</h3>
+              </div>
+              <p>
+                Collection of notebooks and demos covering model prototyping, data pipelines, visualizations and small utilities.
+              </p>
+              <button class="secondary-btn">
+                View Details
+                <img src="src/img/icon-open.svg" alt="">
+              </button>
+            </div>
+          </div>
+        </div>
+
+          </div>
+        </div>
+
+        <!-- Loading indicator -->
+        <div class="loading-indicator" id="loading-indicator">
+          <div class="loading-spinner"></div>
+          <p>Loading more projects...</p>
+        </div>
       </div>
-  
-      <!-- ALPR -->
-      <div class="flex-container even project-with-link">
-        <div class="img-container">
-          <img class="symbolic-icon" src="./src/img/vision-icon.svg" alt="ALPR">
-        </div>
-        <div class="text-box">
-          <h4 class="tags"><span>Computer Vision</span><span>Deployment</span><span>Streamlit</span></h4>
-          <h3><a href="https://github.com/udaylunawat/Automatic-License-Plate-Recognition" target="_blank">Automatic License Plate Recognition (ALPR)</a></h3>
-        </div>
-        <p>
-          High-accuracy ALPR system with end-to-end pipeline and a Streamlit web app for demo and deployment.
-        </p>
-
-        <p class="project-stats" id="stats-Automatic-License-Plate-Recognition">⭐ — · 🍴 —</p>
-
-        <button class="secondary-btn" onclick="window.open('https://github.com/udaylunawat/Automatic-License-Plate-Recognition','_blank')">
-          See repo
-          <img src="src/img/icon-open.svg" alt="">
-        </button>
-      </div>
-  
-      <!-- Real-Time Liveliness Detection (uncommented & included for impact) -->
-      <div class="flex-container project-with-link">
-        <div class="img-container">
-          <img class="symbolic-icon" src="./src/img/pagers-icon.svg" alt="Liveliness Detection">
-        </div>
-        <div class="text-box">
-          <h4 class="tags"><span>MTCNN</span><span>FaceNet</span><span>AWS</span></h4>
-          <h3><a href="https://github.com/udaylunawat/Data-Science-Projects/tree/master/agentic_liveliness" target="_blank">Real-Time Liveliness Detection</a></h3>
-        </div>
-        <p>
-          Anti-spoofing pipeline (MTCNN + FaceNet) optimized for low-latency deployment on AWS with pruning/quantization applied.
-        </p>
-
-        <p class="project-stats" id="stats-Data-Science-Projects">⭐ — · 🍴 —</p>
-
-        <button class="secondary-btn" onclick="window.open('https://github.com/udaylunawat/Data-Science-Projects','_blank')">
-          See repo
-          <img src="src/img/icon-open.svg" alt="">
-        </button>
-      </div>
-  
-      <!-- Covid X-ray -->
-      <div class="flex-container even project-with-link">
-        <div class="img-container">
-          <img class="symbolic-icon" src="./src/img/planet-icon.svg" alt="Covid X-ray Analysis">
-        </div>
-        <div class="text-box">
-          <h4 class="tags"><span>Deep Learning</span><span>Healthcare</span><span>Deployment</span></h4>
-          <h3><a href="https://github.com/udaylunawat/Covid-19-Radiology" target="_blank">Covid-19 X-ray Analysis</a></h3>
-        </div>
-        <p>
-          Real-time deep learning classifier for X-ray images, with notebooks and deployment tooling for evaluation and demo.
-        </p>
-
-        <p class="project-stats" id="stats-Covid-19-Radiology">⭐ — · 🍴 —</p>
-
-        <button class="secondary-btn" onclick="window.open('https://github.com/udaylunawat/Covid-19-Radiology','_blank')">
-          See repo
-          <img src="src/img/icon-open.svg" alt="">
-        </button>
-      </div>
-  
-      <!-- Agentic Data Analysis (folder in Data-Science-Projects) -->
-      <div class="flex-container project-with-link">
-        <div class="img-container">
-          <img class="symbolic-icon" src="./src/img/ai-agent.png" alt="Agentic Data Analysis">
-        </div>
-        <div class="text-box">
-          <h4 class="tags"><span>Agentic</span><span>Google ADK</span><span>Data Analysis</span></h4>
-          <h3><a href="https://github.com/udaylunawat/Data-Science-Projects/tree/master/agentic_data_analysis/agentic_data_analysis" target="_blank">Agentic Data Analysis (Google ADK)</a></h3>
-        </div>
-        <p>
-          Autonomous data-analysis agents that automate EDA, visualization, and report generation — implemented as a folder inside Data-Science-Projects.
-        </p>
-
-        <p class="project-stats" id="stats-Agentic-Data-Analysis">⭐ — · 🍴 —</p>
-
-        <button class="secondary-btn" onclick="window.open('https://github.com/udaylunawat/Data-Science-Projects/tree/master/agentic_data_analysis/agentic_data_analysis','_blank')">
-          See folder
-          <img src="src/img/icon-open.svg" alt="">
-        </button>
-      </div>
-
-      <!-- PDF2Podcast (folder in Data-Science-Projects) -->
-      <div class="flex-container even project-with-link">
-        <div class="img-container">
-          <img class="symbolic-icon" src="./src/img/podcast-grey.png" alt="PDF2Podcast">
-        </div>
-        <div class="text-box">
-          <h4 class="tags"><span>Generative AI</span><span>TTS</span><span>Productivity</span></h4>
-          <h3><a href="https://github.com/udaylunawat/Data-Science-Projects/tree/master/NotebookLM_clone/PDF2Podcast" target="_blank">PDF2Podcast</a></h3>
-        </div>
-        <p>
-          Extracts text from PDFs and converts to podcast-style audio using TTS + summarization, with demo scripts and deployment notes inside the parent repo.
-        </p>
-
-        <p class="project-stats" id="stats-PDF2Podcast">⭐ — · 🍴 —</p>
-
-        <button class="secondary-btn" onclick="window.open('https://github.com/udaylunawat/Data-Science-Projects/tree/master/NotebookLM_clone/PDF2Podcast','_blank')">
-          See folder
-          <img src="src/img/icon-open.svg" alt="">
-        </button>
-      </div>
-
-      <!-- Other ML / DS projects (kept for depth) -->
-      <div class="flex-container even project-with-link">
-        <div class="img-container">
-          <img class="symbolic-icon" src="./src/img/kernel-logo.svg" alt="Other ML Projects">
-        </div>
-        <div class="text-box">
-          <h4 class="tags"><span>Notebooks</span><span>ML Experiments</span><span>Data Pipelines</span></h4>
-          <h3><a href="https://github.com/udaylunawat/Data-Science-Projects" target="_blank">Other ML / DS Projects</a></h3>
-        </div>
-        <p>
-          Collection of notebooks and demos covering model prototyping, data pipelines, visualizations and small utilities.
-        </p>
-
-        <p class="project-stats" id="stats-Other-Data-Science-Projects">⭐ — · 🍴 —</p>
-
-        <button class="secondary-btn" onclick="window.open('https://github.com/udaylunawat/Data-Science-Projects','_blank')">
-          See repos
-          <img src="src/img/icon-open.svg" alt="">
-        </button>
-      </div>
-  
     </div>
   </section>
 
@@ -667,6 +683,326 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     updateStars().catch(()=>{/* ignore errors silently */});
+  });
+</script>
+
+<!-- Image Preloading for Projects Section -->
+<script>
+  function preloadImages() {
+    const imageUrls = [
+      './src/img/icon-rocket.svg',
+      './src/img/vision-icon.svg',
+      './src/img/pagers-icon.svg',
+      './src/img/planet-icon.svg',
+      './src/img/ai-agent.png',
+      './src/img/podcast-grey.png',
+      './src/img/kernel-logo.svg',
+      './src/img/menu-icon.svg',
+      './src/img/close-icon.svg',
+      './src/img/icon-open.svg',
+      './src/img/uday.webp',
+      './src/img/pdf-icon.svg'
+    ];
+
+    imageUrls.forEach(url => {
+      const img = new Image();
+      img.src = url;
+    });
+  }
+
+  // Preload images when DOM is ready
+  document.addEventListener('DOMContentLoaded', () => {
+    preloadImages();
+  });
+</script>
+
+<!-- Project Modal JavaScript -->
+<script>
+  // Modal functionality
+  let currentProjectId = null;
+
+  async function loadProjectContent(projectId) {
+    try {
+      const response = await fetch(`./projects/${projectId}.html`);
+      if (!response.ok) {
+        throw new Error('Project content not found');
+      }
+      const content = await response.text();
+      return content;
+    } catch (error) {
+      console.error('Error loading project content:', error);
+      return getFallbackContent(projectId);
+    }
+  }
+
+  function getFallbackContent(projectId) {
+    const fallbacks = {
+      "rockreveal-ai": `<h1>RockReveal AI</h1><p>Image classification deployed as a Telegram bot...</p>`,
+      "alpr": `<h1>Automatic License Plate Recognition</h1><p>High-accuracy ALPR system...</p>`,
+      "liveliness-detection": `<h1>Real-Time Liveliness Detection</h1><p>Anti-spoofing pipeline...</p>`,
+      "covid-xray": `<h1>Covid-19 X-ray Analysis</h1><p>Real-time deep learning classifier...</p>`,
+      "agentic-data-analysis": `<h1>Agentic Data Analysis</h1><p>Autonomous data-analysis agents...</p>`,
+      "pdf2podcast": `<h1>PDF2Podcast</h1><p>Extracts text from PDFs...</p>`,
+      "other-ml-projects": `<h1>Other ML Projects</h1><p>Collection of notebooks and demos...</p>`
+    };
+    return fallbacks[projectId] || '<h1>Project Content</h1><p>Content loading...</p>';
+  }
+
+  async function openProjectModal(projectId) {
+    const modal = document.getElementById('project-modal');
+    const contentContainer = document.getElementById('modal-content-container');
+
+    // Show loading state
+    contentContainer.innerHTML = '<div class="loading">Loading project content...</div>';
+
+    // Show modal
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    currentProjectId = projectId;
+
+    // Load content
+    const content = await loadProjectContent(projectId);
+    contentContainer.innerHTML = content;
+
+    // Add close button functionality
+    const closeBtn = contentContainer.querySelector('.modal-close');
+    if (closeBtn) {
+      closeBtn.onclick = closeProjectModal;
+    }
+  }
+
+  function initializeModalBackground() {
+    // Initialize particles for modal
+    particlesJS("modal-particles-js", {
+      "particles": {
+        "number": { "value": 8 },
+        "color": { "value": "#ffffff" },
+        "shape": { "type": "circle" },
+        "opacity": { "value": 0.15 },
+        "size": { "value": 2 },
+        "line_linked": {
+          "enable": true,
+          "distance": 300,
+          "color": "#ffffff",
+          "opacity": 0.1,
+          "width": 1
+        },
+        "move": { "enable": true, "speed": 1.5 }
+      },
+      "interactivity": {
+        "events": {
+          "onhover": { "enable": true, "mode": "repulse" },
+          "onclick": { "enable": true, "mode": "push" }
+        }
+      },
+      "retina_detect": true
+    });
+
+    // Initialize WebGL background for modal
+    if (typeof initBackground === 'function') {
+      // Assuming background.js exports an initBackground function
+      // We'll need to modify background.js to support modal initialization
+      initModalBackground();
+    }
+  }
+
+  function initModalBackground() {
+    // This function will be called if background.js supports modal initialization
+    // For now, we'll initialize the canvas manually
+    const canvas = document.querySelector('#modal-canvas canvas');
+    if (canvas && typeof initWebGLBackground === 'function') {
+      initWebGLBackground('modal-canvas', 'modal-colorBackground');
+    }
+  }
+
+  function closeProjectModal() {
+    const modal = document.getElementById('project-modal');
+
+    // Restore scroll position
+    const scrollY = modal.dataset.scrollY || 0;
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+    window.scrollTo(0, parseInt(scrollY));
+
+    modal.classList.remove('active');
+    currentProjectId = null;
+  }
+
+  // Horizontal Infinite Scroll Gallery functionality
+  let scrollPosition = 0;
+  let isAutoScrolling = true;
+  let autoScrollInterval;
+
+  // Project data
+  const projectData = [
+    {
+      id: 'rockreveal-ai',
+      title: 'RockReveal AI',
+      image: './src/img/icon-rocket.svg',
+      tags: ['Python', 'Telegram Bot', 'MLOps', 'W&B'],
+      description: 'Image classification deployed as a Telegram bot. Integrated Weights & Biases for experiment & artifact tracking and a simple MLOps workflow for continuous improvements.'
+    },
+    {
+      id: 'alpr',
+      title: 'Automatic License Plate Recognition (ALPR)',
+      image: './src/img/vision-icon.svg',
+      tags: ['Computer Vision', 'Deployment', 'Streamlit'],
+      description: 'High-accuracy ALPR system with end-to-end pipeline and a Streamlit web app for demo and deployment.'
+    },
+    {
+      id: 'liveliness-detection',
+      title: 'Real-Time Liveliness Detection',
+      image: './src/img/pagers-icon.svg',
+      tags: ['MTCNN', 'FaceNet', 'AWS'],
+      description: 'Anti-spoofing pipeline (MTCNN + FaceNet) optimized for low-latency deployment on AWS with pruning/quantization applied.'
+    },
+    {
+      id: 'covid-xray',
+      title: 'Covid-19 X-ray Analysis',
+      image: './src/img/planet-icon.svg',
+      tags: ['Deep Learning', 'Healthcare', 'Deployment'],
+      description: 'Real-time deep learning classifier for X-ray images, with notebooks and deployment tooling for evaluation and demo.'
+    },
+    {
+      id: 'agentic-data-analysis',
+      title: 'Agentic Data Analysis (Google ADK)',
+      image: './src/img/ai-agent.png',
+      tags: ['Agentic', 'Google ADK', 'Data Analysis'],
+      description: 'Autonomous data-analysis agents that automate EDA, visualization, and report generation — implemented as a folder inside Data-Science-Projects.'
+    },
+    {
+      id: 'pdf2podcast',
+      title: 'PDF2Podcast',
+      image: './src/img/podcast-grey.png',
+      tags: ['Generative AI', 'TTS', 'Productivity'],
+      description: 'Extracts text from PDFs and converts to podcast-style audio using TTS + summarization, with demo scripts and deployment notes inside the parent repo.'
+    },
+    {
+      id: 'other-ml-projects',
+      title: 'Other ML / DS Projects',
+      image: './src/img/kernel-logo.svg',
+      tags: ['Notebooks', 'ML Experiments', 'Data Pipelines'],
+      description: 'Collection of notebooks and demos covering model prototyping, data pipelines, visualizations and small utilities.'
+    }
+  ];
+
+  function createProjectCard(project) {
+    const cardHtml = `
+      <div class="gallery-item project-with-link" data-project="${project.id}">
+        <div class="gallery-card">
+          <div class="img-container">
+              <img class="symbolic-icon" src="${project.image}" alt="${project.title}">
+          </div>
+          <div class="text-box">
+            <h4 class="tags">${project.tags.map(tag => `<span>${tag}</span>`).join('')}</h4>
+            <h3>${project.title}</h3>
+          </div>
+          <p>${project.description}</p>
+          <button class="secondary-btn">
+            View Details
+            <img src="src/img/icon-open.svg" alt="">
+          </button>
+        </div>
+      </div>
+    `;
+    return cardHtml;
+  }
+
+  function initializeGallery() {
+    const galleryGrid = document.getElementById('gallery-grid');
+
+    // Clear existing content
+    galleryGrid.innerHTML = '';
+
+    // Create multiple copies for infinite scroll effect
+    for (let copy = 0; copy < 3; copy++) {
+      projectData.forEach(project => {
+        galleryGrid.insertAdjacentHTML('beforeend', createProjectCard(project));
+      });
+    }
+
+    // Attach click handlers
+    attachCardClickHandlers();
+  }
+
+  function attachCardClickHandlers() {
+    const projectCards = document.querySelectorAll('.project-with-link');
+    projectCards.forEach((card) => {
+      const projectId = card.getAttribute('data-project');
+      if (projectId && !card.hasClickHandler) {
+        card.hasClickHandler = true;
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', (e) => {
+          e.preventDefault();
+          stopAutoScroll();
+          openProjectModal(projectId);
+        });
+      }
+    });
+  }
+
+  function startAutoScroll() {
+    if (autoScrollInterval) return;
+
+    autoScrollInterval = setInterval(() => {
+      const galleryContainer = document.querySelector('.gallery-container');
+      const scrollSpeed = 1; // Adjust speed as needed
+
+      scrollPosition += scrollSpeed;
+      galleryContainer.scrollLeft = scrollPosition;
+
+      // Reset position when reaching the end of first copy
+      const itemWidth = 320 + 30; // card width + gap
+      const resetPoint = itemWidth * projectData.length;
+
+      if (scrollPosition >= resetPoint) {
+        scrollPosition = 0;
+        galleryContainer.scrollLeft = 0;
+      }
+    }, 50); // 50ms interval for smooth scrolling
+  }
+
+  function stopAutoScroll() {
+    if (autoScrollInterval) {
+      clearInterval(autoScrollInterval);
+      autoScrollInterval = null;
+    }
+  }
+
+  function resumeAutoScroll() {
+    setTimeout(() => {
+      startAutoScroll();
+    }, 2000); // Resume after 2 seconds
+  }
+
+  // Event listeners
+  document.addEventListener('DOMContentLoaded', () => {
+    // Initialize gallery
+    initializeGallery();
+    startAutoScroll();
+
+    // Pause on hover
+    const galleryContainer = document.querySelector('.gallery-container');
+    galleryContainer.addEventListener('mouseenter', stopAutoScroll);
+    galleryContainer.addEventListener('mouseleave', startAutoScroll);
+
+    // Close modal on overlay click
+    document.getElementById('project-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'project-modal') {
+        closeProjectModal();
+        resumeAutoScroll();
+      }
+    });
+
+    // Close modal on ESC key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && currentProjectId) {
+        closeProjectModal();
+        resumeAutoScroll();
+      }
+    });
   });
 </script>
     
