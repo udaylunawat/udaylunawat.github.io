@@ -396,13 +396,14 @@ section.home {
 }
 .home .wrapper .home-grid{
     display: grid;
-    grid-template-columns: 1fr; 
+    grid-template-columns: 1fr;
     grid-template-rows: max-content 100px max-content;
-    grid-template-areas: 
+    grid-template-areas:
         "title1"
         "line"
         "title2";
     justify-items: center;
+    margin-bottom: 1rem;
 }
 .home .wrapper div svg {
     width: 200px;
@@ -1386,7 +1387,7 @@ section.home {
     padding: 1.618rem;
 }
 .contact .img-container {
-    display: none;
+    display: block;
 }
 .contact .img-container img {
     width: 11.52rem;
