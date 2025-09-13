@@ -953,7 +953,7 @@ section.home {
     border-radius: 12px;
     padding: 1.5rem;
     height: 100%;
-    min-height: 304px; /* 20% smaller than original 380px */
+    min-height: 380px; /* Increased from 304px */
     display: flex;
     flex-direction: column;
     transition: all 0.3s ease;
@@ -976,10 +976,35 @@ section.home {
     height: 80px;
 }
 
-.experience-gallery .gallery-card .symbolic-icon {
+.experience-gallery .gallery-card .logo-container {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.experience-gallery .gallery-card .tcs-logo,
+.experience-gallery .gallery-card .infosys-logo {
     height: 60px;
     width: auto;
     max-width: 80px;
+    object-fit: contain;
+    filter: grayscale(100%) brightness(70%);
+    transition: all 0.3s ease;
+}
+
+.experience-gallery .gallery-card:hover .tcs-logo,
+.experience-gallery .gallery-card:hover .infosys-logo {
+    filter: grayscale(0%) brightness(100%);
+    transform: scale(1.1);
+}
+
+.experience-gallery .gallery-card .symbolic-icon {
+    height: 80px;
+    width: auto;
+    max-width: 100px;
+    object-fit: contain;
     filter: grayscale(100%) brightness(70%);
     transition: all 0.3s ease;
 }
@@ -1103,7 +1128,7 @@ section.home {
 
     .experience-gallery .gallery-card {
         padding: 1.25rem;
-        min-height: 243px; /* 20% smaller than 304px */
+        min-height: 304px; /* 20% smaller than 380px */
     }
 
     .experience-gallery .gallery-card h3 {
@@ -1130,7 +1155,7 @@ section.home {
 
     .experience-gallery .gallery-card {
         padding: 1rem;
-        min-height: 224px; /* 20% smaller than 280px */
+        min-height: 280px; /* 20% smaller than 350px */
     }
 
     .experience-gallery .gallery-card h3 {
@@ -1162,7 +1187,7 @@ section.home {
 
     .experience-gallery .gallery-card {
         padding: 0.875rem;
-        min-height: 192px; /* 20% smaller than 240px */
+        min-height: 240px; /* 20% smaller than 300px */
     }
 
     .experience-gallery .gallery-card .img-container {
@@ -1173,6 +1198,7 @@ section.home {
     .experience-gallery .gallery-card .symbolic-icon {
         height: 50px;
         max-width: 60px;
+        object-fit: contain;
     }
 
     .experience-gallery .gallery-card h3 {
@@ -1212,7 +1238,7 @@ section.home {
 
     .experience-gallery .gallery-card {
         padding: 0.75rem;
-        min-height: 160px; /* 20% smaller than 200px */
+        min-height: 200px; /* 20% smaller than 250px */
     }
 
     .experience-gallery .gallery-card .img-container {
