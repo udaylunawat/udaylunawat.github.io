@@ -374,7 +374,7 @@ section h2 {
 /* --------------- HOME ---------------*/
 
 section.home {
-    height: 100vh;
+    height: 80vh; /* Reduced from 100vh to create less gap */
 }
 
 .home h1 {
@@ -696,6 +696,7 @@ section.home {
     width: max-content;
     gap: 2rem;
     padding: 1rem 2rem 0 2rem;
+    padding-right: calc(100vw - 2rem - 280px); /* Add padding so last card stops at container edge */
 }
 
 .gallery-item {
@@ -939,6 +940,7 @@ section.home {
     width: max-content;
     gap: 2rem;
     padding: 1rem 2rem 0 2rem;
+    padding-right: calc(100vw - 2rem - 280px); /* Add padding so last card stops at container edge */
 }
 
 .experience-gallery .gallery-item {
