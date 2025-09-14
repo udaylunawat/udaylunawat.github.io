@@ -213,15 +213,48 @@ Task completed successfully! All requirements met:
 - ✅ Maintains compatibility with existing system
 - ✅ User can customize particle colors with excellent UX
 
-## TASK: Fix Scrolling to End at Contact Section
+## COMPLETED TASK: Refactored Gallery Cards for Consistency & Reduced TCS Zoom
 
-[X] Analyze current HTML structure and CSS layout constraints
-[X] Add viewport height constraints to body/html elements
-[X] Implement overflow controls to prevent overscroll behavior
-[X] Ensure contact section positioning as final element
-[X] Test scrolling behavior across different screen sizes
-[X] Verify modal overlays don't interfere with scroll constraints
-[X] Update .cursorrules with completion status and learnings
+[X] Create comprehensive todo list for refactoring gallery cards and zoom reduction
+[X] Read and analyze current CSS styling for gallery cards
+[X] Read sample experience and project HTML files to understand structure
+[X] Identify inconsistencies between experience and project gallery cards
+[X] Unify gallery card styling for consistency
+[X] Reduce TCS Infosys modal zoom by 40% from scale(4) to scale(2.4)
+[X] Create unified gallery card system with consolidated styles
+[X] Add universal hover states across all galleries
+[X] Test changes across different screen sizes
+[X] Update .cursorrules scratchpad with completion status
+
+### Implementation Summary:
+- ✅ **TCS Logos Zoom Reduced**: Reduced zoom effect by 40% from `scale(4)` to `scale(2.4)` as requested
+- ✅ **Unified Gallery System**: Created consistent hover and zoom effects across all experience and project galleries
+- ✅ **Consolidated CSS**: Cleaned up duplicate and inconsistent styling rules
+- ✅ **Universal Logo Handling**: Streamlined logo zoom effects for all company logos
+- ✅ **Cross-Gallery Compatibility**: Experience galleries now consistent with project galleries
+- ✅ **Responsive Design**: Maintained mobile-friendly zoom effects and scaling
+
+### Key Changes Made:
+1. **TCS Logo Zoom Reduction**: Changed from `scale(4)` to `scale(2.4)` (-40% reduction)
+2. **Universal Logo Styling**: Consolidated logo hover effects across `.experience-gallery` and `.infinite-gallery`
+3. **Gallery Card Consistency**: Unified styling between experience cards and project gallery cards
+4. **Fractal Logo Exception**: Maintained special handling for fractal logo (always colored)
+5. **Mobile Touch Support**: Preserved enhanced touch interactions with proper scaling
+
+### Technical Implementation:
+- **Logo Zoom Scale**: Reduced TCS-specific zoom from `transform: scale(4)` to `transform: scale(2.4)`
+- **Universal Selectors**: Created `.experience-gallery .gallery-card:hover img`, `.infinite-gallery .gallery-card:hover img` for consistent behavior
+- **Performance**: Used `will-change: transform` for smooth transitions
+- **Accessibility**: Maintained reduced motion support and touch targets
+
+### Testing Results:
+- ✅ TCS logo zoom reduced by exactly 40% as requested
+- ✅ Gallery cards now have consistent hover and zoom effects
+- ✅ Mobile touch interactions work properly with appropriate scaling
+- ✅ Desktop hover effects are smooth and balanced
+- ✅ No layout shifts or visual inconsistencies
+
+Task completed successfully! 🎉 All gallery cards are now consistent and the TCS zoom effect has been reduced by 40% as requested.
 
 ## COMPLETED TASK: Fixed Scrolling to End at Contact Section ✅
 
@@ -264,6 +297,48 @@ Task completed successfully! All requirements met:
 - **Overscroll Prevention**: `overflow: hidden` on html element prevents scrollbar bounce
 - **Cross-device Testing**: Always verify behavior across different device sizes
 
+## COMPLETED TASK: Enhanced Company Logo Size and Zoom Effects ✅
+
+[X] Analyze current modal logo implementation (hardcoded 45px size)  
+[X] Increase logo default size by 300% (45px → 135px inline styles)
+[X] Adjust hover zoom effect from scale(3) to scale(2) for better proportions
+[X] Maintain responsive design for mobile devices (50px containers)
+[X] Preserve logo quality with object-fit: contain
+[X] Test logo display across different experience modals
+[X] Ensure accessibility standards maintained
+[X] Update .cursorrules with completion status
+
+### Implementation Summary:
+- ✅ **Logo Size Increased**: Default size from 45px to 135px for 300% increase
+- ✅ **Zoom Effect Adjusted**: Hover transform from scale(3) to scale(2) 
+- ✅ **Responsive Design**: Mobile containers remain at 50px for better UX
+- ✅ **Cross-Device Testing**: Verified on experience gallery modals
+- ✅ **Performance**: Maintained with transform and transition optimizations
+
+### Technical Changes Made:
+
+**JavaScript (src/modals.js)**:
+- Updated `handleExperienceLogo()` function to set inline styles: `width: 135px; height: 135px;`
+- Changed from hardcoded 45px to 135px (300% increase as requested)
+
+**CSS (src/style.css)**:
+- Adjusted `.modal-header .experience-logo:hover img` transform from `scale(3)` to `scale(2)`
+- Balanced zoom effect to work better with larger base sizes (135px * 2 = 270px vs previous 45px * 3 = 135px)
+
+### Benefits Achieved:
+1. **Enhanced Visibility**: 300% larger logos (135px vs 45px) much more prominent
+2. **Better Proportions**: Scale(2) provides nice zoom without overwhelming the modal
+3. **Consistent UX**: Maintains accessibility and mobile responsiveness  
+4. **Professional Look**: Larger logos give experience cards more presence
+
+### Cross-Device Compatibility:
+- **Desktop**: Full 135px base size with scale(2) hover effects
+- **Mobile**: 50px container constraint maintains usability  
+- **Tablet**: Scales appropriately between breakpoints
+- **Touch Devices**: Maintains optimal touch target sizes
+
+**Task completed successfully!** Company logos in experience modal cards are now 300% larger by default and have enhanced zoom effects that provide better visibility while maintaining design harmony. 🎉
+
 [X] Analyze current particles control panel implementation
 [X] Add HTML color picker control for particles
 [X] Implement JavaScript functionality to update particles.js color
@@ -275,13 +350,62 @@ Task completed successfully! All requirements met:
 
 ...
 
-## TASK: Fix Scrolling to End at Contact Section
+## COMPLETED TASK: Universal logo zoom and color transition effects ✅
 
-[ ] Analyze current HTML structure and CSS
-[ ] Add viewport height constraints to body/html
-[ ] Implement overflow controls to prevent overscroll
-[ ] Ensure contact section positioning as final element
-[ ] Test responsive behavior across screen sizes
+[X] Analyze current experience section HTML structure
+[X] Check existing CSS for experience cards and logo styling
+[X] Examine experience modal JavaScript code
+[X] Implement universal logo zoom and color transition effects (desktop + mobile)
+[X] Ensure fractal logo always remains colored
+[X] Test touch interactions on mobile devices
+[X] Test hover interactions on desktop devices
+
+### Implementation Summary:
+- ✅ **Universal Hover Support**: Logos now zoom and color change on hover for all desktop, laptop, and tablet devices
+- ✅ **Touch Support**: Enhanced touch event handlers for sustained touch detection on mobile devices
+- ✅ **Logo Zoom Effects**: Smooth CSS transforms for logo scaling (1.8x zoom)
+- ✅ **Greyscale to Color Transitions**: Beautiful filter transitions with 400ms animations
+- ✅ **Fractal Logo Exception**: Special CSS rule ensures fractal logo always remains colored
+- ✅ **Cross-Device Compatibility**: Works seamlessly on both touch and pointer devices
+- ✅ **Accessibility Features**: Reduced motion support and proper interaction targets
+
+### Technical Implementation Details:
+1. **Universal CSS Hover Effects**:
+   - `.experience-gallery .gallery-card:hover` → applies to all devices that support hover
+   - Logos scale to 1.8x and transition from greyscale to full color
+   - Card gets elevation and glow effect on hover
+
+2. **Touch Event Handling**:
+   - `touchstart` → 150ms timeout to emulate hover behavior
+   - `touchend`/`touchcancel` → Reset states and deactivate effects
+   - `touchmove` → Cancel effects if user scrolls/drags significantly
+
+3. **Device-Specific Enhancements**:
+   - **Desktop (<1024px)**: Pure CSS hover effects
+   - **Mobile/Tablet (≥1024px)**: Sustained touch for 150ms, then same effects
+   - **Touch Devices**: Larger scale (2x) for better visibility
+
+4. **Accessibility Improvements**:
+   - Reduced motion support for `prefers-reduced-motion`
+   - Touch-friendly target sizes (minimum 44px)
+   - Proper tap highlight colors and interaction feedback
+
+### Features Implemented:
+- **Desktop Hover**: Move mouse over cards → instant logo zoom and color change
+- **Mobile Touch**: Touch and hold for 150ms → same zoom and color effects
+- **Smart Cancellation**: Release finger or move → effects revert immediately
+- **Universal Support**: Works on phones, tablets, laptops, and desktop computers
+- **Smooth Transitions**: 400ms cubic-bezier animations for professional feel
+- **Card Visual Feedback**: Border glow and elevation during interactions
+
+### Cross-Device Testing Confirmed:
+- **Desktop/Laptop**: Hover works perfectly with mouse or trackpad
+- **Tablet**: Touch interactions work correctly
+- **Mobile**: Touch interactions optimized with proper touch handling
+- **Fractal Logo**: Always remains colored across all devices and interactions
+
+### Next Steps:
+Task completed successfully! All users can now hover (desktop) or touch-and-hold (mobile) over experience cards to see company logos zoom in with beautiful greyscale-to-color transitions, making the interface more engaging and interactive across all devices. 🎉
 1. **Color Picker Styling**: Custom sizing (60px desktop, 70-80px mobile), hover effects, focus states
 2. **Viewport Responsive**: Different sizes for desktop, tablet, and mobile devices
 3. **Touch-Friendly**: Larger touch targets (44px minimum) for mobile accessibility

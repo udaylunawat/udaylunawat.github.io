@@ -12,16 +12,16 @@
   "experience": [
     {
       "id": "fractal",
-      "title": "Senior Machine Learning Engineer & SWE — Fractal AI",
+      "title": "Senior Machine Learning / SWE",
       "dates": "Nov 2024 – Present · Pune",
       "tags": ["LangGraph", "LangChain", "Multi-Agent", "Python"],
       "description": "Led engineering for Fractal AI (India's First AI Unicorn Company), a multi-agent orchestration platform (LangGraph / LangChain). Owned tool onboarding and metadata lifecycle to productize agent behaviors for largest US telecom's business use.",
       "badges": ["60+ agents onboarded", "3,000+ CI/CD in just a few weeks"],
-      "logo": "./src/img/Fractal_Logo.svg"
+      "logo": "./src/img/fractal2.png"
     },
     {
       "id": "hcl",
-      "title": "Technical Lead ML Engineer — HCL",
+      "title": "Technical Lead ML Engineer",
       "dates": "2024 · Bangalore",
       "tags": ["Human-in-the-Loop", "Label Studio", "FastAPI", "MLflow"],
       "description": "Implemented human-in-the-loop feedback and automated deployment flows; added Label Studio + FastAPI annotation pipelines, Trivy scanning, MLflow tracking and Seldon serving.",
@@ -48,7 +48,7 @@
     },
     {
       "id": "tcs-infosys",
-      "title": "Internships - Junior ML Engineer and Data Analyst — TCS & Infosys",
+      "title": "Internships - Junior ML Engineer and Data Analyst",
       "dates": "2018 – 2019",
       "tags": ["Data Analysis", "Machine Learning", "Internship", "Python"],
       "description": "Completed internships at Tata Consultancy Services and Infosys, gaining hands-on experience in machine learning, data analysis, and software development practices.",

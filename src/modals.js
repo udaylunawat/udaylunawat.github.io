@@ -20,6 +20,7 @@ export class ModalManager {
   init() {
     this.attachEventListeners();
     this.initializeGalleries();
+    this.initializeMobileExperienceEnhancements();
   }
 
   async attachEventListeners() {
@@ -348,7 +349,7 @@ export class ModalManager {
     } else if (experienceData?.logos && experienceData.logos.length > 0) {
       logoContainer.innerHTML = `
         <div style="display: flex; gap: 15px; align-items: center;">
-          ${experienceData.logos.map(logo => `<img src="${logo}" alt="${title} logo" style="width: 45px; height: 45px; object-fit: contain;">`).join('')}
+          ${experienceData.logos.map(logo => `<img src="${logo}" alt="${title} logo" style="width: 135px; height: 135px; object-fit: contain;">`).join('')}
         </div>
       `;
     } else {
@@ -696,6 +697,133 @@ export class ModalManager {
 
   async updateExperienceNavigationButtons() {
     return this.updateNavigationButtons();
+  }
+
+  /**
+   * Initialize universal experience card enhancements
+   */
+  initializeMobileExperienceEnhancements() {
+    // Run on all devices (desktop, tablet, mobile)
+    this.setupUniversalExperienceCardTouch();
+
+    console.log('Universal experience card enhancements initialized');
+  }
+
+  /**
+   * Setup universal logo zoom and color transitions for experience cards
+   */
+  setupUniversalExperienceCardTouch() {
+    const experienceCards = document.querySelectorAll('.experience-gallery .gallery-card');
+
+    experienceCards.forEach(card => {
+      let touchStartTime = 0;
+      let touchTimeout;
+      let isActive = false;
+
+      // Get the logo(s) within this card
+      const logos = card.querySelectorAll('img.tcs-logo, img.infosys-logo, img.hcl-logo, img.chugani-logo, img.symbolic-icon');
+
+      card.addEventListener('touchstart', (e) => {
+        // Clear any existing timeout
+        if (touchTimeout) {
+          clearTimeout(touchTimeout);
+        }
+
+        touchStartTime = Date.now();
+        isActive = true;
+
+        // Add active class immediately for visual feedback
+        card.classList.add('mobile-touch-active');
+
+        // Start timeout for sustained touch (emulate hover after 150ms)
+        touchTimeout = setTimeout(() => {
+          if (isActive) {
+            this.activateExperienceLogoZoom(card, logos);
+          }
+        }, 150);
+
+      }, { passive: true });
+
+      card.addEventListener('touchend', (e) => {
+        isActive = false;
+
+        // Clear timeout if touch ended before sustained threshold
+        if (touchTimeout) {
+          clearTimeout(touchTimeout);
+        }
+
+        // Remove active class
+        card.classList.remove('mobile-touch-active');
+
+        // Deactivate zoom effect
+        this.deactivateExperienceLogoZoom(card, logos);
+
+      }, { passive: true });
+
+      card.addEventListener('touchcancel', (e) => {
+        isActive = false;
+
+        if (touchTimeout) {
+          clearTimeout(touchTimeout);
+        }
+
+        card.classList.remove('mobile-touch-active');
+        this.deactivateExperienceLogoZoom(card, logos);
+
+      }, { passive: true });
+
+      // Handle touchmove to detect scrolling/dragging
+      card.addEventListener('touchmove', (e) => {
+        // If user is moving while touching, only cancel on vertical movement (for mobile scrolling prevention)
+        if (isActive) {
+          const touch = e.touches[0];
+          const startTouch = card.dataset.lastTouch ? JSON.parse(card.dataset.lastTouch) : null;
+
+          if (startTouch) {
+            const deltaX = Math.abs(touch.clientX - startTouch.x);
+            const deltaY = Math.abs(touch.clientY - startTouch.y);
+
+            // Only cancel if there's significant vertical movement (ignores horizontal scrolling)
+            // This allows horizontal gallery scrolling while maintaining touch effects
+            if (deltaY > 15) { // Lower threshold for vertical cancellation
+              isActive = false;
+              if (touchTimeout) {
+                clearTimeout(touchTimeout);
+              }
+              card.classList.remove('mobile-touch-active');
+              this.deactivateExperienceLogoZoom(card, logos);
+            }
+            // Horizontal movement is allowed (for horizontal scrolling)
+          }
+        }
+      }, { passive: true });
+    });
+  }
+
+  /**
+   * Activate logo zoom and color transition for experience card
+   */
+  activateExperienceLogoZoom(card, logos) {
+    logos.forEach(logo => {
+      // Add zoom and color transition classes for mobile
+      logo.classList.add('mobile-logo-zoom', 'mobile-logo-color');
+    });
+
+    // Add visual feedback to the card
+    card.classList.add('mobile-logo-active');
+  }
+
+  /**
+   * Deactivate logo zoom and revert to greyscale
+   */
+  deactivateExperienceLogoZoom(card, logos) {
+    logos.forEach(logo => {
+      // Remove zoom and color classes
+      logo.classList.remove('mobile-logo-zoom', 'mobile-logo-color');
+    });
+
+    // Remove card visual feedback
+    card.classList.remove('mobile-logo-active');
   }
 
   // Legacy methods for backward compatibility

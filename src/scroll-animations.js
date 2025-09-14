@@ -44,118 +44,155 @@ const elementsToAnimate = document.querySelectorAll('.animate');
 elementsToAnimate.forEach((el) => observer.observe(el));
 
 //
-// LOGO ZOOM, COLOR, AND GREYSCALE ANIMATIONS FOR PROJECTS AND EXPERIENCE SECTIONS
+// CLEAN MOBILE HORIZONTAL SCROLL LOGO ANIMATIONS
 //
-let experienceCards = [];
-let projectCards = [];
-let isMobile = false;
-let isTablet = false;
 
-function checkDeviceType() {
-    const width = window.innerWidth;
-    isMobile = width <= 768; // Mobile: <= 768px
-    isTablet = width > 768 && width <= 1024; // Tablet: 769px - 1024px
-    return { isMobile, isTablet };
+// Simple device detection
+let isMobileDevice = false;
+
+function detectMobile() {
+    const screenWidth = window.innerWidth;
+    const userAgent = navigator.userAgent.toLowerCase();
+
+    // More reliable mobile detection
+    const mobileKeywords = ['android', 'iphone', 'ipad', 'ipod', 'blackberry', 'mobile', 'tablet'];
+    const isMobileByAgent = mobileKeywords.some(keyword => userAgent.includes(keyword));
+    const isMobileByWidth = screenWidth <= 768;
+
+    isMobileDevice = isMobileByAgent && isMobileByWidth;
+    console.log('Mobile detection:', { width: screenWidth, isMobile: isMobileDevice, agent: userAgent.substring(0, 50) });
+
+    return isMobileDevice;
 }
 
-function initializeLogoAnimations() {
-    // Get all gallery cards
-    experienceCards = document.querySelectorAll('.experience-gallery .gallery-item');
-    projectCards = document.querySelectorAll('.infinite-gallery .gallery-item');
+// Track scroll state
+let scrollState = {
+    isScrollingHorizontally: false,
+    lastScrollX: 0,
+    scrollTimeout: null,
+    activeCards: new Set()
+};
 
-    if (experienceCards.length === 0 && projectCards.length === 0) return;
-
-    // Check device type
-    checkDeviceType();
-
-    // Set up scroll animations for both sections
-    setupLogoScrollAnimations();
-
-    // Also listen for window resize to handle orientation changes
-    window.addEventListener('resize', handleResize);
-}
-
-function setupLogoScrollAnimations() {
-    // Create intersection observer for logo animations
-    const logoObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            const card = entry.target;
-            // Handle both single logos and dual logos (TCS/Infosys case)
-            const logos = card.querySelectorAll('.symbolic-icon, .tcs-logo, .infosys-logo');
-
-            if (logos.length === 0) return;
-
-            if (entry.isIntersecting) {
-                // Card is entering viewport - apply zoom and highlight to all logos
-                logos.forEach(logo => {
-                    logo.style.transform = 'scale(1.5)';
-                    logo.style.filter = 'grayscale(0%) brightness(110%)';
-                    logo.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-                });
-
-                // Add enhanced glow effect to the card
-                card.style.boxShadow = '0 15px 40px rgba(0, 255, 0, 0.3)';
-                card.style.borderColor = 'rgba(0, 255, 0, 0.6)';
-                card.style.borderTopColor = 'rgba(0, 255, 0, 0.6)'; // Ensure top border is visible
-                card.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-            } else {
-                // Card is leaving viewport - reset to original state
-                logos.forEach(logo => {
-                    logo.style.transform = 'scale(1)';
-                    logo.style.filter = 'grayscale(100%) brightness(70%)';
-                    logo.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-                });
-
-                // Reset card effects
-                card.style.boxShadow = '';
-                card.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-                card.style.borderTopColor = 'rgba(255, 255, 255, 0.1)'; // Reset top border
-                card.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-            }
-        });
-    }, {
-        threshold: isMobile ? 0.5 : 0.7, // Different thresholds for mobile vs desktop
-        rootMargin: isMobile ? '-30px 0px -30px 0px' : '-80px 0px -80px 0px' // Different margins for smoother transitions
-    });
-
-    // Observe all experience cards
-    experienceCards.forEach(card => {
-        logoObserver.observe(card);
-    });
-
-    // Observe all project cards
-    projectCards.forEach(card => {
-        logoObserver.observe(card);
-    });
-}
-
-function handleResize() {
-    const wasMobile = isMobile;
-    checkDeviceType();
-
-    // If device type changed, reinitialize animations
-    if (wasMobile !== isMobile) {
-        // Reset all logo styles for both sections
-        const allCards = [...experienceCards, ...projectCards];
-        allCards.forEach(card => {
-            const logos = card.querySelectorAll('.symbolic-icon, .tcs-logo, .infosys-logo');
-            logos.forEach(logo => {
-                logo.style.transform = '';
-                logo.style.filter = '';
-                logo.style.transition = '';
-            });
-            card.style.boxShadow = '';
-            card.style.borderColor = '';
-            card.style.borderTopColor = '';
-            card.style.transition = '';
-        });
-
-        // Reinitialize with new device state
-        setupLogoScrollAnimations();
+function initLogoAnimations() {
+    // Only initialize for mobile devices
+    if (!detectMobile()) {
+        console.log('Desktop device detected - skipping mobile animations');
+        return;
     }
+
+    // Find all gallery sections
+    const gallerySections = document.querySelectorAll('.experience-gallery, .infinite-gallery');
+
+    if (gallerySections.length === 0) {
+        console.log('No gallery sections found');
+        return;
+    }
+
+    console.log('Initializing mobile horizontal scroll animations');
+
+    // Set up horizontal scroll detection
+    setupMobileScrollDetection();
 }
 
-// Initialize logo animations when DOM is loaded
+function setupMobileScrollDetection() {
+    // Throttle scroll detection to reduce performance impact
+    let scrollTimeout;
+    let lastDetectionTime = 0;
+
+    function checkScrollDirection() {
+        const now = Date.now();
+        if (now - lastDetectionTime < 50) return; // Limit to 20 detections per second
+
+        const currentScrollX = window.scrollX || window.pageXOffset || 0;
+        const deltaX = Math.abs(currentScrollX - scrollState.lastScrollX);
+        const deltaY = Math.abs(window.scrollY - (window.pageYOffset || 0));
+
+        // If significant horizontal movement is detected
+        if (deltaX > 20 && deltaX > deltaY * 2) { // Horizontal movement > 20px AND 2x vertical movement
+            triggerEnhancedAnimations();
+
+            // Clear previous timeout
+            clearTimeout(scrollState.scrollTimeout);
+
+            // Reset after scrolling stops
+            scrollState.scrollTimeout = setTimeout(() => {
+                scrollState.isScrollingHorizontally = false;
+                resetAllAnimations();
+                console.log('Scroll stopped - resetting animations');
+            }, 250); // 250ms delay
+        }
+
+        scrollState.lastScrollX = currentScrollX;
+        lastDetectionTime = now;
+    }
+
+    // Add scroll event listener with passive option for better performance
+    window.addEventListener('scroll', checkScrollDirection, { passive: true });
+
+    console.log('Mobile scroll detection activated');
+}
+
+function triggerEnhancedAnimations() {
+    if (scrollState.isScrollingHorizontally) return; // Already active
+
+    scrollState.isScrollingHorizontally = true;
+
+    // Find all gallery cards and their logos
+    const allCards = document.querySelectorAll('.experience-gallery .gallery-item, .infinite-gallery .gallery-item');
+
+    if (allCards.length === 0) return;
+
+    console.log('Enhancing', allCards.length, 'gallery cards');
+
+    allCards.forEach(card => {
+        const logos = card.querySelectorAll('.symbolic-icon, .tcs-logo, .infosys-logo, img');
+        if (logos.length === 0) return;
+
+        // Apply 300% zoom and full color saturation
+        logos.forEach(logo => {
+            logo.style.transform = 'scale(3.0)';
+            logo.style.filter = 'grayscale(0%) brightness(120%) saturate(150%) contrast(110%)';
+            logo.style.transition = 'all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1)';
+            logo.style.zIndex = '10';
+        });
+
+        // Enhanced card effects
+        card.style.boxShadow = '0 20px 50px rgba(0, 255, 0, 0.5)';
+        card.style.borderColor = 'rgba(0, 255, 0, 0.8)';
+        card.style.transition = 'all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1)';
+
+        scrollState.activeCards.add(card);
+    });
+
+    console.log('Applied enhanced animations to all gallery cards');
+}
+
+function resetAllAnimations() {
+    if (scrollState.activeCards.size === 0) return;
+
+    console.log('Resetting animations for', scrollState.activeCards.size, 'cards');
+
+    scrollState.activeCards.forEach(card => {
+        const logos = card.querySelectorAll('.symbolic-icon, .tcs-logo, .infosys-logo, img');
+
+        logos.forEach(logo => {
+            logo.style.transform = 'scale(1)';
+            logo.style.filter = 'grayscale(100%) brightness(70%)';
+            logo.style.transition = 'all 0.6s cubic-bezier(0.4, 0.0, 0.2, 1)';
+            logo.style.zIndex = '';
+        });
+
+        // Reset card effects
+        card.style.boxShadow = '';
+        card.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+        card.style.transition = 'all 0.6s cubic-bezier(0.4, 0.0, 0.2, 1)';
+    });
+
+    scrollState.activeCards.clear();
+}
+
+// Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    initializeLogoAnimations();
+    // Wait a moment for page to fully load
+    setTimeout(initLogoAnimations, 100);
 });
