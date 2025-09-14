@@ -1,0 +1,166 @@
+# Instructions
+
+During you interaction with the user, if you find anything reusable in this project (e.g. version of a library, model name), especially about a fix to a mistake you made or a correction you received, you should take note in the `Lessons` section in the `.cursorrules` file so you will not make the same mistake again. 
+
+You should also use the `.cursorrules` file as a scratchpad to organize your thoughts. Especially when you receive a new task, you should first review the content of the scratchpad, clear old different task if necessary, first explain the task, and plan the steps you need to take to complete the task. You can use todo markers to indicate the progress, e.g.
+[X] Task 1
+[ ] Task 2
+
+Also update the progress of the task in the Scratchpad when you finish a subtask.
+Especially when you finished a milestone, it will help to improve your depth of task accomplishment to use the scratchpad to reflect and plan.
+
+
+## Task: Move tags in modal content, reduce title font size
+
+[X] Analyze current modal implementation and structure
+[X] Understand modal title styling in CSS
+[X] Modify modal to move tags content back to body (not extract for header)
+[X] Reduce title font size by half
+[X] Update project HTML files if needed
+[X] Verify changes work properly
+
+### Current Analysis:
+- Modal currently extracts tags from content and places in header
+- Title stays persistent in header (already correct)
+- Modal title is 1.8rem, needs to be reduced to 1.4rem (half)
+- Project HTML files have tags in <div class="tags"> containers within content
+
+### COMPLETED TASKS:
+- Enhanced mobile touch gestures for better user interaction
+- Added swipe navigation for modal transitions on mobile devices
+- Improved responsive design with better viewport utilization
+- Enhanced text readability and font sizing for mobile devices
+- Added visible close button on mobile for better UX
+- Implemented progressive enhancement for touch devices
+- Optimized touch targets to meet accessibility standards (44px minimum)
+- Added smooth touch response with proper gesture detection
+- Improved keyboard navigation and accessibility features
+
+### Next Steps:
+1. Modify `modals.js` to not extract tags for header (keep in content)
+2. Update CSS modal header title font-size from 1.8rem to 1.4rem
+3. Test that tags appear in modal body content instead of header
+
+
+You should use the `.cursorrules` file as a scratchpad to organize your thoughts. Especially when you receive a new task, you should first review the content of the scratchpad, clear old different task if necessary, first explain the task, and plan the steps you need to take to complete the task. You can use todo markers to indicate the progress, e.g.
+[X] Task completed
+[ ] Task pending
+
+You should use the `.cursorrules` file as a scratchpad to organize your thoughts. Especially when you receive a new task, you should first review the content of the scratchpad, clear old different task if necessary, first explain the task, and plan the steps you need to take to complete the task. You can use todo markers to indicate the progress, e.g.
+[X] Task completed
+[ ] Task pending
+
+Also update the progress of the task in the Scratchpad when you finish a subtask.
+Especially when you finished a milestone, it will help to improve your depth of task accomplishment to use the scratchpad to reflect and plan.
+
+Also update the progress of the task in the Scratchpad when you finish a subtask.
+Especially when you finished a milestone, it will help to improve your depth of task accomplishment to use the scratchpad to reflect and plan.
+
+# Tools
+
+Note all the tools are in python. So in the case you need to do batch processing, you can always consult the python files and write your own script.
+
+## Screenshot Verification
+The screenshot verification workflow allows you to capture screenshots of web pages and verify their appearance using LLMs. The following tools are available:
+
+1. Screenshot Capture:
+```bash
+venv/bin/python tools/screenshot_utils.py URL [--output OUTPUT] [--width WIDTH] [--height HEIGHT]
+```
+
+2. LLM Verification with Images:
+```bash
+venv/bin/python tools/llm_api.py --prompt "Your verification question" --provider {openai|anthropic} --image path/to/screenshot.png
+```
+
+Example workflow:
+```python
+from screenshot_utils import take_screenshot_sync
+from llm_api import query_llm
+
+# Take a screenshot
+screenshot_path = take_screenshot_sync('https://example.com', 'screenshot.png')
+
+# Verify with LLM
+response = query_llm(
+    "What is the background color and title of this webpage?",
+    provider="openai",  # or "anthropic"
+    image_path=screenshot_path
+)
+print(response)
+```
+
+## LLM
+
+You always have an LLM at your side to help you with the task. For simple tasks, you could invoke the LLM by running the following command:
+```
+venv/bin/python ./tools/llm_api.py --prompt "What is the capital of France?" --provider "anthropic"
+```
+
+The LLM API supports multiple providers:
+- OpenAI (default, model: gpt-4o)
+- Azure OpenAI (model: configured via AZURE_OPENAI_MODEL_DEPLOYMENT in .env file, defaults to gpt-4o)
+- DeepSeek (model: deepseek-chat)
+- Anthropic (model: claude-3-sonnet-20240229)
+- Gemini (model: gemini-pro)
+- Local LLM (model: Qwen/Qwen2.5-32B-Instruct-AWQ)
+
+But usually it's a better idea to check the content of the file and use the APIs in the `tools/llm_api.py` file to invoke the LLM if needed.
+
+## Web browser
+
+You could use the `tools/web_scraper.py` file to scrape the web.
+```
+venv/bin/python ./tools/web_scraper.py --max-concurrent 3 URL1 URL2 URL3
+```
+This will output the content of the web pages.
+
+## Search engine
+
+You could use the `tools/search_engine.py` file to search the web.
+```
+venv/bin/python ./tools/search_engine.py "your search keywords"
+```
+This will output the search results in the following format:
+```
+URL: https://example.com
+Title: This is the title of the search result
+Snippet: This is a snippet of the search result
+```
+If needed, you can further use the `web_scraper.py` file to scrape the web page content.
+
+# Lessons
+
+## User Specified Lessons
+
+- You have a python venv in ./venv. Use it.
+- Include info useful for debugging in the program output.
+- Read the file before you try to edit it.
+- Due to Cursor's limit, when you use `git` and `gh` and need to submit a multiline commit message, first write the message in a file, and then use `git commit -F <filename>` or `gh pr create -F <filename>` and then remove the file. Include "[Cursor] " in the commit message and PR title.
+
+## Cursor learned
+
+- For search results, ensure proper handling of different character encodings (UTF-8) for international queries
+- Add debug information to stderr while keeping the main output clean in stdout for better pipeline integration
+- When using seaborn styles in matplotlib, use 'seaborn-v0_8' instead of 'seaborn' as the style name due to recent seaborn version changes
+- Use 'gpt-4o' as the model name for OpenAI's GPT-4 with vision capabilities
+
+## Task: Move tags in modal content, reduce title font size
+
+[X] Analyze current modal implementation and structure
+[X] Understand modal title styling in CSS
+[X] Modify modal to move tags content back to body (not extract for header)
+[X] Reduce title font size by half
+[X] Update project HTML files if needed
+[X] Verify changes work properly
+
+### Current Analysis:
+- Modal currently extracts tags from content and places in header
+- Title stays persistent in header (already correct)
+- Modal title is 1.8rem, needs to be reduced to 1.4rem (half)
+- Project HTML files have tags in <div class="tags"> containers within content
+
+### Next Steps:
+1. Modify `modals.js` to not extract tags for header (keep in content)
+2. Update CSS modal header title font-size from 1.8rem to 1.4rem
+3. Test that tags appear in modal body content instead of header
