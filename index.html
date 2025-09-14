@@ -45,7 +45,7 @@
         </svg>
         <h4 id="homeTitle2">Loading...</h4>
       </div>
-      <h1 id="homeName">Uday Lunawat</h1>
+      <h2 id="homeName">Uday Lunawat</h2>
       <p class="tagline">Loading...</p>
     </div>
   </header>
@@ -98,18 +98,14 @@
 <!-- Project Modal -->
 <div id="project-modal" class="modal-overlay">
   <div class="modal-content">
-    <button class="modal-nav modal-nav-prev" onclick="navigateProjectModal('prev')" id="project-nav-prev">
-      <span class="nav-arrow">&larr;</span>
-    </button>
+    <!-- Removed navigation buttons - modal now uses tap zones -->
     <div class="modal-content-wrapper">
       <div class="modal-header">
         <div class="modal-header-content">
           <h1 id="modal-title">Project Title</h1>
           <div class="tags" id="modal-tags"></div>
         </div>
-        <button class="modal-close" onclick="closeProjectModal()">
-          <img src="./src/img/close-icon.svg" alt="Close">
-        </button>
+
       </div>
       <div class="modal-body">
         <div id="modal-content-container" class="blog-content">
@@ -117,27 +113,19 @@
         </div>
       </div>
     </div>
-    <button class="modal-nav modal-nav-next" onclick="navigateProjectModal('next')" id="project-nav-next">
-      <span class="nav-arrow">&rarr;</span>
-    </button>
   </div>
 </div>
 
 <!-- Experience Modal -->
 <div id="experience-modal" class="modal-overlay">
   <div class="modal-content">
-    <button class="modal-nav modal-nav-prev" onclick="navigateExperienceModal('prev')" id="experience-nav-prev">
-      <span class="nav-arrow">&larr;</span>
-    </button>
+    <!-- Removed navigation buttons - modal now uses tap zones -->
     <div class="modal-content-wrapper">
       <div class="modal-header">
         <div class="modal-header-content">
           <h1 id="experience-modal-title">Experience Title</h1>
           <div class="tags" id="experience-modal-tags"></div>
         </div>
-        <button class="modal-close" onclick="closeExperienceModal()">
-          <img src="./src/img/close-icon.svg" alt="Close">
-        </button>
       </div>
       <div class="modal-body">
         <div id="experience-modal-content-container" class="blog-content">
@@ -145,9 +133,6 @@
         </div>
       </div>
     </div>
-    <button class="modal-nav modal-nav-next" onclick="navigateExperienceModal('next')" id="experience-nav-next">
-      <span class="nav-arrow">&rarr;</span>
-    </button>
   </div>
 </div>
 
