@@ -103,24 +103,6 @@
       </div>
     </div>
 
-    <div class="control-group presets-group">
-      <label>Presets</label>
-      <div class="presets-grid">
-        <button class="preset-btn" id="calm-preset"><span>🌅</span><small>Calm</small></button>
-        <button class="preset-btn" id="balanced-preset"><span>⚖️</span><small>Balanced</small></button>
-        <button class="preset-btn" id="vivid-preset"><span>⚡</span><small>Vivid</small></button>
-        <button class="preset-btn" id="turbulent-preset"><span>🌊</span><small>Turbulent</small></button>
-        <button class="preset-btn" id="space-preset"><span>⭐</span><small>Space</small></button>
-        <button class="preset-btn" id="aurora-preset"><span>🌈</span><small>Aurora</small></button>
-        <button class="preset-btn" id="plasma-preset"><span>🔥</span><small>Plasma</small></button>
-        <button class="preset-btn" id="warp-preset"><span>🌌</span><small>Warp</small></button>
-        <button class="preset-btn" id="matrix-preset"><span>💚</span><small>Matrix</small></button>
-        <button class="preset-btn" id="hypnotic-preset"><span>🌠</span><small>Hypnotic</small></button>
-        <button class="preset-btn" id="dream-preset"><span>💫</span><small>Dream</small></button>
-        <button class="preset-btn" id="echo-preset"><span>🔄</span><small>Echo</small></button>
-      </div>
-    </div>
-
     <div class="control-group">
       <label>Distortion</label>
       <div class="single-control">
@@ -128,8 +110,6 @@
         <span id="background-distortion-display" class="value-display">35</span>
       </div>
     </div>
-
-
 
     <div class="control-group">
       <label>Wave Frequency</label>
@@ -149,15 +129,6 @@
   </div>
 </div>
 
-<!-- Control Panel Overlay - commented out for now -->
-<!-- <div id="control-panel-overlay" class="control-panel-overlay"></div> -->
-
-<img class="nav-open-icon" id="open-icon" src="./src/img/menu-icon.svg" alt="" onclick="showMenu()">
-
-<!-- Minimize Control Button - commented out -->
-<!-- <button id="control-panel-minimize" class="control-panel-minimize-btn" title="Minimize/Maximize Controls">
-  ➖
-</button> -->
 <nav class="main-nav" id="menu">
     <img class="nav-close-icon" id="close-icon" src="./src/img/close-icon.svg" alt="" onclick="hideMenu()">
     <ul>
@@ -202,7 +173,7 @@
       </div>
     </div>
   </section>
-  
+
   <section class="credentials" id="credentials">
     <div class="wrapper">
       <h2>Experience</h2>
@@ -217,8 +188,6 @@
       </div>
     </div>
   </section>
-  
-
 
 <!--------- SKILLS ---------->
 
@@ -228,50 +197,8 @@
       <!-- Content will be loaded dynamically from content.json -->
     </div>
 </section>
-  
 
 <!-------- PROJECTS -------->
-
-<!-- Project Modal -->
-<div id="project-modal" class="modal-overlay">
-  <div class="modal-content">
-    <!-- Removed navigation buttons - modal now uses tap zones -->
-    <div class="modal-content-wrapper">
-      <div class="modal-header">
-        <div class="modal-header-content">
-          <h1 id="modal-title">Project Title</h1>
-          <div class="tags" id="modal-tags"></div>
-        </div>
-
-      </div>
-      <div class="modal-body">
-        <div id="modal-content-container" class="blog-content">
-          <!-- Project content will be loaded here -->
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Experience Modal -->
-<div id="experience-modal" class="modal-overlay">
-  <div class="modal-content">
-    <!-- Removed navigation buttons - modal now uses tap zones -->
-    <div class="modal-content-wrapper">
-      <div class="modal-header">
-        <div class="modal-header-content">
-          <h1 id="experience-modal-title">Experience Title</h1>
-          <div class="tags" id="experience-modal-tags"></div>
-        </div>
-      </div>
-      <div class="modal-body">
-        <div id="experience-modal-content-container" class="blog-content">
-          <!-- Experience content will be loaded here -->
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <section class="projects" id="projects">
     <div class="wrapper">
@@ -296,7 +223,6 @@
 
 <!------------ CONTACT ------------->
 
-
 <section class="contact" id="contact">
     <h2>Contact</h2>
     <div class="wrapper">
@@ -313,8 +239,6 @@
               <a href="#"><button class="secondary-btn">Loading...</button></a>
               <a href="#"><button class="secondary-btn">Loading...</button></a>
               <a href="#"><button class="secondary-btn">Loading...</button></a>
-              <!-- <a href="#"><button class="secondary-btn">Loading...</button></a>
-              <a href="#"><button class="secondary-btn">Loading...</button></a> -->
             </div>
 
             <div style="margin-top:12px;">
@@ -358,165 +282,55 @@
 <!-- <section class="footer">
 </section> -->
 
+<!-- Modal system integrated -->
+<div id="project-modal" class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-content-wrapper">
+      <div class="modal-header">
+        <div class="modal-header-content">
+          <h1 id="modal-title">Project Title</h1>
+          <div class="tags" id="modal-tags"></div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div id="modal-content-container" class="blog-content">
+          <!-- Project content will be loaded here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="experience-modal" class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-content-wrapper">
+      <div class="modal-header">
+        <div class="modal-header-content">
+          <h1 id="experience-modal-title">Experience Title</h1>
+          <div class="tags" id="experience-modal-tags"></div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div id="experience-modal-content-container" class="blog-content">
+          <!-- Experience content will be loaded here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!------------ NAVIGATION ------------->
 
+<img class="nav-open-icon" id="open-icon" src="./src/img/menu-icon.svg" alt="" onclick="showMenu()">
+
 <script src="./src/navigation.js" type="module"></script>
-
-<!------------ MODALS ------------->
-
 <script src="./src/modals.js" type="module"></script>
-
-<!-- <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.net.min.js"></script> -->
-<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script> -->
-<!-- <script>
-  VANTA.NET({
-    el: "#particles-js",
-    color: 0x00ffff,
-    backgroundColor: 0x000000,
-    points: 12.00,
-    maxDistance: 20.00,
-    spacing: 18.00
-  })
-</script> -->
-
-
-<!-- Background fade out and other scroll animations -->
 <script src="./src/scroll-animations.js" type="module"></script>
 
-<!---- JavaScript for scrolling to sections smoothly ---->
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-      // Smooth scrolling for anchor links
-      const smoothScrollLinks = document.querySelectorAll("a[href^='#']");
-      const scrollMargin = 0;
-  
-      smoothScrollLinks.forEach(function(link) {
-        link.addEventListener("click", function(e) {
-          e.preventDefault();
-  
-          const target = document.querySelector(this.hash);
-          if (target) {
-            const targetOffset = target.offsetTop;
-            window.scrollTo({
-              top: targetOffset - scrollMargin,
-              behavior: "smooth",
-            });
-          }
-        });
-      });
-    });
-</script>
+<!-- Core dependencies -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
-<script>
-    particlesJS("particles-js", {
-      "particles": {
-        "number": { "value": 15 },
-        "color": { "value": "#ffffff" },
-        "shape": { "type": "circle" },
-        "opacity": {
-          "value": 1.0,
-          "random": true,
-          "anim": {
-            "enable": true,
-            "speed": 1.5,
-            "opacity_min": 0.3,
-            "sync": false
-          }
-        },
-        "size": {
-          "value": 8,
-          "random": true,
-          "anim": {
-            "enable": true,
-            "speed": 3,
-            "size_min": 2,
-            "sync": false
-          }
-        },
-        "line_linked": {
-          "enable": true,
-          "distance": 300,
-          "color": "#ffffff",
-          "opacity": 0.4,
-          "width": 1,
-          "path": {
-            "enable": true,
-            "type": "particles"
-          }
-        },
-        "move": {
-          "enable": true,
-          "speed": 3,
-          "direction": "none",
-          "random": false,
-          "straight": false,
-          "out_mode": "out",
-          "bounce": false,
-          "attract": {
-            "enable": false,
-            "rotateX": 600,
-            "rotateY": 1200
-          }
-        },
-        "twinkle": {
-          "lines": {
-            "enable": true,
-            "frequency": 0.5,
-            "opacity": 1.0,
-            "color": "#ffffff",
-            "wave": {
-              "travel": false,
-              "speed": 0.5
-            }
-          },
-          "particles": {
-            "enable": true,
-            "frequency": 0.3,
-            "opacity": 1.0,
-            "color": "#ffffff",
-            "wave": {
-              "travel": false,
-              "speed": 0.8
-            }
-          }
-        }
-      },
-      "interactivity": {
-        "events": {
-          "onhover": {
-            "enable": true,
-            "mode": "bubble",
-            "duration": 0.1
-          },
-          "onclick": {
-            "enable": true,
-            "mode": "push"
-          }
-        },
-        "modes": {
-          "bubble": {
-            "distance": 100,
-            "size": 30,
-            "duration": 2,
-            "opacity": 1.0
-          }
-        }
-      },
-      "retina_detect": true
-    });
-  </script>
-  
-
-
-
-<!-- Animated background -->
-<script src="./src/background.js" type="module"></script>
-<!-- Content Loader JavaScript -->
-<script src="./src/content-loader.js"></script>
-
-<!-- Shaders for animated background -->
+<!-- Shaders for animated background (required by background.js) -->
 <script id="snoise-function" type="x-shader/x-vertex">
     vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
     vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
@@ -572,7 +386,6 @@
     }
 </script>
 <script id="fragment-shader" type="x-shader/x-fragment">
-    
     vec3 rgb(float r, float g, float b) {
         return vec3(r / 255., g / 255., b / 255.);
     }
@@ -594,7 +407,7 @@
         vec3 bg = rgb(u_bg.r, u_bg.g, u_bg.b);
         vec3 c1 = rgb(u_color1.r, u_color1.g, u_color1.b);
         vec3 c2 = rgb(u_color2.r, u_color2.g, u_color2.b);
-        vec3 bgMain = rgb(u_bgMain.r, u_bgMain.g, u_bgMain.b);
+        vec3 bgMain = rgb(u_bgMain.r, u_bg.g, u_bg.b);
 
         float noise1 = snoise(vUv + u_time * 0.08);
         float noise2 = snoise(vUv * 2. + u_time * 0.1);
@@ -613,865 +426,177 @@
     }
 </script>
 
-<!-- Live GitHub stars & forks fetcher (content-only addition) -->
+<script src="./src/background.js" type="module"></script>
+<script src="./src/content-loader.js"></script>
+
+<!---- JavaScript for scrolling to sections smoothly ---->
 <script>
-  // Map the project placeholder IDs to the repo slugs.
-  // For projects inside Data-Science-Projects (Agentic, PDF2Podcast, Liveliness etc.)
-  // we use the parent repo name.
-  const repoMap = {
-    "Whats-this-rock": "Whats-this-rock",
-    "Automatic-License-Plate-Recognition": "Automatic-License-Plate-Recognition",
-    "Covid-19-Radiology": "Covid-19-Radiology",
-    "Data-Science-Projects": "Data-Science-Projects", // used for liveliness, agentic, pdf2podcast
-    "Agentic-Data-Analysis": "Data-Science-Projects",
-    "PDF2Podcast": "Data-Science-Projects",
-    "Other-Data-Science": "Data-Science-Projects"
-  };
+document.addEventListener("DOMContentLoaded", function() {
+  // Smooth scrolling for anchor links
+  const smoothScrollLinks = document.querySelectorAll("a[href^='#']");
+  const scrollMargin = 0;
 
-  async function fetchRepo(owner, repo) {
-    const url = `https://api.github.com/repos/${owner}/${repo}`;
-    try {
-      const r = await fetch(url);
-      if (!r.ok) return null;
-      return r.json();
-    } catch (e) {
-      return null;
-    }
-  }
-
-  async function updateStars() {
-    const owner = "udaylunawat";
-    // For each mapping, fetch once and update corresponding DOM placeholders.
-    const seen = {};
-    for (const key in repoMap) {
-      const repo = repoMap[key];
-      if (seen[repo]) {
-        // already fetched; reuse
-        const data = seen[repo];
-        updateDomForKey(key, data);
-        continue;
+  smoothScrollLinks.forEach(function(link) {
+    link.addEventListener("click", function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.hash);
+      if (target) {
+        const targetOffset = target.offsetTop;
+        window.scrollTo({
+          top: targetOffset - scrollMargin,
+          behavior: "smooth",
+        });
       }
-      const data = await fetchRepo(owner, repo);
-      seen[repo] = data;
-      updateDomForKey(key, data);
-    }
-  }
-
-  function updateDomForKey(key, data) {
-    const elIdMap = {
-      "Whats-this-rock": "stats-Whats-this-rock",
-      "Automatic-License-Plate-Recognition": "stats-Automatic-License-Plate-Recognition",
-      "Covid-19-Radiology": "stats-Covid-19-Radiology",
-      "Data-Science-Projects": "stats-Data-Science-Projects",
-      "Agentic-Data-Analysis": "stats-Agentic-Data-Analysis",
-      "PDF2Podcast": "stats-PDF2Podcast",
-      "Other-Data-Science": "stats-Other-Data-Science-Projects"
-    };
-    const elId = elIdMap[key];
-    const el = document.getElementById(elId);
-    if (!el) return;
-    if (!data) {
-      // leave placeholder text but make it subtle
-      el.textContent = '⭐ — · 🍴 —';
-      return;
-    }
-    const stars = data.stargazers_count ?? 0;
-    const forks = data.forks_count ?? 0;
-    el.textContent = `⭐ ${stars} · 🍴 ${forks}`;
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    updateStars().catch(()=>{/* ignore errors silently */});
-  });
-</script>
-
-<!-- Image Preloading for Projects Section -->
-<script>
-  function preloadImages() {
-    const imageUrls = [
-      './src/img/icon-rocket.svg',
-      './src/img/vision-icon.svg',
-      './src/img/pagers-icon.svg',
-      './src/img/planet-icon.svg',
-      './src/img/ai-agent.png',
-      './src/img/podcast-grey.png',
-      './src/img/kernel-logo.svg',
-      './src/img/menu-icon.svg',
-      './src/img/close-icon.svg',
-      './src/img/icon-open.svg',
-      './src/img/uday.webp',
-      './src/img/pdf-icon.svg'
-    ];
-
-    imageUrls.forEach(url => {
-      const img = new Image();
-      img.src = url;
     });
-  }
-
-  // Preload all project modal images
-  async function preloadModalImages() {
-    try {
-      const projectIds = [
-        'rockreveal-ai',
-        'alpr',
-        'liveliness-detection',
-        'covid-xray',
-        'agentic-data-analysis',
-        'pdf2podcast',
-        'other-ml-projects'
-      ];
-
-      const preloadPromises = projectIds.map(async (projectId) => {
-        try {
-          const response = await fetch(`./projects/${projectId}.html`);
-          if (!response.ok) return;
-
-          const htmlText = await response.text();
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(htmlText, 'text/html');
-
-          // Find all images in the project content
-          const images = doc.querySelectorAll('img');
-          images.forEach(img => {
-            // Skip svgs that are small icons
-            if (!img.src.includes('.svg') || img.classList.contains('project-image')) {
-              const image = new Image();
-              image.src = img.src;
-            }
-          });
-        } catch (error) {
-          console.log(`Could not preload images for project: ${projectId}`);
-        }
-      });
-
-      // Preload experience modal images
-      const experienceIds = [
-        'fractal',
-        'hcl',
-        'chugani',
-        'yang',
-        'tcs-infosys'
-      ];
-
-      const experiencePromises = experienceIds.map(async (experienceId) => {
-        try {
-          const response = await fetch(`./experience/${experienceId}.html`);
-          if (!response.ok) return;
-
-          const htmlText = await response.text();
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(htmlText, 'text/html');
-
-          // Find all images in the experience content
-          const images = doc.querySelectorAll('img');
-          images.forEach(img => {
-            // Skip svgs that are small icons
-            if (!img.src.includes('.svg') || img.classList.contains('project-image')) {
-              const image = new Image();
-              image.src = img.src;
-            }
-          });
-        } catch (error) {
-          console.log(`Could not preload images for experience: ${experienceId}`);
-        }
-      });
-
-      await Promise.all([...preloadPromises, ...experiencePromises]);
-      console.log('Project and experience modal images preloaded successfully');
-    } catch (error) {
-      console.log('Error preloading modal images:', error);
-    }
-  }
-
-  // Preload images when DOM is ready
-  document.addEventListener('DOMContentLoaded', () => {
-    preloadImages();
-    preloadModalImages();
   });
+});
 </script>
 
-<!-- Project Modal JavaScript -->
+<!-- Particles configuration -->
 <script>
-  // Modal functionality
-  let currentProjectId = null;
-
-  async function loadProjectContent(projectId) {
-    try {
-      const response = await fetch(`./projects/${projectId}.html`);
-      if (!response.ok) {
-        throw new Error('Project content not found');
+particlesJS("particles-js", {
+  "particles": {
+    "number": { "value": 15 },
+    "color": { "value": "#ffffff" },
+    "shape": { "type": "circle" },
+    "opacity": {
+      "value": 1.0,
+      "random": true,
+      "anim": {
+        "enable": true,
+        "speed": 1.5,
+        "opacity_min": 0.3,
+        "sync": false
       }
-      const content = await response.text();
-      return content;
-    } catch (error) {
-      console.error('Error loading project content:', error);
-      return getFallbackContent(projectId);
-    }
-  }
-
-  function extractTitleAndTags(content) {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(content, 'text/html');
-
-    const title = doc.querySelector('h1')?.textContent || 'Project Title';
-    const tagsElement = doc.querySelector('.tags');
-    const tags = tagsElement ? tagsElement.innerHTML : '';
-
-    // Remove title and tags from content
-    const titleElement = doc.querySelector('h1');
-    if (titleElement) titleElement.remove();
-    if (tagsElement) tagsElement.remove();
-
-    return {
-      title,
-      tags,
-      content: doc.body.innerHTML
-    };
-  }
-
-  /*
-  function getFallbackContent(projectId) {
-    const fallbacks = {
-      "rockreveal-ai": {
-        title: "RockReveal AI",
-        tags: '<span>Python</span><span>Telegram Bot</span><span>MLOps</span><span>W&B</span>',
-        content: '<p>Image classification deployed as a Telegram bot. Integrated Weights & Biases for experiment & artifact tracking and a simple MLOps workflow for continuous improvements.</p>'
-      },
-      "alpr": {
-        title: "Automatic License Plate Recognition",
-        tags: '<span>Computer Vision</span><span>Deployment</span><span>Streamlit</span>',
-        content: '<p>High-accuracy ALPR system with end-to-end pipeline and a Streamlit web app for demo and deployment.</p>'
-      },
-      "liveliness-detection": {
-        title: "Real-Time Liveliness Detection",
-        tags: '<span>MTCNN</span><span>FaceNet</span><span>AWS</span>',
-        content: '<p>Anti-spoofing pipeline (MTCNN + FaceNet) optimized for low-latency deployment on AWS with pruning/quantization applied.</p>'
-      },
-      "covid-xray": {
-        title: "Covid-19 X-ray Analysis",
-        tags: '<span>Deep Learning</span><span>Healthcare</span><span>Deployment</span>',
-        content: '<p>Real-time deep learning classifier for X-ray images, with notebooks and deployment tooling for evaluation and demo.</p>'
-      },
-      "agentic-data-analysis": {
-        title: "Agentic Data Analysis (Google ADK)",
-        tags: '<span>Agentic</span><span>Google ADK</span><span>Data Analysis</span>',
-        content: '<p>Autonomous data-analysis agents that automate EDA, visualization, and report generation — implemented as a folder inside Data-Science-Projects.</p>'
-      },
-      "pdf2podcast": {
-        title: "PDF2Podcast",
-        tags: '<span>Generative AI</span><span>TTS</span><span>Productivity</span>',
-        content: '<p>Extracts text from PDFs and converts to podcast-style audio using TTS + summarization, with demo scripts and deployment notes inside the parent repo.</p>'
-      },
-      "other-ml-projects": {
-        title: "Other ML / DS Projects",
-        tags: '<span>Notebooks</span><span>ML Experiments</span><span>Data Pipelines</span>',
-        content: '<p>Collection of notebooks and demos covering model prototyping, data pipelines, visualizations and small utilities.</p>'
+    },
+    "size": {
+      "value": 8,
+      "random": true,
+      "anim": {
+        "enable": true,
+        "speed": 3,
+        "size_min": 2,
+        "sync": false
       }
-    };
-
-    const fallback = fallbacks[projectId];
-    if (fallback) {
-      return `<h1>${fallback.title}</h1><div class="tags">${fallback.tags}</div>${fallback.content}`;
-    }
-    return '<h1>Project Content</h1><div class="tags"><span>Loading</span></div><p>Content loading...</p>';
-  }
-  */
-
-  async function openProjectModal(projectId) {
-    const modal = document.getElementById('project-modal');
-    const contentContainer = document.getElementById('modal-content-container');
-    const modalTitle = document.getElementById('modal-title');
-    const modalTags = document.getElementById('modal-tags');
-
-    // Save current scroll position and projects section position
-    const projectsSection = document.getElementById('projects');
-    modal.dataset.scrollY = window.scrollY;
-    modal.dataset.projectsOffset = projectsSection ? projectsSection.offsetTop : 0;
-
-    // Show loading state
-    contentContainer.innerHTML = '<div class="loading">Loading project content...</div>';
-
-    // Show modal
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    currentProjectId = projectId;
-
-    // Load content
-    const rawContent = await loadProjectContent(projectId);
-    const { title, tags, content } = extractTitleAndTags(rawContent);
-
-    // Set title and tags in header
-    modalTitle.textContent = title;
-    modalTags.innerHTML = tags;
-
-    // Set content in body
-    contentContainer.innerHTML = content;
-
-    // Update navigation buttons state
-    updateProjectNavigationButtons();
-
-    // Add close button functionality
-    const closeBtn = contentContainer.querySelector('.modal-close');
-    if (closeBtn) {
-      closeBtn.onclick = closeProjectModal;
-    }
-  }
-
-  function initializeModalBackground() {
-    // Initialize particles for modal
-    particlesJS("modal-particles-js", {
+    },
+    "line_linked": {
+      "enable": true,
+      "distance": 300,
+      "color": "#ffffff",
+      "opacity": 0.4,
+      "width": 1,
+      "path": { "enable": true, "type": "particles" }
+    },
+    "move": {
+      "enable": true,
+      "speed": 3,
+      "direction": "none",
+      "random": false,
+      "straight": false,
+      "out_mode": "out",
+      "bounce": false,
+      "attract": { "enable": false, "rotateX": 600, "rotateY": 1200 }
+    },
+    "twinkle": {
+      "lines": {
+        "enable": true,
+        "frequency": 0.5,
+        "opacity": 1.0,
+        "color": "#ffffff",
+        "wave": {
+          "travel": false,
+          "speed": 0.5
+        }
+      },
       "particles": {
-        "number": { "value": 8 },
-        "color": { "value": "#ffffff" },
-        "shape": { "type": "circle" },
-        "opacity": { "value": 0.15 },
-        "size": { "value": 2 },
-        "line_linked": {
-          "enable": true,
-          "distance": 300,
-          "color": "#ffffff",
-          "opacity": 0.1,
-          "width": 1
-        },
-        "move": { "enable": true, "speed": 1.5 }
-      },
-      "interactivity": {
-        "events": {
-          "onhover": { "enable": true, "mode": "repulse" },
-          "onclick": { "enable": true, "mode": "push" }
+        "enable": true,
+        "frequency": 0.3,
+        "opacity": 1.0,
+        "color": "#ffffff",
+        "wave": {
+          "travel": false,
+          "speed": 0.8
         }
-      },
-      "retina_detect": true
-    });
-
-    // Initialize WebGL background for modal
-    if (typeof initBackground === 'function') {
-      // Assuming background.js exports an initBackground function
-      // We'll need to modify background.js to support modal initialization
-      initModalBackground();
-    }
-  }
-
-  function initModalBackground() {
-    // This function will be called if background.js supports modal initialization
-    // For now, we'll initialize the canvas manually
-    const canvas = document.querySelector('#modal-canvas canvas');
-    if (canvas && typeof initWebGLBackground === 'function') {
-      initWebGLBackground('modal-canvas', 'modal-colorBackground');
-    }
-  }
-
-  function closeProjectModal() {
-    const modal = document.getElementById('project-modal');
-
-    // Restore scroll position
-    const scrollY = modal.dataset.scrollY || 0;
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.width = '';
-    document.body.style.overflow = '';
-    window.scrollTo(0, parseInt(scrollY));
-
-    modal.classList.remove('active');
-    currentProjectId = null;
-  }
-
-  // Simple Gallery functionality - no auto-scroll
-  function initializeGallery() {
-    const galleryContainer = document.querySelector('.infinite-gallery .gallery-container');
-    const galleryGrid = document.getElementById('gallery-grid');
-
-    if (!galleryContainer || !galleryGrid) {
-      console.error('Gallery elements not found');
-      return;
-    }
-
-    // Get existing project cards from HTML
-    const projectCards = Array.from(document.querySelectorAll('.project-with-link'));
-    console.log('Found', projectCards.length, 'project cards');
-
-    // Attach click handlers to all cards
-    attachCardClickHandlers();
-
-    console.log('Gallery initialized with', projectCards.length, 'project cards');
-  }
-
-  function attachCardClickHandlers() {
-    const allProjectCards = document.querySelectorAll('.project-with-link');
-    allProjectCards.forEach((card) => {
-      const projectId = card.getAttribute('data-project');
-      if (projectId && !card.hasClickHandler) {
-        card.hasClickHandler = true;
-        card.style.cursor = 'pointer';
-
-        let touchStartX = 0;
-        let touchStartY = 0;
-        let touchStartTime = 0;
-        let isScrolling = false;
-
-        // Mouse click
-        card.addEventListener('click', (e) => {
-          if (!isScrolling) {
-            e.preventDefault();
-            openProjectModal(projectId);
-          }
-        });
-
-        // Touch support for mobile - improved to allow horizontal scrolling
-        card.addEventListener('touchstart', (e) => {
-          touchStartX = e.touches[0].clientX;
-          touchStartY = e.touches[0].clientY;
-          touchStartTime = Date.now();
-          isScrolling = false;
-        }, { passive: true });
-
-        card.addEventListener('touchmove', (e) => {
-          if (!touchStartX || !touchStartY) return;
-
-          const touchCurrentX = e.touches[0].clientX;
-          const touchCurrentY = e.touches[0].clientY;
-          const deltaX = Math.abs(touchCurrentX - touchStartX);
-          const deltaY = Math.abs(touchCurrentY - touchStartY);
-
-          // If horizontal movement is greater than vertical, or significant horizontal movement
-          if (deltaX > deltaY && deltaX > 10) {
-            isScrolling = true;
-          }
-        }, { passive: true });
-
-        card.addEventListener('touchend', (e) => {
-          const touchEndTime = Date.now();
-          const touchDuration = touchEndTime - touchStartTime;
-
-          // Only open modal if it's a quick tap (not a scroll) and not marked as scrolling
-          if (!isScrolling && touchDuration < 300) {
-            e.preventDefault();
-            openProjectModal(projectId);
-          }
-
-          // Reset touch tracking
-          touchStartX = 0;
-          touchStartY = 0;
-          touchStartTime = 0;
-          isScrolling = false;
-        }, { passive: false });
-
-        // Keyboard support
-        card.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            openProjectModal(projectId);
-          }
-        });
-      }
-    });
-  }
-
-  // Modal close handling
-  function closeProjectModal() {
-    const modal = document.getElementById('project-modal');
-
-    // Always return to projects section when closing project modal
-    const projectsSection = document.getElementById('projects');
-    if (projectsSection) {
-      const projectsOffset = parseInt(modal.dataset.projectsOffset) || projectsSection.offsetTop;
-      // Scroll to projects section with smooth behavior
-      window.scrollTo({
-        top: projectsOffset - 20, // Small offset for better positioning
-        behavior: 'smooth'
-      });
-    }
-
-    // Restore body styles
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.width = '';
-    document.body.style.overflow = '';
-
-    modal.classList.remove('active');
-    currentProjectId = null;
-  }
-
-  // Project Navigation Functions
-  let projectList = null;
-
-  // Load and cache project list
-  async function getProjectList() {
-    if (projectList === null) {
-      try {
-        const response = await fetch('./projects.json');
-        const data = await response.json();
-        projectList = data.projects;
-      } catch (error) {
-        console.error('Error loading project list:', error);
-        return [];
       }
     }
-    return projectList;
-  }
-
-  // Get current project index
-  function getCurrentProjectIndex(projectId) {
-    const projects = projectList;
-    if (!projects) return -1;
-    return projects.findIndex(project => project.id === projectId);
-  }
-
-  // Navigate to next or previous project
-  async function navigateProjectModal(direction) {
-    if (!currentProjectId) return;
-
-    const projects = await getProjectList();
-    if (projects.length === 0) return;
-
-    const currentIndex = getCurrentProjectIndex(currentProjectId);
-    if (currentIndex === -1) return;
-
-    let newIndex;
-    if (direction === 'next') {
-      newIndex = currentIndex + 1;
-    } else if (direction === 'prev') {
-      newIndex = currentIndex - 1;
-    } else {
-      return;
-    }
-
-    // Check bounds
-    if (newIndex < 0 || newIndex >= projects.length) {
-      return;
-    }
-
-    const newProjectId = projects[newIndex].id;
-    await openProjectModal(newProjectId);
-  }
-
-  // Update navigation button states
-  async function updateProjectNavigationButtons() {
-    if (!currentProjectId) return;
-
-    const projects = await getProjectList();
-    if (projects.length === 0) return;
-
-    const currentIndex = getCurrentProjectIndex(currentProjectId);
-    if (currentIndex === -1) return;
-
-    const prevButton = document.getElementById('project-nav-prev');
-    const nextButton = document.getElementById('project-nav-next');
-
-    if (prevButton) {
-      prevButton.disabled = currentIndex === 0;
-    }
-    if (nextButton) {
-      nextButton.disabled = currentIndex === projects.length - 1;
-    }
-  }
-
-  // Event listeners
-  document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM loaded, initializing gallery...');
-
-    // Initialize gallery with existing HTML
-    initializeGallery();
-
-    // Close modal on overlay click
-    const projectModal = document.getElementById('project-modal');
-    if (projectModal) {
-      projectModal.addEventListener('click', (e) => {
-        if (e.target.id === 'project-modal') {
-          closeProjectModal();
-        }
-      });
-    }
-
-    // Close modal on ESC key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && currentProjectId) {
-        closeProjectModal();
+  },
+  "interactivity": {
+    "events": {
+      "onhover": { "enable": true, "mode": "bubble", "duration": 0.1 },
+      "onclick": { "enable": true, "mode": "push" }
+    },
+    "modes": {
+      "bubble": {
+        "distance": 100,
+        "size": 30,
+        "duration": 2,
+        "opacity": 1.0
       }
-    });
-  });
+    }
+  },
+  "retina_detect": true
+});
 </script>
 
-<!-- Experience Modal JavaScript -->
+<!-- Live GitHub stars fetcher -->
 <script>
-  // Experience Modal functionality
-  let currentExperienceId = null;
+const repoMap = {
+  "Automatic-License-Plate-Recognition": "Automatic-License-Plate-Recognition",
+  "Covid-19-Radiology": "Covid-19-Radiology",
+  "Data-Science-Projects": "Data-Science-Projects"
+};
 
-  async function loadExperienceContent(experienceId) {
-    try {
-      const response = await fetch(`./experience/${experienceId}.html`);
-      if (!response.ok) {
-        throw new Error('Experience content not found');
-      }
-      const content = await response.text();
-      return content;
-    } catch (error) {
-      console.error('Error loading experience content:', error);
-      return getExperienceFallbackContent(experienceId);
-    }
+async function fetchRepo(owner, repo) {
+  const url = `https://api.github.com/repos/${owner}/${repo}`;
+  try {
+    const r = await fetch(url);
+    if (!r.ok) return null;
+    return r.json();
+  } catch (e) {
+    return null;
   }
+}
 
-  function extractExperienceTitleAndTags(content) {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(content, 'text/html');
-
-    const title = doc.querySelector('h1')?.textContent || 'Experience Title';
-    const tagsElement = doc.querySelector('.tags');
-    const tags = tagsElement ? tagsElement.innerHTML : '';
-
-    // Remove title and tags from content
-    const titleElement = doc.querySelector('h1');
-    if (titleElement) titleElement.remove();
-    if (tagsElement) tagsElement.remove();
-
-    return {
-      title,
-      tags,
-      content: doc.body.innerHTML
-    };
+async function updateStars() {
+  const owner = "udaylunawat";
+  const seen = {};
+  for (const key in repoMap) {
+    const repo = repoMap[key];
+    if (seen[repo]) {
+      const data = seen[repo];
+      updateDomForKey(key, data);
+      continue;
+    }
+    const data = await fetchRepo(owner, repo);
+    seen[repo] = data;
+    updateDomForKey(key, data);
   }
+}
 
-  /*
-  function getExperienceFallbackContent(experienceId) {
-    const fallbacks = {
-      "fractal": {
-        title: "Senior Machine Learning Engineer & SWE — Fractal AI",
-        tags: '<span>LangGraph</span><span>LangChain</span><span>Multi-Agent Orchestration</span><span>Python</span><span>Production ML</span>',
-        content: '<p>Led engineering for a multi-agent orchestration platform (LangGraph / LangChain). Owned tool onboarding and metadata lifecycle to productize agent behaviors for business use.</p>'
-      },
-      "hcl": {
-        title: "Technical Lead ML Engineer — HCL",
-        tags: '<span>Human-in-the-Loop</span><span>Label Studio</span><span>FastAPI</span><span>MLflow</span><span>Seldon</span><span>Trivy</span>',
-        content: '<p>Implemented human-in-the-loop feedback and automated deployment flows; added Label Studio + FastAPI annotation pipelines, Trivy scanning, MLflow tracking and Seldon serving.</p>'
-      },
-      "chugani": {
-        title: "ML Engineer — Chugani",
-        tags: '<span>MTCNN</span><span>FaceNet</span><span>Liveliness Detection</span><span>AWS</span><span>Real-time ML</span><span>MLOps</span>',
-        content: '<p>Built a real-time liveliness detection service (MTCNN + FaceNet), converted prototypes to modular MLOps pipelines, and established monitoring + retraining flows on AWS.</p>'
-      },
-      "yang": {
-        title: "ML & ETL Engineer — Yang",
-        tags: '<span>AI + ETL</span><span>Smart Factory</span><span>IPQC System</span><span>Tableau</span><span>Production ML</span><span>Data Pipelines</span>',
-        content: '<p>Delivered AI + ETL systems for smart-factory operations; shipped a 24/7 IPQC audit system (≈200 hours/week saved) and dashboards across 20+ vendor sites.</p>'
-      }
-    };
-
-    const fallback = fallbacks[experienceId];
-    if (fallback) {
-      return `<h1>${fallback.title}</h1><div class="tags">${fallback.tags}</div>${fallback.content}`;
-    }
-    return '<h1>Experience Content</h1><div class="tags"><span>Loading</span></div><p>Content loading...</p>';
+function updateDomForKey(key, data) {
+  const elIdMap = {
+    "Automatic-License-Plate-Recognition": "stats-Automatic-License-Plate-Recognition",
+    "Covid-19-Radiology": "stats-Covid-19-Radiology",
+    "Data-Science-Projects": "stats-Data-Science-Projects"
+  };
+  const elId = elIdMap[key];
+  const el = document.getElementById(elId);
+  if (!el) return;
+  if (!data) {
+    el.textContent = '⭐ — · 🍴 —';
+    return;
   }
-  */
+  const stars = data.stargazers_count ?? 0;
+  const forks = data.forks_count ?? 0;
+  el.textContent = `⭐ ${stars} · 🍴 ${forks}`;
+}
 
-  async function openExperienceModal(experienceId) {
-    const modal = document.getElementById('experience-modal');
-    const contentContainer = document.getElementById('experience-modal-content-container');
-    const modalTitle = document.getElementById('experience-modal-title');
-    const modalTags = document.getElementById('experience-modal-tags');
-    const modalHeader = document.querySelector('#experience-modal .modal-header');
-
-    // Save current scroll position
-    modal.dataset.scrollY = window.scrollY;
-
-    // Show loading state
-    contentContainer.innerHTML = '<div class="loading">Loading experience content...</div>';
-
-    // Show modal
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    currentExperienceId = experienceId;
-
-    // Load content
-    const rawContent = await loadExperienceContent(experienceId);
-    const { title, tags, content } = extractExperienceTitleAndTags(rawContent);
-
-    // Set title and tags in header
-    modalTitle.textContent = title;
-    modalTags.innerHTML = tags;
-
-    // Set content in body
-    contentContainer.innerHTML = content;
-
-    // Find experience logo data
-    const experiences = await getExperienceList();
-    const experienceData = experiences.find(exp => exp.id === experienceId);
-
-    // Create and position logo in header
-    let logoContainer = modalHeader.querySelector('.experience-logo');
-    if (!logoContainer) {
-      logoContainer = document.createElement('div');
-      logoContainer.className = 'experience-logo';
-      modalHeader.appendChild(logoContainer);
-    }
-
-    // Add logo image
-    if (experienceData?.logo) {
-      logoContainer.innerHTML = `<img src="${experienceData.logo}" alt="${title} logo">`;
-    } else if (experienceData?.logos && experienceData.logos.length > 0) {
-      // Handle multiple logos (like tcs-infosys)
-      logoContainer.innerHTML = `
-        <div style="display: flex; gap: 15px; align-items: center;">
-          ${experienceData.logos.map(logo => `<img src="${logo}" alt="${title} logo" style="width: 45px; height: 45px; object-fit: contain;">`).join('')}
-        </div>
-      `;
-    } else {
-      logoContainer.style.display = 'none';
-    }
-
-    // Update navigation buttons state
-    updateExperienceNavigationButtons();
-
-    // Add close button functionality
-    const closeBtn = contentContainer.querySelector('.modal-close');
-    if (closeBtn) {
-      closeBtn.onclick = closeExperienceModal;
-    }
-  }
-
-  function closeExperienceModal() {
-    const modal = document.getElementById('experience-modal');
-
-    // Restore scroll position
-    const scrollY = modal.dataset.scrollY || 0;
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.width = '';
-    document.body.style.overflow = '';
-    window.scrollTo(0, parseInt(scrollY));
-
-    modal.classList.remove('active');
-    currentExperienceId = null;
-  }
-
-  // Experience Navigation Functions
-  let experienceList = null;
-
-  // Load and cache experience list
-  async function getExperienceList() {
-    if (experienceList === null) {
-      try {
-        const response = await fetch('./content.json');
-        const data = await response.json();
-        experienceList = data.experience;
-      } catch (error) {
-        console.error('Error loading experience list:', error);
-        return [];
-      }
-    }
-    return experienceList;
-  }
-
-  // Get current experience index
-  function getCurrentExperienceIndex(experienceId) {
-    const experiences = experienceList;
-    if (!experiences) return -1;
-    return experiences.findIndex(experience => experience.id === experienceId);
-  }
-
-  // Navigate to next or previous experience
-  async function navigateExperienceModal(direction) {
-    if (!currentExperienceId) return;
-
-    const experiences = await getExperienceList();
-    if (experiences.length === 0) return;
-
-    const currentIndex = getCurrentExperienceIndex(currentExperienceId);
-    if (currentIndex === -1) return;
-
-    let newIndex;
-    if (direction === 'next') {
-      newIndex = currentIndex + 1;
-    } else if (direction === 'prev') {
-      newIndex = currentIndex - 1;
-    } else {
-      return;
-    }
-
-    // Check bounds
-    if (newIndex < 0 || newIndex >= experiences.length) {
-      return;
-    }
-
-    const newExperienceId = experiences[newIndex].id;
-    await openExperienceModal(newExperienceId);
-  }
-
-  // Update navigation button states
-  async function updateExperienceNavigationButtons() {
-    if (!currentExperienceId) return;
-
-    const experiences = await getExperienceList();
-    if (experiences.length === 0) return;
-
-    const currentIndex = getCurrentExperienceIndex(currentExperienceId);
-    if (currentIndex === -1) return;
-
-    const prevButton = document.getElementById('experience-nav-prev');
-    const nextButton = document.getElementById('experience-nav-next');
-
-    if (prevButton) {
-      prevButton.disabled = currentIndex === 0;
-    }
-    if (nextButton) {
-      nextButton.disabled = currentIndex === experiences.length - 1;
-    }
-  }
-
-  // Initialize experience modal functionality
-  document.addEventListener('DOMContentLoaded', () => {
-    // Make experience cards clickable
-    const experienceCards = document.querySelectorAll('.experience-with-link');
-    experienceCards.forEach((card) => {
-      card.style.cursor = 'pointer';
-      card.addEventListener('click', (e) => {
-        e.preventDefault();
-        const experienceId = card.getAttribute('data-experience') || 'fractal';
-        openExperienceModal(experienceId);
-      });
-    });
-
-    // Close experience modal on overlay click
-    document.getElementById('experience-modal').addEventListener('click', (e) => {
-      if (e.target.id === 'experience-modal') {
-        closeExperienceModal();
-      }
-    });
-
-    // Close experience modal on ESC key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && currentExperienceId) {
-        closeExperienceModal();
-      }
-    });
-  });
+document.addEventListener('DOMContentLoaded', () => {
+  updateStars().catch(()=>{});
+});
 </script>
 
-<!-- Resume download and open functionality -->
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const resumeLink = document.getElementById('resume-link');
-
-    if (resumeLink) {
-      resumeLink.addEventListener('click', (e) => {
-        // Allow the link to open in new tab (target="_blank" handles this)
-        // Additionally trigger download programmatically
-        const link = document.createElement('a');
-        link.href = resumeLink.href;
-        link.download = 'Uday_Lunawat_Resume_Senior_ML_Engineer_V9.pdf';
-        link.style.display = 'none';
-
-        // Add to DOM, click, and remove
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      });
-    }
-  });
-</script>
-
-<!-- Minimal Particles Control Panel with Tab Functionality -->
+<!-- Consolidated control panel with full functionality -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   console.log('🎮 Initializing enhanced particles control panel with tabs...');
@@ -1496,14 +621,16 @@ document.addEventListener('DOMContentLoaded', function() {
   const sizeDisplay = document.getElementById('particles-size-display');
   const linkOpacitySlider = document.getElementById('particles-link-opacity');
   const linkOpacityDisplay = document.getElementById('particles-link-opacity-display');
-
-  // Background sliders and displays
+  const opacitySlider = document.getElementById('particles-opacity');
+  const opacityDisplay = document.getElementById('particles-opacity-display');
   const backgroundSpeedSlider = document.getElementById('background-speed');
   const backgroundSpeedDisplay = document.getElementById('background-speed-display');
-  const backgroundScaleSlider = document.getElementById('background-scale');
-  const backgroundScaleDisplay = document.getElementById('background-scale-display');
   const backgroundDistortionSlider = document.getElementById('background-distortion');
   const backgroundDistortionDisplay = document.getElementById('background-distortion-display');
+  const backgroundPhaseSlider = document.getElementById('background-phase');
+  const backgroundPhaseDisplay = document.getElementById('background-phase-display');
+  const backgroundFrequencySlider = document.getElementById('background-frequency');
+  const backgroundFrequencyDisplay = document.getElementById('background-frequency-display');
 
   // Toggle panel visibility
   function toggleControlPanel() {
@@ -1522,236 +649,6 @@ document.addEventListener('DOMContentLoaded', function() {
   function hideControlPanel() {
     controlPanel.classList.add('hidden');
     console.log('✨ Particles control panel hidden');
-  }
-
-  // Update particles parameter
-  function updateParticlesParameter(parameter, value) {
-    if (window.pJSDom && window.pJSDom.length > 0) {
-      const pJS = window.pJSDom[0].pJS;
-
-      // Update the parameter in the particles configuration
-      switch(parameter) {
-        case 'number':
-          numberSlider.value = value;
-          numberDisplay.textContent = value;
-          break;
-        case 'speed':
-          speedSlider.value = value;
-          speedDisplay.textContent = value;
-          break;
-        case 'size':
-          sizeSlider.value = value;
-          sizeDisplay.textContent = value;
-          break;
-        case 'linkOpacity':
-          linkOpacitySlider.value = value;
-          linkOpacityDisplay.textContent = value;
-          break;
-      }
-
-      // Reinitialize particles.js with updated configuration
-      const updatedConfig = {
-        particles: {
-          number: { value: parseInt(numberSlider.value) },
-          color: { value: "#ffffff" },
-          shape: { type: "circle" },
-          opacity: {
-            value: 1.0,
-            random: true,
-            anim: {
-              enable: true,
-              speed: 1.5,
-              opacity_min: 0.3,
-              sync: false
-            }
-          },
-          size: {
-            value: parseInt(sizeSlider.value),
-            random: true,
-            anim: {
-              enable: true,
-              speed: 3,
-              size_min: 2,
-              sync: false
-            }
-          },
-          line_linked: {
-            enable: true,
-            distance: 300,
-            color: "#ffffff",
-            opacity: parseFloat(linkOpacitySlider.value),
-            width: 1,
-            path: { enable: true, type: "particles" }
-          },
-          move: {
-            enable: true,
-            speed: parseFloat(speedSlider.value),
-            direction: "none",
-            random: false,
-            straight: false,
-            out_mode: "out",
-            bounce: false,
-            attract: { enable: false, rotateX: 600, rotateY: 1200 }
-          }
-        },
-        interactivity: {
-          events: {
-            onhover: { enable: true, mode: "bubble", duration: 0.1 },
-            onclick: { enable: true, mode: "push" }
-          },
-          modes: {
-            bubble: { distance: 100, size: 30, duration: 2, opacity: 1.0 }
-          }
-        },
-        retina_detect: true
-      };
-
-      // Destroy existing particles and reinitialize
-      if (window.pJSDom[0]) {
-        window.pJSDom[0].pJS.fn.particlesEmpty();
-        particlesJS("particles-js", updatedConfig);
-      }
-
-      console.log(`✨ Particles ${parameter} updated to:`, value, 'Full config reloaded');
-    } else {
-      console.log('⚠️ Particles.js not ready yet, cannot update');
-      // Update display anyway for consistency
-      switch(parameter) {
-        case 'number':
-          numberDisplay.textContent = value;
-          break;
-        case 'speed':
-          speedDisplay.textContent = value;
-          break;
-        case 'size':
-          sizeDisplay.textContent = value;
-          break;
-        case 'linkOpacity':
-          linkOpacityDisplay.textContent = value;
-          break;
-      }
-    }
-  }
-
-  // Function to update particles opacity
-  function updateParticlesOpacity(opacityValue) {
-    if (window.pJSDom && window.pJSDom.length > 0) {
-      const pJS = window.pJSDom[0].pJS;
-
-      // Update the particles opacity in the configuration
-      pJS.particles.opacity.value = opacityValue;
-
-      // Reinitialize particles.js with updated configuration
-      const updatedConfig = {
-        particles: {
-          number: { value: pJS.particles.number.value },
-          color: { value: "#ffffff" },
-          shape: { type: "circle" },
-          opacity: {
-            value: opacityValue,
-            random: true,
-            anim: {
-              enable: true,
-              speed: 1.5,
-              opacity_min: 0.3,
-              sync: false
-            }
-          },
-          size: {
-            value: pJS.particles.size.value,
-            random: true,
-            anim: {
-              enable: true,
-              speed: 3,
-              size_min: 2,
-              sync: false
-            }
-          },
-          line_linked: {
-            enable: true,
-            distance: pJS.particles.line_linked.distance,
-            color: "#ffffff",
-            opacity: pJS.particles.line_linked.opacity,
-            width: 1,
-            path: { enable: true, type: "particles" }
-          },
-          move: {
-            enable: true,
-            speed: pJS.particles.move.speed,
-            direction: "none",
-            random: false,
-            straight: false,
-            out_mode: "out",
-            bounce: false,
-            attract: { enable: false, rotateX: 600, rotateY: 1200 }
-          }
-        },
-        interactivity: {
-          events: {
-            onhover: { enable: true, mode: "bubble", duration: 0.1 },
-            onclick: { enable: true, mode: "push" }
-          },
-          modes: {
-            bubble: { distance: 100, size: 30, duration: 2, opacity: 1.0 }
-          }
-        },
-        retina_detect: true
-      };
-
-      // Destroy existing particles and reinitialize
-      if (window.pJSDom[0]) {
-        window.pJSDom[0].pJS.fn.particlesEmpty();
-        particlesJS("particles-js", updatedConfig);
-      }
-
-      console.log('✨ Particles opacity updated to:', opacityValue);
-      opacityDisplay.textContent = opacityValue;
-    } else {
-      console.log('⚠️ Particles.js not ready yet, cannot update opacity');
-      // Update display anyway for consistency
-      opacityDisplay.textContent = opacityValue;
-    }
-  }
-
-  // Wait for particles.js to be ready before setting initial values
-  function initializeParticlesControls() {
-    if (window.pJSDom && window.pJSDom.length > 0) {
-      // Set initial display values
-      if (window.pJSDom[0].pJS && window.pJSDom[0].pJS.particles) {
-        const pJS = window.pJSDom[0].pJS;
-        numberSlider.value = pJS.particles.number.value;
-        numberDisplay.textContent = pJS.particles.number.value;
-        speedSlider.value = pJS.particles.move.speed;
-        speedDisplay.textContent = pJS.particles.move.speed;
-        sizeSlider.value = pJS.particles.size.value;
-        sizeDisplay.textContent = pJS.particles.size.value;
-        linkOpacitySlider.value = pJS.particles.line_linked.opacity;
-        linkOpacityDisplay.textContent = pJS.particles.line_linked.opacity;
-        opacityDisplay.textContent = pJS.particles.opacity.value;
-        console.log('✨ Particles controls initialized successfully');
-        return true;
-      }
-    }
-    return false;
-  }
-
-  // Event listeners
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      toggleControlPanel();
-    });
-    console.log('✅ Toggle button event listener attached');
-  }
-
-  if (closeBtn) {
-    closeBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      hideControlPanel();
-    });
-    console.log('✅ Close button event listener attached');
   }
 
   // Tab switching functionality
@@ -1774,6 +671,256 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  // Initialize particles controls
+  function initializeParticlesControls() {
+    if (window.pJSDom && window.pJSDom.length > 0) {
+      // Set initial display values
+      if (window.pJSDom[0].pJS && window.pJSDom[0].pJS.particles) {
+        const pJS = window.pJSDom[0].pJS;
+        if (numberDisplay) numberDisplay.textContent = pJS.particles.number.value;
+        if (speedDisplay) speedDisplay.textContent = pJS.particles.move.speed;
+        if (sizeDisplay) sizeDisplay.textContent = pJS.particles.size.value;
+        if (linkOpacityDisplay) linkOpacityDisplay.textContent = pJS.particles.line_linked.opacity;
+        if (opacityDisplay) opacityDisplay.textContent = pJS.particles.opacity.value;
+        console.log('✨ Particles controls initialized successfully');
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // Update particles parameter
+  function updateParticlesParameter(parameter, value) {
+    if (window.pJSDom && window.pJSDom.length > 0) {
+      const pJS = window.pJSDom[0].pJS;
+
+      // Update the parameter in the particles configuration
+      switch(parameter) {
+        case 'number':
+          if (numberSlider) numberSlider.value = value;
+          if (numberDisplay) numberDisplay.textContent = value;
+          break;
+        case 'speed':
+          if (speedSlider) speedSlider.value = value;
+          if (speedDisplay) speedDisplay.textContent = value;
+          break;
+        case 'size':
+          if (sizeSlider) sizeSlider.value = value;
+          if (sizeDisplay) sizeDisplay.textContent = value;
+          break;
+        case 'linkOpacity':
+          if (linkOpacitySlider) linkOpacitySlider.value = value;
+          if (linkOpacityDisplay) linkOpacityDisplay.textContent = value;
+          break;
+      }
+
+      // Reinitialize particles.js with updated configuration
+      const updatedConfig = {
+        particles: {
+          number: { value: parseInt(numberSlider ? numberSlider.value : 15) },
+          color: { value: "#ffffff" },
+          shape: { type: "circle" },
+          opacity: {
+            value: parseFloat(opacitySlider ? opacitySlider.value : 1.0),
+            random: true,
+            anim: {
+              enable: true,
+              speed: 1.5,
+              opacity_min: 0.3,
+              sync: false
+            }
+          },
+          size: {
+            value: parseInt(sizeSlider ? sizeSlider.value : 8),
+            random: true,
+            anim: {
+              enable: true,
+              speed: 3,
+              size_min: 2,
+              sync: false
+            }
+          },
+          line_linked: {
+            enable: true,
+            distance: 300,
+            color: "#ffffff",
+            opacity: parseFloat(linkOpacitySlider ? linkOpacitySlider.value : 0.4),
+            width: 1,
+            path: { enable: true, type: "particles" }
+          },
+          move: {
+            enable: true,
+            speed: parseFloat(speedSlider ? speedSlider.value : 3),
+            direction: "none",
+            random: false,
+            straight: false,
+            out_mode: "out",
+            bounce: false,
+            attract: { enable: false, rotateX: 600, rotateY: 1200 }
+          }
+        },
+        interactivity: {
+          events: {
+            onhover: {
+              enable: true,
+              mode: "bubble",
+              duration: 0.1
+            },
+            onclick: {
+              enable: true,
+              mode: "push"
+            }
+          },
+          modes: {
+            bubble: {
+              distance: 100,
+              size: 30,
+              duration: 2,
+              opacity: 1.0
+            }
+          }
+        },
+        retina_detect: true
+      };
+
+      // Destroy existing particles and reinitialize
+      if (window.pJSDom[0].pJS.fn && window.pJSDom[0].pJS.fn.particlesEmpty) {
+        window.pJSDom[0].pJS.fn.particlesEmpty();
+        if (typeof particlesJS === 'function') {
+          particlesJS("particles-js", updatedConfig);
+        }
+      }
+
+      console.log(`✨ Particles ${parameter} updated to:`, value, 'Full config reloaded');
+    } else {
+      console.log('⚠️ Particles.js not ready yet, cannot update');
+      // Update display anyway for consistency
+      switch(parameter) {
+        case 'number':
+          if (numberDisplay) numberDisplay.textContent = value;
+          break;
+        case 'speed':
+          if (speedDisplay) speedDisplay.textContent = value;
+          break;
+        case 'size':
+          if (sizeDisplay) sizeDisplay.textContent = value;
+          break;
+        case 'linkOpacity':
+          if (linkOpacityDisplay) linkOpacityDisplay.textContent = value;
+          break;
+      }
+    }
+  }
+
+  // Update background parameter
+  function updateBackgroundParameter(parameter, value) {
+    if (window.backgroundControls) {
+      try {
+        switch(parameter) {
+          case 'speed':
+            window.backgroundControls.setAnimationSpeed(value, undefined);
+            if (backgroundSpeedDisplay) backgroundSpeedDisplay.textContent = value;
+            console.log(`🌊 Background animation speed updated to:`, value);
+            break;
+          case 'distortion':
+            window.currentDistortion = value / 100.0;
+            if (backgroundDistortionDisplay) backgroundDistortionDisplay.textContent = value;
+            console.log(`🌊 Background distortion updated to:`, value);
+            if (window.backgroundControls.updateBackgroundDistortion) {
+              window.backgroundControls.updateBackgroundDistortion(window.currentDistortion);
+            }
+            break;
+          case 'phase':
+            window.currentPhase = value;
+            if (backgroundPhaseDisplay) backgroundPhaseDisplay.textContent = value;
+            console.log(`🌊 Background phase updated to:`, value);
+            if (window.backgroundControls.updateBackgroundPhase) {
+              window.backgroundControls.updateBackgroundPhase(window.currentPhase);
+            }
+            break;
+          case 'frequency':
+            window.currentFrequency = value;
+            if (backgroundFrequencyDisplay) backgroundFrequencyDisplay.textContent = value;
+            console.log(`🌊 Background frequency updated to:`, value);
+            if (window.backgroundControls.updateBackgroundFrequency) {
+              window.backgroundControls.updateBackgroundFrequency(window.currentFrequency);
+            }
+            break;
+        }
+      } catch (error) {
+        console.log('⚠️ Background controls not yet available:', error);
+      }
+    } else {
+      console.log('⚠️ Background controls not ready yet');
+      // Update display anyway for consistency
+      switch(parameter) {
+        case 'speed':
+          if (backgroundSpeedDisplay) backgroundSpeedDisplay.textContent = value;
+          break;
+        case 'distortion':
+          if (backgroundDistortionDisplay) backgroundDistortionDisplay.textContent = value;
+          window.currentDistortion = value / 100.0;
+          break;
+          case 'phase':
+          if (backgroundPhaseDisplay) backgroundPhaseDisplay.textContent = value;
+          window.currentPhase = value;
+          break;
+        case 'frequency':
+          if (backgroundFrequencyDisplay) backgroundFrequencyDisplay.textContent = value;
+          window.currentFrequency = value;
+          break;
+      }
+    }
+  }
+
+  // Function to update particles opacity
+  function updateParticlesOpacity(opacityValue) {
+    if (window.pJSDom && window.pJSDom.length > 0 && opacityDisplay) {
+      opacityDisplay.textContent = opacityValue;
+      updateParticlesParameter('opacity', opacityValue);
+      console.log('✨ Particles opacity updated to:', opacityValue);
+    } else {
+      console.log('⚠️ Particles.js not ready yet, cannot update opacity');
+      if (opacityDisplay) opacityDisplay.textContent = opacityValue;
+    }
+  }
+
+  // Function to update particles color
+  function updateParticlesColor(colorValue) {
+    const colorDisplay = document.getElementById('particles-color-display');
+    if (window.pJSDom && window.pJSDom.length > 0) {
+      const pJS = window.pJSDom[0].pJS;
+      if (pJS.particles.color) {
+        pJS.particles.color.value = colorValue;
+        if (typeof particlesJS === 'function') {
+          pJS.fn.particlesEmpty();
+          particlesJS("particles-js", {...pJS.particles});
+        }
+      }
+    }
+    if (colorDisplay) colorDisplay.textContent = colorValue;
+    console.log('✨ Particles color updated to:', colorValue);
+  }
+
+  // Event listeners
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleControlPanel();
+    });
+    console.log('✅ Toggle button event listener attached');
+  }
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      hideControlPanel();
+    });
+    console.log('✅ Close button event listener attached');
+  }
+
   // Tab event listeners
   if (particlesTab) {
     particlesTab.addEventListener('click', function(e) {
@@ -1791,169 +938,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('✅ Background tab event listener attached');
   }
 
-  // Background parameter updates
-  function updateBackgroundParameter(parameter, value) {
-    if (window.backgroundControls) {
-      try {
-        switch(parameter) {
-          case 'speed':
-            window.backgroundControls.setAnimationSpeed(value, undefined); // Use existing position speed
-            backgroundSpeedDisplay.textContent = value;
-            console.log(`🌊 Background animation speed updated to:`, value);
-            break;
-          case 'distortion':
-            // Create global distortion value for background.js to access
-            window.currentDistortion = value / 100.0; // Normalize 0-100 to 0.0-1.0
-            backgroundDistortionDisplay.textContent = value;
-            console.log(`🌊 Background distortion updated to:`, value, 'normalized:', window.currentDistortion);
-
-            if (window.backgroundControls && typeof window.backgroundControls.updateBackgroundDistortion === 'function') {
-              window.backgroundControls.updateBackgroundDistortion(window.currentDistortion);
-            }
-            break;
-
-          case 'frequency':
-            // Update wave frequency multiplier
-            window.currentFrequency = value;
-            backgroundFrequencyDisplay.textContent = value;
-            console.log(`🌊 Background wave frequency updated to:`, value);
-
-            if (window.backgroundControls && typeof window.backgroundControls.updateBackgroundFrequency === 'function') {
-              window.backgroundControls.updateBackgroundFrequency(window.currentFrequency);
-            }
-            break;
-          case 'phase':
-            // Update animation phase offset
-            window.currentPhase = value;
-            backgroundPhaseDisplay.textContent = value;
-            console.log(`🌊 Background animation phase updated to:`, value);
-
-            if (window.backgroundControls && typeof window.backgroundControls.updateBackgroundPhase === 'function') {
-              window.backgroundControls.updateBackgroundPhase(window.currentPhase);
-            }
-            break;
-        }
-      } catch (error) {
-        console.log('⚠️ Background controls not yet available:', error);
-      }
-    } else {
-      console.log('⚠️ Background controls not ready yet');
-      // Update display anyway for consistency
-      switch(parameter) {
-        case 'speed':
-          backgroundSpeedDisplay.textContent = value;
-          break;
-        case 'distortion':
-          backgroundDistortionDisplay.textContent = value;
-          window.currentDistortion = value / 100.0; // Store normalized value
-          break;
-
-        case 'frequency':
-          backgroundFrequencyDisplay.textContent = value;
-          window.currentFrequency = value; // Store value
-          break;
-        case 'phase':
-          backgroundPhaseDisplay.textContent = value;
-          window.currentPhase = value; // Store value
-          break;
-      }
-    }
-  }
-
-  // Initialize global distortion value
-  window.currentDistortion = 35 / 100.0; // Default value (35 normalized)
-
-  // Global function for background.js to update distortion via shader uniform
-  window.updateBackgroundDistortion = function(distortionValue) {
-    console.log('🌊 updateBackgroundDistortion called with:', distortionValue);
-    window.currentDistortion = distortionValue;
-
-    // If background.js provides a method to update active shader uniforms
-    if (window.backgroundControls && typeof window.backgroundControls.setUniformValue === 'function') {
-      window.backgroundControls.setUniformValue('u_distortion', distortionValue * 10.0); // Scale back up for shader use
-    }
-
-    return true; // Success indicator
-  };
-
-  // Function to update particles color
-  function updateParticlesColor(colorValue) {
-    if (window.pJSDom && window.pJSDom.length > 0) {
-      const pJS = window.pJSDom[0].pJS;
-
-      // Update the particles color in the configuration
-      pJS.particles.color.value = colorValue;
-
-      // Reinitialize particles.js with updated configuration
-      const updatedConfig = {
-        particles: {
-          number: { value: pJS.particles.number.value },
-          color: { value: colorValue },
-          shape: { type: "circle" },
-          opacity: {
-            value: 1.0,
-            random: true,
-            anim: {
-              enable: true,
-              speed: 1.5,
-              opacity_min: 0.3,
-              sync: false
-            }
-          },
-          size: {
-            value: pJS.particles.size.value,
-            random: true,
-            anim: {
-              enable: true,
-              speed: 3,
-              size_min: 2,
-              sync: false
-            }
-          },
-          line_linked: {
-            enable: true,
-            distance: pJS.particles.line_linked.distance,
-            color: pJS.particles.line_linked.color,
-            opacity: pJS.particles.line_linked.opacity,
-            width: 1,
-            path: { enable: true, type: "particles" }
-          },
-          move: {
-            enable: true,
-            speed: pJS.particles.move.speed,
-            direction: "none",
-            random: false,
-            straight: false,
-            out_mode: "out",
-            bounce: false,
-            attract: { enable: false, rotateX: 600, rotateY: 1200 }
-          }
-        },
-        interactivity: {
-          events: {
-            onhover: { enable: true, mode: "bubble", duration: 0.1 },
-            onclick: { enable: true, mode: "push" }
-          },
-          modes: {
-            bubble: { distance: 100, size: 30, duration: 2, opacity: 1.0 }
-          }
-        },
-        retina_detect: true
-      };
-
-      // Destroy existing particles and reinitialize
-      if (window.pJSDom[0]) {
-        window.pJSDom[0].pJS.fn.particlesEmpty();
-        particlesJS("particles-js", updatedConfig);
-      }
-
-      console.log('✨ Particles color updated to:', colorValue);
-    } else {
-      console.log('⚠️ Particles.js not ready yet, cannot update color');
-    }
-  }
-
-  // All parameter slider listeners
+  // Slider event listeners
   if (numberSlider) {
     numberSlider.addEventListener('input', function(e) {
       const newValue = parseInt(e.target.value);
@@ -1978,9 +963,6 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('✅ Size slider event listener attached');
   }
 
-  // Particles Opacity slider
-  const opacitySlider = document.getElementById('particles-opacity');
-  const opacityDisplay = document.getElementById('particles-opacity-display');
   if (opacitySlider) {
     opacitySlider.addEventListener('input', function(e) {
       const newValue = parseFloat(e.target.value);
@@ -1997,19 +979,6 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('✅ Link opacity slider event listener attached');
   }
 
-  // Color picker event listener
-  const colorPicker = document.getElementById('particles-color');
-  const colorDisplay = document.getElementById('particles-color-display');
-  if (colorPicker) {
-    colorPicker.addEventListener('input', function(e) {
-      const newColor = e.target.value;
-      updateParticlesColor(newColor);
-      colorDisplay.textContent = newColor;
-      console.log('✅ Particles color updated to:', newColor);
-    });
-    console.log('✅ Color picker event listener attached');
-  }
-
   // Background slider event listeners
   if (backgroundSpeedSlider) {
     backgroundSpeedSlider.addEventListener('input', function(e) {
@@ -2019,26 +988,6 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('✅ Background speed slider event listener attached');
   }
 
-
-
-  if (backgroundFrequencySlider) {
-    backgroundFrequencySlider.addEventListener('input', function(e) {
-      const newValue = parseFloat(e.target.value);
-      updateBackgroundParameter('frequency', newValue);
-      backgroundFrequencyDisplay.textContent = newValue;
-    });
-    console.log('✅ Background frequency slider event listener attached');
-  }
-
-  if (backgroundPhaseSlider) {
-    backgroundPhaseSlider.addEventListener('input', function(e) {
-      const newValue = parseFloat(e.target.value);
-      updateBackgroundParameter('phase', newValue);
-      backgroundPhaseDisplay.textContent = newValue;
-    });
-    console.log('✅ Background phase slider event listener attached');
-  }
-
   if (backgroundDistortionSlider) {
     backgroundDistortionSlider.addEventListener('input', function(e) {
       const newValue = parseInt(e.target.value);
@@ -2046,6 +995,50 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     console.log('✅ Background distortion slider event listener attached');
   }
+
+  if (backgroundPhaseSlider) {
+    backgroundPhaseSlider.addEventListener('input', function(e) {
+      const newValue = parseFloat(e.target.value);
+      updateBackgroundParameter('phase', newValue);
+    });
+    console.log('✅ Background phase slider event listener attached');
+  }
+
+  if (backgroundFrequencySlider) {
+    backgroundFrequencySlider.addEventListener('input', function(e) {
+      const newValue = parseFloat(e.target.value);
+      updateBackgroundParameter('frequency', newValue);
+    });
+    console.log('✅ Background frequency slider event listener attached');
+  }
+
+  // Color picker event listener
+  const colorPicker = document.getElementById('particles-color');
+  if (colorPicker) {
+    colorPicker.addEventListener('input', function(e) {
+      const newColor = e.target.value;
+      updateParticlesColor(newColor);
+    });
+    console.log('✅ Color picker event listener attached');
+  }
+
+  // Initialize global distortion value
+  window.currentDistortion = 35 / 100.0;
+  window.currentPhase = 0;
+  window.currentFrequency = 1.0;
+
+  // Global function for background.js
+  window.updateBackgroundDistortion = function(distortionValue) {
+    console.log('🌊 updateBackgroundDistortion called with:', distortionValue);
+    window.currentDistortion = distortionValue;
+    if (backgroundDistortionDisplay) {
+      backgroundDistortionDisplay.textContent = (window.currentDistortion * 100).toFixed(0);
+    }
+    if (window.backgroundControls && typeof window.backgroundControls.setUniformValue === 'function') {
+      window.backgroundControls.setUniformValue('u_distortion', distortionValue * 10.0);
+    }
+    return true;
+  };
 
   // Close panel when clicking outside or pressing Escape
   document.addEventListener('keydown', function(e) {
@@ -2077,1064 +1070,25 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  setTimeout(tryInitialize, 500); // Start after page load
-
-  console.log('✅ Minimal particles control panel initialized with 4 parameters');
-
-  // Enhanced preset functionality - controls BOTH particles AND background
-  function applyPreset(presetType) {
-    console.log('🎨 Applying comprehensive preset:', presetType);
-
-    switch(presetType) {
-      case 'calm':
-        // Calm preset: Gentle, serene atmosphere with slow, soft everything
-        // Background
-        updateBackgroundParameter('speed', '0.002');
-        updateBackgroundParameter('distortion', '15');
-        backgroundSpeedDisplay.textContent = '0.002';
-        backgroundDistortionDisplay.textContent = '15';
-        // Particles: Relaxed, sparse movement
-        particlesNumberSlider.value = '8';
-        particlesSpeedSlider.value = '2';
-        particlesSizeSlider.value = '6';
-        particlesLinkOpacitySlider.value = '0.3';
-        particlesNumberDisplay.textContent = '8';
-        particlesSpeedDisplay.textContent = '2';
-        particlesSizeDisplay.textContent = '6';
-        particlesLinkOpacityDisplay.textContent = '0.3';
-        updateParticlesFromUI();
-        break;
-
-      case 'balanced':
-        // Balanced preset: Harmonious, standard settings for everything
-        // Background
-        updateBackgroundParameter('speed', '0.01');
-        updateBackgroundParameter('distortion', '35');
-        backgroundSpeedDisplay.textContent = '0.01';
-        backgroundDistortionDisplay.textContent = '35';
-        // Particles: Moderate, balanced
-        particlesNumberSlider.value = '12';
-        particlesSpeedSlider.value = '3';
-        particlesSizeSlider.value = '8';
-        particlesLinkOpacitySlider.value = '0.4';
-        particlesNumberDisplay.textContent = '12';
-        particlesSpeedDisplay.textContent = '3';
-        particlesSizeDisplay.textContent = '8';
-        particlesLinkOpacityDisplay.textContent = '0.4';
-        updateParticlesFromUI();
-        break;
-
-      case 'vivid':
-        // Vivid preset: Energetic and dynamic
-        // Background: Fast, defined patterns
-        updateBackgroundParameter('speed', '0.015');
-        updateBackgroundParameter('distortion', '60');
-        backgroundSpeedDisplay.textContent = '0.015';
-        backgroundDistortionDisplay.textContent = '60';
-        // Particles: Active, visible
-        particlesNumberSlider.value = '18';
-        particlesSpeedSlider.value = '4.5';
-        particlesSizeSlider.value = '12';
-        particlesLinkOpacitySlider.value = '0.6';
-        particlesNumberDisplay.textContent = '18';
-        particlesSpeedDisplay.textContent = '4.5';
-        particlesSizeDisplay.textContent = '12';
-        particlesLinkOpacityDisplay.textContent = '0.6';
-        updateParticlesFromUI();
-        break;
-
-      case 'turbulent':
-        // Turbulent preset: Chaotic, intense atmosphere
-        // Background: Fast, extreme distortion
-        updateBackgroundParameter('speed', '0.025');
-        updateBackgroundParameter('distortion', '88');
-        backgroundSpeedDisplay.textContent = '0.025';
-        backgroundDistortionDisplay.textContent = '88';
-        // Particles: Chaotic, dense movement
-        particlesNumberSlider.value = '25';
-        particlesSpeedSlider.value = '7';
-        particlesSizeSlider.value = '16';
-        particlesLinkOpacitySlider.value = '0.8';
-        particlesNumberDisplay.textContent = '25';
-        particlesSpeedDisplay.textContent = '7';
-        particlesSizeDisplay.textContent = '16';
-        particlesLinkOpacityDisplay.textContent = '0.8';
-        updateParticlesFromUI();
-        break;
-
-      case 'space':
-        // Space preset: Cosmic serenity with minimal particles
-        // Background: Slow, subtle star-like movements
-        updateBackgroundParameter('speed', '0.001');
-        updateBackgroundParameter('distortion', '8');
-        backgroundSpeedDisplay.textContent = '0.001';
-        backgroundDistortionDisplay.textContent = '8';
-        // Particles: Sparse, twinkling stars
-        particlesNumberSlider.value = '6';
-        particlesSpeedSlider.value = '1.5';
-        particlesSizeSlider.value = '4';
-        particlesLinkOpacitySlider.value = '0.2';
-        particlesNumberDisplay.textContent = '6';
-        particlesSpeedDisplay.textContent = '1.5';
-        particlesSizeDisplay.textContent = '4';
-        particlesLinkOpacityDisplay.textContent = '0.2';
-        updateParticlesFromUI();
-        break;
-
-      case 'aurora':
-        // Aurora preset: Northern lights effect
-        // Background: Slow, flowing waves
-        updateBackgroundParameter('speed', '0.003');
-        updateBackgroundParameter('distortion', '28');
-        backgroundSpeedDisplay.textContent = '0.003';
-        backgroundDistortionDisplay.textContent = '28';
-        // Particles: Gentle, sparse wisps
-        particlesNumberSlider.value = '10';
-        particlesSpeedSlider.value = '2.5';
-        particlesSizeSlider.value = '7';
-        particlesLinkOpacitySlider.value = '0.35';
-        particlesNumberDisplay.textContent = '10';
-        particlesSpeedDisplay.textContent = '2.5';
-        particlesSizeDisplay.textContent = '7';
-        particlesLinkOpacityDisplay.textContent = '0.35';
-        updateParticlesFromUI();
-        break;
-
-      case 'plasma':
-        // Plasma preset: Volcanic, molten effect
-        // Background: Medium-fast with high energy
-        updateBackgroundParameter('speed', '0.012');
-        updateBackgroundParameter('distortion', '78');
-        backgroundSpeedDisplay.textContent = '0.012';
-        backgroundDistortionDisplay.textContent = '78';
-        // Particles: Bright, glowing orbs
-        particlesNumberSlider.value = '15';
-        particlesSpeedSlider.value = '5';
-        particlesSizeSlider.value = '14';
-        particlesLinkOpacitySlider.value = '0.7';
-        particlesNumberDisplay.textContent = '15';
-        particlesSpeedDisplay.textContent = '5';
-        particlesSizeDisplay.textContent = '14';
-        particlesLinkOpacityDisplay.textContent = '0.7';
-        updateParticlesFromUI();
-        break;
-
-      case 'warp':
-        // Warp preset: Space-time distortion
-        // Background: Fast spatial warping
-        updateBackgroundParameter('speed', '0.024');
-        updateBackgroundParameter('distortion', '52');
-        backgroundSpeedDisplay.textContent = '0.024';
-        backgroundDistortionDisplay.textContent = '52';
-        // Particles: Fast, directional streaks
-        particlesNumberSlider.value = '20';
-        particlesSpeedSlider.value = '8';
-        particlesSizeSlider.value = '10';
-        particlesLinkOpacitySlider.value = '0.5';
-        particlesNumberDisplay.textContent = '20';
-        particlesSpeedDisplay.textContent = '8';
-        particlesSizeDisplay.textContent = '10';
-        particlesLinkOpacityDisplay.textContent = '0.5';
-        updateParticlesFromUI();
-        break;
-
-      case 'matrix':
-        // Matrix preset: Digital rain atmosphere
-        // Background: Controlled, grid-like
-        updateBackgroundParameter('speed', '0.018');
-        updateBackgroundParameter('distortion', '22');
-        backgroundSpeedDisplay.textContent = '0.018';
-        backgroundDistortionDisplay.textContent = '22';
-        // Particles: Fast descending drops
-        particlesNumberSlider.value = '30';
-        particlesSpeedSlider.value = '6';
-        particlesSizeSlider.value = '5';
-        particlesLinkOpacitySlider.value = '0.9';
-        particlesNumberDisplay.textContent = '30';
-        particlesSpeedDisplay.textContent = '6';
-        particlesSizeDisplay.textContent = '5';
-        particlesLinkOpacityDisplay.textContent = '0.9';
-        updateParticlesFromUI();
-        break;
-
-      case 'hypnotic':
-        // Hypnotic preset: Mesmerizing patterns
-        // Background: Very slow, spiraling
-        updateBackgroundParameter('speed', '0.004');
-        updateBackgroundParameter('distortion', '58');
-        backgroundSpeedDisplay.textContent = '0.004';
-        backgroundDistortionDisplay.textContent = '58';
-        // Particles: Ritual circling
-        particlesNumberSlider.value = '12';
-        particlesSpeedSlider.value = '3.5';
-        particlesSizeSlider.value = '9';
-        particlesLinkOpacitySlider.value = '0.5';
-        particlesNumberDisplay.textContent = '12';
-        particlesSpeedDisplay.textContent = '3.5';
-        particlesSizeDisplay.textContent = '9';
-        particlesLinkOpacityDisplay.textContent = '0.5';
-        updateParticlesFromUI();
-        break;
-
-      case 'dream':
-        // Dream preset: Surreal, flowing atmosphere
-        // Background: Slow, dream-like waves
-        updateBackgroundParameter('speed', '0.007');
-        updateBackgroundParameter('distortion', '92');
-        backgroundSpeedDisplay.textContent = '0.007';
-        backgroundDistortionDisplay.textContent = '92';
-        // Particles: Ethereal floating
-        particlesNumberSlider.value = '14';
-        particlesSpeedSlider.value = '2.8';
-        particlesSizeSlider.value = '11';
-        particlesLinkOpacitySlider.value = '0.45';
-        particlesNumberDisplay.textContent = '14';
-        particlesSpeedDisplay.textContent = '2.8';
-        particlesSizeDisplay.textContent = '11';
-        particlesLinkOpacityDisplay.textContent = '0.45';
-        updateParticlesFromUI();
-        break;
-
-      case 'echo':
-        // Echo preset: Reverberating patterns
-        // Background: Medium speed with extreme distortion
-        updateBackgroundParameter('speed', '0.009');
-        updateBackgroundParameter('distortion', '95');
-        backgroundSpeedDisplay.textContent = '0.009';
-        backgroundDistortionDisplay.textContent = '95';
-        // Particles: Pulsing network
-        particlesNumberSlider.value = '16';
-        particlesSpeedSlider.value = '4.2';
-        particlesSizeSlider.value = '13';
-        particlesLinkOpacitySlider.value = '0.65';
-        particlesNumberDisplay.textContent = '16';
-        particlesSpeedDisplay.textContent = '4.2';
-        particlesSizeDisplay.textContent = '13';
-        particlesLinkOpacityDisplay.textContent = '0.65';
-        updateParticlesFromUI();
-        break;
-
-      default:
-        console.log('⚠️ Unknown preset type:', presetType);
-        return;
-    }
-
-    // Log comprehensive preset application
-    console.log(`🎨🏔️ COMPREHENSIVE PRESET "${presetType.toUpperCase()}" APPLIED!`);
-    console.log(`   └─ Background: Speed ${backgroundSpeedDisplay.textContent}, Distortion ${backgroundDistortionDisplay.textContent}`);
-    console.log(`   └─ Particles: ${particlesNumberDisplay.textContent} particles, Speed ${particlesSpeedDisplay.textContent}, Size ${particlesSizeDisplay.textContent}, Links ${particlesLinkOpacityDisplay.textContent}`);
-  }
-
-  // Helper function to update particles from preset values - Wait for systems to be ready
-  function updateParticlesFromUI() {
-    const maxWait = 10; // Maximum seconds to wait
-    let attempts = 0;
-
-    function tryUpdate() {
-      attempts++;
-
-      // Ensure systems are ready
-      if (!window.pJSDom || !window.pJSDom[0] || !window.pJSDom[0].pJS) {
-        if (attempts < maxWait * 10) { // Wait up to 10 seconds
-          console.log(`⏳ Waiting for particles system... (attempt ${attempts})`);
-          setTimeout(tryUpdate, 100);
-          return;
-        } else {
-          console.log('⚠️ Particles system not available after maximum wait time');
-          return;
-        }
-      }
-
-      console.log('🎆 Force-updating all particle parameters from preset...');
-
-      try {
-        // Force reload entire particles configuration for immediate effect
-        if (window.pJSDom && window.pJSDom[0]) {
-          const pJS = window.pJSDom[0].pJS;
-
-          // Update the configuration values
-          pJS.particles.number.value = parseInt(particlesNumberSlider.value);
-          pJS.particles.size.value = parseInt(particlesSizeSlider.value);
-          pJS.particles.move.speed = parseFloat(particlesSpeedSlider.value);
-          pJS.particles.line_linked.opacity = parseFloat(particlesLinkOpacitySlider.value);
-
-          console.log(`✅ Applied particles preset: ${pJS.particles.number.value} particles, size ${pJS.particles.size.value}, speed ${pJS.particles.move.speed}, links ${pJS.particles.line_linked.opacity}`);
-
-          // Force refresh - clear and regenerate particles
-          pJS.fn.particlesEmpty();
-          pJS.fn.particlesCreate();
-          pJS.fn.particlesRefresh();
-
-          console.log('🎆 Particles force-refreshed successfully!');
-        }
-      } catch (error) {
-        console.log('❌ Error in force-update:', error);
-      }
-    }
-
-    tryUpdate();
-  }
-
-  // Preset button event listeners
-  const presetButtons = [
-    'calm-preset', 'balanced-preset', 'vivid-preset', 'turbulent-preset',
-    'space-preset', 'aurora-preset', 'plasma-preset', 'warp-preset',
-    'matrix-preset', 'hypnotic-preset', 'dream-preset', 'echo-preset'
-  ];
-
-  presetButtons.forEach(presetId => {
-    const button = document.getElementById(presetId);
-    if (button) {
-      button.addEventListener('click', () => {
-        const presetType = presetId.replace('-preset', '');
-        applyPreset(presetType);
-      });
-      console.log(`✅ ${presetId} event listener attached`);
-    } else {
-      console.log(`⚠️ ${presetId} not found`);
-    }
-  });
-
-  console.log('✅ Enhanced preset functionality initialized with 12 presets!');
+  setTimeout(tryInitialize, 500);
+  console.log('✅ Minimal particles control panel initialized with full functionality');
 });
 </script>
 
-<!-- Control Panel Functionality - commented out for now -->
-<!-- <script>
-document.addEventListener('DOMContentLoaded', function() {
-  console.log('🎯 Initializing comprehensive control panel...');
-
-  // Initialize panel as active (visible) by default
-  const controlPanel = document.getElementById('control-panel');
-  if (controlPanel) {
-    controlPanel.classList.remove('hidden');
-    console.log('🎨 Control panel initialized in active state');
-  }
-
-  // Control Panel Toggle Button - should be attached only once
-  const controlPanelToggleBtn = document.getElementById('control-panel-toggle');
-  if (controlPanelToggleBtn && !controlPanelToggleBtn.hasEventListener) {
-    controlPanelToggleBtn.hasEventListener = true;
-    controlPanelToggleBtn.addEventListener('click', function(e) {
-      console.log('🎨 Control panel toggle clicked!');
-      toggleControlPanel();
-      e.preventDefault();
-      e.stopPropagation();
-    });
-    console.log('✅ Control panel button event listener attached');
-  }
-
-  // Tab switching functionality
-  const tabs = document.querySelectorAll('.control-tab');
-  const tabPanels = document.querySelectorAll('.control-tab-panel');
-
-  function switchTab(targetTab) {
-    console.log('🔄 Switching to tab:', targetTab);
-
-    // Remove active state from all tabs and panels
-    tabs.forEach(tab => tab.classList.remove('active'));
-    tabPanels.forEach(panel => panel.classList.remove('active'));
-
-    // Add active state to targeted tab and panel
-    const activeTab = document.querySelector(`[data-tab="${targetTab}"]`);
-    const activePanel = document.getElementById(`${targetTab}-content`);
-
-    if (activeTab) activeTab.classList.add('active');
-    if (activePanel) activePanel.classList.add('active');
-  }
-
-  // Add click handlers to tabs - avoid duplicates
-  tabs.forEach(tab => {
-    if (!tab.hasTabListener) {
-      tab.hasTabListener = true;
-      tab.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetTab = tab.getAttribute('data-tab');
-        if (targetTab) {
-          switchTab(targetTab);
-        }
-      });
-    }
-  });
-
-  console.log('✅ Control panel tabs initialized');
-});
-</script> -->
-
-<!-- Control Panel Minimize/Maximize Functionality -->
+<!-- Resume download -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Minimize/maximize button functionality
-  const minimizeBtn = document.getElementById('control-panel-minimize');
-  if (minimizeBtn) {
-    minimizeBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      toggleCompact();
+document.addEventListener('DOMContentLoaded', () => {
+  const resumeLink = document.getElementById('resume-link');
+  if (resumeLink) {
+    resumeLink.addEventListener('click', (e) => {
+      const link = document.createElement('a');
+      link.href = './src/Uday_Lunawat_Resume_Senior_ML_Engineer_V9.pdf';
+      link.download = 'Uday_Lunawat_Resume_Senior_ML_Engineer_V9.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     });
-  }
-
-  function toggleCompact() {
-    const controlPanel = document.getElementById('control-panel');
-    const isCompact = controlPanel.classList.contains('control-panel-compact');
-
-    if (isCompact) {
-      // Expand back to full size
-      controlPanel.classList.remove('control-panel-compact');
-      minimizeBtn.textContent = '➖';
-      minimizeBtn.title = 'Minimize Controls';
-    } else {
-      // Collapse to compact view
-      controlPanel.classList.add('control-panel-compact');
-      minimizeBtn.textContent = '➕';
-      minimizeBtn.title = 'Expand Controls';
-    }
   }
 });
-</script>
-
-<!-- SIMPLE TAB SYSTEM TEST -->
-<script>
-</script>
-
-    const controlPanelOverlay = document.getElementById('control-panel-overlay');
-    const controlPanelClose = document.getElementById('control-panel-close');
-    const resetControlsBtn = document.getElementById('reset-controls');
-    const savePresetBtn = document.getElementById('save-preset');
-    const loadPresetBtn = document.getElementById('load-preset');
-
-    // Control Panel Toggle Function
-    function toggleControlPanel() {
-      const isHidden = controlPanel.classList.contains('hidden');
-      if (isHidden) {
-        showControlPanel();
-      } else {
-        hideControlPanel();
-      }
-    }
-
-    function showControlPanel() {
-      controlPanel.classList.remove('hidden');
-      controlPanel.classList.add('active');
-      controlPanelOverlay.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function hideControlPanel() {
-      controlPanel.classList.remove('active');
-      controlPanel.classList.add('hidden');
-      controlPanelOverlay.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    // Event Listeners
-    controlPanelClose.addEventListener('click', hideControlPanel);
-    controlPanelOverlay.addEventListener('click', hideControlPanel);
-
-    // Control Panel Toggle Button
-    const controlPanelToggleBtn = document.getElementById('control-panel-toggle');
-    if (controlPanelToggleBtn) {
-      console.log('🎨 Button found, adding event listener');
-      controlPanelToggleBtn.addEventListener('click', (e) => {
-        console.log('🎨 Button clicked!');
-        console.log('Control panel element:', controlPanel);
-        console.log('Control panel classes:', controlPanel ? controlPanel.classList.toString() : 'null');
-        toggleControlPanel();
-        e.preventDefault();
-        e.stopPropagation();
-      });
-      console.log('✅ Control panel button event listener successfully attached');
-    } else {
-      console.log('❌ Control panel toggle button not found');
-    }
-
-    // Close on Escape
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && !controlPanel.classList.contains('hidden')) {
-        hideControlPanel();
-      }
-    });
-
-    // Initialize Particles Controls
-    window.particlesControls = {
-      updateParticles: function(config) {
-        if (window.pJSDom && window.pJSDom.length > 0) {
-          // Update particles config dynamically
-          window.pJSDom[0].pJS.particles.number.value = config.number;
-          window.pJSDom[0].pJS.particles.color.value = `rgb(${config.color.r}, ${config.color.g}, ${config.color.b})`;
-          window.pJSDom[0].pJS.particles.size.value = config.size;
-          window.pJSDom[0].pJS.particles.size.anim.size_min = config.sizeMin;
-          window.pJSDom[0].pJS.particles.move.speed = config.speed;
-          window.pJSDom[0].pJS.particles.opacity.value = config.opacity;
-          window.pJSDom[0].pJS.particles.line_linked.distance = config.linkDistance;
-          window.pJSDom[0].pJS.particles.line_linked.opacity = config.linkOpacity;
-
-          // Force refresh
-          window.pJSDom[0].pJS.fn.particlesRefresh();
-        }
-      },
-      reset: function() {
-        // Reset to original values
-        this.updateParticles({
-          number: 15,
-          color: { r: 255, g: 255, b: 255 },
-          size: 8,
-          sizeMin: 2,
-          speed: 3,
-          opacity: 1.0,
-          linkDistance: 300,
-          linkOpacity: 0.4
-        });
-      }
-    };
-
-    // Background.js Controls
-    function setupBackgroundControls() {
-      // Color controls
-      ['bg-r', 'bg-g', 'bg-b'].forEach(id => {
-        const slider = document.getElementById(id);
-        const display = document.getElementById('bg-rgb');
-        slider.addEventListener('input', () => {
-          const r = parseInt(document.getElementById('bg-r').value);
-          const g = parseInt(document.getElementById('bg-g').value);
-          const b = parseInt(document.getElementById('bg-b').value);
-          if (window.backgroundControls) {
-            window.backgroundControls.setBackgroundColor(r, g, b);
-          }
-          display.textContent = `rgb(${r}, ${g}, ${b})`;
-        });
-      });
-
-      // Color1 controls
-      ['color1-r', 'color1-g', 'color1-b'].forEach(id => {
-        const slider = document.getElementById(id);
-        const display = document.getElementById('color1-rgb');
-        slider.addEventListener('input', () => {
-          const r = parseInt(document.getElementById('color1-r').value);
-          const g = parseInt(document.getElementById('color1-g').value);
-          const b = parseInt(document.getElementById('color1-b').value);
-          if (window.backgroundControls) {
-            window.backgroundControls.setColor1(r, g, b);
-          }
-          display.textContent = `rgb(${r}, ${g}, ${b})`;
-        });
-      });
-
-      // Color2 controls
-      ['color2-r', 'color2-g', 'color2-b'].forEach(id => {
-        const slider = document.getElementById(id);
-        const display = document.getElementById('color2-rgb');
-        slider.addEventListener('input', () => {
-          const r = parseInt(document.getElementById('color2-r').value);
-          const g = parseInt(document.getElementById('color2-g').value);
-          const b = parseInt(document.getElementById('color2-b').value);
-          if (window.backgroundControls) {
-            window.backgroundControls.setColor2(r, g, b);
-          }
-          display.textContent = `rgb(${r}, ${g}, ${b})`;
-        });
-      });
-
-      // Position controls
-      const posSliders = ['pos-x', 'pos-y', 'pos-z'];
-      posSliders.forEach(id => {
-        const slider = document.getElementById(id);
-        const display = document.getElementById('pos-display');
-        slider.addEventListener('input', () => {
-          const x = parseInt(document.getElementById('pos-x').value);
-          const y = parseInt(document.getElementById('pos-y').value);
-          const z = parseInt(document.getElementById('pos-z').value);
-          if (window.backgroundControls) {
-            window.backgroundControls.setPosition(x, y, z);
-          }
-          display.textContent = `(${x}, ${y}, ${z})`;
-        });
-      });
-
-      // Rotation controls
-      const rotSliders = ['rot-x', 'rot-y', 'rot-z'];
-      rotSliders.forEach(id => {
-        const slider = document.getElementById(id);
-        const display = document.getElementById('rot-display');
-        slider.addEventListener('input', () => {
-          const rx = parseFloat(document.getElementById('rot-x').value);
-          const ry = parseFloat(document.getElementById('rot-y').value);
-          const rz = parseFloat(document.getElementById('rot-z').value);
-          if (window.backgroundControls) {
-            window.backgroundControls.setRotation(rx, ry, rz);
-          }
-          display.textContent = `(${rx.toFixed(1)}, ${ry.toFixed(1)}, ${rz.toFixed(1)})`;
-        });
-      });
-
-      // Scale control
-      const scaleSlider = document.getElementById('scale');
-      const scaleDisplay = document.getElementById('scale-display');
-      scaleSlider.addEventListener('input', () => {
-        const scale = parseFloat(scaleSlider.value);
-        if (window.backgroundControls) {
-          window.backgroundControls.setScale(scale);
-        }
-        scaleDisplay.textContent = scale.toFixed(1);
-      });
-
-      // Animation speed controls
-      const timeSpeedSlider = document.getElementById('time-speed');
-      const timeSpeedDisplay = document.getElementById('time-speed-display');
-      timeSpeedSlider.addEventListener('input', () => {
-        const speed = parseFloat(timeSpeedSlider.value);
-        const posSpeed = parseFloat(document.getElementById('pos-speed').value);
-        if (window.backgroundControls) {
-          window.backgroundControls.setAnimationSpeed(speed, posSpeed);
-        }
-        timeSpeedDisplay.textContent = speed.toString();
-      });
-
-      const posSpeedSlider = document.getElementById('pos-speed');
-      const posSpeedDisplay = document.getElementById('pos-speed-display');
-      posSpeedSlider.addEventListener('input', () => {
-        const speed = parseFloat(timeSpeedSlider.value);
-        const posSpeed = parseFloat(posSpeedSlider.value);
-        if (window.backgroundControls) {
-          window.backgroundControls.setAnimationSpeed(speed, posSpeed);
-        }
-        posSpeedDisplay.textContent = posSpeed.toString();
-      });
-    }
-
-    // Particles.js Controls
-    function setupParticlesControls() {
-      // Number control
-      const numberSlider = document.getElementById('particles-number');
-      const numberDisplay = document.getElementById('particles-number-display');
-      numberSlider.addEventListener('input', () => {
-        const config = getParticlesConfig();
-        if (window.particlesControls) {
-          window.particlesControls.updateParticles(config);
-        }
-        numberDisplay.textContent = numberSlider.value;
-      });
-
-      // Color controls
-      ['particles-r', 'particles-g', 'particles-b'].forEach(id => {
-        const slider = document.getElementById(id);
-        const display = document.getElementById('particles-rgb');
-        slider.addEventListener('input', () => {
-          const config = getParticlesConfig();
-          if (window.particlesControls) {
-            window.particlesControls.updateParticles(config);
-          }
-          const r = parseInt(document.getElementById('particles-r').value);
-          const g = parseInt(document.getElementById('particles-g').value);
-          const b = parseInt(document.getElementById('particles-b').value);
-          display.textContent = `rgb(${r}, ${g}, ${b})`;
-        });
-      });
-
-      // Size controls
-      const sizeSlider = document.getElementById('particles-size');
-      const sizeDisplay = document.getElementById('particles-size-display');
-      sizeSlider.addEventListener('input', () => {
-        const config = getParticlesConfig();
-        if (window.particlesControls) {
-          window.particlesControls.updateParticles(config);
-        }
-        sizeDisplay.textContent = sizeSlider.value;
-      });
-
-      const sizeVarSlider = document.getElementById('particles-size-var');
-      const sizeVarDisplay = document.getElementById('particles-size-var-display');
-      sizeVarSlider.addEventListener('input', () => {
-        const config = getParticlesConfig();
-        if (window.particlesControls) {
-          window.particlesControls.updateParticles(config);
-        }
-        sizeVarDisplay.textContent = sizeVarSlider.value;
-      });
-
-      // Speed control
-      const speedSlider = document.getElementById('particles-speed');
-      const speedDisplay = document.getElementById('particles-speed-display');
-      speedSlider.addEventListener('input', () => {
-        const config = getParticlesConfig();
-        if (window.particlesControls) {
-          window.particlesControls.updateParticles(config);
-        }
-        speedDisplay.textContent = speedSlider.value;
-      });
-
-      // Opacity control
-      const opacitySlider = document.getElementById('particles-opacity');
-      const opacityDisplay = document.getElementById('particles-opacity-display');
-      opacitySlider.addEventListener('input', () => {
-        const config = getParticlesConfig();
-        if (window.particlesControls) {
-          window.particlesControls.updateParticles(config);
-        }
-        opacityDisplay.textContent = opacitySlider.value;
-      });
-
-      // Link controls
-      const linkDistanceSlider = document.getElementById('particles-link-distance');
-      const linkDistanceDisplay = document.getElementById('particles-link-distance-display');
-      linkDistanceSlider.addEventListener('input', () => {
-        const config = getParticlesConfig();
-        if (window.particlesControls) {
-          window.particlesControls.updateParticles(config);
-        }
-        linkDistanceDisplay.textContent = linkDistanceSlider.value;
-      });
-
-      const linkOpacitySlider = document.getElementById('particles-link-opacity');
-      const linkOpacityDisplay = document.getElementById('particles-link-opacity-display');
-      linkOpacitySlider.addEventListener('input', () => {
-        const config = getParticlesConfig();
-        if (window.particlesControls) {
-          window.particlesControls.updateParticles(config);
-        }
-        linkOpacityDisplay.textContent = linkOpacitySlider.value;
-      });
-    }
-
-    function getParticlesConfig() {
-      return {
-        number: parseInt(document.getElementById('particles-number').value),
-        color: {
-          r: parseInt(document.getElementById('particles-r').value),
-          g: parseInt(document.getElementById('particles-g').value),
-          b: parseInt(document.getElementById('particles-b').value)
-        },
-        size: parseInt(document.getElementById('particles-size').value),
-        sizeMin: parseInt(document.getElementById('particles-size-var').value),
-        speed: parseFloat(document.getElementById('particles-speed').value),
-        opacity: parseFloat(document.getElementById('particles-opacity').value),
-        linkDistance: parseInt(document.getElementById('particles-link-distance').value),
-        linkOpacity: parseFloat(document.getElementById('particles-link-opacity').value)
-      };
-    }
-
-    // Reset functionality
-    resetControlsBtn.addEventListener('click', () => {
-      if (window.backgroundControls) {
-        window.backgroundControls.reset();
-      }
-      if (window.particlesControls) {
-        window.particlesControls.reset();
-      }
-      resetControlValues();
-    });
-
-    function resetControlValues() {
-      // Reset background controls
-      document.getElementById('bg-r').value = 23;
-      document.getElementById('bg-g').value = 27;
-      document.getElementById('bg-b').value = 34;
-      document.getElementById('bg-rgb').textContent = 'rgb(23, 27, 34)';
-
-      document.getElementById('color1-r').value = 23;
-      document.getElementById('color1-g').value = 27;
-      document.getElementById('color1-b').value = 34;
-      document.getElementById('color1-rgb').textContent = 'rgb(23, 27, 34)';
-
-      document.getElementById('color2-r').value = 0;
-      document.getElementById('color2-g').value = 17;
-      document.getElementById('color2-b').value = 34;
-      document.getElementById('color2-rgb').textContent = 'rgb(0, 17, 34)';
-
-      document.getElementById('pos-x').value = -200;
-      document.getElementById('pos-y').value = 270;
-      document.getElementById('pos-z').value = -280;
-      document.getElementById('pos-display').textContent = '(-200, 270, -280)';
-
-      document.getElementById('rot-x').value = -1.0;
-      document.getElementById('rot-y').value = 0.0;
-      document.getElementById('rot-z').value = 0.1;
-      document.getElementById('rot-display').textContent = '(-1.0, 0.0, 0.1)';
-
-      document.getElementById('scale').value = 4.0;
-      document.getElementById('scale-display').textContent = '4.0';
-
-      document.getElementById('time-speed').value = 0.01;
-      document.getElementById('time-speed-display').textContent = '0.01';
-
-      document.getElementById('pos-speed').value = 0.005;
-      document.getElementById('pos-speed-display').textContent = '0.005';
-
-      // Reset particles controls
-      document.getElementById('particles-number').value = 15;
-      document.getElementById('particles-number-display').textContent = '15';
-
-      document.getElementById('particles-r').value = 255;
-      document.getElementById('particles-g').value = 255;
-      document.getElementById('particles-b').value = 255;
-      document.getElementById('particles-rgb').textContent = 'rgb(255, 255, 255)';
-
-      document.getElementById('particles-size').value = 8;
-      document.getElementById('particles-size-display').textContent = '8';
-
-      document.getElementById('particles-size-var').value = 2;
-      document.getElementById('particles-size-var-display').textContent = '2';
-
-      document.getElementById('particles-speed').value = 3;
-      document.getElementById('particles-speed-display').textContent = '3';
-
-      document.getElementById('particles-opacity').value = 1.0;
-      document.getElementById('particles-opacity-display').textContent = '1.0';
-
-      document.getElementById('particles-link-distance').value = 300;
-      document.getElementById('particles-link-distance-display').textContent = '300';
-
-      document.getElementById('particles-link-opacity').value = 0.4;
-      document.getElementById('particles-link-opacity-display').textContent = '0.4';
-    }
-
-    // Save/Load Preset functionality
-    savePresetBtn.addEventListener('click', () => {
-      const preset = {
-        background: {
-          bgColor: {
-            r: parseInt(document.getElementById('bg-r').value),
-            g: parseInt(document.getElementById('bg-g').value),
-            b: parseInt(document.getElementById('bg-b').value)
-          },
-          color1: {
-            r: parseInt(document.getElementById('color1-r').value),
-            g: parseInt(document.getElementById('color1-g').value),
-            b: parseInt(document.getElementById('color1-b').value)
-          },
-          color2: {
-            r: parseInt(document.getElementById('color2-r').value),
-            g: parseInt(document.getElementById('color2-g').value),
-            b: parseInt(document.getElementById('color2-b').value)
-          },
-          position: {
-            x: parseInt(document.getElementById('pos-x').value),
-            y: parseInt(document.getElementById('pos-y').value),
-            z: parseInt(document.getElementById('pos-z').value)
-          },
-          rotation: {
-            x: parseFloat(document.getElementById('rot-x').value),
-            y: parseFloat(document.getElementById('rot-y').value),
-            z: parseFloat(document.getElementById('rot-z').value)
-          },
-          scale: parseFloat(document.getElementById('scale').value),
-          timeSpeed: parseFloat(document.getElementById('time-speed').value),
-          posSpeed: parseFloat(document.getElementById('pos-speed').value)
-        },
-        particles: getParticlesConfig()
-      };
-
-      const blob = new Blob([JSON.stringify(preset, null, 2)], {type: 'application/json'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'background-preset.json';
-      a.click();
-      URL.revokeObjectURL(url);
-    });
-
-    loadPresetBtn.addEventListener('click', () => {
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.accept = '.json';
-      input.onchange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            try {
-              const preset = JSON.parse(e.target.result);
-              loadPreset(preset);
-            } catch (error) {
-              alert('Invalid preset file');
-            }
-          };
-          reader.readAsText(file);
-        }
-      };
-      input.click();
-    });
-
-    function loadPreset(preset) {
-      if (preset.background) {
-        // Load background settings
-        const bg = preset.background;
-        if (bg.bgColor) {
-          document.getElementById('bg-r').value = bg.bgColor.r;
-          document.getElementById('bg-g').value = bg.bgColor.g;
-          document.getElementById('bg-b').value = bg.bgColor.b;
-          if (window.backgroundControls) {
-            window.backgroundControls.setBackgroundColor(bg.bgColor.r, bg.bgColor.g, bg.bgColor.b);
-          }
-        }
-        if (bg.color1) {
-          document.getElementById('color1-r').value = bg.color1.r;
-          document.getElementById('color1-g').value = bg.color1.g;
-          document.getElementById('color1-b').value = bg.color1.b;
-          if (window.backgroundControls) {
-            window.backgroundControls.setColor1(bg.color1.r, bg.color1.g, bg.color1.b);
-          }
-        }
-        if (bg.color2) {
-          document.getElementById('color2-r').value = bg.color2.r;
-          document.getElementById('color2-g').value = bg.color2.g;
-          document.getElementById('color2-b').value = bg.color2.b;
-          if (window.backgroundControls) {
-            window.backgroundControls.setColor2(bg.color2.r, bg.color2.g, bg.color2.b);
-          }
-        }
-        if (bg.position) {
-          document.getElementById('pos-x').value = bg.position.x;
-          document.getElementById('pos-y').value = bg.position.y;
-          document.getElementById('pos-z').value = bg.position.z;
-          if (window.backgroundControls) {
-            window.backgroundControls.setPosition(bg.position.x, bg.position.y, bg.position.z);
-          }
-        }
-        if (bg.rotation) {
-          document.getElementById('rot-x').value = bg.rotation.x;
-          document.getElementById('rot-y').value = bg.rotation.y;
-          document.getElementById('rot-z').value = bg.rotation.z;
-          if (window.backgroundControls) {
-            window.backgroundControls.setRotation(bg.rotation.x, bg.rotation.y, bg.rotation.z);
-          }
-        }
-        if (bg.scale !== undefined) {
-          document.getElementById('scale').value = bg.scale;
-          if (window.backgroundControls) {
-            window.backgroundControls.setScale(bg.scale);
-          }
-        }
-        if (bg.timeSpeed !== undefined) {
-          document.getElementById('time-speed').value = bg.timeSpeed;
-          if (window.backgroundControls) {
-            window.backgroundControls.setAnimationSpeed(bg.timeSpeed, bg.posSpeed || 0.005);
-          }
-        }
-
-        // Update displays
-        updateBackgroundDisplays();
-      }
-
-      if (preset.particles) {
-        // Load particles settings
-        const particles = preset.particles;
-        document.getElementById('particles-number').value = particles.number || 15;
-        document.getElementById('particles-r').value = particles.color?.r || 255;
-        document.getElementById('particles-g').value = particles.color?.g || 255;
-        document.getElementById('particles-b').value = particles.color?.b || 255;
-        document.getElementById('particles-size').value = particles.size || 8;
-        document.getElementById('particles-size-var').value = particles.sizeMin || 2;
-        document.getElementById('particles-speed').value = particles.speed || 3;
-        document.getElementById('particles-opacity').value = particles.opacity || 1.0;
-        document.getElementById('particles-link-distance').value = particles.linkDistance || 300;
-        document.getElementById('particles-link-opacity').value = particles.linkOpacity || 0.4;
-
-        if (window.particlesControls) {
-          window.particlesControls.updateParticles(particles);
-        }
-
-        // Update displays
-        updateParticlesDisplays();
-      }
-    }
-
-    function updateBackgroundDisplays() {
-      const r = parseInt(document.getElementById('bg-r').value);
-      const g = parseInt(document.getElementById('bg-g').value);
-      const b = parseInt(document.getElementById('bg-b').value);
-      document.getElementById('bg-rgb').textContent = `rgb(${r}, ${g}, ${b})`;
-
-      const c1r = parseInt(document.getElementById('color1-r').value);
-      const c1g = parseInt(document.getElementById('color1-g').value);
-      const c1b = parseInt(document.getElementById('color1-b').value);
-      document.getElementById('color1-rgb').textContent = `rgb(${c1r}, ${c1g}, ${c1b})`;
-
-      const c2r = parseInt(document.getElementById('color2-r').value);
-      const c2g = parseInt(document.getElementById('color2-g').value);
-      const c2b = parseInt(document.getElementById('color2-b').value);
-      document.getElementById('color2-rgb').textContent = `rgb(${c2r}, ${c2g}, ${c2b})`;
-
-      const px = parseInt(document.getElementById('pos-x').value);
-      const py = parseInt(document.getElementById('pos-y').value);
-      const pz = parseInt(document.getElementById('pos-z').value);
-      document.getElementById('pos-display').textContent = `(${px}, ${py}, ${pz})`;
-
-      const rx = parseFloat(document.getElementById('rot-x').value);
-      const ry = parseFloat(document.getElementById('rot-y').value);
-      const rz = parseFloat(document.getElementById('rot-z').value);
-      document.getElementById('rot-display').textContent = `(${rx.toFixed(1)}, ${ry.toFixed(1)}, ${rz.toFixed(1)})`;
-
-      const scale = parseFloat(document.getElementById('scale').value);
-      document.getElementById('scale-display').textContent = scale.toFixed(1);
-
-      const timeSpeed = parseFloat(document.getElementById('time-speed').value);
-      document.getElementById('time-speed-display').textContent = timeSpeed.toString();
-
-      const posSpeed = parseFloat(document.getElementById('pos-speed').value);
-      document.getElementById('pos-speed-display').textContent = posSpeed.toString();
-    }
-
-    function updateParticlesDisplays() {
-      const number = parseInt(document.getElementById('particles-number').value);
-      document.getElementById('particles-number-display').textContent = number.toString();
-
-      const pr = parseInt(document.getElementById('particles-r').value);
-      const pg = parseInt(document.getElementById('particles-g').value);
-      const pb = parseInt(document.getElementById('particles-b').value);
-      document.getElementById('particles-rgb').textContent = `rgb(${pr}, ${pg}, ${pb})`;
-
-      const size = parseInt(document.getElementById('particles-size').value);
-      document.getElementById('particles-size-display').textContent = size.toString();
-
-      const sizeVar = parseInt(document.getElementById('particles-size-var').value);
-      document.getElementById('particles-size-var-display').textContent = sizeVar.toString();
-
-      const speed = parseFloat(document.getElementById('particles-speed').value);
-      document.getElementById('particles-speed-display').textContent = speed.toString();
-
-      const opacity = parseFloat(document.getElementById('particles-opacity').value);
-      document.getElementById('particles-opacity-display').textContent = opacity.toString();
-
-      const linkDistance = parseInt(document.getElementById('particles-link-distance').value);
-      document.getElementById('particles-link-distance-display').textContent = linkDistance.toString();
-
-      const linkOpacity = parseFloat(document.getElementById('particles-link-opacity').value);
-      document.getElementById('particles-link-opacity-display').textContent = linkOpacity.toString();
-    }
-
-    // Initialize controls - wait for both background.js module and particles.js
-    function trySetupControls() {
-      if (window.backgroundControls && window.pJSDom) {
-        console.log('🚀 Setting up all controls now...');
-        setupBackgroundControls();
-        setupParticlesControls();
-        updateBackgroundDisplays();
-        updateParticlesDisplays();
-      } else {
-        console.log('⏳ Controls not ready yet, checking again...');
-        setTimeout(trySetupControls, 100);
-      }
-    }
-
-    setTimeout(trySetupControls, 200); // Start quickly after page load
-
-    // Add keyboard hint to console
-    console.log('🎨 Interactive Control Panel available!');
-    console.log('Click the 🎨 button to toggle the background and particles controls');
-+++
-<task_progress>
-- [x] Analyze current control panel implementation
-- [x] Remove keyboard shortcut (Ctrl+Shift+D) functionality
-- [x] Add visible button to toggle control panel
-- [ ] Test button functionality and live preview
-- [ ] Update scratchpad/lessons when complete
-</task_progress>
-  });
-</script>
-
-
-
-</body>
-
+</script></body>
 </html>

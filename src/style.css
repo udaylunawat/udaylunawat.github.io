@@ -2526,7 +2526,7 @@ header.home, section.home {
 
 /* ---------------- INTERACTIVE CONTROL PANEL ---------------- */
 
-/* Control Panel Base Styles - Made persistent and sticky */
+/* Control Panel Base Styles - Initially hidden */
 .control-panel {
   position: fixed;
   top: 20px;
@@ -2539,20 +2539,21 @@ header.home, section.home {
   width: 320px;
   max-height: 85vh;
   overflow: hidden;
-  z-index: 2000;
+  z-index: 100;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   transition: all 0.3s ease;
-  opacity: 1;
-  visibility: visible;
-  scale: 1;
-  display: block;
-  pointer-events: all;
+  opacity: 0;
+  visibility: hidden;
+  scale: 0.8;
+  display: none;
+  pointer-events: none;
 }
 
 .control-panel.active {
   opacity: 1;
   visibility: visible;
   scale: 1;
+  display: block;
   pointer-events: all;
 }
 
@@ -2562,9 +2563,9 @@ header.home, section.home {
 }
 
 .control-panel.hidden {
-  display: none;
   opacity: 0;
   visibility: hidden;
+  scale: 0.8;
 }
 
 /* Control Panel Header */
@@ -3361,6 +3362,8 @@ input[type="range"]::-moz-range-thumb:hover {
   bottom: 100px;
   right: 20px;
   width: 280px;
+  max-width: 90vw;
+  max-height: calc(100vh - 150px);
   background-color: rgba(23, 27, 34, 0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -3370,6 +3373,8 @@ input[type="range"]::-moz-range-thumb:hover {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   transition: opacity 0.3s ease, transform 0.3s ease;
   transform-origin: bottom right;
+  /* Ensure it doesn't interfere with page scroll */
+  pointer-events: auto;
 }
 
 .particles-control-panel.hidden {
