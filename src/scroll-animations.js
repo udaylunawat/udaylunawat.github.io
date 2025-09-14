@@ -44,37 +44,40 @@ const elementsToAnimate = document.querySelectorAll('.animate');
 elementsToAnimate.forEach((el) => observer.observe(el));
 
 //
-// EXPERIENCE LOGO ZOOM AND HIGHLIGHT ANIMATIONS FOR MOBILE
+// LOGO ZOOM, COLOR, AND GREYSCALE ANIMATIONS FOR PROJECTS AND EXPERIENCE SECTIONS
 //
 let experienceCards = [];
+let projectCards = [];
 let isMobile = false;
+let isTablet = false;
 
-function checkMobile() {
-    isMobile = window.innerWidth <= 768; // Consider mobile if width <= 768px
-    return isMobile;
+function checkDeviceType() {
+    const width = window.innerWidth;
+    isMobile = width <= 768; // Mobile: <= 768px
+    isTablet = width > 768 && width <= 1024; // Tablet: 769px - 1024px
+    return { isMobile, isTablet };
 }
 
-function initializeExperienceAnimations() {
-    // Get all experience gallery cards
+function initializeLogoAnimations() {
+    // Get all gallery cards
     experienceCards = document.querySelectorAll('.experience-gallery .gallery-item');
+    projectCards = document.querySelectorAll('.infinite-gallery .gallery-item');
 
-    if (experienceCards.length === 0) return;
+    if (experienceCards.length === 0 && projectCards.length === 0) return;
 
-    // Check if we're on mobile
-    checkMobile();
+    // Check device type
+    checkDeviceType();
 
-    // Set up scroll listener for mobile animations
-    if (isMobile) {
-        setupMobileScrollAnimations();
-    }
+    // Set up scroll animations for both sections
+    setupLogoScrollAnimations();
 
     // Also listen for window resize to handle orientation changes
     window.addEventListener('resize', handleResize);
 }
 
-function setupMobileScrollAnimations() {
-    // Create intersection observer for mobile scroll animations
-    const mobileObserver = new IntersectionObserver((entries) => {
+function setupLogoScrollAnimations() {
+    // Create intersection observer for logo animations
+    const logoObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             const card = entry.target;
             // Handle both single logos and dual logos (TCS/Infosys case)
@@ -85,48 +88,56 @@ function setupMobileScrollAnimations() {
             if (entry.isIntersecting) {
                 // Card is entering viewport - apply zoom and highlight to all logos
                 logos.forEach(logo => {
-                    logo.style.transform = 'scale(1.1)';
-                    logo.style.filter = 'grayscale(0%) brightness(100%)';
-                    logo.style.transition = 'all 0.6s ease-out';
+                    logo.style.transform = 'scale(1.5)';
+                    logo.style.filter = 'grayscale(0%) brightness(110%)';
+                    logo.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
                 });
 
-                // Add a subtle glow effect to the card
-                card.style.boxShadow = '0 8px 25px rgba(0, 255, 0, 0.2)';
-                card.style.borderColor = 'rgba(0, 255, 0, 0.4)';
-                card.style.transition = 'all 0.6s ease-out';
+                // Add enhanced glow effect to the card
+                card.style.boxShadow = '0 15px 40px rgba(0, 255, 0, 0.3)';
+                card.style.borderColor = 'rgba(0, 255, 0, 0.6)';
+                card.style.borderTopColor = 'rgba(0, 255, 0, 0.6)'; // Ensure top border is visible
+                card.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
             } else {
                 // Card is leaving viewport - reset to original state
                 logos.forEach(logo => {
                     logo.style.transform = 'scale(1)';
                     logo.style.filter = 'grayscale(100%) brightness(70%)';
-                    logo.style.transition = 'all 0.6s ease-out';
+                    logo.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
                 });
 
                 // Reset card effects
                 card.style.boxShadow = '';
                 card.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-                card.style.transition = 'all 0.6s ease-out';
+                card.style.borderTopColor = 'rgba(255, 255, 255, 0.1)'; // Reset top border
+                card.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
             }
         });
     }, {
-        threshold: 0.6, // Trigger when 60% of the card is visible
-        rootMargin: '-50px 0px -50px 0px' // Add some margin for smoother transitions
+        threshold: isMobile ? 0.5 : 0.7, // Different thresholds for mobile vs desktop
+        rootMargin: isMobile ? '-30px 0px -30px 0px' : '-80px 0px -80px 0px' // Different margins for smoother transitions
     });
 
     // Observe all experience cards
     experienceCards.forEach(card => {
-        mobileObserver.observe(card);
+        logoObserver.observe(card);
+    });
+
+    // Observe all project cards
+    projectCards.forEach(card => {
+        logoObserver.observe(card);
     });
 }
 
 function handleResize() {
     const wasMobile = isMobile;
-    checkMobile();
+    checkDeviceType();
 
-    // If mobile state changed, reinitialize animations
+    // If device type changed, reinitialize animations
     if (wasMobile !== isMobile) {
-        // Reset all logo styles
-        experienceCards.forEach(card => {
+        // Reset all logo styles for both sections
+        const allCards = [...experienceCards, ...projectCards];
+        allCards.forEach(card => {
             const logos = card.querySelectorAll('.symbolic-icon, .tcs-logo, .infosys-logo');
             logos.forEach(logo => {
                 logo.style.transform = '';
@@ -135,17 +146,16 @@ function handleResize() {
             });
             card.style.boxShadow = '';
             card.style.borderColor = '';
+            card.style.borderTopColor = '';
             card.style.transition = '';
         });
 
-        // Reinitialize with new mobile state
-        if (isMobile) {
-            setupMobileScrollAnimations();
-        }
+        // Reinitialize with new device state
+        setupLogoScrollAnimations();
     }
 }
 
-// Initialize experience animations when DOM is loaded
+// Initialize logo animations when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    initializeExperienceAnimations();
+    initializeLogoAnimations();
 });
