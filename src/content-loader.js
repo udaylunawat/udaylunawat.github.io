@@ -243,6 +243,7 @@ class ContentLoader {
             const resumeLink = document.getElementById('resume-link');
             if (resumeLink) {
                 resumeLink.href = contactData.resume;
+                resumeLink.target = '_blank';
             }
         }
     }
