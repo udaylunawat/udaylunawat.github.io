@@ -848,7 +848,7 @@ section.home {
 /* Gallery Navigation */
 .gallery-nav {
     display: flex;
-    justify-content: center;
+    justify-acontent: center;
     align-items: center;
     gap: 1.5rem;
     margin-top: 2rem;
@@ -1679,9 +1679,9 @@ section.home {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   width: 95vw;
-  height: 95vh;
+  height: 65.4vh;
   max-width: 1400px;
-  max-height: 900px;
+  max-height: 1200px;
   transition: transform 0.3s ease-in-out;
 }
 
@@ -1702,6 +1702,38 @@ section.home {
   align-items: center;
   z-index: 10;
   min-height: 80px;
+  position: relative;
+}
+
+.modal-header .experience-logo {
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: rgba(23, 27, 34, 0.98);
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top: 3px solid #00ff00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 11;
+}
+
+.modal-header .experience-logo img {
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
+  filter: grayscale(100%) brightness(70%);
+  transition: filter 0.3s ease;
+}
+
+.modal-header .experience-logo:hover img {
+  filter: grayscale(0%) brightness(100%);
 }
 
 .modal-header-content {
@@ -1736,6 +1768,80 @@ section.home {
   font-weight: 500;
 }
 
+/* Modal Layout */
+.modal-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Modal Navigation Buttons */
+.modal-nav {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.02);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.modal-nav:hover:not(:disabled) {
+  border-color: #00ff00;
+  background-color: rgba(0, 255, 0, 0.1);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.modal-nav:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: translateY(-50%) scale(0.9);
+}
+
+.modal-nav:disabled:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.nav-arrow {
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 1;
+  color: #00ff00;
+  user-select: none;
+}
+
+.modal-nav.modal-nav-prev {
+  left: 10px;
+}
+
+.modal-nav.modal-nav-next {
+  right: 10px;
+}
+
+/* Modal Content Wrapper */
+.modal-content-wrapper {
+  flex: 1;
+  max-width: 100%;
+  margin: 0 60px; /* Add margin to accommodate navigation buttons */
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
 .modal-close {
   background: none;
   border: none;
@@ -1758,7 +1864,7 @@ section.home {
 
 .modal-body {
   padding: 0;
-  max-height: calc(90vh - 80px);
+  max-height: calc(65.4vh - 120px);
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: none; /* Firefox */

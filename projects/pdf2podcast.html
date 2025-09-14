@@ -1,80 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF2Podcast - Project Details</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF2Podcast - Project Details</title>
 </head>
 <body>
-    <h1>PDF2Podcast</h1>
+  <h1>PDF2Podcast</h1>
 
-    <div class="tags">
-        <span>Generative AI</span>
-        <span>TTS</span>
-        <span>Productivity</span>
-        <span>Content Transformation</span>
-    </div>
+  <div class="tags">
+    <span>Generative AI</span>
+    <span>Text-to-Speech</span>
+    <span>Gradio</span>
+    <span>Content Transformation</span>
+  </div>
 
-    <img src="https://picsum.photos/800/400?random=16" alt="PDF2Podcast System" class="project-image">
+  <div class="action-buttons">
+    <a href="https://github.com/udaylunawat/Data-Science-Projects/tree/master/NotebookLM_clone/PDF2Podcast" 
+       class="secondary-btn" target="_blank">
+       View Repository
+    </a>
+    <a href="https://huggingface.co/spaces/udayl/NotebookLM-Kokoro_TTS_App" 
+       class="secondary-btn" target="_blank">
+       Live Demo
+    </a>
+    <a href="https://colab.research.google.com/drive/1JkFWT2K-Pbe3FsBI-v6fZehnQoB5r4Fk?usp=sharing" 
+       class="secondary-btn" target="_blank">
+       Run in Colab
+    </a>
+  </div>
 
+  <img src="https://github.com/user-attachments/assets/93484a1f-aabd-4f92-b5d5-12f8e63168ee" 
+       alt="PDF2Podcast Gradio Screenshot" class="project-image">
+
+  <section>
+    <h2>Overview</h2>
     <p>
-        PDF2Podcast revolutionizes how we consume written content by transforming static documents
-        into engaging, conversational audio experiences. This innovative tool bridges the gap between
-        traditional reading and modern audio consumption preferences.
+      <strong>PDF2Podcast</strong> is a Google NotebookLM-style text-to-speech application that 
+      transforms PDF documents into conversational podcasts. It leverages 
+      <a href="https://huggingface.co/hexgrad/Kokoro-82M" target="_blank">Kokoro</a>, 
+      a lightweight open-weight TTS model with 82M parameters, and 
+      <strong>Kyutai (Moshi)</strong>, a new open-source real-time TTS model (launched July 2025), 
+      to generate natural-sounding audio. A clean, user-friendly interface is built using <strong>Gradio</strong>.
     </p>
+  </section>
 
-    <h2>The Content Revolution</h2>
-    <p>
-        In an era of podcasts and audio content, PDF2Podcast addresses the growing demand for
-        audio alternatives to traditional reading. Whether it's research papers, reports, or
-        lengthy documents, users can now experience content through immersive audio narratives.
-    </p>
-
-    <h2>AI-Powered Transformation</h2>
-    <p>
-        The system employs advanced natural language processing to extract key information from
-        PDFs, then uses sophisticated text-to-speech synthesis to create natural-sounding audio
-        content. Machine learning algorithms optimize pacing, emphasis, and intonation for maximum
-        engagement.
-    </p>
-
-    <img src="https://picsum.photos/600/300?random=17" alt="AI Processing Pipeline" class="project-image">
-
-    <h2>Key Features</h2>
+  <section>
+    <h2>Features</h2>
     <ul>
-        <li><strong>Smart Summarization:</strong> Extracts and prioritizes key information automatically</li>
-        <li><strong>Natural Speech:</strong> High-quality TTS with emotional intelligence</li>
-        <li><strong>Multi-format Support:</strong> Handles various PDF layouts and structures</li>
-        <li><strong>Customizable Playback:</strong> Adjustable speed, voice, and content focus</li>
+      <li><strong>PDF to Audio Conversion:</strong> Upload any PDF and convert it into a podcast-style conversation.</li>
+      <li><strong>Multiple Voice Options:</strong> Assign different voices for multiple speakers.</li>
+      <li><strong>API Flexibility:</strong> Supports OpenAI, OpenRouter, and Kyutai (Moshi) APIs.</li>
+      <li><strong>Parallel Processing:</strong> Utilizes all CPU cores for faster audio generation.</li>
+      <li><strong>Cross-Platform:</strong> Works on macOS, Linux, and Windows.</li>
+      <li><strong>User-Friendly:</strong> Simple Gradio-based interface for accessibility.</li>
     </ul>
+  </section>
 
-    <h2>Technical Innovation</h2>
+  <section>
+    <h2>Architecture</h2>
     <p>
-        The project combines multiple AI technologies: OCR for text extraction, NLP for content
-        understanding, and advanced TTS systems for natural speech synthesis. The result is an
-        end-to-end pipeline that transforms written documents into compelling audio experiences.
+      The system runs inside a Docker container and follows an end-to-end pipeline:
     </p>
+    <ul>
+      <li>📄 PDF Processor extracts text</li>
+      <li>📝 Transcript Generator creates conversation-like output</li>
+      <li>🤗 Kokoro TTS or Kyutai TTS generates audio</li>
+      <li>🔊 Audio is returned to the user via the browser</li>
+      <li>🤖 Optional integration with OpenAI/OpenRouter for summarization & transcript improvements</li>
+    </ul>
+    <p><em>(Architecture diagram available in repo README)</em></p>
+  </section>
 
-    <img src="https://picsum.photos/700/350?random=18" alt="User Interface" class="project-image">
+  <section>
+    <h2>Sample Audio</h2>
+    <p><a href="https://github.com/user-attachments/assets/6ba7338b-9e63-42ed-88e3-e5890ebb949c" target="_blank">▶ Kokoro Sample</a></p>
+    <p><a href="https://github.com/user-attachments/assets/029b0090-cb9c-4281-829f-4d0a8257efe2" target="_blank">▶ Kyutai Sample</a></p>
+  </section>
 
-    <h2>Use Cases & Impact</h2>
+  <section>
+    <h2>Setup & Usage</h2>
+    <ol>
+      <li>Install <code>espeak-ng</code> on macOS, Linux, or Windows.</li>
+      <li>Create a Python 3.9+ virtual environment with <code>uv</code> or <code>pip</code>.</li>
+      <li>Install dependencies via <code>uv sync</code> or <code>pip install</code>.</li>
+      <li>Run <code>python gradio_app.py</code> and open <code>http://127.0.0.1:7860</code> in a browser.</li>
+      <li>Upload a PDF, select voices, choose API provider (OpenAI/OpenRouter/Kyutai), and generate audio.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Performance</h2>
     <p>
-        Perfect for researchers listening to papers during commutes, professionals consuming reports
-        hands-free, or anyone preferring audio learning. The system has been adopted by educational
-        institutions, research organizations, and productivity-focused companies.
+      Audio generation is parallelized across CPU cores. Performance depends on PDF length, 
+      available memory, CPU cores, and API network latency. 
     </p>
+  </section>
 
-    <h2>Privacy & Accessibility</h2>
+  <section>
+    <h2>Troubleshooting</h2>
+    <ul>
+      <li><strong>No audio:</strong> Ensure <code>espeak-ng</code> is installed.</li>
+      <li><strong>API errors:</strong> Verify API key and endpoint.</li>
+      <li><strong>PDF not processed:</strong> Ensure PDF contains readable text (not scanned images).</li>
+      <li><strong>Memory issues:</strong> Large PDFs require more system memory.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Alternatives</h2>
+    <ul>
+      <li><a href="https://github.com/souzatharsis/podcastfy" target="_blank">podcastfy</a></li>
+      <li><a href="https://github.com/Goekdeniz-Guelmez/Local-NotebookLM" target="_blank">Local NotebookLM</a></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>License</h2>
     <p>
-        Built with privacy in mind, all processing can be done locally without sending documents
-        to external servers. The system also improves accessibility for visually impaired users
-        and those who benefit from audio content consumption.
+      This project is open-source and available under the MIT License.
     </p>
-
-    <div class="action-buttons">
-        <a href="https://github.com/udaylunawat/Data-Science-Projects/tree/master/NotebookLM_clone/PDF2Podcast" class="secondary-btn" target="_blank">
-            View Repository
-        </a>
-    </div>
+  </section>
 </body>
 </html>

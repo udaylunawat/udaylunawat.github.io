@@ -1,0 +1,145 @@
+{
+  "home": {
+    "title1": "Senior Machine Learning Engineer",
+    "title2": "Software Engineer",
+    "tagline": "Building scalable, production-ready AI and software systems across Computer Vision, NLP, and Agentic AI.<br> 6+ years • Senior ML Engineer & SWE — production deployments, agentic orchestration, and CI/CD at scale."
+  },
+  "about": {
+    "title": "Passion",
+    "icon": "./src/img/icon-rocket.svg",
+    "content": "I am a Senior Machine Learning Engineer and Software Engineer with over 6 years delivering enterprise-grade AI and software solutions. I focus on moving models into production — writing reliable model code, robust APIs, and repeatable deployment pipelines.<br><br>My work spans Computer Vision, NLP, and agentic systems that automate analytics and workflows. I prefer shipping maintainable code and building observability into ML systems from day one.<br><br>I enjoy open-source tooling and pragmatic engineering: making complex systems simple to operate and measure."
+  },
+  "experience": [
+    {
+      "id": "fractal",
+      "title": "Senior Machine Learning Engineer & SWE — Fractal AI",
+      "dates": "Nov 2024 – Present · Pune",
+      "tags": ["LangGraph", "LangChain", "Multi-Agent", "Python"],
+      "description": "Led engineering for Fractal AI (India's First AI Unicorn Company), a multi-agent orchestration platform (LangGraph / LangChain). Owned tool onboarding and metadata lifecycle to productize agent behaviors for largest US telecom's business use.",
+      "badges": ["60+ agents onboarded", "3,000+ CI/CD in just a few weeks"],
+      "logo": "./src/img/Fractal_Logo.svg"
+    },
+    {
+      "id": "hcl",
+      "title": "Technical Lead ML Engineer — HCL",
+      "dates": "2024 · Bangalore",
+      "tags": ["Human-in-the-Loop", "Label Studio", "FastAPI", "MLflow"],
+      "description": "Implemented human-in-the-loop feedback and automated deployment flows; added Label Studio + FastAPI annotation pipelines, Trivy scanning, MLflow tracking and Seldon serving.",
+      "badges": [],
+      "logo": "./src/img/hcltech.jpeg"
+    },
+    {
+      "id": "chugani",
+      "title": "ML Engineer — Chugani",
+      "dates": "2022 – 2023 · Remote",
+      "tags": ["MTCNN", "FaceNet", "Liveliness Detection", "AWS"],
+      "description": "Built a real-time liveliness detection service (MTCNN + FaceNet), converted prototypes to modular MLOps pipelines, and established monitoring + retraining flows on AWS.",
+      "badges": [],
+      "logo": "./src/img/pagers-icon.svg"
+    },
+    {
+      "id": "yang",
+      "title": "ML & ETL Engineer — Yang",
+      "dates": "2019 – 2022 · Remote",
+      "tags": ["AI + ETL", "Smart Factory", "IPQC System", "Tableau"],
+      "description": "Delivered AI + ETL systems for smart-factory operations; shipped a 24/7 IPQC audit system (≈200 hours/week saved) and dashboards across 20+ vendor sites.",
+      "badges": [],
+      "logo": "./src/img/planet-icon.svg"
+    },
+    {
+      "id": "tcs-infosys",
+      "title": "Internships - Junior ML Engineer and Data Analyst — TCS & Infosys",
+      "dates": "2018 – 2019",
+      "tags": ["Data Analysis", "Machine Learning", "Internship", "Python"],
+      "description": "Completed internships at Tata Consultancy Services and Infosys, gaining hands-on experience in machine learning, data analysis, and software development practices.",
+      "badges": [],
+      "logos": ["./src/img/Infosys_logo.svg.png", "./src/img/tcs.webp"]
+    }
+  ],
+  "skills": [
+    {
+      "icon": "devicons devicon-python-plain",
+      "name": "Python"
+    },
+    {
+      "icon": "devicons devicon-docker-plain",
+      "name": "Docker"
+    },
+    {
+      "icon": "devicons devicon-googlecloud-plain",
+      "name": "GCP"
+    },
+    {
+      "icon": "devicons devicon-amazonwebservices-original",
+      "name": "AWS"
+    },
+    {
+      "icon": "devicons devicon-tensorflow-original",
+      "name": "TensorFlow · XGBoost · scikit-learn"
+    },
+    {
+      "icon": "devicons devicon-github-original",
+      "name": "CI/CD (Jenkins, GitHub Actions)"
+    },
+    {
+      "icon": "devicons devicon-postgresql-plain",
+      "name": "PostgreSQL · MongoDB · MySQL · Redis"
+    },
+    {
+      "icon": "devicons devicon-fastapi-plain",
+      "name": "FastAPI · Flask · Streamlit"
+    },
+    {
+      "icon": "devicons devicon-apacheairflow-plain-wordmark",
+      "img": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/apacheairflow/apacheairflow-plain-wordmark.svg",
+      "name": "Airflow · ETL Pipelines"
+    },
+    {
+      "icon": "devicons devicon-minitab-plain",
+      "name": "Tableau · Dask · Plotly"
+    },
+    {
+      "icon": "devicons devicon-pandas-original",
+      "name": "Pandas · Numpy"
+    },
+    {
+      "icon": "devicons devicon-git-plain",
+      "name": "Git · Version Control"
+    },
+    {
+      "icon": "devicons devicon-terraform-plain",
+      "name": "Cloud Infra"
+    },
+    {
+      "icon": "devicons devicon-jupyter-plain",
+      "name": "Jupyter · Notebook Workflows"
+    },
+    {
+      "icon": "devicons devicon-linux-plain",
+      "name": "Linux · Shell Scripting"
+    }
+  ],
+  "contact": {
+    "name": "Uday Lunawat",
+    "title": "Let's connect",
+    "description": "I am eager to join your team and contribute my expertise in Agentic GenAI, software engineering and production-grade ML delivery.<br><br>Find me at:",
+    "email": "udaylunawat@gmail.com",
+    "phone": "(+91) 70209 01969",
+    "links": [
+      {
+        "text": "LinkedIn",
+        "url": "https://www.linkedin.com/in/uday-lunawat"
+      },
+      {
+        "text": "Github",
+        "url": "https://github.com/udaylunawat"
+      },
+      {
+        "text": "Portfolio",
+        "url": "https://udaylunawat.github.io"
+      }
+    ],
+    "resume": "./src/Uday_Lunawat_Resume_Senior_ML_Engineer_V9.pdf",
+    "photo": "./src/img/uday.webp"
+  }
+}

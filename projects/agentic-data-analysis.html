@@ -11,69 +11,71 @@
     <div class="tags">
         <span>Agentic</span>
         <span>Google ADK</span>
-        <span>Data Analysis</span>
+        <span>Python</span>
+        <span>Multi-Agent Orchestration</span>
         <span>Automation</span>
     </div>
-
-    <img src="https://picsum.photos/800/400?random=13" alt="Agentic Data Analysis" class="project-image">
-
-    <p>
-        This groundbreaking project explores the future of data analysis through autonomous AI agents.
-        Built using Google's Agent Development Kit, it demonstrates how artificial intelligence can
-        transform traditional data science workflows into intelligent, self-directed analytical processes.
-    </p>
-
-    <h2>The Vision</h2>
-    <p>
-        Traditional data analysis requires extensive human intervention at every step. This project
-        envisions a world where AI agents can autonomously explore datasets, identify patterns,
-        generate insights, and even propose actionable recommendations without constant human supervision.
-    </p>
-
-    <h2>Google ADK Integration</h2>
-    <p>
-        Leveraging Google's Agent Development Kit, the system creates sophisticated agents capable of:
-        understanding natural language queries, exploring complex datasets, performing statistical analysis,
-        generating visualizations, and communicating findings in human-readable formats.
-    </p>
-
-    <img src="https://picsum.photos/600/300?random=14" alt="Agent Architecture" class="project-image">
-
-    <h2>Agent Capabilities</h2>
-    <ul>
-        <li><strong>Autonomous Exploration:</strong> Independently navigates and understands data structures</li>
-        <li><strong>Intelligent Analysis:</strong> Applies appropriate statistical methods automatically</li>
-        <li><strong>Dynamic Visualization:</strong> Creates relevant charts and graphs on demand</li>
-        <li><strong>Natural Communication:</strong> Explains findings in conversational language</li>
-    </ul>
-
-    <h2>Technical Architecture</h2>
-    <p>
-        The system employs a multi-agent architecture where specialized agents handle different aspects
-        of the analytical process. A coordinator agent manages the workflow, delegating tasks to
-        specialized agents for data cleaning, statistical analysis, visualization, and reporting.
-    </p>
-
-    <img src="https://picsum.photos/700/350?random=15" alt="Multi-Agent System" class="project-image">
-
-    <h2>Real-World Applications</h2>
-    <p>
-        This technology has applications across numerous industries: financial analysis, market research,
-        scientific research, business intelligence, and automated reporting systems. It can significantly
-        reduce the time and expertise required for complex data analysis tasks.
-    </p>
-
-    <h2>Future Implications</h2>
-    <p>
-        As AI agent technology matures, projects like this pave the way for fully autonomous data
-        science platforms. The potential impact on productivity, decision-making speed, and analytical
-        accuracy could be transformative across all data-driven industries.
-    </p>
 
     <div class="action-buttons">
         <a href="https://github.com/udaylunawat/Data-Science-Projects/tree/master/agentic_data_analysis/agentic_data_analysis" class="secondary-btn" target="_blank">
             View Repository
         </a>
     </div>
+
+    <!-- Replace with your own accessible image or diagram -->
+    <img src="https://raw.githubusercontent.com/udaylunawat/Data-Science-Projects/master/agentic_data_analysis/agentic_data_analysis/docs/architecture.png" alt="Agentic Data Analysis Architecture" class="project-image" onerror="this.onerror=null;this.src='https://placehold.co/600x300?text=Architecture+Diagram+Unavailable';">
+
+    <p>
+        <strong>Agentic Data Analysis</strong> is a modular Python framework for autonomous data analysis, built using Google's Agent Development Kit (ADK). The codebase is organized around agent orchestration, enabling agents to perform data cleaning, statistical analysis, visualization, and reporting with minimal human intervention.
+    </p>
+
+    <h2>Repository Structure</h2>
+    <pre>
+agentic_data_analysis/
+├── agents/
+│   ├── data_cleaning_agent.py
+│   ├── analysis_agent.py
+│   └── visualization_agent.py
+├── utils/
+│   └── ...
+├── config/
+│   └── default.yaml
+├── coordinator.py
+└── main.py
+    </pre>
+
+    <!-- Replace with your own accessible workflow diagram or code screenshot -->
+    <img src="https://raw.githubusercontent.com/udaylunawat/Data-Science-Projects/master/agentic_data_analysis/agentic_data_analysis/docs/workflow.png" alt="Agent Workflow" class="project-image" onerror="this.onerror=null;this.src='https://placehold.co/600x300?text=Workflow+Diagram+Unavailable';">
+
+    <h2>How It Works</h2>
+    <ol>
+        <li><code>main.py</code> initializes the <code>Coordinator</code> and loads configuration.</li>
+        <li>The <code>Coordinator</code> delegates tasks to agents (data cleaning, EDA, visualization).</li>
+        <li>Agents communicate via defined interfaces, passing intermediate results and triggering downstream actions.</li>
+        <li>Results are aggregated and a final report is generated, including visualizations and insights.</li>
+    </ol>
+
+    <h2>Key Features</h2>
+    <ul>
+        <li>Plug-and-play agent modules for extensibility.</li>
+        <li>Natural language query support (if enabled in config).</li>
+        <li>Automated EDA, visualization, and reporting.</li>
+        <li>Configurable workflows for different data analysis scenarios.</li>
+    </ul>
+
+    <h2>Example Usage</h2>
+    <pre>
+python main.py --config config/default.yaml --input data/sample.csv
+    </pre>
+
+    <h2>Code Example</h2>
+    <pre>
+# main.py
+from coordinator import Coordinator
+
+if __name__ == "__main__":
+    coordinator = Coordinator(config_path="config/default.yaml")
+    coordinator.run(input_path="data/sample.csv")
+    </pre>
 </body>
 </html>
