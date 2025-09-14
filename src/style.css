@@ -1135,7 +1135,7 @@ header.home, section.home {
     border-radius: 12px;
     padding: 1.5rem;
     height: 100%;
-    min-height: 380px; /* Increased from 304px */
+    min-height: 420px; /* Increased from 380px for better content fitting */
     display: flex;
     flex-direction: column;
     transition: all 0.3s ease;
@@ -1860,7 +1860,7 @@ header.home, section.home {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   width: 95vw;
-  height: 75vh; /* Increased from 65.4vh for better utilization */
+  height: 85vh; /* Increased from 65.4vh for better utilization */
   max-width: 1400px;
   max-height: 90vh; /* Increased from 1200px max-height */
   transition: transform 0.3s ease-in-out;
@@ -2439,6 +2439,37 @@ header.home, section.home {
   .blog-content h3 {
     font-size: clamp(1.2rem, 3vw, 1.4rem);
     margin: 1.5rem 0 0.75rem 0;
+  }
+
+  /* Fix mobile bullet point visibility */
+  .blog-content ul, .blog-content ol {
+    list-style-position: outside;
+    padding-left: 1.5rem;
+    margin: 1rem 0;
+  }
+
+  /* Ensure bullet points are visible on mobile */
+  .blog-content li {
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+    position: relative;
+    color: rgba(255, 255, 255, 0.95);
+  }
+
+  /* Enhanced bullet styling for better mobile visibility */
+  .blog-content li:before {
+    content: "•";
+    display: inline-block;
+    width: 1em;
+    color: #00ff00;
+    font-weight: bold;
+    position: relative;
+  }
+
+  /* Adjust strong elements in mobile */
+  .blog-content li strong {
+    color: #00ff00;
+    font-weight: 600;
   }
 }
 
