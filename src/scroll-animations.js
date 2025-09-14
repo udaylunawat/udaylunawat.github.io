@@ -88,43 +88,34 @@ function setupLogoScrollAnimations() {
             if (entry.isIntersecting) {
                 // Card is entering viewport - apply zoom and highlight to all logos
                 logos.forEach(logo => {
-                    logo.style.transform = isMobile ? 'scale(1.3)' : 'scale(1.5)'; // Smaller scale on mobile
+                    logo.style.transform = 'scale(1.5)';
                     logo.style.filter = 'grayscale(0%) brightness(110%)';
-                    logo.style.transition = isMobile ?
-                        'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : // Faster on mobile
-                        'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    logo.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
                 });
 
                 // Add enhanced glow effect to the card
                 card.style.boxShadow = '0 15px 40px rgba(0, 255, 0, 0.3)';
                 card.style.borderColor = 'rgba(0, 255, 0, 0.6)';
                 card.style.borderTopColor = 'rgba(0, 255, 0, 0.6)'; // Ensure top border is visible
-                card.style.transition = isMobile ?
-                    'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : // Faster on mobile
-                    'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                card.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
             } else {
                 // Card is leaving viewport - reset to original state
                 logos.forEach(logo => {
                     logo.style.transform = 'scale(1)';
-                    logo.style.filter = 'grayscale(100%) brightness(70%) opacity(0.7)';
-                    logo.style.transition = isMobile ?
-                        'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : // Faster on mobile
-                        'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    logo.style.filter = 'grayscale(100%) brightness(70%)';
+                    logo.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
                 });
 
                 // Reset card effects
                 card.style.boxShadow = '';
                 card.style.borderColor = 'rgba(255, 255, 255, 0.1)';
                 card.style.borderTopColor = 'rgba(255, 255, 255, 0.1)'; // Reset top border
-                card.style.transition = isMobile ?
-                    'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : // Faster on mobile
-                    'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                card.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
             }
         });
     }, {
-        threshold: isMobile ? 0.3 : 0.7, // Lower threshold for mobile for better trigger
-        rootMargin: isMobile ? '-20px 0px -20px 0px' : '-80px 0px -80px 0px', // Smaller margins for mobile
-        root: null // Use viewport as root
+        threshold: isMobile ? 0.5 : 0.7, // Different thresholds for mobile vs desktop
+        rootMargin: isMobile ? '-30px 0px -30px 0px' : '-80px 0px -80px 0px' // Different margins for smoother transitions
     });
 
     // Observe all experience cards

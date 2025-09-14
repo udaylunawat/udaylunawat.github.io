@@ -8,19 +8,156 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Oswald:wght@200;300;400;500;600;700&family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;1,100;1,200;1,300;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css"> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
 </head>
 
 <body>
 <div id="particles-js"></div>
-<div class="canvas-container" id="canvas">
+    <div class="canvas-container" id="canvas">
     <canvas></canvas>
 </div>
 
 <div class="color-background" id="colorBackground">
 </div>
 
+<!-- Minimal Particles Control Panel Toggle Button -->
+<button id="particles-control-toggle" class="particles-control-toggle-btn" title="Particles Controls">
+  ✨
+</button>
+
+<!-- Minimal Particles Control Panel with Tabs -->
+<div id="particles-control-panel" class="particles-control-panel hidden">
+  <div class="particles-panel-header">
+    <h3>🎮 Controls</h3>
+    <button id="particles-panel-close" class="particles-panel-close">&times;</button>
+  </div>
+
+  <!-- Tab Navigation -->
+  <div class="control-tabs">
+    <button id="particles-tab" class="control-tab active" data-tab="particles">✨ Particles</button>
+    <button id="background-tab" class="control-tab" data-tab="background">🌊 Background</button>
+  </div>
+
+  <!-- Particles Tab Content -->
+  <div id="particles-content" class="particles-panel-content control-tab-panel active">
+    <div class="control-group">
+      <label>Particle Count</label>
+      <div class="single-control">
+        <input type="range" id="particles-number" min="1" max="100" value="15" step="1">
+        <span id="particles-number-display" class="value-display">15</span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label>Particle Speed</label>
+      <div class="single-control">
+        <input type="range" id="particles-speed" min="0.5" max="10" value="3" step="0.5">
+        <span id="particles-speed-display" class="value-display">3</span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label>Particle Size</label>
+      <div class="single-control">
+        <input type="range" id="particles-size" min="2" max="20" value="8" step="1">
+        <span id="particles-size-display" class="value-display">8</span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label>Particle Opacity</label>
+      <div class="single-control">
+        <input type="range" id="particles-opacity" min="0.1" max="1.0" value="1.0" step="0.05">
+        <span id="particles-opacity-display" class="value-display">1.0</span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label>Link Opacity</label>
+      <div class="single-control">
+        <input type="range" id="particles-link-opacity" min="0.1" max="1.0" value="0.4" step="0.05">
+        <span id="particles-link-opacity-display" class="value-display">0.4</span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label>Particle Color</label>
+      <div class="single-control color-control">
+        <input type="color" id="particles-color" value="#ffffff" class="color-picker">
+        <span id="particles-color-display" class="value-display">#ffffff</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Background Tab Content -->
+  <div id="background-content" class="particles-panel-content control-tab-panel">
+    <div class="control-info">
+      <p>🎨 Background animation controls</p>
+    </div>
+
+    <div class="control-group">
+      <label>Animation Speed</label>
+      <div class="single-control">
+        <input type="range" id="background-speed" min="0.001" max="0.5" value="0.01" step="0.001">
+        <span id="background-speed-display" class="value-display">0.01</span>
+      </div>
+    </div>
+
+    <div class="control-group presets-group">
+      <label>Presets</label>
+      <div class="presets-grid">
+        <button class="preset-btn" id="calm-preset"><span>🌅</span><small>Calm</small></button>
+        <button class="preset-btn" id="balanced-preset"><span>⚖️</span><small>Balanced</small></button>
+        <button class="preset-btn" id="vivid-preset"><span>⚡</span><small>Vivid</small></button>
+        <button class="preset-btn" id="turbulent-preset"><span>🌊</span><small>Turbulent</small></button>
+        <button class="preset-btn" id="space-preset"><span>⭐</span><small>Space</small></button>
+        <button class="preset-btn" id="aurora-preset"><span>🌈</span><small>Aurora</small></button>
+        <button class="preset-btn" id="plasma-preset"><span>🔥</span><small>Plasma</small></button>
+        <button class="preset-btn" id="warp-preset"><span>🌌</span><small>Warp</small></button>
+        <button class="preset-btn" id="matrix-preset"><span>💚</span><small>Matrix</small></button>
+        <button class="preset-btn" id="hypnotic-preset"><span>🌠</span><small>Hypnotic</small></button>
+        <button class="preset-btn" id="dream-preset"><span>💫</span><small>Dream</small></button>
+        <button class="preset-btn" id="echo-preset"><span>🔄</span><small>Echo</small></button>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label>Distortion</label>
+      <div class="single-control">
+        <input type="range" id="background-distortion" min="0" max="100" value="35" step="1">
+        <span id="background-distortion-display" class="value-display">35</span>
+      </div>
+    </div>
+
+
+
+    <div class="control-group">
+      <label>Wave Frequency</label>
+      <div class="single-control">
+        <input type="range" id="background-frequency" min="0.5" max="2.0" value="1.0" step="0.1">
+        <span id="background-frequency-display" class="value-display">1.0</span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label>Animation Phase</label>
+      <div class="single-control">
+        <input type="range" id="background-phase" min="0" max="6.28" value="0" step="0.1">
+        <span id="background-phase-display" class="value-display">0</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Control Panel Overlay - commented out for now -->
+<!-- <div id="control-panel-overlay" class="control-panel-overlay"></div> -->
+
 <img class="nav-open-icon" id="open-icon" src="./src/img/menu-icon.svg" alt="" onclick="showMenu()">
+
+<!-- Minimize Control Button - commented out -->
+<!-- <button id="control-panel-minimize" class="control-panel-minimize-btn" title="Minimize/Maximize Controls">
+  ➖
+</button> -->
 <nav class="main-nav" id="menu">
     <img class="nav-close-icon" id="close-icon" src="./src/img/close-icon.svg" alt="" onclick="hideMenu()">
     <ul>
@@ -275,30 +412,104 @@
 <script>
     particlesJS("particles-js", {
       "particles": {
-        "number": { "value": 10 },
+        "number": { "value": 15 },
         "color": { "value": "#ffffff" },
         "shape": { "type": "circle" },
-        "opacity": { "value": 0.2 },
-        "size": { "value": 3 },
+        "opacity": {
+          "value": 1.0,
+          "random": true,
+          "anim": {
+            "enable": true,
+            "speed": 1.5,
+            "opacity_min": 0.3,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 8,
+          "random": true,
+          "anim": {
+            "enable": true,
+            "speed": 3,
+            "size_min": 2,
+            "sync": false
+          }
+        },
         "line_linked": {
           "enable": true,
-          "distance": 400,
+          "distance": 300,
           "color": "#ffffff",
-          "opacity": 0.1,
-          "width": 1
+          "opacity": 0.4,
+          "width": 1,
+          "path": {
+            "enable": true,
+            "type": "particles"
+          }
         },
-        "move": { "enable": true, "speed": 2 }
+        "move": {
+          "enable": true,
+          "speed": 3,
+          "direction": "none",
+          "random": false,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false,
+          "attract": {
+            "enable": false,
+            "rotateX": 600,
+            "rotateY": 1200
+          }
+        },
+        "twinkle": {
+          "lines": {
+            "enable": true,
+            "frequency": 0.5,
+            "opacity": 1.0,
+            "color": "#ffffff",
+            "wave": {
+              "travel": false,
+              "speed": 0.5
+            }
+          },
+          "particles": {
+            "enable": true,
+            "frequency": 0.3,
+            "opacity": 1.0,
+            "color": "#ffffff",
+            "wave": {
+              "travel": false,
+              "speed": 0.8
+            }
+          }
+        }
       },
       "interactivity": {
         "events": {
-          "onhover": { "enable": true, "mode": "repulse" },
-          "onclick": { "enable": true, "mode": "push" }
+          "onhover": {
+            "enable": true,
+            "mode": "bubble",
+            "duration": 0.1
+          },
+          "onclick": {
+            "enable": true,
+            "mode": "push"
+          }
+        },
+        "modes": {
+          "bubble": {
+            "distance": 100,
+            "size": 30,
+            "duration": 2,
+            "opacity": 1.0
+          }
         }
       },
       "retina_detect": true
     });
   </script>
   
+
+
 
 <!-- Animated background -->
 <script src="./src/background.js" type="module"></script>
@@ -343,6 +554,7 @@
 <script id="vertex-shader" type="x-shader/x-vertex">
     uniform float u_time;
     uniform vec2 u_randomisePosition;
+    uniform float u_distortion;
 
     varying float vDistortion;
     varying float xDistortion;
@@ -350,11 +562,11 @@
 
     void main() {
         vUv = uv;
-        vDistortion = snoise(vUv.xx * 3. - u_randomisePosition * 0.15);
-        xDistortion = snoise(vUv.yy * 1. - u_randomisePosition * 0.05);
+        vDistortion = snoise(vUv.xx * u_distortion * 0.3 - u_randomisePosition * 0.15);
+        xDistortion = snoise(vUv.yy * u_distortion * 0.1 - u_randomisePosition * 0.05);
         vec3 pos = position;
-        pos.z += (vDistortion * 35.);
-        pos.x += (xDistortion * 25.);
+        pos.z += (vDistortion * u_distortion * 3.5);
+        pos.x += (xDistortion * u_distortion * 2.5);
 
         gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
     }
@@ -1258,6 +1470,1670 @@
     }
   });
 </script>
+
+<!-- Minimal Particles Control Panel with Tab Functionality -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('🎮 Initializing enhanced particles control panel with tabs...');
+
+  // Elements
+  const toggleBtn = document.getElementById('particles-control-toggle');
+  const controlPanel = document.getElementById('particles-control-panel');
+  const closeBtn = document.getElementById('particles-panel-close');
+
+  // Tab elements
+  const particlesTab = document.getElementById('particles-tab');
+  const backgroundTab = document.getElementById('background-tab');
+  const particlesContent = document.getElementById('particles-content');
+  const backgroundContent = document.getElementById('background-content');
+
+  // Particles sliders and displays
+  const numberSlider = document.getElementById('particles-number');
+  const numberDisplay = document.getElementById('particles-number-display');
+  const speedSlider = document.getElementById('particles-speed');
+  const speedDisplay = document.getElementById('particles-speed-display');
+  const sizeSlider = document.getElementById('particles-size');
+  const sizeDisplay = document.getElementById('particles-size-display');
+  const linkOpacitySlider = document.getElementById('particles-link-opacity');
+  const linkOpacityDisplay = document.getElementById('particles-link-opacity-display');
+
+  // Background sliders and displays
+  const backgroundSpeedSlider = document.getElementById('background-speed');
+  const backgroundSpeedDisplay = document.getElementById('background-speed-display');
+  const backgroundScaleSlider = document.getElementById('background-scale');
+  const backgroundScaleDisplay = document.getElementById('background-scale-display');
+  const backgroundDistortionSlider = document.getElementById('background-distortion');
+  const backgroundDistortionDisplay = document.getElementById('background-distortion-display');
+
+  // Toggle panel visibility
+  function toggleControlPanel() {
+    if (controlPanel.classList.contains('hidden')) {
+      showControlPanel();
+    } else {
+      hideControlPanel();
+    }
+  }
+
+  function showControlPanel() {
+    controlPanel.classList.remove('hidden');
+    console.log('✨ Particles control panel shown');
+  }
+
+  function hideControlPanel() {
+    controlPanel.classList.add('hidden');
+    console.log('✨ Particles control panel hidden');
+  }
+
+  // Update particles parameter
+  function updateParticlesParameter(parameter, value) {
+    if (window.pJSDom && window.pJSDom.length > 0) {
+      const pJS = window.pJSDom[0].pJS;
+
+      // Update the parameter in the particles configuration
+      switch(parameter) {
+        case 'number':
+          numberSlider.value = value;
+          numberDisplay.textContent = value;
+          break;
+        case 'speed':
+          speedSlider.value = value;
+          speedDisplay.textContent = value;
+          break;
+        case 'size':
+          sizeSlider.value = value;
+          sizeDisplay.textContent = value;
+          break;
+        case 'linkOpacity':
+          linkOpacitySlider.value = value;
+          linkOpacityDisplay.textContent = value;
+          break;
+      }
+
+      // Reinitialize particles.js with updated configuration
+      const updatedConfig = {
+        particles: {
+          number: { value: parseInt(numberSlider.value) },
+          color: { value: "#ffffff" },
+          shape: { type: "circle" },
+          opacity: {
+            value: 1.0,
+            random: true,
+            anim: {
+              enable: true,
+              speed: 1.5,
+              opacity_min: 0.3,
+              sync: false
+            }
+          },
+          size: {
+            value: parseInt(sizeSlider.value),
+            random: true,
+            anim: {
+              enable: true,
+              speed: 3,
+              size_min: 2,
+              sync: false
+            }
+          },
+          line_linked: {
+            enable: true,
+            distance: 300,
+            color: "#ffffff",
+            opacity: parseFloat(linkOpacitySlider.value),
+            width: 1,
+            path: { enable: true, type: "particles" }
+          },
+          move: {
+            enable: true,
+            speed: parseFloat(speedSlider.value),
+            direction: "none",
+            random: false,
+            straight: false,
+            out_mode: "out",
+            bounce: false,
+            attract: { enable: false, rotateX: 600, rotateY: 1200 }
+          }
+        },
+        interactivity: {
+          events: {
+            onhover: { enable: true, mode: "bubble", duration: 0.1 },
+            onclick: { enable: true, mode: "push" }
+          },
+          modes: {
+            bubble: { distance: 100, size: 30, duration: 2, opacity: 1.0 }
+          }
+        },
+        retina_detect: true
+      };
+
+      // Destroy existing particles and reinitialize
+      if (window.pJSDom[0]) {
+        window.pJSDom[0].pJS.fn.particlesEmpty();
+        particlesJS("particles-js", updatedConfig);
+      }
+
+      console.log(`✨ Particles ${parameter} updated to:`, value, 'Full config reloaded');
+    } else {
+      console.log('⚠️ Particles.js not ready yet, cannot update');
+      // Update display anyway for consistency
+      switch(parameter) {
+        case 'number':
+          numberDisplay.textContent = value;
+          break;
+        case 'speed':
+          speedDisplay.textContent = value;
+          break;
+        case 'size':
+          sizeDisplay.textContent = value;
+          break;
+        case 'linkOpacity':
+          linkOpacityDisplay.textContent = value;
+          break;
+      }
+    }
+  }
+
+  // Function to update particles opacity
+  function updateParticlesOpacity(opacityValue) {
+    if (window.pJSDom && window.pJSDom.length > 0) {
+      const pJS = window.pJSDom[0].pJS;
+
+      // Update the particles opacity in the configuration
+      pJS.particles.opacity.value = opacityValue;
+
+      // Reinitialize particles.js with updated configuration
+      const updatedConfig = {
+        particles: {
+          number: { value: pJS.particles.number.value },
+          color: { value: "#ffffff" },
+          shape: { type: "circle" },
+          opacity: {
+            value: opacityValue,
+            random: true,
+            anim: {
+              enable: true,
+              speed: 1.5,
+              opacity_min: 0.3,
+              sync: false
+            }
+          },
+          size: {
+            value: pJS.particles.size.value,
+            random: true,
+            anim: {
+              enable: true,
+              speed: 3,
+              size_min: 2,
+              sync: false
+            }
+          },
+          line_linked: {
+            enable: true,
+            distance: pJS.particles.line_linked.distance,
+            color: "#ffffff",
+            opacity: pJS.particles.line_linked.opacity,
+            width: 1,
+            path: { enable: true, type: "particles" }
+          },
+          move: {
+            enable: true,
+            speed: pJS.particles.move.speed,
+            direction: "none",
+            random: false,
+            straight: false,
+            out_mode: "out",
+            bounce: false,
+            attract: { enable: false, rotateX: 600, rotateY: 1200 }
+          }
+        },
+        interactivity: {
+          events: {
+            onhover: { enable: true, mode: "bubble", duration: 0.1 },
+            onclick: { enable: true, mode: "push" }
+          },
+          modes: {
+            bubble: { distance: 100, size: 30, duration: 2, opacity: 1.0 }
+          }
+        },
+        retina_detect: true
+      };
+
+      // Destroy existing particles and reinitialize
+      if (window.pJSDom[0]) {
+        window.pJSDom[0].pJS.fn.particlesEmpty();
+        particlesJS("particles-js", updatedConfig);
+      }
+
+      console.log('✨ Particles opacity updated to:', opacityValue);
+      opacityDisplay.textContent = opacityValue;
+    } else {
+      console.log('⚠️ Particles.js not ready yet, cannot update opacity');
+      // Update display anyway for consistency
+      opacityDisplay.textContent = opacityValue;
+    }
+  }
+
+  // Wait for particles.js to be ready before setting initial values
+  function initializeParticlesControls() {
+    if (window.pJSDom && window.pJSDom.length > 0) {
+      // Set initial display values
+      if (window.pJSDom[0].pJS && window.pJSDom[0].pJS.particles) {
+        const pJS = window.pJSDom[0].pJS;
+        numberSlider.value = pJS.particles.number.value;
+        numberDisplay.textContent = pJS.particles.number.value;
+        speedSlider.value = pJS.particles.move.speed;
+        speedDisplay.textContent = pJS.particles.move.speed;
+        sizeSlider.value = pJS.particles.size.value;
+        sizeDisplay.textContent = pJS.particles.size.value;
+        linkOpacitySlider.value = pJS.particles.line_linked.opacity;
+        linkOpacityDisplay.textContent = pJS.particles.line_linked.opacity;
+        opacityDisplay.textContent = pJS.particles.opacity.value;
+        console.log('✨ Particles controls initialized successfully');
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // Event listeners
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleControlPanel();
+    });
+    console.log('✅ Toggle button event listener attached');
+  }
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      hideControlPanel();
+    });
+    console.log('✅ Close button event listener attached');
+  }
+
+  // Tab switching functionality
+  function switchTab(targetTab) {
+    console.log('🔄 Switching to tab:', targetTab);
+
+    // Remove active state from all tabs and panels
+    [particlesTab, backgroundTab].forEach(tab => tab.classList.remove('active'));
+    [particlesContent, backgroundContent].forEach(panel => panel.classList.remove('active'));
+
+    // Add active state to targeted tab and panel
+    if (targetTab === 'particles') {
+      particlesTab.classList.add('active');
+      particlesContent.classList.add('active');
+      console.log('✨ Switched to Particles tab');
+    } else if (targetTab === 'background') {
+      backgroundTab.classList.add('active');
+      backgroundContent.classList.add('active');
+      console.log('🌊 Switched to Background tab');
+    }
+  }
+
+  // Tab event listeners
+  if (particlesTab) {
+    particlesTab.addEventListener('click', function(e) {
+      e.preventDefault();
+      switchTab('particles');
+    });
+    console.log('✅ Particles tab event listener attached');
+  }
+
+  if (backgroundTab) {
+    backgroundTab.addEventListener('click', function(e) {
+      e.preventDefault();
+      switchTab('background');
+    });
+    console.log('✅ Background tab event listener attached');
+  }
+
+  // Background parameter updates
+  function updateBackgroundParameter(parameter, value) {
+    if (window.backgroundControls) {
+      try {
+        switch(parameter) {
+          case 'speed':
+            window.backgroundControls.setAnimationSpeed(value, undefined); // Use existing position speed
+            backgroundSpeedDisplay.textContent = value;
+            console.log(`🌊 Background animation speed updated to:`, value);
+            break;
+          case 'distortion':
+            // Create global distortion value for background.js to access
+            window.currentDistortion = value / 100.0; // Normalize 0-100 to 0.0-1.0
+            backgroundDistortionDisplay.textContent = value;
+            console.log(`🌊 Background distortion updated to:`, value, 'normalized:', window.currentDistortion);
+
+            if (window.backgroundControls && typeof window.backgroundControls.updateBackgroundDistortion === 'function') {
+              window.backgroundControls.updateBackgroundDistortion(window.currentDistortion);
+            }
+            break;
+
+          case 'frequency':
+            // Update wave frequency multiplier
+            window.currentFrequency = value;
+            backgroundFrequencyDisplay.textContent = value;
+            console.log(`🌊 Background wave frequency updated to:`, value);
+
+            if (window.backgroundControls && typeof window.backgroundControls.updateBackgroundFrequency === 'function') {
+              window.backgroundControls.updateBackgroundFrequency(window.currentFrequency);
+            }
+            break;
+          case 'phase':
+            // Update animation phase offset
+            window.currentPhase = value;
+            backgroundPhaseDisplay.textContent = value;
+            console.log(`🌊 Background animation phase updated to:`, value);
+
+            if (window.backgroundControls && typeof window.backgroundControls.updateBackgroundPhase === 'function') {
+              window.backgroundControls.updateBackgroundPhase(window.currentPhase);
+            }
+            break;
+        }
+      } catch (error) {
+        console.log('⚠️ Background controls not yet available:', error);
+      }
+    } else {
+      console.log('⚠️ Background controls not ready yet');
+      // Update display anyway for consistency
+      switch(parameter) {
+        case 'speed':
+          backgroundSpeedDisplay.textContent = value;
+          break;
+        case 'distortion':
+          backgroundDistortionDisplay.textContent = value;
+          window.currentDistortion = value / 100.0; // Store normalized value
+          break;
+
+        case 'frequency':
+          backgroundFrequencyDisplay.textContent = value;
+          window.currentFrequency = value; // Store value
+          break;
+        case 'phase':
+          backgroundPhaseDisplay.textContent = value;
+          window.currentPhase = value; // Store value
+          break;
+      }
+    }
+  }
+
+  // Initialize global distortion value
+  window.currentDistortion = 35 / 100.0; // Default value (35 normalized)
+
+  // Global function for background.js to update distortion via shader uniform
+  window.updateBackgroundDistortion = function(distortionValue) {
+    console.log('🌊 updateBackgroundDistortion called with:', distortionValue);
+    window.currentDistortion = distortionValue;
+
+    // If background.js provides a method to update active shader uniforms
+    if (window.backgroundControls && typeof window.backgroundControls.setUniformValue === 'function') {
+      window.backgroundControls.setUniformValue('u_distortion', distortionValue * 10.0); // Scale back up for shader use
+    }
+
+    return true; // Success indicator
+  };
+
+  // Function to update particles color
+  function updateParticlesColor(colorValue) {
+    if (window.pJSDom && window.pJSDom.length > 0) {
+      const pJS = window.pJSDom[0].pJS;
+
+      // Update the particles color in the configuration
+      pJS.particles.color.value = colorValue;
+
+      // Reinitialize particles.js with updated configuration
+      const updatedConfig = {
+        particles: {
+          number: { value: pJS.particles.number.value },
+          color: { value: colorValue },
+          shape: { type: "circle" },
+          opacity: {
+            value: 1.0,
+            random: true,
+            anim: {
+              enable: true,
+              speed: 1.5,
+              opacity_min: 0.3,
+              sync: false
+            }
+          },
+          size: {
+            value: pJS.particles.size.value,
+            random: true,
+            anim: {
+              enable: true,
+              speed: 3,
+              size_min: 2,
+              sync: false
+            }
+          },
+          line_linked: {
+            enable: true,
+            distance: pJS.particles.line_linked.distance,
+            color: pJS.particles.line_linked.color,
+            opacity: pJS.particles.line_linked.opacity,
+            width: 1,
+            path: { enable: true, type: "particles" }
+          },
+          move: {
+            enable: true,
+            speed: pJS.particles.move.speed,
+            direction: "none",
+            random: false,
+            straight: false,
+            out_mode: "out",
+            bounce: false,
+            attract: { enable: false, rotateX: 600, rotateY: 1200 }
+          }
+        },
+        interactivity: {
+          events: {
+            onhover: { enable: true, mode: "bubble", duration: 0.1 },
+            onclick: { enable: true, mode: "push" }
+          },
+          modes: {
+            bubble: { distance: 100, size: 30, duration: 2, opacity: 1.0 }
+          }
+        },
+        retina_detect: true
+      };
+
+      // Destroy existing particles and reinitialize
+      if (window.pJSDom[0]) {
+        window.pJSDom[0].pJS.fn.particlesEmpty();
+        particlesJS("particles-js", updatedConfig);
+      }
+
+      console.log('✨ Particles color updated to:', colorValue);
+    } else {
+      console.log('⚠️ Particles.js not ready yet, cannot update color');
+    }
+  }
+
+  // All parameter slider listeners
+  if (numberSlider) {
+    numberSlider.addEventListener('input', function(e) {
+      const newValue = parseInt(e.target.value);
+      updateParticlesParameter('number', newValue);
+    });
+    console.log('✅ Number slider event listener attached');
+  }
+
+  if (speedSlider) {
+    speedSlider.addEventListener('input', function(e) {
+      const newValue = parseFloat(e.target.value);
+      updateParticlesParameter('speed', newValue);
+    });
+    console.log('✅ Speed slider event listener attached');
+  }
+
+  if (sizeSlider) {
+    sizeSlider.addEventListener('input', function(e) {
+      const newValue = parseInt(e.target.value);
+      updateParticlesParameter('size', newValue);
+    });
+    console.log('✅ Size slider event listener attached');
+  }
+
+  // Particles Opacity slider
+  const opacitySlider = document.getElementById('particles-opacity');
+  const opacityDisplay = document.getElementById('particles-opacity-display');
+  if (opacitySlider) {
+    opacitySlider.addEventListener('input', function(e) {
+      const newValue = parseFloat(e.target.value);
+      updateParticlesOpacity(newValue);
+    });
+    console.log('✅ Opacity slider event listener attached');
+  }
+
+  if (linkOpacitySlider) {
+    linkOpacitySlider.addEventListener('input', function(e) {
+      const newValue = parseFloat(e.target.value);
+      updateParticlesParameter('linkOpacity', newValue);
+    });
+    console.log('✅ Link opacity slider event listener attached');
+  }
+
+  // Color picker event listener
+  const colorPicker = document.getElementById('particles-color');
+  const colorDisplay = document.getElementById('particles-color-display');
+  if (colorPicker) {
+    colorPicker.addEventListener('input', function(e) {
+      const newColor = e.target.value;
+      updateParticlesColor(newColor);
+      colorDisplay.textContent = newColor;
+      console.log('✅ Particles color updated to:', newColor);
+    });
+    console.log('✅ Color picker event listener attached');
+  }
+
+  // Background slider event listeners
+  if (backgroundSpeedSlider) {
+    backgroundSpeedSlider.addEventListener('input', function(e) {
+      const newValue = parseFloat(e.target.value);
+      updateBackgroundParameter('speed', newValue);
+    });
+    console.log('✅ Background speed slider event listener attached');
+  }
+
+
+
+  if (backgroundFrequencySlider) {
+    backgroundFrequencySlider.addEventListener('input', function(e) {
+      const newValue = parseFloat(e.target.value);
+      updateBackgroundParameter('frequency', newValue);
+      backgroundFrequencyDisplay.textContent = newValue;
+    });
+    console.log('✅ Background frequency slider event listener attached');
+  }
+
+  if (backgroundPhaseSlider) {
+    backgroundPhaseSlider.addEventListener('input', function(e) {
+      const newValue = parseFloat(e.target.value);
+      updateBackgroundParameter('phase', newValue);
+      backgroundPhaseDisplay.textContent = newValue;
+    });
+    console.log('✅ Background phase slider event listener attached');
+  }
+
+  if (backgroundDistortionSlider) {
+    backgroundDistortionSlider.addEventListener('input', function(e) {
+      const newValue = parseInt(e.target.value);
+      updateBackgroundParameter('distortion', newValue);
+    });
+    console.log('✅ Background distortion slider event listener attached');
+  }
+
+  // Close panel when clicking outside or pressing Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && !controlPanel.classList.contains('hidden')) {
+      hideControlPanel();
+    }
+  });
+
+  document.addEventListener('click', function(e) {
+    if (!controlPanel.classList.contains('hidden') &&
+        !controlPanel.contains(e.target) &&
+        e.target !== toggleBtn) {
+      hideControlPanel();
+    }
+  });
+
+  // Initialize controls - wait for particles.js to be fully loaded
+  let initAttempts = 0;
+  const maxAttempts = 20;
+
+  function tryInitialize() {
+    initAttempts++;
+    if (!initializeParticlesControls()) {
+      if (initAttempts < maxAttempts) {
+        setTimeout(tryInitialize, 100);
+      } else {
+        console.log('✨ Particles controls initialization timed out, but controls will work when particles.js loads');
+      }
+    }
+  }
+
+  setTimeout(tryInitialize, 500); // Start after page load
+
+  console.log('✅ Minimal particles control panel initialized with 4 parameters');
+
+  // Enhanced preset functionality - controls BOTH particles AND background
+  function applyPreset(presetType) {
+    console.log('🎨 Applying comprehensive preset:', presetType);
+
+    switch(presetType) {
+      case 'calm':
+        // Calm preset: Gentle, serene atmosphere with slow, soft everything
+        // Background
+        updateBackgroundParameter('speed', '0.002');
+        updateBackgroundParameter('distortion', '15');
+        backgroundSpeedDisplay.textContent = '0.002';
+        backgroundDistortionDisplay.textContent = '15';
+        // Particles: Relaxed, sparse movement
+        particlesNumberSlider.value = '8';
+        particlesSpeedSlider.value = '2';
+        particlesSizeSlider.value = '6';
+        particlesLinkOpacitySlider.value = '0.3';
+        particlesNumberDisplay.textContent = '8';
+        particlesSpeedDisplay.textContent = '2';
+        particlesSizeDisplay.textContent = '6';
+        particlesLinkOpacityDisplay.textContent = '0.3';
+        updateParticlesFromUI();
+        break;
+
+      case 'balanced':
+        // Balanced preset: Harmonious, standard settings for everything
+        // Background
+        updateBackgroundParameter('speed', '0.01');
+        updateBackgroundParameter('distortion', '35');
+        backgroundSpeedDisplay.textContent = '0.01';
+        backgroundDistortionDisplay.textContent = '35';
+        // Particles: Moderate, balanced
+        particlesNumberSlider.value = '12';
+        particlesSpeedSlider.value = '3';
+        particlesSizeSlider.value = '8';
+        particlesLinkOpacitySlider.value = '0.4';
+        particlesNumberDisplay.textContent = '12';
+        particlesSpeedDisplay.textContent = '3';
+        particlesSizeDisplay.textContent = '8';
+        particlesLinkOpacityDisplay.textContent = '0.4';
+        updateParticlesFromUI();
+        break;
+
+      case 'vivid':
+        // Vivid preset: Energetic and dynamic
+        // Background: Fast, defined patterns
+        updateBackgroundParameter('speed', '0.015');
+        updateBackgroundParameter('distortion', '60');
+        backgroundSpeedDisplay.textContent = '0.015';
+        backgroundDistortionDisplay.textContent = '60';
+        // Particles: Active, visible
+        particlesNumberSlider.value = '18';
+        particlesSpeedSlider.value = '4.5';
+        particlesSizeSlider.value = '12';
+        particlesLinkOpacitySlider.value = '0.6';
+        particlesNumberDisplay.textContent = '18';
+        particlesSpeedDisplay.textContent = '4.5';
+        particlesSizeDisplay.textContent = '12';
+        particlesLinkOpacityDisplay.textContent = '0.6';
+        updateParticlesFromUI();
+        break;
+
+      case 'turbulent':
+        // Turbulent preset: Chaotic, intense atmosphere
+        // Background: Fast, extreme distortion
+        updateBackgroundParameter('speed', '0.025');
+        updateBackgroundParameter('distortion', '88');
+        backgroundSpeedDisplay.textContent = '0.025';
+        backgroundDistortionDisplay.textContent = '88';
+        // Particles: Chaotic, dense movement
+        particlesNumberSlider.value = '25';
+        particlesSpeedSlider.value = '7';
+        particlesSizeSlider.value = '16';
+        particlesLinkOpacitySlider.value = '0.8';
+        particlesNumberDisplay.textContent = '25';
+        particlesSpeedDisplay.textContent = '7';
+        particlesSizeDisplay.textContent = '16';
+        particlesLinkOpacityDisplay.textContent = '0.8';
+        updateParticlesFromUI();
+        break;
+
+      case 'space':
+        // Space preset: Cosmic serenity with minimal particles
+        // Background: Slow, subtle star-like movements
+        updateBackgroundParameter('speed', '0.001');
+        updateBackgroundParameter('distortion', '8');
+        backgroundSpeedDisplay.textContent = '0.001';
+        backgroundDistortionDisplay.textContent = '8';
+        // Particles: Sparse, twinkling stars
+        particlesNumberSlider.value = '6';
+        particlesSpeedSlider.value = '1.5';
+        particlesSizeSlider.value = '4';
+        particlesLinkOpacitySlider.value = '0.2';
+        particlesNumberDisplay.textContent = '6';
+        particlesSpeedDisplay.textContent = '1.5';
+        particlesSizeDisplay.textContent = '4';
+        particlesLinkOpacityDisplay.textContent = '0.2';
+        updateParticlesFromUI();
+        break;
+
+      case 'aurora':
+        // Aurora preset: Northern lights effect
+        // Background: Slow, flowing waves
+        updateBackgroundParameter('speed', '0.003');
+        updateBackgroundParameter('distortion', '28');
+        backgroundSpeedDisplay.textContent = '0.003';
+        backgroundDistortionDisplay.textContent = '28';
+        // Particles: Gentle, sparse wisps
+        particlesNumberSlider.value = '10';
+        particlesSpeedSlider.value = '2.5';
+        particlesSizeSlider.value = '7';
+        particlesLinkOpacitySlider.value = '0.35';
+        particlesNumberDisplay.textContent = '10';
+        particlesSpeedDisplay.textContent = '2.5';
+        particlesSizeDisplay.textContent = '7';
+        particlesLinkOpacityDisplay.textContent = '0.35';
+        updateParticlesFromUI();
+        break;
+
+      case 'plasma':
+        // Plasma preset: Volcanic, molten effect
+        // Background: Medium-fast with high energy
+        updateBackgroundParameter('speed', '0.012');
+        updateBackgroundParameter('distortion', '78');
+        backgroundSpeedDisplay.textContent = '0.012';
+        backgroundDistortionDisplay.textContent = '78';
+        // Particles: Bright, glowing orbs
+        particlesNumberSlider.value = '15';
+        particlesSpeedSlider.value = '5';
+        particlesSizeSlider.value = '14';
+        particlesLinkOpacitySlider.value = '0.7';
+        particlesNumberDisplay.textContent = '15';
+        particlesSpeedDisplay.textContent = '5';
+        particlesSizeDisplay.textContent = '14';
+        particlesLinkOpacityDisplay.textContent = '0.7';
+        updateParticlesFromUI();
+        break;
+
+      case 'warp':
+        // Warp preset: Space-time distortion
+        // Background: Fast spatial warping
+        updateBackgroundParameter('speed', '0.024');
+        updateBackgroundParameter('distortion', '52');
+        backgroundSpeedDisplay.textContent = '0.024';
+        backgroundDistortionDisplay.textContent = '52';
+        // Particles: Fast, directional streaks
+        particlesNumberSlider.value = '20';
+        particlesSpeedSlider.value = '8';
+        particlesSizeSlider.value = '10';
+        particlesLinkOpacitySlider.value = '0.5';
+        particlesNumberDisplay.textContent = '20';
+        particlesSpeedDisplay.textContent = '8';
+        particlesSizeDisplay.textContent = '10';
+        particlesLinkOpacityDisplay.textContent = '0.5';
+        updateParticlesFromUI();
+        break;
+
+      case 'matrix':
+        // Matrix preset: Digital rain atmosphere
+        // Background: Controlled, grid-like
+        updateBackgroundParameter('speed', '0.018');
+        updateBackgroundParameter('distortion', '22');
+        backgroundSpeedDisplay.textContent = '0.018';
+        backgroundDistortionDisplay.textContent = '22';
+        // Particles: Fast descending drops
+        particlesNumberSlider.value = '30';
+        particlesSpeedSlider.value = '6';
+        particlesSizeSlider.value = '5';
+        particlesLinkOpacitySlider.value = '0.9';
+        particlesNumberDisplay.textContent = '30';
+        particlesSpeedDisplay.textContent = '6';
+        particlesSizeDisplay.textContent = '5';
+        particlesLinkOpacityDisplay.textContent = '0.9';
+        updateParticlesFromUI();
+        break;
+
+      case 'hypnotic':
+        // Hypnotic preset: Mesmerizing patterns
+        // Background: Very slow, spiraling
+        updateBackgroundParameter('speed', '0.004');
+        updateBackgroundParameter('distortion', '58');
+        backgroundSpeedDisplay.textContent = '0.004';
+        backgroundDistortionDisplay.textContent = '58';
+        // Particles: Ritual circling
+        particlesNumberSlider.value = '12';
+        particlesSpeedSlider.value = '3.5';
+        particlesSizeSlider.value = '9';
+        particlesLinkOpacitySlider.value = '0.5';
+        particlesNumberDisplay.textContent = '12';
+        particlesSpeedDisplay.textContent = '3.5';
+        particlesSizeDisplay.textContent = '9';
+        particlesLinkOpacityDisplay.textContent = '0.5';
+        updateParticlesFromUI();
+        break;
+
+      case 'dream':
+        // Dream preset: Surreal, flowing atmosphere
+        // Background: Slow, dream-like waves
+        updateBackgroundParameter('speed', '0.007');
+        updateBackgroundParameter('distortion', '92');
+        backgroundSpeedDisplay.textContent = '0.007';
+        backgroundDistortionDisplay.textContent = '92';
+        // Particles: Ethereal floating
+        particlesNumberSlider.value = '14';
+        particlesSpeedSlider.value = '2.8';
+        particlesSizeSlider.value = '11';
+        particlesLinkOpacitySlider.value = '0.45';
+        particlesNumberDisplay.textContent = '14';
+        particlesSpeedDisplay.textContent = '2.8';
+        particlesSizeDisplay.textContent = '11';
+        particlesLinkOpacityDisplay.textContent = '0.45';
+        updateParticlesFromUI();
+        break;
+
+      case 'echo':
+        // Echo preset: Reverberating patterns
+        // Background: Medium speed with extreme distortion
+        updateBackgroundParameter('speed', '0.009');
+        updateBackgroundParameter('distortion', '95');
+        backgroundSpeedDisplay.textContent = '0.009';
+        backgroundDistortionDisplay.textContent = '95';
+        // Particles: Pulsing network
+        particlesNumberSlider.value = '16';
+        particlesSpeedSlider.value = '4.2';
+        particlesSizeSlider.value = '13';
+        particlesLinkOpacitySlider.value = '0.65';
+        particlesNumberDisplay.textContent = '16';
+        particlesSpeedDisplay.textContent = '4.2';
+        particlesSizeDisplay.textContent = '13';
+        particlesLinkOpacityDisplay.textContent = '0.65';
+        updateParticlesFromUI();
+        break;
+
+      default:
+        console.log('⚠️ Unknown preset type:', presetType);
+        return;
+    }
+
+    // Log comprehensive preset application
+    console.log(`🎨🏔️ COMPREHENSIVE PRESET "${presetType.toUpperCase()}" APPLIED!`);
+    console.log(`   └─ Background: Speed ${backgroundSpeedDisplay.textContent}, Distortion ${backgroundDistortionDisplay.textContent}`);
+    console.log(`   └─ Particles: ${particlesNumberDisplay.textContent} particles, Speed ${particlesSpeedDisplay.textContent}, Size ${particlesSizeDisplay.textContent}, Links ${particlesLinkOpacityDisplay.textContent}`);
+  }
+
+  // Helper function to update particles from preset values - Wait for systems to be ready
+  function updateParticlesFromUI() {
+    const maxWait = 10; // Maximum seconds to wait
+    let attempts = 0;
+
+    function tryUpdate() {
+      attempts++;
+
+      // Ensure systems are ready
+      if (!window.pJSDom || !window.pJSDom[0] || !window.pJSDom[0].pJS) {
+        if (attempts < maxWait * 10) { // Wait up to 10 seconds
+          console.log(`⏳ Waiting for particles system... (attempt ${attempts})`);
+          setTimeout(tryUpdate, 100);
+          return;
+        } else {
+          console.log('⚠️ Particles system not available after maximum wait time');
+          return;
+        }
+      }
+
+      console.log('🎆 Force-updating all particle parameters from preset...');
+
+      try {
+        // Force reload entire particles configuration for immediate effect
+        if (window.pJSDom && window.pJSDom[0]) {
+          const pJS = window.pJSDom[0].pJS;
+
+          // Update the configuration values
+          pJS.particles.number.value = parseInt(particlesNumberSlider.value);
+          pJS.particles.size.value = parseInt(particlesSizeSlider.value);
+          pJS.particles.move.speed = parseFloat(particlesSpeedSlider.value);
+          pJS.particles.line_linked.opacity = parseFloat(particlesLinkOpacitySlider.value);
+
+          console.log(`✅ Applied particles preset: ${pJS.particles.number.value} particles, size ${pJS.particles.size.value}, speed ${pJS.particles.move.speed}, links ${pJS.particles.line_linked.opacity}`);
+
+          // Force refresh - clear and regenerate particles
+          pJS.fn.particlesEmpty();
+          pJS.fn.particlesCreate();
+          pJS.fn.particlesRefresh();
+
+          console.log('🎆 Particles force-refreshed successfully!');
+        }
+      } catch (error) {
+        console.log('❌ Error in force-update:', error);
+      }
+    }
+
+    tryUpdate();
+  }
+
+  // Preset button event listeners
+  const presetButtons = [
+    'calm-preset', 'balanced-preset', 'vivid-preset', 'turbulent-preset',
+    'space-preset', 'aurora-preset', 'plasma-preset', 'warp-preset',
+    'matrix-preset', 'hypnotic-preset', 'dream-preset', 'echo-preset'
+  ];
+
+  presetButtons.forEach(presetId => {
+    const button = document.getElementById(presetId);
+    if (button) {
+      button.addEventListener('click', () => {
+        const presetType = presetId.replace('-preset', '');
+        applyPreset(presetType);
+      });
+      console.log(`✅ ${presetId} event listener attached`);
+    } else {
+      console.log(`⚠️ ${presetId} not found`);
+    }
+  });
+
+  console.log('✅ Enhanced preset functionality initialized with 12 presets!');
+});
+</script>
+
+<!-- Control Panel Functionality - commented out for now -->
+<!-- <script>
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('🎯 Initializing comprehensive control panel...');
+
+  // Initialize panel as active (visible) by default
+  const controlPanel = document.getElementById('control-panel');
+  if (controlPanel) {
+    controlPanel.classList.remove('hidden');
+    console.log('🎨 Control panel initialized in active state');
+  }
+
+  // Control Panel Toggle Button - should be attached only once
+  const controlPanelToggleBtn = document.getElementById('control-panel-toggle');
+  if (controlPanelToggleBtn && !controlPanelToggleBtn.hasEventListener) {
+    controlPanelToggleBtn.hasEventListener = true;
+    controlPanelToggleBtn.addEventListener('click', function(e) {
+      console.log('🎨 Control panel toggle clicked!');
+      toggleControlPanel();
+      e.preventDefault();
+      e.stopPropagation();
+    });
+    console.log('✅ Control panel button event listener attached');
+  }
+
+  // Tab switching functionality
+  const tabs = document.querySelectorAll('.control-tab');
+  const tabPanels = document.querySelectorAll('.control-tab-panel');
+
+  function switchTab(targetTab) {
+    console.log('🔄 Switching to tab:', targetTab);
+
+    // Remove active state from all tabs and panels
+    tabs.forEach(tab => tab.classList.remove('active'));
+    tabPanels.forEach(panel => panel.classList.remove('active'));
+
+    // Add active state to targeted tab and panel
+    const activeTab = document.querySelector(`[data-tab="${targetTab}"]`);
+    const activePanel = document.getElementById(`${targetTab}-content`);
+
+    if (activeTab) activeTab.classList.add('active');
+    if (activePanel) activePanel.classList.add('active');
+  }
+
+  // Add click handlers to tabs - avoid duplicates
+  tabs.forEach(tab => {
+    if (!tab.hasTabListener) {
+      tab.hasTabListener = true;
+      tab.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetTab = tab.getAttribute('data-tab');
+        if (targetTab) {
+          switchTab(targetTab);
+        }
+      });
+    }
+  });
+
+  console.log('✅ Control panel tabs initialized');
+});
+</script> -->
+
+<!-- Control Panel Minimize/Maximize Functionality -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Minimize/maximize button functionality
+  const minimizeBtn = document.getElementById('control-panel-minimize');
+  if (minimizeBtn) {
+    minimizeBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleCompact();
+    });
+  }
+
+  function toggleCompact() {
+    const controlPanel = document.getElementById('control-panel');
+    const isCompact = controlPanel.classList.contains('control-panel-compact');
+
+    if (isCompact) {
+      // Expand back to full size
+      controlPanel.classList.remove('control-panel-compact');
+      minimizeBtn.textContent = '➖';
+      minimizeBtn.title = 'Minimize Controls';
+    } else {
+      // Collapse to compact view
+      controlPanel.classList.add('control-panel-compact');
+      minimizeBtn.textContent = '➕';
+      minimizeBtn.title = 'Expand Controls';
+    }
+  }
+});
+</script>
+
+<!-- SIMPLE TAB SYSTEM TEST -->
+<script>
+</script>
+
+    const controlPanelOverlay = document.getElementById('control-panel-overlay');
+    const controlPanelClose = document.getElementById('control-panel-close');
+    const resetControlsBtn = document.getElementById('reset-controls');
+    const savePresetBtn = document.getElementById('save-preset');
+    const loadPresetBtn = document.getElementById('load-preset');
+
+    // Control Panel Toggle Function
+    function toggleControlPanel() {
+      const isHidden = controlPanel.classList.contains('hidden');
+      if (isHidden) {
+        showControlPanel();
+      } else {
+        hideControlPanel();
+      }
+    }
+
+    function showControlPanel() {
+      controlPanel.classList.remove('hidden');
+      controlPanel.classList.add('active');
+      controlPanelOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function hideControlPanel() {
+      controlPanel.classList.remove('active');
+      controlPanel.classList.add('hidden');
+      controlPanelOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Event Listeners
+    controlPanelClose.addEventListener('click', hideControlPanel);
+    controlPanelOverlay.addEventListener('click', hideControlPanel);
+
+    // Control Panel Toggle Button
+    const controlPanelToggleBtn = document.getElementById('control-panel-toggle');
+    if (controlPanelToggleBtn) {
+      console.log('🎨 Button found, adding event listener');
+      controlPanelToggleBtn.addEventListener('click', (e) => {
+        console.log('🎨 Button clicked!');
+        console.log('Control panel element:', controlPanel);
+        console.log('Control panel classes:', controlPanel ? controlPanel.classList.toString() : 'null');
+        toggleControlPanel();
+        e.preventDefault();
+        e.stopPropagation();
+      });
+      console.log('✅ Control panel button event listener successfully attached');
+    } else {
+      console.log('❌ Control panel toggle button not found');
+    }
+
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !controlPanel.classList.contains('hidden')) {
+        hideControlPanel();
+      }
+    });
+
+    // Initialize Particles Controls
+    window.particlesControls = {
+      updateParticles: function(config) {
+        if (window.pJSDom && window.pJSDom.length > 0) {
+          // Update particles config dynamically
+          window.pJSDom[0].pJS.particles.number.value = config.number;
+          window.pJSDom[0].pJS.particles.color.value = `rgb(${config.color.r}, ${config.color.g}, ${config.color.b})`;
+          window.pJSDom[0].pJS.particles.size.value = config.size;
+          window.pJSDom[0].pJS.particles.size.anim.size_min = config.sizeMin;
+          window.pJSDom[0].pJS.particles.move.speed = config.speed;
+          window.pJSDom[0].pJS.particles.opacity.value = config.opacity;
+          window.pJSDom[0].pJS.particles.line_linked.distance = config.linkDistance;
+          window.pJSDom[0].pJS.particles.line_linked.opacity = config.linkOpacity;
+
+          // Force refresh
+          window.pJSDom[0].pJS.fn.particlesRefresh();
+        }
+      },
+      reset: function() {
+        // Reset to original values
+        this.updateParticles({
+          number: 15,
+          color: { r: 255, g: 255, b: 255 },
+          size: 8,
+          sizeMin: 2,
+          speed: 3,
+          opacity: 1.0,
+          linkDistance: 300,
+          linkOpacity: 0.4
+        });
+      }
+    };
+
+    // Background.js Controls
+    function setupBackgroundControls() {
+      // Color controls
+      ['bg-r', 'bg-g', 'bg-b'].forEach(id => {
+        const slider = document.getElementById(id);
+        const display = document.getElementById('bg-rgb');
+        slider.addEventListener('input', () => {
+          const r = parseInt(document.getElementById('bg-r').value);
+          const g = parseInt(document.getElementById('bg-g').value);
+          const b = parseInt(document.getElementById('bg-b').value);
+          if (window.backgroundControls) {
+            window.backgroundControls.setBackgroundColor(r, g, b);
+          }
+          display.textContent = `rgb(${r}, ${g}, ${b})`;
+        });
+      });
+
+      // Color1 controls
+      ['color1-r', 'color1-g', 'color1-b'].forEach(id => {
+        const slider = document.getElementById(id);
+        const display = document.getElementById('color1-rgb');
+        slider.addEventListener('input', () => {
+          const r = parseInt(document.getElementById('color1-r').value);
+          const g = parseInt(document.getElementById('color1-g').value);
+          const b = parseInt(document.getElementById('color1-b').value);
+          if (window.backgroundControls) {
+            window.backgroundControls.setColor1(r, g, b);
+          }
+          display.textContent = `rgb(${r}, ${g}, ${b})`;
+        });
+      });
+
+      // Color2 controls
+      ['color2-r', 'color2-g', 'color2-b'].forEach(id => {
+        const slider = document.getElementById(id);
+        const display = document.getElementById('color2-rgb');
+        slider.addEventListener('input', () => {
+          const r = parseInt(document.getElementById('color2-r').value);
+          const g = parseInt(document.getElementById('color2-g').value);
+          const b = parseInt(document.getElementById('color2-b').value);
+          if (window.backgroundControls) {
+            window.backgroundControls.setColor2(r, g, b);
+          }
+          display.textContent = `rgb(${r}, ${g}, ${b})`;
+        });
+      });
+
+      // Position controls
+      const posSliders = ['pos-x', 'pos-y', 'pos-z'];
+      posSliders.forEach(id => {
+        const slider = document.getElementById(id);
+        const display = document.getElementById('pos-display');
+        slider.addEventListener('input', () => {
+          const x = parseInt(document.getElementById('pos-x').value);
+          const y = parseInt(document.getElementById('pos-y').value);
+          const z = parseInt(document.getElementById('pos-z').value);
+          if (window.backgroundControls) {
+            window.backgroundControls.setPosition(x, y, z);
+          }
+          display.textContent = `(${x}, ${y}, ${z})`;
+        });
+      });
+
+      // Rotation controls
+      const rotSliders = ['rot-x', 'rot-y', 'rot-z'];
+      rotSliders.forEach(id => {
+        const slider = document.getElementById(id);
+        const display = document.getElementById('rot-display');
+        slider.addEventListener('input', () => {
+          const rx = parseFloat(document.getElementById('rot-x').value);
+          const ry = parseFloat(document.getElementById('rot-y').value);
+          const rz = parseFloat(document.getElementById('rot-z').value);
+          if (window.backgroundControls) {
+            window.backgroundControls.setRotation(rx, ry, rz);
+          }
+          display.textContent = `(${rx.toFixed(1)}, ${ry.toFixed(1)}, ${rz.toFixed(1)})`;
+        });
+      });
+
+      // Scale control
+      const scaleSlider = document.getElementById('scale');
+      const scaleDisplay = document.getElementById('scale-display');
+      scaleSlider.addEventListener('input', () => {
+        const scale = parseFloat(scaleSlider.value);
+        if (window.backgroundControls) {
+          window.backgroundControls.setScale(scale);
+        }
+        scaleDisplay.textContent = scale.toFixed(1);
+      });
+
+      // Animation speed controls
+      const timeSpeedSlider = document.getElementById('time-speed');
+      const timeSpeedDisplay = document.getElementById('time-speed-display');
+      timeSpeedSlider.addEventListener('input', () => {
+        const speed = parseFloat(timeSpeedSlider.value);
+        const posSpeed = parseFloat(document.getElementById('pos-speed').value);
+        if (window.backgroundControls) {
+          window.backgroundControls.setAnimationSpeed(speed, posSpeed);
+        }
+        timeSpeedDisplay.textContent = speed.toString();
+      });
+
+      const posSpeedSlider = document.getElementById('pos-speed');
+      const posSpeedDisplay = document.getElementById('pos-speed-display');
+      posSpeedSlider.addEventListener('input', () => {
+        const speed = parseFloat(timeSpeedSlider.value);
+        const posSpeed = parseFloat(posSpeedSlider.value);
+        if (window.backgroundControls) {
+          window.backgroundControls.setAnimationSpeed(speed, posSpeed);
+        }
+        posSpeedDisplay.textContent = posSpeed.toString();
+      });
+    }
+
+    // Particles.js Controls
+    function setupParticlesControls() {
+      // Number control
+      const numberSlider = document.getElementById('particles-number');
+      const numberDisplay = document.getElementById('particles-number-display');
+      numberSlider.addEventListener('input', () => {
+        const config = getParticlesConfig();
+        if (window.particlesControls) {
+          window.particlesControls.updateParticles(config);
+        }
+        numberDisplay.textContent = numberSlider.value;
+      });
+
+      // Color controls
+      ['particles-r', 'particles-g', 'particles-b'].forEach(id => {
+        const slider = document.getElementById(id);
+        const display = document.getElementById('particles-rgb');
+        slider.addEventListener('input', () => {
+          const config = getParticlesConfig();
+          if (window.particlesControls) {
+            window.particlesControls.updateParticles(config);
+          }
+          const r = parseInt(document.getElementById('particles-r').value);
+          const g = parseInt(document.getElementById('particles-g').value);
+          const b = parseInt(document.getElementById('particles-b').value);
+          display.textContent = `rgb(${r}, ${g}, ${b})`;
+        });
+      });
+
+      // Size controls
+      const sizeSlider = document.getElementById('particles-size');
+      const sizeDisplay = document.getElementById('particles-size-display');
+      sizeSlider.addEventListener('input', () => {
+        const config = getParticlesConfig();
+        if (window.particlesControls) {
+          window.particlesControls.updateParticles(config);
+        }
+        sizeDisplay.textContent = sizeSlider.value;
+      });
+
+      const sizeVarSlider = document.getElementById('particles-size-var');
+      const sizeVarDisplay = document.getElementById('particles-size-var-display');
+      sizeVarSlider.addEventListener('input', () => {
+        const config = getParticlesConfig();
+        if (window.particlesControls) {
+          window.particlesControls.updateParticles(config);
+        }
+        sizeVarDisplay.textContent = sizeVarSlider.value;
+      });
+
+      // Speed control
+      const speedSlider = document.getElementById('particles-speed');
+      const speedDisplay = document.getElementById('particles-speed-display');
+      speedSlider.addEventListener('input', () => {
+        const config = getParticlesConfig();
+        if (window.particlesControls) {
+          window.particlesControls.updateParticles(config);
+        }
+        speedDisplay.textContent = speedSlider.value;
+      });
+
+      // Opacity control
+      const opacitySlider = document.getElementById('particles-opacity');
+      const opacityDisplay = document.getElementById('particles-opacity-display');
+      opacitySlider.addEventListener('input', () => {
+        const config = getParticlesConfig();
+        if (window.particlesControls) {
+          window.particlesControls.updateParticles(config);
+        }
+        opacityDisplay.textContent = opacitySlider.value;
+      });
+
+      // Link controls
+      const linkDistanceSlider = document.getElementById('particles-link-distance');
+      const linkDistanceDisplay = document.getElementById('particles-link-distance-display');
+      linkDistanceSlider.addEventListener('input', () => {
+        const config = getParticlesConfig();
+        if (window.particlesControls) {
+          window.particlesControls.updateParticles(config);
+        }
+        linkDistanceDisplay.textContent = linkDistanceSlider.value;
+      });
+
+      const linkOpacitySlider = document.getElementById('particles-link-opacity');
+      const linkOpacityDisplay = document.getElementById('particles-link-opacity-display');
+      linkOpacitySlider.addEventListener('input', () => {
+        const config = getParticlesConfig();
+        if (window.particlesControls) {
+          window.particlesControls.updateParticles(config);
+        }
+        linkOpacityDisplay.textContent = linkOpacitySlider.value;
+      });
+    }
+
+    function getParticlesConfig() {
+      return {
+        number: parseInt(document.getElementById('particles-number').value),
+        color: {
+          r: parseInt(document.getElementById('particles-r').value),
+          g: parseInt(document.getElementById('particles-g').value),
+          b: parseInt(document.getElementById('particles-b').value)
+        },
+        size: parseInt(document.getElementById('particles-size').value),
+        sizeMin: parseInt(document.getElementById('particles-size-var').value),
+        speed: parseFloat(document.getElementById('particles-speed').value),
+        opacity: parseFloat(document.getElementById('particles-opacity').value),
+        linkDistance: parseInt(document.getElementById('particles-link-distance').value),
+        linkOpacity: parseFloat(document.getElementById('particles-link-opacity').value)
+      };
+    }
+
+    // Reset functionality
+    resetControlsBtn.addEventListener('click', () => {
+      if (window.backgroundControls) {
+        window.backgroundControls.reset();
+      }
+      if (window.particlesControls) {
+        window.particlesControls.reset();
+      }
+      resetControlValues();
+    });
+
+    function resetControlValues() {
+      // Reset background controls
+      document.getElementById('bg-r').value = 23;
+      document.getElementById('bg-g').value = 27;
+      document.getElementById('bg-b').value = 34;
+      document.getElementById('bg-rgb').textContent = 'rgb(23, 27, 34)';
+
+      document.getElementById('color1-r').value = 23;
+      document.getElementById('color1-g').value = 27;
+      document.getElementById('color1-b').value = 34;
+      document.getElementById('color1-rgb').textContent = 'rgb(23, 27, 34)';
+
+      document.getElementById('color2-r').value = 0;
+      document.getElementById('color2-g').value = 17;
+      document.getElementById('color2-b').value = 34;
+      document.getElementById('color2-rgb').textContent = 'rgb(0, 17, 34)';
+
+      document.getElementById('pos-x').value = -200;
+      document.getElementById('pos-y').value = 270;
+      document.getElementById('pos-z').value = -280;
+      document.getElementById('pos-display').textContent = '(-200, 270, -280)';
+
+      document.getElementById('rot-x').value = -1.0;
+      document.getElementById('rot-y').value = 0.0;
+      document.getElementById('rot-z').value = 0.1;
+      document.getElementById('rot-display').textContent = '(-1.0, 0.0, 0.1)';
+
+      document.getElementById('scale').value = 4.0;
+      document.getElementById('scale-display').textContent = '4.0';
+
+      document.getElementById('time-speed').value = 0.01;
+      document.getElementById('time-speed-display').textContent = '0.01';
+
+      document.getElementById('pos-speed').value = 0.005;
+      document.getElementById('pos-speed-display').textContent = '0.005';
+
+      // Reset particles controls
+      document.getElementById('particles-number').value = 15;
+      document.getElementById('particles-number-display').textContent = '15';
+
+      document.getElementById('particles-r').value = 255;
+      document.getElementById('particles-g').value = 255;
+      document.getElementById('particles-b').value = 255;
+      document.getElementById('particles-rgb').textContent = 'rgb(255, 255, 255)';
+
+      document.getElementById('particles-size').value = 8;
+      document.getElementById('particles-size-display').textContent = '8';
+
+      document.getElementById('particles-size-var').value = 2;
+      document.getElementById('particles-size-var-display').textContent = '2';
+
+      document.getElementById('particles-speed').value = 3;
+      document.getElementById('particles-speed-display').textContent = '3';
+
+      document.getElementById('particles-opacity').value = 1.0;
+      document.getElementById('particles-opacity-display').textContent = '1.0';
+
+      document.getElementById('particles-link-distance').value = 300;
+      document.getElementById('particles-link-distance-display').textContent = '300';
+
+      document.getElementById('particles-link-opacity').value = 0.4;
+      document.getElementById('particles-link-opacity-display').textContent = '0.4';
+    }
+
+    // Save/Load Preset functionality
+    savePresetBtn.addEventListener('click', () => {
+      const preset = {
+        background: {
+          bgColor: {
+            r: parseInt(document.getElementById('bg-r').value),
+            g: parseInt(document.getElementById('bg-g').value),
+            b: parseInt(document.getElementById('bg-b').value)
+          },
+          color1: {
+            r: parseInt(document.getElementById('color1-r').value),
+            g: parseInt(document.getElementById('color1-g').value),
+            b: parseInt(document.getElementById('color1-b').value)
+          },
+          color2: {
+            r: parseInt(document.getElementById('color2-r').value),
+            g: parseInt(document.getElementById('color2-g').value),
+            b: parseInt(document.getElementById('color2-b').value)
+          },
+          position: {
+            x: parseInt(document.getElementById('pos-x').value),
+            y: parseInt(document.getElementById('pos-y').value),
+            z: parseInt(document.getElementById('pos-z').value)
+          },
+          rotation: {
+            x: parseFloat(document.getElementById('rot-x').value),
+            y: parseFloat(document.getElementById('rot-y').value),
+            z: parseFloat(document.getElementById('rot-z').value)
+          },
+          scale: parseFloat(document.getElementById('scale').value),
+          timeSpeed: parseFloat(document.getElementById('time-speed').value),
+          posSpeed: parseFloat(document.getElementById('pos-speed').value)
+        },
+        particles: getParticlesConfig()
+      };
+
+      const blob = new Blob([JSON.stringify(preset, null, 2)], {type: 'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'background-preset.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    loadPresetBtn.addEventListener('click', () => {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.json';
+      input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            try {
+              const preset = JSON.parse(e.target.result);
+              loadPreset(preset);
+            } catch (error) {
+              alert('Invalid preset file');
+            }
+          };
+          reader.readAsText(file);
+        }
+      };
+      input.click();
+    });
+
+    function loadPreset(preset) {
+      if (preset.background) {
+        // Load background settings
+        const bg = preset.background;
+        if (bg.bgColor) {
+          document.getElementById('bg-r').value = bg.bgColor.r;
+          document.getElementById('bg-g').value = bg.bgColor.g;
+          document.getElementById('bg-b').value = bg.bgColor.b;
+          if (window.backgroundControls) {
+            window.backgroundControls.setBackgroundColor(bg.bgColor.r, bg.bgColor.g, bg.bgColor.b);
+          }
+        }
+        if (bg.color1) {
+          document.getElementById('color1-r').value = bg.color1.r;
+          document.getElementById('color1-g').value = bg.color1.g;
+          document.getElementById('color1-b').value = bg.color1.b;
+          if (window.backgroundControls) {
+            window.backgroundControls.setColor1(bg.color1.r, bg.color1.g, bg.color1.b);
+          }
+        }
+        if (bg.color2) {
+          document.getElementById('color2-r').value = bg.color2.r;
+          document.getElementById('color2-g').value = bg.color2.g;
+          document.getElementById('color2-b').value = bg.color2.b;
+          if (window.backgroundControls) {
+            window.backgroundControls.setColor2(bg.color2.r, bg.color2.g, bg.color2.b);
+          }
+        }
+        if (bg.position) {
+          document.getElementById('pos-x').value = bg.position.x;
+          document.getElementById('pos-y').value = bg.position.y;
+          document.getElementById('pos-z').value = bg.position.z;
+          if (window.backgroundControls) {
+            window.backgroundControls.setPosition(bg.position.x, bg.position.y, bg.position.z);
+          }
+        }
+        if (bg.rotation) {
+          document.getElementById('rot-x').value = bg.rotation.x;
+          document.getElementById('rot-y').value = bg.rotation.y;
+          document.getElementById('rot-z').value = bg.rotation.z;
+          if (window.backgroundControls) {
+            window.backgroundControls.setRotation(bg.rotation.x, bg.rotation.y, bg.rotation.z);
+          }
+        }
+        if (bg.scale !== undefined) {
+          document.getElementById('scale').value = bg.scale;
+          if (window.backgroundControls) {
+            window.backgroundControls.setScale(bg.scale);
+          }
+        }
+        if (bg.timeSpeed !== undefined) {
+          document.getElementById('time-speed').value = bg.timeSpeed;
+          if (window.backgroundControls) {
+            window.backgroundControls.setAnimationSpeed(bg.timeSpeed, bg.posSpeed || 0.005);
+          }
+        }
+
+        // Update displays
+        updateBackgroundDisplays();
+      }
+
+      if (preset.particles) {
+        // Load particles settings
+        const particles = preset.particles;
+        document.getElementById('particles-number').value = particles.number || 15;
+        document.getElementById('particles-r').value = particles.color?.r || 255;
+        document.getElementById('particles-g').value = particles.color?.g || 255;
+        document.getElementById('particles-b').value = particles.color?.b || 255;
+        document.getElementById('particles-size').value = particles.size || 8;
+        document.getElementById('particles-size-var').value = particles.sizeMin || 2;
+        document.getElementById('particles-speed').value = particles.speed || 3;
+        document.getElementById('particles-opacity').value = particles.opacity || 1.0;
+        document.getElementById('particles-link-distance').value = particles.linkDistance || 300;
+        document.getElementById('particles-link-opacity').value = particles.linkOpacity || 0.4;
+
+        if (window.particlesControls) {
+          window.particlesControls.updateParticles(particles);
+        }
+
+        // Update displays
+        updateParticlesDisplays();
+      }
+    }
+
+    function updateBackgroundDisplays() {
+      const r = parseInt(document.getElementById('bg-r').value);
+      const g = parseInt(document.getElementById('bg-g').value);
+      const b = parseInt(document.getElementById('bg-b').value);
+      document.getElementById('bg-rgb').textContent = `rgb(${r}, ${g}, ${b})`;
+
+      const c1r = parseInt(document.getElementById('color1-r').value);
+      const c1g = parseInt(document.getElementById('color1-g').value);
+      const c1b = parseInt(document.getElementById('color1-b').value);
+      document.getElementById('color1-rgb').textContent = `rgb(${c1r}, ${c1g}, ${c1b})`;
+
+      const c2r = parseInt(document.getElementById('color2-r').value);
+      const c2g = parseInt(document.getElementById('color2-g').value);
+      const c2b = parseInt(document.getElementById('color2-b').value);
+      document.getElementById('color2-rgb').textContent = `rgb(${c2r}, ${c2g}, ${c2b})`;
+
+      const px = parseInt(document.getElementById('pos-x').value);
+      const py = parseInt(document.getElementById('pos-y').value);
+      const pz = parseInt(document.getElementById('pos-z').value);
+      document.getElementById('pos-display').textContent = `(${px}, ${py}, ${pz})`;
+
+      const rx = parseFloat(document.getElementById('rot-x').value);
+      const ry = parseFloat(document.getElementById('rot-y').value);
+      const rz = parseFloat(document.getElementById('rot-z').value);
+      document.getElementById('rot-display').textContent = `(${rx.toFixed(1)}, ${ry.toFixed(1)}, ${rz.toFixed(1)})`;
+
+      const scale = parseFloat(document.getElementById('scale').value);
+      document.getElementById('scale-display').textContent = scale.toFixed(1);
+
+      const timeSpeed = parseFloat(document.getElementById('time-speed').value);
+      document.getElementById('time-speed-display').textContent = timeSpeed.toString();
+
+      const posSpeed = parseFloat(document.getElementById('pos-speed').value);
+      document.getElementById('pos-speed-display').textContent = posSpeed.toString();
+    }
+
+    function updateParticlesDisplays() {
+      const number = parseInt(document.getElementById('particles-number').value);
+      document.getElementById('particles-number-display').textContent = number.toString();
+
+      const pr = parseInt(document.getElementById('particles-r').value);
+      const pg = parseInt(document.getElementById('particles-g').value);
+      const pb = parseInt(document.getElementById('particles-b').value);
+      document.getElementById('particles-rgb').textContent = `rgb(${pr}, ${pg}, ${pb})`;
+
+      const size = parseInt(document.getElementById('particles-size').value);
+      document.getElementById('particles-size-display').textContent = size.toString();
+
+      const sizeVar = parseInt(document.getElementById('particles-size-var').value);
+      document.getElementById('particles-size-var-display').textContent = sizeVar.toString();
+
+      const speed = parseFloat(document.getElementById('particles-speed').value);
+      document.getElementById('particles-speed-display').textContent = speed.toString();
+
+      const opacity = parseFloat(document.getElementById('particles-opacity').value);
+      document.getElementById('particles-opacity-display').textContent = opacity.toString();
+
+      const linkDistance = parseInt(document.getElementById('particles-link-distance').value);
+      document.getElementById('particles-link-distance-display').textContent = linkDistance.toString();
+
+      const linkOpacity = parseFloat(document.getElementById('particles-link-opacity').value);
+      document.getElementById('particles-link-opacity-display').textContent = linkOpacity.toString();
+    }
+
+    // Initialize controls - wait for both background.js module and particles.js
+    function trySetupControls() {
+      if (window.backgroundControls && window.pJSDom) {
+        console.log('🚀 Setting up all controls now...');
+        setupBackgroundControls();
+        setupParticlesControls();
+        updateBackgroundDisplays();
+        updateParticlesDisplays();
+      } else {
+        console.log('⏳ Controls not ready yet, checking again...');
+        setTimeout(trySetupControls, 100);
+      }
+    }
+
+    setTimeout(trySetupControls, 200); // Start quickly after page load
+
+    // Add keyboard hint to console
+    console.log('🎨 Interactive Control Panel available!');
+    console.log('Click the 🎨 button to toggle the background and particles controls');
++++
+<task_progress>
+- [x] Analyze current control panel implementation
+- [x] Remove keyboard shortcut (Ctrl+Shift+D) functionality
+- [x] Add visible button to toggle control panel
+- [ ] Test button functionality and live preview
+- [ ] Update scratchpad/lessons when complete
+</task_progress>
+  });
+</script>
+
+
 
 </body>
 
