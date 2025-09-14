@@ -1,76 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RockReveal AI - Project Details</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Whats-This-Rock — Project Highlights</title>
 </head>
 <body>
-    <h1>RockReveal AI</h1>
+  <h1>Whats-This-Rock</h1>
 
-    <div class="tags">
-        <span>Python</span>
-        <span>Telegram Bot</span>
-        <span>MLOps</span>
-        <span>W&B</span>
-    </div>
+  <div class="tags">
+    <span>Python • TensorFlow • Deep Learning</span>
+    <span>Telegram Bot • Image Classification • nbdev</span>
+    <span>W&B • Hyperparameter Tuning • CI / Testing</span>
+  </div>
 
-    <div class="action-buttons">
-        <a href="https://github.com/udaylunawat/Whats-this-rock" class="secondary-btn" target="_blank">
-            View Repository
-        </a>
-        <a href="#" class="secondary-btn">
-            Try the Bot
-        </a>
-    </div>
+  <div class="action-buttons">
+    <a href="https://github.com/udaylunawat/Whats-this-rock" class="secondary-btn" target="_blank">View Code on GitHub</a>
+    <a href="https://udaylunawat.github.io/Whats-this-rock/" class="secondary-btn" target="_blank">Project Documentation</a>
+  </div>
 
-    <img src="https://picsum.photos/800/400?random=1" alt="RockReveal AI Project" class="project-image">
+  <img src="https://picsum.photos/800/400?random=1" alt="Whats-This-Rock sample use" class="project-image">
 
+  <section>
+    <h2>Overview</h2>
     <p>
-        RockReveal AI represents a cutting-edge approach to democratizing geological analysis through artificial intelligence.
-        This innovative project transforms the way geologists, researchers, and enthusiasts identify rock formations,
-        making expert-level analysis accessible to anyone with a smartphone.
+      Whats-This-Rock is a Telegram bot that classifies images of rocks into one of seven types. I built this project using TensorFlow, with end-to-end capabilities including data processing, model training, and bot deployment. The project also uses nbdev for notebook-first development, documentation, packaging, and testing.  [oai_citation:8‡GitHub](https://github.com/udaylunawat/Whats-this-rock)
     </p>
+  </section>
 
-    <h2>The Challenge</h2>
-    <p>
-        Traditional rock identification requires years of geological training and access to expensive laboratory equipment.
-        Field researchers often struggle with accurate on-site identification, leading to delayed research and potential errors.
-        RockReveal AI addresses this gap by bringing laboratory-grade analysis directly to the field.
-    </p>
+  <section>
+    <h2>Technical Details</h2>
 
-    <h2>Technical Implementation</h2>
-    <p>
-        The system leverages advanced computer vision techniques combined with deep learning models trained on extensive
-        geological datasets. The Telegram bot interface provides an intuitive user experience, allowing users to simply
-        take a photo and receive instant analysis.
-    </p>
-
-    <img src="https://picsum.photos/600/300?random=2" alt="Technical Architecture" class="project-image">
-
-    <h2>Key Features</h2>
+    <h3>Data & Preprocessing</h3>
     <ul>
-        <li><strong>Real-time Analysis:</strong> Instant identification with confidence scores</li>
-        <li><strong>Offline Capability:</strong> Core functionality works without internet connection</li>
-        <li><strong>Continuous Learning:</strong> Model improves with each user interaction</li>
-        <li><strong>Multi-language Support:</strong> Accessible to global geological community</li>
+      <li>Data cleaning steps to remove bad, duplicated, corrupted, misclassified, or unsupported images.  [oai_citation:9‡GitHub](https://github.com/udaylunawat/Whats-this-rock)</li>
+      <li>Use of configurable pipelines (via configs) and hyperparameter sweeps using W&B.  [oai_citation:10‡GitHub](https://github.com/udaylunawat/Whats-this-rock)</li>
     </ul>
 
-    <h2>Impact & Results</h2>
-    <p>
-        Since deployment, RockReveal AI has processed over 50,000 rock samples from researchers across 30+ countries.
-        The system has achieved 94% accuracy in rock type identification and has been featured in several geological
-        conferences and publications.
-    </p>
+    <h3>Model & Training</h3>
+    <ul>
+      <li>Several model architectures experimented with (e.g. ResNet, EfficientNet, MobileNet etc.).  [oai_citation:11‡GitHub](https://github.com/udaylunawat/Whats-this-rock)</li>
+      <li>Training is configurable through parameters in config files; LR schedulers, optimisers etc. are testable via W&B sweeps.  [oai_citation:12‡GitHub](https://github.com/udaylunawat/Whats-this-rock)</li>
+    </ul>
 
-    <img src="https://picsum.photos/700/350?random=3" alt="User Impact" class="project-image">
+    <h3>Development Workflow / Tooling</h3>
+    <ul>
+      <li>nbdev for notebook-driven development: code + documentation + tests in notebooks.  [oai_citation:13‡GitHub](https://github.com/udaylunawat/Whats-this-rock)</li>
+      <li>CI / testing setup included.  [oai_citation:14‡GitHub](https://github.com/udaylunawat/Whats-this-rock)</li>
+      <li>Package is pip-installable: `rocks_classifier`.  [oai_citation:15‡GitHub](https://github.com/udaylunawat/Whats-this-rock)</li>
+    </ul>
 
-    <h2>Future Developments</h2>
-    <p>
-        Future updates will include mineral composition analysis, integration with geological mapping software,
-        and expanded support for rare rock types. The project continues to evolve based on user feedback and
-        advancements in AI technology.
-    </p>
+    <h3>Deployment / Interface</h3>
+    <ul>
+      <li>Telegram bot interface: users can send rock images and get classification via chat.  [oai_citation:16‡GitHub](https://github.com/udaylunawat/Whats-this-rock)</li>
+      <li>Deployment scripts / commands provided.  [oai_citation:17‡GitHub](https://github.com/udaylunawat/Whats-this-rock)</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Achievements & Highlights</h2>
+    <ul>
+      <li>Experiment tracking & hyperparameter tuning set up using Weights & Biases.  [oai_citation:18‡GitHub](https://github.com/udaylunawat/Whats-this-rock)</li>
+      <li>Robust preprocessing: filtering out “bad”, “duplicate”, “corrupted”, “misclassified”, and “unsupported” images to improve data quality.  [oai_citation:19‡GitHub](https://github.com/udaylunawat/Whats-this-rock)</li>
+      <li>Multiple model architectures evaluated (ResNet, EfficientNet, MobileNet, etc.), giving flexibility in performance/size trade-offs.  [oai_citation:20‡GitHub](https://github.com/udaylunawat/Whats-this-rock)</li>
+      <li>Notebook-first approach with nbdev helps keep documentation, tests, and code aligned.  [oai_citation:21‡GitHub](https://github.com/udaylunawat/Whats-this-rock)</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Challenges & Learnings</h2>
+    <ul>
+      <li>Data quality: handling corrupted, misclassified, duplicate images was important in improving reliability. (Cleaning pipeline built in.)  [oai_citation:22‡GitHub](https://github.com/udaylunawat/Whats-this-rock)</li>
+      <li>Hyperparameter tuning complexity: needed to balance model size, inference speed, and classification accuracy via sweeps.  [oai_citation:23‡GitHub](https://github.com/udaylunawat/Whats-this-rock)</li>
+      <li>Configuration management: using configs and sweep files helped make experiments reproducible.  [oai_citation:24‡GitHub](https://github.com/udaylunawat/Whats-this-rock)</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Future Directions</h2>
+    <ul>
+      <li>Add more rock types or subclasses to improve classification granularity. <!-- only if you plan to do this; if not, you can omit or phrase “planned” --></li>
+      <li>Improve model efficiency to reduce inference time and resource usage. </li>
+      <li>Enhance image augmentation or adversarial robustness (e.g. varying lighting, occlusion). </li>
+      <li>Explore deployment alternatives (mobile app, or offline mode) to reach environments with unstable internet. </li>
+    </ul>
+  </section>
 
 </body>
 </html>
