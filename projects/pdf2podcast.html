@@ -1,192 +1,441 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PDF2Podcast - Project Details</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF2Podcast: AI-Powered PDF to Audio Conversion - Kokoro & Kyutai</title>
 </head>
 <body>
-  <h1>PDF2Podcast</h1>
 
-  <div class="tags">
-    <span>Generative AI</span>
-    <span>Text-to-Speech</span>
-    <span>Gradio</span>
-    <span>Content Transformation</span>
-  </div>
+    <h1>PDF2Podcast</h1>
 
-  <div class="action-buttons">
-    <a href="https://github.com/udaylunawat/Data-Science-Projects/tree/master/NotebookLM_clone/PDF2Podcast" 
-       class="secondary-btn" target="_blank">
-       View Repository
-    </a>
-    <a href="https://huggingface.co/spaces/udayl/NotebookLM-Kokoro_TTS_App" 
-       class="secondary-btn" target="_blank">
-       Live Demo
-    </a>
-    <a href="https://colab.research.google.com/drive/1JkFWT2K-Pbe3FsBI-v6fZehnQoB5r4Fk?usp=sharing" 
-       class="secondary-btn" target="_blank">
-       Run in Colab
-    </a>
-  </div>
+    <div class="tags">
+        <span>AI • TTS • Document Processing • Audio Generation</span>
+    </div>
 
-  <img src="https://github.com/user-attachments/assets/93484a1f-aabd-4f92-b5d5-12f8e63168ee" 
-       alt="PDF2Podcast Gradio Screenshot" class="project-image">
+    <div class="action-buttons">
+        <a href="https://colab.research.google.com/drive/1JkFWT2K-Pbe3FsBI-v6fZehnQoB5r4Fk?usp=sharing" class="secondary-btn" target="_blank">Try Demo in Colab</a>
+        <a href="https://github.com/udaylunawat/Data-Science-Projects/tree/master/NotebookLM_clone/PDF2Podcast" class="secondary-btn" target="_blank">GitHub Repository</a>
+        <a href="https://huggingface.co/spaces/udayl/NotebookLM-Kokoro_TTS_App" class="secondary-btn" target="_blank">Live Demo 🤖</a>
+    </div>
 
-  <section>
-    <h2>Overview</h2>
-    <p>
-      <strong>PDF2Podcast</strong> is a Google NotebookLM-style text-to-speech application that 
-      transforms PDF documents into conversational podcasts. It leverages 
-      <a href="https://huggingface.co/hexgrad/Kokoro-82M" target="_blank">Kokoro</a>, 
-      a lightweight open-weight TTS model with 82M parameters, and 
-      <strong>Kyutai (Moshi)</strong>, a new open-source real-time TTS model (launched July 2025), 
-      to generate natural-sounding audio. A clean, user-friendly interface is built using <strong>Gradio</strong>.
-    </p>
-  </section>
+    <!-- <img src="projects/PDF2Podcast/README.jpg" alt="PDF2Podcast Interface Screenshot" class="project-image"> -->
 
-  <section>
-    <h2>Features</h2>
-    <ul>
-      <li><strong>PDF to Audio Conversion:</strong> Upload any PDF and convert it into a podcast-style conversation.</li>
-      <li><strong>Multiple Voice Options:</strong> Assign different voices for multiple speakers.</li>
-      <li><strong>API Flexibility:</strong> Supports OpenAI, OpenRouter, and Kyutai (Moshi) APIs.</li>
-      <li><strong>Parallel Processing:</strong> Utilizes all CPU cores for faster audio generation.</li>
-      <li><strong>Cross-Platform:</strong> Works on macOS, Linux, and Windows.</li>
-      <li><strong>User-Friendly:</strong> Simple Gradio-based interface for accessibility.</li>
-    </ul>
-  </section>
+    <section>
+        <h2>The Document to Audio Accessibility Challenge</h2>
+        <p>
+            Traditional reading workflows suffer from limited accessibility for visually impaired users,
+            busy professionals, and multimodal learners who benefit from auditory content consumption.
+            High-quality text-to-speech systems require sophisticated neural architectures and real-time
+            processing capabilities that weren't previously available at scale.
+        </p>
+        <p>
+            PDF2Podcast bridges this gap by implementing cutting-edge TTS models (Kokoro and Kyutai)
+            that transform static PDF documents into engaging, conversational audio experiences,
+            making content universally accessible while maintaining the depth and context of the original material.
+        </p>
+    </section>
 
-  <section>
-    <h2>Architecture</h2>
-    <p>
-      The system runs inside a Docker container and follows an end-to-end pipeline:
-    </p>
-    <ul>
-      <li>📄 PDF Processor extracts text</li>
-      <li>📝 Transcript Generator creates conversation-like output</li>
-      <li>🤗 Kokoro TTS or Kyutai TTS generates audio</li>
-      <li>🔊 Audio is returned to the user via the browser</li>
-      <li>🤖 Optional integration with OpenAI/OpenRouter for summarization & transcript improvements</li>
-    </ul>
-    <p><em>(Architecture diagram available in repo README)</em></p>
-  </section>
+    <section>
+        <h2>Kokoro vs Kyutai: The Next Generation of TTS</h2>
 
-  <section>
-    <h2>Sample Audio</h2>
-    <p><a href="https://github.com/user-attachments/assets/6ba7338b-9e63-42ed-88e3-e5890ebb949c" target="_blank">▶ Kokoro Sample</a></p>
-    <p><a href="https://github.com/user-attachments/assets/029b0090-cb9c-4281-829f-4d0a8257efe2" target="_blank">▶ Kyutai Sample</a></p>
-  </section>
+        <h3>🎯 Why Kokoro?</h3>
+        <p>Kokoro is a lightweight (82M parameters), open-weight TTS model that delivers exceptional quality for its size.</p>
+        <ul>
+            <li>✅ <strong>Best Open-Source Model:</strong> Reigns as the top performer in TTS-Arena benchmarks</li>
+            <li>✅ <strong>Lightweight Architecture:</strong> 82 million parameters with incredible efficiency</li>
+            <li>✅ <strong>Quality-Focused:</strong> Exceptional audio generation with minimal computational overhead</li>
+            <li>✅ <strong>Local Processing:</strong> No cloud dependencies for privacy and low-latency operation</li>
+        </ul>
 
-  <section>
-    <h2>Setup & Usage</h2>
-    <ol>
-      <li>Install <code>espeak-ng</code> on macOS, Linux, or Windows.</li>
-      <li>Create a Python 3.9+ virtual environment with <code>uv</code> or <code>pip</code>.</li>
-      <li>Install dependencies via <code>uv sync</code> or <code>pip install</code>.</li>
-      <li>Run <code>python gradio_app.py</code> and open <code>http://127.0.0.1:7860</code> in a browser.</li>
-      <li>Upload a PDF, select voices, choose API provider (OpenAI/OpenRouter/Kyutai), and generate audio.</li>
-    </ol>
-  </section>
+        <h3>🚀 Kyutai (Moshi) Innovation</h3>
+        <p>Kyutai represents the bleeding edge of TTS technology with its real-time, conversational capabilities.</p>
+        <ul>
+            <li>✅ <strong>July 2025 Launch:</strong> Fresh from the Kyutai development team</li>
+            <li>✅ <strong>Real-Time Processing:</strong> Sub-second response times for conversational interfaces</li>
+            <li>✅ <strong>ElevenLabs Quality:</strong> Comparable performance to commercial TTS leaders</li>
+            <li>✅ <strong>Streaming Architecture:</strong> True conversational speech generation</li>
+        </ul>
+    </section>
 
-  <section>
-    <h2>Performance</h2>
-    <p>
-      Audio generation is parallelized across CPU cores. Performance depends on PDF length, 
-      available memory, CPU cores, and API network latency. 
-    </p>
-  </section>
+    <section>
+        <h2>Step-by-Step PDF to Podcast Pipeline</h2>
 
-  <section>
-    <h2>Troubleshooting</h2>
-    <ul>
-      <li><strong>No audio:</strong> Ensure <code>espeak-ng</code> is installed.</li>
-      <li><strong>API errors:</strong> Verify API key and endpoint.</li>
-      <li><strong>PDF not processed:</strong> Ensure PDF contains readable text (not scanned images).</li>
-      <li><strong>Memory issues:</strong> Large PDFs require more system memory.</li>
-    </ul>
-  </section>
+        <h3>1. Advanced PDF Text Extraction</h3>
+        <p>Intelligent document processing that handles diverse PDF formats and layout structures.</p>
+        <ul>
+            <li>OCR-enabled text recognition for scanned documents</li>
+            <li>Layout-aware text ordering and hierarchy preservation</li>
+            <li>Content structure analysis and semantic segmentation</li>
+            <li>Metadata extraction and document properties validation</li>
+        </ul>
 
-  <section>
-    <h2>Alternatives</h2>
-    <ul>
-      <li><a href="https://github.com/souzatharsis/podcastfy" target="_blank">podcastfy</a></li>
-      <li><a href="https://github.com/Goekdeniz-Guelmez/Local-NotebookLM" target="_blank">Local NotebookLM</a></li>
-    </ul>
-  </section>
+        <h3>2. Conversational Content Transformation</h3>
+        <p>AI-driven content restructuring that converts formal documents into natural dialogues.</p>
+        <img width="1079" alt="Screenshot 2025-07-07 at 01 53 14" src="https://github.com/user-attachments/assets/93484a1f-aabd-4f92-b5d5-12f8e63168ee" class="project-image">
+        <ul>
+            <li>Role assignment and speaker characterization</li>
+            <li>Narrative flow optimization for auditory consumption</li>
+            <li>Contextual transitions and conversational rhythm</li>
+            <li>Pacing algorithms for optimal listening experience</li>
+        </ul>
 
-  <section>
-    <h2>License</h2>
-    <p>
-      This project is open-source and available under the MIT License.
-    </p>
-  </section>
+        <h3>3. Multi-Modal TTS Processing</h3>
+        <p>Dual-engine TTS architecture supporting both Kokoro and Kyutai models.</p>
+        <ul>
+            <li>Kokoro model integration with optimized voice profiles</li>
+            <li>Kyutai real-time streaming capabilities</li>
+            <li>Voice separation and multi-speaker orchestration</li>
+            <li>Audio post-processing and quality enhancement</li>
+        </ul>
 
-  <style>
-    /* Mobile responsive styles for blog content */
-    @media screen and (max-width: 768px) {
-        body {
-            font-size: 0.9rem; /* Smaller font size for content on mobile */
+        <h3>4. API Integration & Flexibility</h3>
+        <p>Comprehensive API support for various AI providers and deployment scenarios.</p>
+        <ul>
+            <li>OpenAI GPT integration for content enhancement</li>
+            <li>OpenRouter support for cost-effective API access</li>
+            <li>Kyutai DSP voices from Hugging Face Spaces</li>
+            <li>DSM TTS integration for additional voice options</li>
+        </ul>
+
+        <h3>5. Interactive Web Interface</h3>
+        <p>Production-ready Gradio interface with comprehensive user experience.</p>
+        <ul>
+            <li>Drag-and-drop PDF upload functionality</li>
+            <li>Real-time processing feedback and progress indicators</li>
+            <li>Voice selection and API configuration options</li>
+            <li>Audio playback and download capabilities</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Technologies & System Architecture</h2>
+
+        <h3>🎵 TTS Engine Stack</h3>
+        <ul>
+            <li><strong>Kokoro TTS:</strong> 82M parameter model for high-quality, efficient speech synthesis</li>
+            <li><strong>Kyutai/Moshi:</strong> Real-time streaming TTS with ElevenLabs-level quality</li>
+            <li><strong>OpenAI Integration:</strong> GPT-powered content enhancement and summarization</li>
+            <li><strong>OpenRouter Support:</strong> Multi-provider API orchestration</li>
+        </ul>
+
+        <h3>🛠️ Development & Processing</h3>
+        <ul>
+            <li><strong>Python Core:</strong> Main application framework and scripting</li>
+            <li><strong>PyPDF2:</strong> Advanced PDF text extraction and processing</li>
+            <li><strong>Gradio:</strong> Interactive web interface and deployment</li>
+            <li><strong>UV Package Manager:</strong> Modern Python dependency management</li>
+        </ul>
+
+        <h3>🔧 Infrastructure & Performance</h3>
+        <ul>
+            <li><strong>Docker Containerization:</strong> Portable deployment and environment consistency</li>
+            <li><strong>Asynchronous Processing:</strong> CPU core utilization optimization</li>
+            <li><strong>Parallel Generation:</strong> Multi-threading for improved performance</li>
+            <li><strong>Cross-Platform Compatibility:</strong> Windows, Linux, and macOS support</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Key Features & Capabilities</h2>
+        <ul>
+            <li>✅ <strong>PDF to Audio Conversion:</strong> Direct document to podcast transformation</li>
+            <li>✅ <strong>Dual TTS Engines:</strong> Both Kokoro and Kyutai model support</li>
+            <li>✅ <strong>Real-Time Streaming:</strong> Kyutai-powered conversational speech</li>
+            <li>✅ <strong>Multi-Voice Content:</strong> Different voices for multiple speakers</li>
+            <li>✅ <strong>API Flexibility:</strong> OpenAI, OpenRouter, and Kyutai integration</li>
+            <li>✅ <strong>Parallel Processing:</strong> Multi-CPU core utilization for speed</li>
+            <li>✅ <strong>Cross-Platform:</strong> macOS, Windows, and Linux compatibility</li>
+            <li>✅ <strong>User-Friendly Interface:</strong> Intuitive Gradio-based web application</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Real-World Applications</h2>
+
+        <h3>🏥 Healthcare & Education</h3>
+        <ul>
+            <li><strong>Medical Document Audio:</strong> Research papers and clinical guidelines</li>
+            <li><strong>Educational Content:</strong> Textbook and academic paper accessibility</li>
+            <li><strong>Remote Learning:</strong> Lecture notes and study materials</li>
+        </ul>
+
+        <h3>📚 Content Creation & Publishing</h3>
+        <ul>
+            <li><strong>eBook Audiobooks:</strong> PDF book conversion for audiobooks</li>
+            <li><strong>Professional Reports:</strong> Business reports and technical documentation</li>
+            <li><strong>Podcast Production:</strong> Automated content generation for creators</li>
+        </ul>
+
+        <h3>♿ Accessibility & Inclusion</h3>
+        <ul>
+            <li><strong>Visual Impairment Support:</strong> Document access for blind users</li>
+            <li><strong>Multimodal Learning:</strong> Audio complement to traditional reading</li>
+            <li><strong>Cognitive Accessibility:</strong> Easier content consumption for learning disabilities</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Installation & Getting Started</h2>
+
+        <h3>⚙️ System Requirements & Setup</h3>
+        <p>Complete installation instructions for all supported platforms with optimized performance.</p>
+
+        <h4>macOS Installation</h4>
+        <pre><code>brew install espeak-ng</code></pre>
+
+        <h4>Ubuntu/Debian Linux</h4>
+        <pre><code>sudo apt-get update
+sudo apt-get install espeak-ng</code></pre>
+
+        <h4>Windows Installation</h4>
+        <p>Download espeak-ng from GitHub releases and add to system PATH.</p>
+
+        <h3>🐍 Python Environment Setup</h3>
+        <pre><code># Install UV package manager
+pip install uv
+
+# Create and activate virtual environment
+uv venv
+source .venv/bin/activate  # Linux/macOS
+# .venv\Scripts\activate  # Windows
+
+# Install dependencies (Recommended)
+uv sync
+
+# Alternative: Manual pip installation
+pip install "kokoro>=0.9.2" soundfile torch gradio PyPDF2 numpy
+pip install openai ipython  # For enhanced features</code></pre>
+    </section>
+
+    <section>
+        <h2>Usage Examples & API Configuration</h2>
+
+        <h3>🖥️ Running the Application</h3>
+        <pre><code># Start Gradio interface
+python gradio_app.py
+
+# Access at: http://127.0.0.1:7860
+
+# Alternative: Public URL for temporary access</code></pre>
+
+        <h3>🔑 API Configuration</h3>
+
+        <h4>OpenAI Setup</h4>
+        <pre><code># API Endpoint: https://api.openai.com/v1</code></pre>
+
+        <h4>OpenRouter Setup</h4>
+        <pre><code># Use default base URL or custom endpoint
+# API key from OpenRouter dashboard</code></pre>
+
+        <h4>Kyutai (Moshi) Setup</h4>
+        <pre><code># No API key required - runs locally
+# Select Kyutai/Moshi as provider
+# Choose from DSM TTS Voices on Hugging Face</code></pre>
+    </section>
+
+    <section>
+        <h2>Performance & Audio Quality</h2>
+
+        <h3>🎵 Kokoro Sample Audio</h3>
+        <p><a href="https://github.com/user-attachments/assets/6ba7338b-9e63-42ed-88e3-e5890ebb949c" target="_blank">🎧 Listen to Kokoro TTS</a></p>
+
+        <h3>🎵 Kyutai (Moshi) Sample Audio</h3>
+        <p><a href="https://github.com/user-attachments/assets/029b0090-cb9c-4281-829f-4d0a8257efe2" target="_blank">🎧 Listen to Kyutai TTS</a></p>
+
+        <h3>⚡ Performance Metrics</h3>
+        <ul>
+            <li><strong>Processing Speed:</strong> Parallel CPU utilization across all available cores</li>
+            <li><strong>Memory Efficiency:</strong> Optimized for various PDF sizes and content complexity</li>
+            <li><strong>Streaming Capability:</strong> Kyutai real-time audio generation</li>
+            <li><strong>Quality Trade-offs:</strong> Configurable between speed and audio quality</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Troubleshooting & Best Practices</h2>
+
+        <h3>🔧 Common Issues</h3>
+        <ul>
+            <li><strong>No Audio Generation:</strong> Ensure espeak-ng is properly installed</li>
+            <li><strong>API Authentication:</strong> Verify API key and base URL configuration</li>
+            <li><strong>PDF Processing:</strong> Ensure PDFs contain readable text (not scanned images)</li>
+            <li><strong>Memory Limitations:</strong> Reduce batch size for large PDF documents</li>
+        </ul>
+
+        <h3>🎯 Optimization Tips</h3>
+        <ul>
+            <li>Use Kokoro for high-quality, offline TTS</li>
+            <li>Implement Kyutai for conversational applications</li>
+            <li>Configure multiple voice options for diverse content</li>
+            <li>Utilize GPU acceleration for improved performance</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Learning Outcomes & Innovation Impact</h2>
+        <p>PDF2Podcast demonstrates how cutting-edge TTS technologies can revolutionize content accessibility and consumption patterns.</p>
+        <ul>
+            <li>Advanced TTS models (Kokoro, Kyutai) show the potential of low-parameter, high-quality speech synthesis</li>
+            <li>Multi-modal content processing combines AI with traditional document workflows</li>
+            <li>Conversational content transformation improves user engagement and comprehension</li>
+            <li>Open-source innovation beats proprietary solutions in accessibility applications</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Alternatives & Comparisons</h2>
+
+        <h3>📊 Feature Comparison</h3>
+        <ul>
+            <li><strong>PDF2Podcast (Kokoro + Kyutai):</strong> High-quality TTS, multi-model support, real-time streaming</li>
+            <li><strong>podcastify:</strong> General podcast creation, less TTS-specific</li>
+            <li><strong>Local-NotebookLM:</strong> PDF processing focus, limited TTS capabilities</li>
+        </ul>
+
+        <h3>🎯 Why Choose PDF2Podcast?</h3>
+        <ul>
+            <li>✅ Dual TTS engines with best-in-class quality</li>
+            <li>✅ Real-time Kyutai processing capabilities</li>
+            <li>✅ Comprehensive PDF handling and layout preservation</li>
+            <li>✅ Multiple API provider support for flexibility</li>
+            <li>✅ Production-ready deployment and containerization</li>
+        </ul>
+    </section>
+
+    <style>
+        /* Mobile responsive styles for blog content */
+        @media screen and (max-width: 768px) {
+            body {
+                font-size: 0.9rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+                margin: 1rem 0;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+                margin: 1.5rem 0 0.75rem 0;
+            }
+
+            h3 {
+                font-size: 1.2rem;
+                margin: 1.2rem 0 0.75rem 0;
+            }
+
+            p {
+                font-size: 0.95rem;
+                line-height: 1.6;
+                margin-bottom: 1.2rem;
+            }
+
+            ul, ol {
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .secondary-btn {
+                font-size: 0.85rem;
+                padding: 0.6rem 1.2rem;
+                text-align: center;
+                width: 100%;
+                min-height: 44px; /* Better touch targets */
+            }
+
+            .project-image {
+                max-width: 100%;
+                height: auto;
+                margin: 1.5rem 0;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0, 255, 0, 0.1);
+            }
+
+            /* Enhanced spacing for dark theme readability */
+            section {
+                margin-bottom: 2rem;
+            }
+
+            pre {
+                font-size: 0.85rem;
+                line-height: 1.4;
+                overflow-x: auto;
+                word-wrap: break-word;
+                padding: 1rem;
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 6px;
+                margin: 1rem 0;
+            }
+
+            pre code {
+                color: #00ff00;
+                font-family: 'Roboto Mono', monospace;
+            }
         }
 
-        h1, h2, h3, h4, h5, h6 {
-            font-size: var(--text-xl);
-        }
+        @media screen and (max-width: 480px) {
+            body {
+                font-size: 0.85rem;
+                padding: 0.5rem;
+            }
 
-        h2 {
-            font-size: 1.3rem;
-            margin: 1.5rem 0 0.75rem 0;
-        }
+            h1 {
+                font-size: 1.6rem;
+                line-height: 1.4;
+            }
 
-        h3 {
-            font-size: 1.2rem;
-            margin: 1.2rem 0 0.75rem 0;
-        }
+            .tags {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
 
-        p {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 1.2rem;
-        }
+            .tags span {
+                font-size: 0.8rem;
+                padding: 0.3rem 0.6rem;
+                line-height: 1.4;
+            }
 
-        ul, ol {
-            font-size: 0.95rem;
-        }
+            .action-buttons {
+                gap: 0.4rem;
+            }
 
-        .action-buttons {
-            flex-direction: column;
-            gap: 0.5rem;
-        }
+            .secondary-btn {
+                font-size: 0.8rem;
+                padding: 0.5rem 1rem;
+            }
 
-        .secondary-btn {
-            font-size: 0.85rem;
-            padding: 0.6rem 1.2rem;
-            text-align: center;
-            width: 100%;
-        }
+            /* Improve readability in dark theme */
+            p, li {
+                line-height: 1.6;
+                margin-bottom: 1rem;
+            }
 
-        .project-image {
-            max-width: 100%;
-            height: auto;
-            margin: 1.5rem 0;
-        }
-    }
+            pre {
+                padding: 0.75rem;
+                margin: 1rem 0;
+                font-size: 0.8rem;
+            }
 
-    @media screen and (max-width: 480px) {
-        body {
-            font-size: 0.85rem;
-            padding: 0.5rem;
-        }
+            /* Better button visual hierarchy */
+            .secondary-btn {
+                background-color: rgba(0, 255, 0, 0.1);
+                border: 1px solid rgba(0, 255, 0, 0.3);
+                color: #00ff00;
+                transition: all 0.3s ease;
+            }
 
-        .action-buttons {
-            gap: 0.4rem;
+            .secondary-btn:hover {
+                background-color: rgba(0, 255, 0, 0.15);
+                border-color: #00ff00;
+            }
         }
+    </style>
 
-        .secondary-btn {
-            font-size: 0.8rem;
-            padding: 0.5rem 1rem;
-        }
-    }
-</style>
 </body>
 </html>

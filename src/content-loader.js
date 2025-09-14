@@ -132,10 +132,6 @@ class ContentLoader {
                                 </div>
                                 <p>${exp.description}</p>
                                 ${badgesHTML}
-                                <button class="secondary-btn">
-                                    View Details
-                                    <img src="src/img/icon-open.svg" alt="">
-                                </button>
                             </div>
                         </div>
                     `;
@@ -166,10 +162,6 @@ class ContentLoader {
                                     <h3>${project.title}</h3>
                                 </div>
                                 <p>${project.description}</p>
-                                <button class="secondary-btn">
-                                    View Details
-                                    <img src="src/img/icon-open.svg" alt="">
-                                </button>
                             </div>
                         </div>
                     `;

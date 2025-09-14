@@ -3,97 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Automatic License Plate Recognition - Project Details</title>
+    <title>Indian ALPR System: License Plate Recognition with Deep Learning</title>
 </head>
 <body>
-    <h1>Automatic License Plate Recognition (ALPR)</h1>
 
+    <h1>Indian Automatic License Plate Recognition</h1>
 
     <div class="tags">
-        <span>Computer Vision</span>
-        <span>Deployment</span>
-        <span>Streamlit</span>
-        <span>OCR</span>
+        <span>AI • Computer Vision • Smart Cities • Transportation</span>
     </div>
 
-    <img src="https://picsum.photos/800/400?random=4" alt="ALPR System" class="project-image">
+    <div class="action-buttons">
+        <a href="https://colab.research.google.com/drive/1BqegosjfXthG1v9p3TUVnfvkvMxAOC5g#scrollTo=LUUvnvqrvFy3" class="secondary-btn" target="_blank">Demo in Colab</a>
+        <a href="https://github.com/udaylunawat/Automatic-License-Plate-Recognition" class="secondary-btn" target="_blank">GitHub Repo</a>
+    </div>
 
-    <p>
-        This comprehensive ALPR system represents the pinnacle of automated vehicle identification technology.
-        Designed for real-world deployment scenarios, it combines cutting-edge computer vision algorithms with
-        robust engineering practices to deliver enterprise-grade license plate recognition capabilities.
-    </p>
+    <section>
+        <h2>🎯 Problem Statement</h2>
+        <p><strong>Challenge:</strong> Manual license plate reading is inefficient, error-prone, and doesn't scale for high-volume applications like toll booths, parking garages, and security checkpoints. Traditional systems struggle with varying lighting, angles, and weather conditions.</p>
+    </section>
 
-    <h2>System Architecture</h2>
-    <p>
-        The ALPR pipeline consists of multiple sophisticated stages working in harmony:
-        vehicle detection, license plate localization, character segmentation, and optical character recognition.
-        Each component is optimized for accuracy and performance across diverse environmental conditions.
-    </p>
+    <section>
+        <h2>🚀 Solution Overview</h2>
+        <p><strong>Indian ALPR System</strong> is a complete automatic number plate recognition solution optimized for Indian license plate formats. It uses advanced computer vision models to detect license plates from car images and extract text through optical character recognition.</p>
 
-    <img src="https://picsum.photos/600/300?random=5" alt="System Architecture" class="project-image">
+        <h3>✨ Key Features</h3>
+        <ul>
+            <li>🎯 <strong>Dual Models:</strong> YOLOv3 and RetinaNet for flexible performance</li>
+            <li>🇮🇳 <strong>Indian-Optimized:</strong> Trained specifically for Indian license plates</li>
+            <li>⚡ <strong>Real-time:</strong> Sub-second detection and recognition</li>
+            <li>🌧️ <strong>Weather Resilient:</strong> Works in various lighting and weather</li>
+            <li>📱 <strong>Web Interface:</strong> Streamlit app for easy testing</li>
+            <li>🐳 <strong>Docker Ready:</strong> Containerized production deployment</li>
+        </ul>
+    </section>
 
-    <h2>Technical Challenges Solved</h2>
-    <ul>
-        <li><strong>Multi-angle Recognition:</strong> Handles plates at various angles and orientations</li>
-        <li><strong>Weather Resilience:</strong> Performs reliably in rain, fog, and low-light conditions</li>
-        <li><strong>Real-time Processing:</strong> Sub-second recognition for high-throughput applications</li>
-        <li><strong>Multi-format Support:</strong> Recognizes plates from 150+ countries and regions</li>
-    </ul>
+    <section>
+        <h2>🛠 Technical Stack</h2>
+        <ul>
+            <li>🔧 <strong>Frameworks:</strong> TensorFlow/Keras for deep learning</li>
+            <li>👁️ <strong>Computer Vision:</strong> OpenCV for image processing</li>
+            <li>📖 <strong>OCR Engine:</strong> Tesseract for character recognition</li>
+            <li>🌐 <strong>Interface:</strong> Streamlit for web application</li>
+            <li>📦 <strong>Deployment:</strong> Docker for containerization</li>
+        </ul>
+    </section>
 
-    <h2>Performance Metrics</h2>
-    <p>
-        The system achieves 98.7% accuracy on standard benchmark datasets and maintains 95%+ accuracy
-        in real-world conditions. Processing speed averages 150ms per image, making it suitable for
-        high-traffic applications like toll booths and parking facilities.
-    </p>
-
-    <img src="https://picsum.photos/700/350?random=6" alt="Performance Dashboard" class="project-image">
-
-    <h2>Deployment & Integration</h2>
-    <p>
-        Built with production deployment in mind, the system includes comprehensive APIs, monitoring
-        dashboards, and integration capabilities with existing security and traffic management systems.
-        The Streamlit web interface provides an intuitive way to test and demonstrate the system's capabilities.
-    </p>
-
-    <h2>Industry Applications</h2>
-    <p>
-        This ALPR system powers applications across multiple industries including:
-        smart cities, parking management, border security, toll collection, and law enforcement.
-        Its modular design allows for easy customization and integration into existing workflows.
-    </p>
-
+    <section>
+        <h2>✅ Objectives Achieved</h2>
+        <p><strong>🚦 Traffic Management:</strong> Automated toll collection and parking system integration.</p>
+        <p><strong>🔒 Security Enhancement:</strong> Improved vehicle tracking for security and surveillance applications.</p>
+        <p><strong>📚 Learning Impact:</strong> Demonstrated practical computer vision implementation using limited datasets with high accuracy results.</p>
 
     <style>
-        /* Mobile responsive styles for blog content */
+        /* Enhanced readability and better screen utilization */
+        body {
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            font-size: 1rem;
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+            line-height: 1.2;
+        }
+
+        h2 {
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+            line-height: 1.3;
+        }
+
+        h3 {
+            margin-top: 0.8rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+            line-height: 1.3;
+        }
+
+        p {
+            margin-bottom: 0.7rem;
+            line-height: 1.65;
+        }
+
+        ul, ol {
+            margin-bottom: 0.7rem;
+            line-height: 1.6;
+        }
+
+        li {
+            margin-bottom: 0.35rem;
+        }
+
+        section {
+            margin-bottom: 0.7rem;
+        }
+
+        .tags {
+            margin-bottom: 1rem;
+        }
+
+        .action-buttons {
+            margin-bottom: 1rem;
+        }
+
+        .project-image {
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Mobile responsive - much more compact for better screen utilization */
         @media screen and (max-width: 768px) {
             body {
-                font-size: 0.9rem; /* Smaller font size for content on mobile */
+                font-size: 0.95rem;
+                padding: 0.5rem;
             }
 
-            h1, h2, h3, h4, h5, h6 {
-                font-size: var(--text-xl);
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 0.8rem;
             }
 
             h2 {
-                font-size: 1.3rem;
-                margin: 1.5rem 0 0.75rem 0;
+                font-size: 1.5rem;
+                margin-top: 1.4rem;
+                margin-bottom: 0.6rem;
             }
 
             h3 {
                 font-size: 1.2rem;
-                margin: 1.2rem 0 0.75rem 0;
+                margin-top: 1.2rem;
+                margin-bottom: 0.5rem;
             }
 
             p {
-                font-size: 0.95rem;
+                margin-bottom: 0.8rem;
                 line-height: 1.6;
-                margin-bottom: 1.2rem;
             }
 
-            ul, ol {
-                font-size: 0.95rem;
+            section {
+                margin-bottom: 1rem;
             }
 
             .action-buttons {
@@ -102,23 +156,105 @@
             }
 
             .secondary-btn {
-                font-size: 0.85rem;
+                font-size: 0.9rem;
                 padding: 0.6rem 1.2rem;
-                text-align: center;
+                margin-bottom: 0.3rem;
                 width: 100%;
-            }
-
-            .project-image {
-                max-width: 100%;
-                height: auto;
-                margin: 1.5rem 0;
+                text-align: center;
+                display: block;
             }
         }
 
+        /* Laptop/Desktop - better screen utilization with tighter spacing */
+        @media screen and (min-width: 769px) {
+            h1 {
+                margin-bottom: 0.8rem;
+            }
+
+            h2 {
+                margin-top: 1.5rem;
+                margin-bottom: 0.6rem;
+            }
+
+            h3 {
+                margin-top: 1.2rem;
+                margin-bottom: 0.5rem;
+            }
+
+            section {
+                margin-bottom: 1.1rem;
+            }
+
+            p {
+                margin-bottom: 0.9rem;
+                line-height: 1.65;
+            }
+
+            .tags {
+                margin-bottom: 0.8rem;
+            }
+
+            .action-buttons {
+                margin-bottom: 0.8rem;
+            }
+
+            /* Tighter button spacing for better utilization */
+            .secondary-btn {
+                margin-right: 0.5rem;
+                vertical-align: top;
+            }
+        }
+
+        /* Very large screens - optimized for maximum real estate */
+        @media screen and (min-width: 1200px) {
+            body {
+                font-size: 1.1rem;
+            }
+
+            h1 {
+                font-size: 3rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            h3 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Very small screens - maximum readability */
         @media screen and (max-width: 480px) {
             body {
-                font-size: 0.85rem;
-                padding: 0.5rem;
+                font-size: 0.9rem;
+                padding: 0.3rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+                line-height: 1.3;
+            }
+
+            h2 {
+                font-size: 1.4rem;
+                margin-top: 1.2rem;
+            }
+
+            h3 {
+                font-size: 1.1rem;
+                margin-top: 1rem;
+            }
+
+            .tags {
+                flex-direction: column;
+                gap: 0.3rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .tags span {
+                font-size: 0.75rem;
+                padding: 0.25rem 0.5rem;
             }
 
             .action-buttons {
@@ -128,8 +264,10 @@
             .secondary-btn {
                 font-size: 0.8rem;
                 padding: 0.5rem 1rem;
+                margin-bottom: 0.2rem;
             }
         }
     </style>
-  </body>
+
+</body>
 </html>
