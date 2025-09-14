@@ -35,20 +35,20 @@
 
 <!----------- HOME -------->
 
-<section class="home" id="homeTitle">
+<header class="home" id="homeTitle">
     <div class="wrapper">
       <div class="home-grid">
         <h4 id="homeTitle1">Loading...</h4>
-        <svg width="300" height="100">
-          <line x1="150" y1="100" x2="150" y2="0" stroke="#ffffff37"/>
-          <line x1="100" y1="50" x2="200" y2="50" stroke="#ffffff37"/>
+        <svg width="18.75rem" height="6.25rem">
+          <line x1="9.375rem" y1="6.25rem" x2="9.375rem" y2="0" stroke="#ffffff37"/>
+          <line x1="6.25rem" y1="3.125rem" x2="12.5rem" y2="3.125rem" stroke="#ffffff37"/>
         </svg>
         <h4 id="homeTitle2">Loading...</h4>
       </div>
-      <h2>Uday Lunawat</h2>
+      <h1 id="homeName">Uday Lunawat</h1>
       <p class="tagline">Loading...</p>
     </div>
-  </section>
+  </header>
 
 <!--------- ABOUT ---------->
 
@@ -191,8 +191,8 @@
               <a href="#"><button class="secondary-btn">Loading...</button></a>
               <a href="#"><button class="secondary-btn">Loading...</button></a>
               <a href="#"><button class="secondary-btn">Loading...</button></a>
-              <a href="#"><button class="secondary-btn">Loading...</button></a>
-              <a href="#"><button class="secondary-btn">Loading...</button></a>
+              <!-- <a href="#"><button class="secondary-btn">Loading...</button></a>
+              <a href="#"><button class="secondary-btn">Loading...</button></a> -->
             </div>
 
             <div style="margin-top:12px;">
@@ -237,25 +237,13 @@
 </section> -->
 
 
-<!-- JavaScript for toggle menu (unchanged) -->
-<script>
-    const menu = document.getElementById("menu");
-    const closeIcon = document.getElementById("close-icon");
-    const openIcon = document.getElementById("open-icon");
+<!------------ NAVIGATION ------------->
 
-    function showMenu() {
-        menu.style.opacity = 1;
-        menu.style.zIndex = 22;
-        openIcon.style.display = 'none';
-        closeIcon.style.display = 'block';
-    }
-    function hideMenu() {
-        menu.style.opacity = 0;
-        menu.style.zIndex = -1;
-        closeIcon.style.display = 'none';
-        openIcon.style.display = 'block';
-    }
-</script> 
+<script src="./src/navigation.js" type="module"></script>
+
+<!------------ MODALS ------------->
+
+<script src="./src/modals.js" type="module"></script>
 
 <!-- <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.net.min.js"></script> -->
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
