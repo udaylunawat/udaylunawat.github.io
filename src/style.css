@@ -547,15 +547,18 @@ header.home, section.home {
     z-index: 2;
 }
 
-.home h1 {
+.home h2 {
     font-size: 5.5rem;
     line-height: 1.1;
+    margin-top: -1.1rem;
     margin-bottom: 0.2rem;
     display: block;
     color: #fff;
     text-align: left;
     font-weight: 200;
-  }
+    padding-left: var(--g1);
+    padding-right: var(--g1);
+}
 
 .home > svg {
     display: none;
@@ -609,12 +612,14 @@ header.home, section.home {
 
 .home .tagline {
     margin-top: 0;
-    margin-bottom: 0.8rem;
+    margin-bottom: 4.0rem;
     line-height: 1.35;
     color: rgba(255, 255, 255, 0.8);
     display: block;
     text-align: left;
-  }
+    padding-left: var(--g1);
+    padding-right: var(--g1);
+}
 
 @media screen and (min-width: 600px) {
     .home h1 {
@@ -651,6 +656,22 @@ header.home, section.home {
     }
     .home .wrapper div svg {
         width: 300px;
+    }
+}
+
+/* Responsive: slightly less padding on mobile */
+@media (max-width: 600px) {
+    .home h2,
+    .home .tagline {
+        padding-left: var(--space-sm);
+        padding-right: var(--space-sm);
+    }
+    .home h2 {
+        margin-bottom: 0.5rem; /* Reduce space below h2 */
+    }
+    .home .tagline {
+        margin-top: 0.2rem;    /* Reduce space above tagline */
+        margin-bottom: 2.5rem; /* Optional: less space below tagline */
     }
 }
 
@@ -962,7 +983,7 @@ header.home, section.home {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 80px; /* Prevent layout shifts during zoom */
+    min-height: 140px; /* Prevent layout shifts during zoom */
 }
 
 .gallery-card .symbolic-icon {
@@ -1327,11 +1348,11 @@ header.home, section.home {
 }
 
 .experience-gallery .gallery-card .img-container {
-    display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    margin-bottom: 1.25rem;
-    height: 80px;
+    justify-content: center;
+    gap: 0.5rem;
+    display: flex;
 }
 
 .experience-gallery .gallery-card .logo-container {
@@ -1403,24 +1424,62 @@ header.home, section.home {
 }
 
 /* Unified Experience Card Typography System */
-.experience-gallery .gallery-card h3 {
-    color: #00ff00;
-    font-size: 1.25rem;
-    margin: 0;
-    border-bottom: 2px solid rgba(0, 255, 0, 0.3);
-    padding-bottom: 0.375rem;
-    line-height: 1.3;
-    width: 100%;
-    /* Prevent title overflow - comprehensive solution for all titles */
+/* --- Robust Responsive Experience Card Header --- */
+.experience-gallery .gallery-card h3,
+.gallery-card h3,
+.job-card h3 {
+  color: #00ff00;
+  font-size: 1.25rem;
+  margin: 0;
+  border-bottom: 2px solid rgba(0, 255, 0, 0.3);
+  padding-bottom: 0.375rem;
+  line-height: 1.3;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;         /* Chrome/Safari */
+  -webkit-box-orient: vertical;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  white-space: normal;
+}
+
+/* Fallback for Firefox and Edge (2 lines clamp) */
+@supports not (-webkit-line-clamp: 2) {
+  .experience-gallery .gallery-card h3,
+  .gallery-card h3,
+  .job-card h3 {
+    max-height: 2.6em; /* 2 lines */
     overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
+  }
+}
+
+/* Responsive: smaller font and tighter spacing for mobile */
+@media (max-width: 700px) {
+  .experience-gallery .gallery-card h3,
+  .gallery-card h3,
+  .job-card h3 {
+    font-size: 1rem;
+    padding-bottom: 0.18rem;
+    line-height: 1.15;
     -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    word-wrap: break-word;
-    hyphens: auto;
-    overflow-wrap: break-word;
-    max-width: 100%;
+    max-height: 2.3em;
+  }
+}
+
+@media (max-width: 480px) {
+  .experience-gallery .gallery-card h3,
+  .gallery-card h3,
+  .job-card h3 {
+    font-size: 0.92rem;
+    padding-bottom: 0.12rem;
+    line-height: 1.12;
+    -webkit-line-clamp: 2;
+    max-height: 2.1em;
+  }
 }
 
 .experience-gallery .gallery-card .text-box {
@@ -2193,7 +2252,7 @@ header.home, section.home {
   top: 50%;
   right: 20px; /* Move to right side instead of center */
   transform: translateY(-50%); /* Center vertically instead of overlapping title */
-  width: 60px; /* Smaller size to not overwhelm */
+  width: px; /* Smaller size to not overwhelm */
   height: 60px;
   border-radius: 50%;
   background-color: rgba(23, 27, 34, 0.98);
@@ -2207,6 +2266,14 @@ header.home, section.home {
   z-index: 11;
   opacity: 0.9;
   transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.modal-experience-logo-img {
+  width: 36px !important;
+  height: 36px !important;
+  max-width: 36px !important;
+  max-height: 36px !important;
+  object-fit: contain !important;
 }
 
 .modal-header .experience-logo:hover,
@@ -4777,3 +4844,501 @@ input[type="range"]::-moz-range-thumb:hover {
     min-height: 44px;
   }
 }
+
+/* Marquee effect: scrolls text horizontally if content overflows */
+.marquee-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+  height: 2.6em; /* for 2 lines, adjust as needed */
+  display: flex;
+  align-items: center;
+}
+
+.marquee {
+  display: inline-block;
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee-scroll 8s linear infinite;
+  font-size: inherit;
+  line-height: inherit;
+  padding-right: 2rem; /* gap between loops */
+}
+
+@keyframes marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Pause on hover for accessibility */
+.marquee-container:hover .marquee,
+.marquee-container:focus-within .marquee {
+  animation-play-state: paused;
+}
+
+/* For tags: horizontal scroll */
+.marquee-tags {
+  display: flex;
+  gap: 0.5rem;
+  white-space: nowrap;
+  animation: marquee-scroll-tags 10s linear infinite;
+  will-change: transform;
+  padding-right: 2rem;
+}
+
+@keyframes marquee-scroll-tags {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-tags span {
+  margin-right: 0.5rem;
+}
+
+/* For description: vertical scroll if overflow */
+.marquee-vertical-container {
+  position: relative;
+  overflow: hidden;
+  height: 3.2em; /* about 2 lines */
+  max-width: 100%;
+}
+
+.marquee-vertical {
+  display: inline-block;
+  animation: marquee-scroll-vertical 8s linear infinite;
+  will-change: transform;
+}
+
+@keyframes marquee-scroll-vertical {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+.marquee-scroll-gallery {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 2.2em;
+  margin-bottom: 0.5em;
+}
+
+.marquee-scroll-track {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  animation: marquee-horizontal 12s linear infinite;
+  will-change: transform;
+}
+
+@keyframes marquee-horizontal {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Pause on hover for accessibility */
+.marquee-scroll-gallery:hover .marquee-scroll-track {
+  animation-play-state: paused;
+}
+
+.marquee-scroll-gallery .tag,
+.marquee-scroll-gallery .badge {
+  display: inline-block;
+  background: var(--color-secondary);
+  color: var(--color-primary);
+  border-radius: 12px;
+  padding: 0.2em 0.8em;
+  font-size: 0.92em;
+  font-weight: 500;
+  margin: 0 0.25em 0 0;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.marquee-scroll-gallery .tag {
+  background: rgba(38,162,105,0.12);
+  color: #26a269;
+}
+
+.marquee-scroll-gallery .badge {
+  background: rgba(38,162,105,0.18);
+  color: #1a5c3a;
+}
+
+/* Hide scrollbars on mobile */
+@media (max-width: 600px) {
+  .marquee-scroll-gallery::-webkit-scrollbar { display: none; }
+  .marquee-scroll-gallery { scrollbar-width: none; }
+}
+
+/* Hide scrollbars on mobile for cleaner look */
+@media (max-width: 600px) {
+  .card-scroll-gallery::-webkit-scrollbar { display: none; }
+  .card-scroll-gallery { scrollbar-width: none; }
+}
+
+.marquee-scroll-gallery {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 2.2em;
+  margin-bottom: 0.5em;
+}
+
+.marquee-scroll-track {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  animation: marquee-horizontal 12s linear infinite;
+  will-change: transform;
+}
+
+@keyframes marquee-horizontal {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-scroll-gallery .tag,
+.marquee-scroll-gallery .badge {
+  display: inline-block;
+  background: var(--color-secondary);
+  color: var(--color-primary);
+  border-radius: 12px;
+  padding: 0.2em 0.8em;
+  font-size: 0.92em;
+  font-weight: 500;
+  margin: 0 0.25em 0 0;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.marquee-scroll-gallery .tag {
+  background: rgba(38,162,105,0.12);
+  color: #26a269;
+}
+
+.marquee-scroll-gallery .badge {
+  background: rgba(38,162,105,0.18);
+  color: #1a5c3a;
+}
+
+/* Scrollable (marquee) title styles for cards */
+.card-title-marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  width: 100%;
+  font-size: 1.05rem; /* Slightly smaller than default h3 */
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.card-title-marquee .marquee-inner {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee-title-scroll 7s linear infinite;
+}
+
+@keyframes marquee-title-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+.gallery-card h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0.2em 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.card-title-marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  width: 100%;
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.card-title-marquee .marquee-inner {
+  display: inline-block;
+  padding-left: 0;
+}
+.card-title-marquee.marquee-active .marquee-inner {
+  padding-left: 100%;
+  animation: marquee-title-scroll 7s linear infinite;
+}
+@keyframes marquee-title-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+.experience-gallery .gallery-card .img-container {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    display: flex;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 0.5rem;
+}
+
+.experience-gallery .gallery-card .symbolic-icon,
+.experience-gallery .gallery-card .experience-logo {
+    z-index: 2;
+    position: relative;
+    margin-bottom: 0.3rem;
+}
+
+.card-title-marquee {
+    width: 100%;
+    text-align: center;
+    margin: 0.2rem 0 0.2rem 0;
+    font-size: 1.13rem;
+    font-weight: 700;
+    color: #00ff00;
+    letter-spacing: 0.5px;
+    background: linear-gradient(90deg, rgba(38,162,105,0.08) 0%, rgba(0,255,0,0.04) 100%);
+    border-radius: 8px;
+    padding: 0.38em 0.7em;
+    box-sizing: border-box;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    z-index: 3;
+    line-height: 1.5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.2em;
+}
+
+.card-title-marquee .marquee-inner {
+  display: inline-block;
+  min-width: 100%;
+  padding-left: 0;
+  text-align: center;
+  line-height: 1.5;           /* Match parent line height */
+}
+
+.card-title-marquee.marquee-active .marquee-inner {
+  padding-left: 100%;
+  animation: marquee-title-scroll 7s linear infinite;
+}
+
+@keyframes marquee-title-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+.experience-gallery .gallery-card:hover .symbolic-icon,
+.experience-gallery .gallery-card:hover .experience-logo {
+    margin-bottom: 0.8rem;
+}
+
+/* ========= Vars ========= */
+:root{
+  --gap: 6px;
+  --marquee-duration: 32s;            /* slower desktop */
+  --marquee-duration-mobile: 42s;     /* slower mobile */
+}
+
+/* ========= Clusters / Chips base ========= */
+.brain-cluster{
+  position:absolute;
+  left:0; top:0;
+  transform: translate(-50%,-50%) scale(1);
+  min-width:190px;
+  background: rgba(18,24,28,.55);
+  border: 1px solid rgba(38,162,105,.28);
+  backdrop-filter: blur(8px) saturate(130%);
+  color: rgba(255,255,255,.95);
+  box-shadow: 0 8px 24px rgba(38,162,105,.10);
+  border-radius: 14px;
+  padding: 10px 12px;
+  pointer-events: auto;
+  opacity: 0; /* JS sets actual opacity; hover override below */
+  transition: box-shadow .16s ease, border-color .16s ease;
+}
+
+.brain-cluster h4,
+.brain-chip {
+  color: rgba(255,255,255,.9);
+  -webkit-text-stroke: .25px rgba(0,0,0,.25);
+  transition: color .15s ease, text-shadow .2s ease, filter .2s ease, background .2s ease, opacity .18s ease;
+}
+
+.brain-chip{
+  background: rgba(38,162,105,.12);
+  border: 1px solid rgba(38,162,105,.35);
+}
+
+/* Hover glow */
+.brain-cluster h4:hover,
+.brain-chip:hover,
+.brain-chip:focus-visible {
+  color:#f2fff8;
+  text-shadow:
+    0 0 12px rgba(38,162,105,1),
+    0 0 26px rgba(38,162,105,1),
+    0 0 42px rgba(38,162,105,.95),
+    0 0 80px rgba(38,162,105,.75),
+    0 0 120px rgba(38,162,105,.6);
+  filter: drop-shadow(0 0 22px rgba(38,162,105,1));
+}
+.brain-chip:hover,
+.brain-chip:focus-visible { background: rgba(38,162,105,.22); border-color: rgba(38,162,105,.75); }
+
+/* Let CSS beat inline opacity set by JS when hovered */
+.brain-cluster:hover { opacity: 1 !important; z-index: 9999 !important; }
+
+/* Additive halo */
+.brain-chip, .brain-cluster h4 { position: relative; }
+.brain-chip::after, .brain-cluster h4::after{
+  content:"";
+  position:absolute; inset:-8px; border-radius:14px; pointer-events:none;
+  opacity:0; transition:opacity .18s ease; mix-blend-mode:screen;
+  background:
+    radial-gradient(40% 40% at 50% 50%, rgba(38,162,105,1) 0%, rgba(38,162,105,.45) 35%, rgba(38,162,105,0) 70%),
+    radial-gradient(70% 70% at 50% 50%, rgba(140,255,210,.45) 0%, rgba(140,255,210,0) 70%);
+}
+.brain-chip:hover::after,
+.brain-chip:focus-visible::after,
+.brain-cluster h4:hover::after{ opacity:1; }
+
+/* Optional ambient pulse */
+@keyframes bioPulse {
+  0%   { filter: drop-shadow(0 0 14px rgba(38,162,105,0.45)); }
+  50%  { filter: drop-shadow(0 0 34px rgba(38,162,105,0.95)); }
+  100% { filter: drop-shadow(0 0 14px rgba(38,162,105,0.45)); }
+}
+.brain-chip { animation: bioPulse 2.8s ease-in-out infinite; }
+
+/* ========= HORIZONTAL infinite marquee ========= */
+/* Viewport: window the scroll with soft edges */
+.brain-chips-viewport{
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  contain: content;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+}
+
+/* We create a single track that is visually duplicated using background.
+   For true seamless loops with dynamic content, we rely on CSS custom property
+   --track-w set at runtime by layout; as a fallback we repeat content with
+   an after pseudo-element copying the flow. */
+
+/* Base track row */
+.brain-chips-track{
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--gap);
+  white-space: nowrap;
+  width: max-content;
+  will-change: transform;
+  animation: brain-marquee var(--marquee-duration) linear infinite;
+  animation-play-state: running;
+  transform: translate3d(0,0,0);
+}
+
+/* Pause marquee on hover/focus to let users read
+.brain-cluster:hover .brain-chips-track,
+.brain-chips-track:focus-within { animation-play-state: paused; } */
+
+/* Duplicate the row virtually */
+.brain-chips-track::after{
+  content: attr(data-dup);
+  display: inline-flex;
+  gap: var(--gap);
+  padding-left: var(--gap);
+}
+.brain-chips-track{
+  /* If --track-w isn’t injected by JS, approximate using 200vw. */
+  --track-w: min(200vw, 2000px);
+}
+
+/* Chip box — DO NOT SHRINK */
+.brain-chip{
+  flex: 0 0 auto;
+  white-space: nowrap;
+  border-radius: 10px;
+  padding: 6px 8px;
+}
+
+/* Keyframes: move left across 2× content width so the seam is offscreen */
+@keyframes brain-marquee {
+  from { transform: translate3d(0,0,0); }
+  to   { transform: translate3d(-50%,0,0); }
+}
+
+/* Respect reduced motion */
+@media(max-width:768px){
+  .brain-chips-track{
+    animation-duration: var(--marquee-duration-mobile);
+  }
+}
+
+/* ========= Canvas host & stacking ========= */
+.canvas-container{
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: min(78svh, 78dvh, 640px);
+  aspect-ratio: 16 / 10;
+  z-index: 2;
+  pointer-events: auto;
+}
+.canvas-container > canvas{ position:absolute; inset:0; z-index:1; }
+
+/* Skills host variant */
+#skills .brain-host{
+  position: relative;
+  width: 100%;
+  height: min(88svh, 88dvh, 760px);
+  aspect-ratio: 16 / 11;
+  z-index: 2;
+  pointer-events: auto;
+}
+
+/* Name on top */
+#brain-name{
+  position:absolute; bottom: 6vh; left:50%; transform:translateX(-50%);
+  z-index: 2147483647; pointer-events:none;
+  font: 700 clamp(18px, calc(3.6vw * var(--ui-scale)), 56px)/1.1 'Montserrat', sans-serif;
+  letter-spacing:.06em; color:#e8fff3;
+  -webkit-text-stroke:.4px rgba(0,0,0,.25);
+  text-shadow:
+    0 0 12px rgba(38,162,105,1),
+    0 0 28px rgba(38,162,105,1),
+    0 0 48px rgba(38,162,105,.9),
+    0 0 90px rgba(38,162,105,.7);
+}
+
+.brain-cluster:hover{
+  border-color: rgba(38,162,105,.45) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,.25);
+}
+
+/* ========= Mobile tweaks ========= */
+@media (max-width: 768px){
+  .canvas-container{ height: 72svh; }
+  .brain-cluster{ background: rgba(18,24,28,.70); }
+  .brain-chip{ -webkit-text-stroke:0; }
+  #brain-name{ bottom:3vh; }
+  .brain-chips-track{
+    animation-duration: var(--marquee-duration-mobile);
+  }
+}
+
+/* Optional background */
+html, body { background: radial-gradient(circle at 50% 50%, #0f1318 0%, #05070b 90%); }

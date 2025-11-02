@@ -349,7 +349,7 @@ export class ModalManager {
     } else if (experienceData?.logos && experienceData.logos.length > 0) {
       logoContainer.innerHTML = `
         <div style="display: flex; gap: 15px; align-items: center;">
-          ${experienceData.logos.map(logo => `<img src="${logo}" alt="${title} logo" style="width: 135px; height: 135px; object-fit: contain;">`).join('')}
+          ${experienceData.logos.map(logo => `<img src="${logo}" alt="${title} logo" class="modal-experience-logo-img">`).join('')}
         </div>
       `;
     } else {

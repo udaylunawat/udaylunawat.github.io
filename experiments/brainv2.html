@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Brain GLB — Neon Hover + Neural Particles + Pro Controls</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Three UMD + helpers (same version) -->
+  <script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/examples/js/utils/BufferGeometryUtils.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/examples/js/modifiers/SimplifyModifier.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --accent:#26a269; --bg:#0f1318; --text:rgba(255,255,255,.92); --muted:rgba(255,255,255,.6); --panel:#121820; }
+    html,body { height:100%; margin:0; background:var(--bg); color:var(--text); font-family:'Montserrat',system-ui,sans-serif; }
+    #stage { width:100%; height:100%; display:block; cursor:grab; }
+
+    /* ---------- Control Panel ---------- */
+    .panel-wrap { position: fixed; top: 12px; left: 12px; z-index: 20; }
+    .toggle {
+      position: fixed; top: 12px; left: 12px; z-index: 30;
+      width: 38px; height: 38px; border-radius: 10px;
+      border: 1px solid rgba(38,162,105,.28); background: rgba(15,19,24,.65);
+      backdrop-filter: blur(8px); color: var(--text); display:flex; align-items:center; justify-content:center;
+      cursor: pointer; box-shadow: 0 6px 18px rgba(0,0,0,.25);
+    }
+    .toggle:hover { box-shadow: 0 8px 22px rgba(0,0,0,.35); }
+    .panel {
+      width: 360px; background: rgba(18,24,32,.78); border: 1px solid rgba(38,162,105,.24);
+      backdrop-filter: blur(10px); border-radius: 14px; padding: 10px 10px 12px;
+      box-shadow: 0 10px 28px rgba(0,0,0,.35);
+    }
+    .tabbar {
+      display:flex; gap:6px; margin-bottom:8px;
+      background: rgba(255,255,255,.04); border:1px solid rgba(38,162,105,.18);
+      padding:4px; border-radius:10px;
+    }
+    .tab {
+      flex:1; text-align:center; padding:6px 8px; font-size:12px; color:var(--muted);
+      border-radius:8px; cursor:pointer; user-select:none;
+    }
+    .tab.active { color:var(--text); background: rgba(38,162,105,.16); border:1px solid rgba(38,162,105,.28); }
+    .section { display:none; }
+    .section.active { display:block; }
+    .row { display:flex; align-items:center; gap:10px; margin:8px 0; }
+    .row label { flex: 0 0 160px; font-size:12px; color: var(--muted); }
+    .row input[type="range"] { flex:1; }
+    .row .val { width:52px; text-align:right; font-size:12px; color:var(--muted); }
+    .row input[type="checkbox"] { transform: translateY(1px); }
+    .hint { display:block; margin-top:6px; color:var(--muted); opacity:.8; font-size:12px; }
+    .kbd { font: 11px/1 monospace; padding:2px 5px; border:1px solid rgba(255,255,255,.2); border-radius:6px; }
+
+    /* ---------- Clusters (neon hover) ---------- */
+    .cluster {
+      position:absolute; left:0; top:0; transform:translate(-50%,-50%) scale(1);
+      background:rgba(18,24,28,.48); border:1px solid rgba(38,162,105,.22);
+      backdrop-filter: blur(6px); border-radius:14px; padding:10px 12px;
+      box-shadow: 0 6px 18px rgba(38,162,105,.10);
+      pointer-events:auto; opacity:0; transition: box-shadow .16s ease, border-color .16s ease;
+      min-width: 170px;
+    }
+    .cluster h4 { margin:0 0 6px; font-weight:600; font-size:12px; letter-spacing:.3px; color:var(--muted) }
+    .chips { display:flex; flex-wrap:wrap; gap:6px; }
+    .chip {
+      display:inline-flex; align-items:center; gap:6px; padding:6px 8px; border-radius:10px;
+      background:rgba(38,162,105,.10); border:1px solid rgba(38,162,105,.20); font-size:12px;
+      color:var(--text); white-space:nowrap; transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease, filter .12s ease, text-shadow .12s ease;
+    }
+    .chip img { width:16px; height:16px; filter:brightness(0) invert(1); display:block; }
+    .cluster:hover {
+      box-shadow: 0 12px 30px rgba(38,162,105,.35), 0 0 50px rgba(38,162,105,.18) inset;
+      border-color: rgba(38,162,105,.42);
+    }
+    .chip:hover, .chip:focus-visible {
+      transform: scale(1.10);
+      box-shadow: 0 0 18px rgba(38,162,105,.7), 0 0 2px rgba(38,162,105,1) inset;
+      border-color: rgba(38,162,105,.6);
+      text-shadow: 0 0 6px rgba(38,162,105,.85), 0 0 16px rgba(38,162,105,.55);
+      filter: drop-shadow(0 0 10px rgba(38,162,105,.8));
+      outline: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cluster, .chip, .tab { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stage"></canvas>
+
+  <!-- Minimal toggle button -->
+  <button class="toggle" id="toggle" title="Toggle Controls (H)">⚙️</button>
+
+  <!-- Panel with tabs -->
+  <div class="panel-wrap" id="panelWrap" style="display:none;">
+    <div class="panel" id="panel">
+      <div class="tabbar" id="tabbar">
+        <div class="tab active" data-tab="appearance">Appearance</div>
+        <div class="tab" data-tab="particles">Particles</div>
+        <div class="tab" data-tab="motion">Motion</div>
+        <div class="tab" data-tab="labels">Labels</div>
+      </div>
+
+      <div class="section active" id="appearance">
+        <div class="row"><label>Surface Opacity</label>
+          <input id="baseOpacity" type="range" min="0" max="0.2" step="0.005" value="0.035"><span class="val" id="baseOpacityVal">0.035</span>
+        </div>
+        <div class="row"><label>Fresnel Power</label>
+          <input id="fresnelPow" type="range" min="0.5" max="4" step="0.1" value="2.1"><span class="val" id="fresnelPowVal">2.1</span>
+        </div>
+        <div class="row"><label>Edge Strength</label>
+          <input id="edgeStrength" type="range" min="0" max="0.4" step="0.01" value="0.10"><span class="val" id="edgeStrengthVal">0.10</span>
+        </div>
+        <div class="row"><label><input id="showSurface" type="checkbox" checked> Show Surface</label></div>
+        <div class="row"><label><input id="showEdges" type="checkbox" checked> Show Edges</label></div>
+        <span class="hint">Tip: lower opacity and edges when you want the text to dominate.</span>
+      </div>
+
+      <div class="section" id="particles">
+        <div class="row"><label>Show Particles</label><input id="showParticles" type="checkbox" checked></div>
+        <div class="row"><label>Particle Count</label>
+          <input id="particleCount" type="range" min="1" max="1500" step="5" value="5"><span class="val" id="particleCountVal">50</span>
+        </div>
+        <div class="row"><label>Glow Size</label>
+          <input id="particleSize" type="range" min="0.01" max="5" step="0.01" value="0.01"><span class="val" id="particleSizeVal">0.01</span>
+        </div>
+        <div class="row"><label>Pulse Amplitude</label>
+          <input id="particlePulse" type="range" min="0" max="5" step="0.1" value="0.1"><span class="val" id="particlePulseVal">0.1</span>
+        </div>
+        <div class="row"><label>Particle Opacity</label>
+          <input id="particleOpacity" type="range" min="0" max="1" step="0.025" value="0.95"><span class="val" id="particleOpacityVal">0.95</span>
+        </div>
+        <div class="row"><label>Links per Node</label>
+          <input id="linksPerNode" type="range" min="0" max="8" step="1" value="3"><span class="val" id="linksPerNodeVal">3</span>
+        </div>
+        <div class="row"><label>Link Distance</label>
+          <input id="linkDist" type="range" min="0.5" max="6" step="0.1" value="2.8"><span class="val" id="linkDistVal">2.8</span>
+        </div>
+        <div class="row"><label>Rewire Interval (ms)</label>
+          <input id="rewireMs" type="range" min="200" max="4000" step="100" value="700"><span class="val" id="rewireMsVal">700</span>
+        </div>
+      </div>
+
+      <div class="section" id="motion">
+        <div class="row"><label>Rotate Speed</label>
+          <input id="rotSpeed" type="range" min="0" max="0.01" step="0.0002" value="0.0009"><span class="val" id="rotSpeedVal">0.0009</span>
+        </div>
+        <div class="row"><label>Keep Triangles</label>
+          <input id="keepRatio" type="range" min="0.05" max="0.6" step="0.01" value="0.20"><span class="val" id="keepRatioVal">0.20</span>
+        </div>
+        <div class="row"><label><input id="pause" type="checkbox"> Pause Rotation</label></div>
+        <div class="row"><label><input id="flipFront" type="checkbox"> Flip Front/Back</label></div>
+        <span class="hint">Changing “Keep Triangles” re-simplifies geometry live.</span>
+      </div>
+
+      <div class="section" id="labels">
+        <span class="hint">Hover any chip → neon glow. Want click actions (open docs, filter, etc.)? Wire them below.</span>
+        <div class="row"><label>Card Scale on Hover</label>
+          <input id="labelHoverScale" type="range" min="1.00" max="1.25" step="0.01" value="1.10"><span class="val" id="labelHoverScaleVal">1.10</span>
+        </div>
+        <div class="row"><label>Base Label Size</label>
+          <input id="labelBaseScale" type="range" min="0.7" max="1.3" step="0.01" value="1.00"><span class="val" id="labelBaseScaleVal">1.00</span>
+        </div>
+      </div>
+
+      <div class="hint">Press <span class="kbd">H</span> to toggle this panel.</div>
+    </div>
+  </div>
+
+<script>
+  // ------- Config / Data -------
+  const GLB_PATH = '../src/brain.glb';
+  const ACCENT   = 0x26a269;
+
+  const CLUSTERS = [
+    { key:'frontal',   title:'Reasoning · Planning', items:[ {label:'Python'}, {label:'LangGraph'}, {label:'Neural Nets'} ]},
+    { key:'visual',    title:'Visual Cortex',        items:[ {label:'Streamlit'}, {label:'Gradio'} ]},
+    { key:'motor',     title:'Motor / Control',      items:[ {label:'LLM Orchestration'}, {label:'Agents'}, {label:'Evaluation'} ]},
+    { key:'temporalL', title:'Temporal · L',         items:[ {label:'Whisper'}, {label:'ASR'}, {label:'Prompting'} ]},
+    { key:'temporalR', title:'Temporal · R',         items:[ {label:'RAG'}, {label:'Embeddings'}, {label:'Vector DBs'} ]},
+    { key:'infra',     title:'Infrastructure',       items:[ {label:'Docker'}, {label:'Kubernetes'}, {label:'AWS'} ]},
+  ];
+
+  // ------- THREE setup -------
+  const canvas   = document.getElementById('stage');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+  const scene  = new THREE.Scene();
+  scene.fog = new THREE.Fog(0x0f1318, 40, 120);
+
+  const camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 2000);
+  camera.position.set(0, 0, 4);
+
+  scene.add(new THREE.AmbientLight(0xa0ffd0, 0.22));
+  const dir = new THREE.DirectionalLight(0xffffff, 0.28);
+  dir.position.set(5, 10, 7);
+  scene.add(dir);
+
+  // ------- Materials -------
+  function makeHologramMaterial(baseOpacity, fresnelPow) {
+    return new THREE.ShaderMaterial({
+      uniforms: {
+        uTime:        { value: 0 },
+        uColor:       { value: new THREE.Color(ACCENT) },
+        uFresnelPow:  { value: fresnelPow },
+        uBaseOpacity: { value: baseOpacity }
+      },
+      vertexShader: `
+        varying vec3 vWorldPos; varying vec3 vNormal;
+        void main(){ vNormal = normalize(normalMatrix * normal);
+          vec4 wp = modelMatrix * vec4(position,1.0); vWorldPos = wp.xyz;
+          gl_Position = projectionMatrix * viewMatrix * wp;
+        }
+      `,
+      fragmentShader: `
+        precision mediump float;
+        uniform float uTime; uniform vec3 uColor; uniform float uFresnelPow; uniform float uBaseOpacity;
+        varying vec3 vWorldPos; varying vec3 vNormal;
+        void main(){
+          vec3 V = normalize(cameraPosition - vWorldPos);
+          float fres = pow(1.0 - max(dot(normalize(vNormal), V), 0.0), uFresnelPow);
+          float scan = 0.5 + 0.5 * sin(vWorldPos.y*0.30 + uTime*1.2);
+          float grid = step(0.48, fract(vWorldPos.y*0.05 + uTime*0.10)) * 0.12;
+          float alpha = clamp(uBaseOpacity + fres * 0.18 + grid, 0.0, 0.35);
+          vec3 col = uColor * (0.30 + mix(scan, 1.0, fres) * 0.45);
+          gl_FragColor = vec4(col, alpha);
+        }
+      `,
+      transparent: true, depthWrite: false, blending: THREE.AdditiveBlending
+    });
+  }
+
+  function makeWirePulseMaterial(edgeStrength) {
+    return new THREE.ShaderMaterial({
+      uniforms: { uTime:{value:0}, uColor:{value:new THREE.Color(ACCENT)}, uEdge:{value:edgeStrength} },
+      vertexShader: `
+        varying vec3 vWorldPos;
+        void main(){ vec4 wp = modelMatrix * vec4(position,1.0); vWorldPos = wp.xyz; gl_Position = projectionMatrix * viewMatrix * wp; }
+      `,
+      fragmentShader: `
+        precision mediump float; uniform float uTime; uniform vec3 uColor; uniform float uEdge; varying vec3 vWorldPos;
+        void main(){
+          float wave = 0.5 + 0.5 * sin(uTime*0.9 + vWorldPos.y*1.0);
+          vec3  col  = uColor * (0.40 + 0.36 * wave);
+          float a    = clamp(uEdge * (0.5 + 0.8 * wave), 0.0, 1.0);
+          gl_FragColor = vec4(col, a);
+        }
+      `,
+      transparent: true, depthWrite: false, blending: THREE.AdditiveBlending
+    });
+  }
+
+  // Particle shaders
+  const pointsVert = `
+    uniform float uTime; uniform float uBaseSize; uniform float uPulseAmp; uniform float uOpacity;
+    attribute float aSize; attribute float aPhase; varying float vAlpha;
+    void main(){
+      vec3 p = position;
+      float wiggle = 0.18 * sin(uTime*0.8 + aPhase);
+      p += normalize(p) * wiggle;
+      vec4 mv = modelViewMatrix * vec4(p,1.0);
+      float pulse = 0.5 + 0.5 * sin(uTime*1.1 + aPhase);
+      float size = (uBaseSize + uPulseAmp * pulse) * aSize;
+      gl_PointSize = size * (280.0 / -mv.z);
+      vAlpha = uOpacity * (0.35 + 0.65 * pulse);
+      gl_Position = projectionMatrix * mv;
+    }
+  `;
+  const pointsFrag = `
+    precision mediump float; varying float vAlpha;
+    void main(){
+      vec2 c = gl_PointCoord - vec2(0.5);
+      float d = length(c);
+      float ring = smoothstep(0.5, 0.0, d);
+      float core = smoothstep(0.18, 0.0, d);
+      float a = clamp(ring*0.8 + core*0.4, 0.0, 1.0) * vAlpha;
+      gl_FragColor = vec4(0.62, 1.0, 0.84, a);
+    }
+  `;
+  const lineVert = `
+    uniform float uTime; varying float vAlpha;
+    attribute float aOpacity; attribute float aPhase;
+    void main(){ vAlpha = aOpacity * (0.75 + 0.25 * sin(uTime*1.2 + aPhase)); gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }
+  `;
+  const lineFrag = `precision mediump float; varying float vAlpha; void main(){ gl_FragColor = vec4(0.15, 0.82, 0.53, vAlpha); }`;
+
+  // ------- State -------
+  const qs = id => document.getElementById(id);
+  const ui = {
+    // Appearance
+    baseOpacity: qs('baseOpacity'), fresnelPow: qs('fresnelPow'), edgeStrength: qs('edgeStrength'),
+    showSurface: qs('showSurface'), showEdges: qs('showEdges'),
+    // Particles
+    showParticles: qs('showParticles'), particleCount: qs('particleCount'), linkDist: qs('linkDist'),
+    particleSize: qs('particleSize'), particlePulse: qs('particlePulse'), particleOpacity: qs('particleOpacity'),
+    linksPerNode: qs('linksPerNode'), rewireMs: qs('rewireMs'),
+    // Motion
+    rotSpeed: qs('rotSpeed'), keepRatio: qs('keepRatio'), pause: qs('pause'), flipFront: qs('flipFront'),
+    // Labels
+    labelHoverScale: qs('labelHoverScale'), labelBaseScale: qs('labelBaseScale'),
+  };
+  const val = {
+    baseOpacity: qs('baseOpacityVal'), fresnelPow: qs('fresnelPowVal'), edgeStrength: qs('edgeStrengthVal'),
+    particleCount: qs('particleCountVal'), linkDist: qs('linkDistVal'),
+    particleSize: qs('particleSizeVal'), particlePulse: qs('particlePulseVal'), particleOpacity: qs('particleOpacityVal'),
+    linksPerNode: qs('linksPerNodeVal'), rewireMs: qs('rewireMsVal'),
+    rotSpeed: qs('rotSpeedVal'), keepRatio: qs('keepRatioVal'),
+    labelHoverScale: qs('labelHoverScaleVal'), labelBaseScale: qs('labelBaseScaleVal'),
+  };
+
+  let rootScene, targetMesh, wire, holoMat, wireMat, originalGeom;
+  let animatedMats = [];
+  let anchors = {};
+  let clusterEls = [];
+  const hoverScale = new Map();
+  let FRONT_DIR = 1;
+
+  // Particles
+  let points, pointsMat, pGeom, lines, lineGeom, lineMat;
+  let posArr, sizes, phases, linePositions, lineOpacities, linePhases, lineCount = 0;
+  let CONNECTIONS_PER_NODE = parseInt(ui.linksPerNode.value, 10);
+  let lastRewire = 0;
+
+  // ------- Loader / build -------
+  const loader = new THREE.GLTFLoader();
+  const modifier = new THREE.SimplifyModifier();
+
+  loader.load(GLB_PATH, (gltf) => {
+    rootScene = gltf.scene;
+    targetMesh = null;
+    rootScene.traverse(o => { if (o.isMesh && !targetMesh) targetMesh = o; });
+    if (!targetMesh) { console.error('No mesh in GLB'); return; }
+
+    originalGeom = THREE.BufferGeometryUtils.mergeVertices(targetMesh.geometry.toNonIndexed());
+    buildWithRatio(parseFloat(ui.keepRatio.value));
+
+    // Center + scale
+    const box = new THREE.Box3().setFromObject(rootScene);
+    const size = new THREE.Vector3(); box.getSize(size);
+    const center = new THREE.Vector3(); box.getCenter(center);
+    rootScene.position.sub(center);
+    const maxDim = Math.max(size.x, size.y, size.z) || 1;
+    const scale = 3.0 / maxDim;
+    rootScene.scale.setScalar(scale);
+
+    // Extents for anchors
+    const extX = (size.x * scale) / 2;
+    const extY = (size.y * scale) / 2;
+    const extZ = (size.z * scale) / 2;
+
+    const anchorVecs = {
+      frontal:    new THREE.Vector3(0,     0.10*extY,  +FRONT_DIR*0.62*extZ),
+      visual:     new THREE.Vector3(0,     0.10*extY,  -FRONT_DIR*0.62*extZ),
+      motor:      new THREE.Vector3(0,     0.65*extY,  0),
+      temporalL:  new THREE.Vector3(-0.68*extX, 0.00,  0.12*extZ),
+      temporalR:  new THREE.Vector3( 0.68*extX, 0.00,  0.12*extZ),
+      infra:      new THREE.Vector3(0,    -0.62*extY, -0.20*extZ),
+    };
+
+    // Nodes at anchors
+    anchors = {};
+    Object.entries(anchorVecs).forEach(([k, v]) => {
+      const n = new THREE.Object3D(); n.position.copy(v);
+      targetMesh.add(n); anchors[k] = n;
+    });
+
+    // Build clusters
+    const container = document.body;
+    CLUSTERS.forEach((c,i) => {
+      const el = document.createElement('div');
+      el.className = 'cluster';
+      el.innerHTML = `
+        <h4>${c.title}</h4>
+        <div class="chips">
+          ${c.items.map(it => `<span class="chip" tabindex="0">${it.label}</span>`).join('')}
+        </div>
+      `;
+      container.appendChild(el);
+      clusterEls.push({ key:c.key, el });
+      hoverScale.set(el, 1.0);
+      el.addEventListener('mouseenter', () => { hoverScale.set(el, parseFloat(ui.labelHoverScale.value)); });
+      el.addEventListener('mouseleave', () => { hoverScale.set(el, 1.0); });
+    });
+
+    // Particles from simplified geometry (centroids)
+    buildParticlesFromGeometry(targetMesh.geometry);
+
+    scene.add(rootScene);
+    startLoop();
+  });
+
+  function buildWithRatio(keepRatio) {
+    let geom = originalGeom.clone();
+    const triCount = geom.attributes.position.count / 3;
+    const target   = Math.max(48, Math.floor(triCount * keepRatio));
+    geom = modifier.modify(geom, target);
+    geom.computeVertexNormals();
+
+    targetMesh.geometry = geom;
+
+    // materials
+    holoMat = makeHologramMaterial(parseFloat(ui.baseOpacity.value), parseFloat(ui.fresnelPow.value));
+    targetMesh.material = holoMat;
+
+    if (wire) targetMesh.remove(wire);
+    wireMat = makeWirePulseMaterial(parseFloat(ui.edgeStrength.value));
+    wire = new THREE.LineSegments(new THREE.WireframeGeometry(geom), wireMat);
+    wire.renderOrder = 1;
+    targetMesh.add(wire);
+
+    // collect mats (for uTime ticking)
+    animatedMats = [];
+    targetMesh.traverse(o => { const m = o.material; if (m?.uniforms?.uTime) animatedMats.push(m); });
+  }
+
+  function triangleCentroids(nonIndexedGeometry) {
+    const pos = nonIndexedGeometry.attributes.position.array;
+    const triCount = pos.length / 9;
+    const out = new Float32Array(triCount * 3);
+    for (let i=0;i<triCount;i++){
+      const i9=i*9;
+      const ax=pos[i9], ay=pos[i9+1], az=pos[i9+2];
+      const bx=pos[i9+3], by=pos[i9+4], bz=pos[i9+5];
+      const cx=pos[i9+6], cy=pos[i9+7], cz=pos[i9+8];
+      out[i*3]   = (ax+bx+cx)/3;
+      out[i*3+1] = (ay+by+cy)/3;
+      out[i*3+2] = (az+bz+cz)/3;
+    }
+    return out;
+  }
+
+  function buildParticlesFromGeometry(geom) {
+    // dispose old
+    if (points) { targetMesh.remove(points); points.geometry.dispose(); points.material.dispose(); points=null; }
+    if (lines)  { targetMesh.remove(lines);  lineGeom.dispose(); lineMat.dispose(); lines=null; }
+
+    const centroids = triangleCentroids(geom.toNonIndexed());
+    const desiredCount = parseInt(ui.particleCount.value, 10);
+    const triCount = centroids.length / 3;
+    const step = Math.max(1, Math.floor(triCount / desiredCount));
+    const count = Math.min(desiredCount, Math.floor(triCount / step));
+
+    posArr = new Float32Array(count * 3);
+    sizes  = new Float32Array(count);
+    phases = new Float32Array(count);
+
+    for (let i=0,j=0;i<triCount && j<count;i+=step, j++){
+      posArr[j*3]   = centroids[i*3];
+      posArr[j*3+1] = centroids[i*3+1];
+      posArr[j*3+2] = centroids[i*3+2];
+      sizes[j]  = 0.9 + Math.random()*0.8;
+      phases[j] = Math.random()*Math.PI*2;
+    }
+
+    // Points
+    pGeom = new THREE.BufferGeometry();
+    pGeom.setAttribute('position', new THREE.BufferAttribute(posArr, 3));
+    pGeom.setAttribute('aSize', new THREE.BufferAttribute(sizes, 1));
+    pGeom.setAttribute('aPhase', new THREE.BufferAttribute(phases, 1));
+
+    pointsMat = new THREE.ShaderMaterial({
+      uniforms:{ 
+        uTime:{value:0}, 
+        uBaseSize:{value:parseFloat(ui.particleSize.value)}, 
+        uPulseAmp:{value:parseFloat(ui.particlePulse.value)}, 
+        uOpacity:{value:parseFloat(ui.particleOpacity.value)} 
+      },
+      vertexShader: pointsVert, fragmentShader: pointsFrag,
+      transparent:true, depthWrite:false, blending:THREE.AdditiveBlending
+    });
+    points = new THREE.Points(pGeom, pointsMat);
+    targetMesh.add(points);
+
+    // Lines
+    CONNECTIONS_PER_NODE = parseInt(ui.linksPerNode.value, 10);
+    const maxSegments = count * CONNECTIONS_PER_NODE;
+    linePositions = new Float32Array(maxSegments * 2 * 3);
+    lineOpacities = new Float32Array(maxSegments * 2);
+    linePhases    = new Float32Array(maxSegments * 2);
+    lineGeom = new THREE.BufferGeometry();
+    lineGeom.setAttribute('position', new THREE.BufferAttribute(linePositions, 3).setUsage(THREE.DynamicDrawUsage));
+    lineGeom.setAttribute('aOpacity', new THREE.BufferAttribute(lineOpacities, 1).setUsage(THREE.DynamicDrawUsage));
+    lineGeom.setAttribute('aPhase',   new THREE.BufferAttribute(linePhases,   1).setUsage(THREE.DynamicDrawUsage));
+    lineMat = new THREE.ShaderMaterial({ uniforms:{ uTime:{value:0} }, vertexShader: lineVert, fragmentShader: lineFrag, transparent:true, depthWrite:false, blending:THREE.AdditiveBlending });
+    lines = new THREE.LineSegments(lineGeom, lineMat);
+    lines.renderOrder = 2;
+    targetMesh.add(lines);
+
+    rebuildLinks();
+  }
+
+  function rebuildLinks() {
+    if (!pGeom) return;
+    const LINK_DIST = parseFloat(ui.linkDist.value);
+    const MAX_CONNECTIONS = CONNECTIONS_PER_NODE;
+
+    const pa = pGeom.attributes.position.array;
+    const count = pa.length / 3;
+    const maxPerNode = new Uint8Array(count);
+    lineCount = 0;
+
+    for (let i=0;i<count;i++) {
+      if (maxPerNode[i] >= MAX_CONNECTIONS) continue;
+      const ax=pa[i*3], ay=pa[i*3+1], az=pa[i*3+2];
+      for (let j=i+1;j<count;j++) {
+        if (maxPerNode[j] >= MAX_CONNECTIONS) continue;
+        const bx=pa[j*3], by=pa[j*3+1], bz=pa[j*3+2];
+        const dx=ax-bx, dy=ay-by, dz=az-bz;
+        const d2=dx*dx+dy*dy+dz*dz;
+        if (d2 < LINK_DIST*LINK_DIST) {
+          const k=lineCount*2*3; if (k >= linePositions.length) break;
+          linePositions[k]=ax; linePositions[k+1]=ay; linePositions[k+2]=az;
+          linePositions[k+3]=bx; linePositions[k+4]=by; linePositions[k+5]=bz;
+
+          const baseOpacity = Math.max(0.06, 1.0 - Math.sqrt(d2)/LINK_DIST) * 0.35;
+          const o=lineCount*2; lineOpacities[o]=baseOpacity; lineOpacities[o+1]=baseOpacity;
+          const p=lineCount*2; linePhases[p]=Math.random()*Math.PI*2; linePhases[p+1]=Math.random()*Math.PI*2;
+
+          lineCount++; maxPerNode[i]++; maxPerNode[j]++;
+          if (maxPerNode[i] >= MAX_CONNECTIONS) break;
+        }
+      }
+    }
+    lineGeom.setDrawRange(0, lineCount*2);
+    lineGeom.attributes.position.needsUpdate = true;
+    lineGeom.attributes.aOpacity.needsUpdate = true;
+    lineGeom.attributes.aPhase.needsUpdate   = true;
+  }
+
+  // ------- Interaction / render -------
+  let dragging=false, prevX=0, rotY=0, targetRotY=0;
+
+  canvas.addEventListener('mousedown', e => { dragging=true; prevX=e.clientX; });
+  window.addEventListener('mousemove', e => { if(!dragging) return; targetRotY += (e.clientX - prevX) * 0.003; prevX=e.clientX; });
+  window.addEventListener('mouseup', ()=> dragging=false);
+
+  function projectToScreen(obj3D) {
+    const v = new THREE.Vector3();
+    v.copy(obj3D.position);
+    obj3D.parent.localToWorld(v);
+    v.project(camera);
+    return { x:(v.x + 1) * 0.5 * window.innerWidth, y:(1 - v.y) * 0.5 * window.innerHeight, z:v.z };
+  }
+
+  let rafId=null;
+  function startLoop(){
+    if(rafId) cancelAnimationFrame(rafId);
+    const loop = () => {
+      rafId = requestAnimationFrame(loop);
+      if (!rootScene) return;
+
+      const paused = ui.pause.checked;
+      const speed  = parseFloat(ui.rotSpeed.value);
+      if(!dragging && !paused) targetRotY += speed;
+      rotY += (targetRotY - rotY) * 0.08;
+      rootScene.rotation.y = rotY;
+
+      const t = performance.now() * 0.0010;
+      for(const m of animatedMats) m.uniforms.uTime.value = t;
+      if (pointsMat) {
+        pointsMat.uniforms.uTime.value      = t;
+        pointsMat.uniforms.uBaseSize.value  = parseFloat(ui.particleSize.value);
+        pointsMat.uniforms.uPulseAmp.value  = parseFloat(ui.particlePulse.value);
+        pointsMat.uniforms.uOpacity.value   = parseFloat(ui.particleOpacity.value);
+      }
+      if (lineMat)   lineMat.uniforms.uTime.value   = t;
+
+      // periodic rewire
+      const now = performance.now();
+      if (lines && now - lastRewire > parseInt(ui.rewireMs.value, 10)) {
+        lastRewire = now; rebuildLinks();
+      }
+
+      // clusters: position and hover scaling (JS-composed)
+      const baseLabelScale = parseFloat(ui.labelBaseScale.value);
+      clusterEls.forEach(({key, el}) => {
+        const node = anchors[key]; if(!node) return;
+        const s = projectToScreen(node);
+        const depth = 1 - Math.min(1, Math.max(0, s.z));
+        const baseScale = baseLabelScale * (0.88 + depth * 0.22);
+        const hScale = hoverScale.get(el) || 1.0;
+        const finalScale = baseScale * hScale;
+        const opac  = (s.z < 1.0) ? (0.22 + depth * 0.78) : 0;
+        el.style.transform = `translate(${s.x}px, ${s.y}px) translate(-50%,-50%) scale(${finalScale})`;
+        el.style.opacity   = opac.toFixed(3);
+        el.style.zIndex    = String(Math.round(depth*1000));
+      });
+
+      // toggles
+      if (wire) wire.visible = ui.showEdges.checked && parseFloat(ui.edgeStrength.value) > 0.001;
+      if (targetMesh) targetMesh.material.visible = ui.showSurface.checked;
+      if (points) { const show = ui.showParticles.checked; points.visible = show; }
+      if (lines)  { const show = ui.showParticles.checked && CONNECTIONS_PER_NODE>0; lines.visible  = show; }
+
+      renderer.render(scene, camera);
+    };
+    loop();
+  }
+
+  // ------- UI events -------
+  function bind(id, fn) { ui[id].addEventListener('input', e => fn(e.target.value)); }
+  const setVal = (k, v) => val[k].textContent = v;
+
+  // Appearance
+  bind('baseOpacity', v => { setVal('baseOpacity', v); if(holoMat) holoMat.uniforms.uBaseOpacity.value = parseFloat(v); });
+  bind('fresnelPow',  v => { setVal('fresnelPow', v);  if(holoMat) holoMat.uniforms.uFresnelPow.value  = parseFloat(v); });
+  bind('edgeStrength',v => { setVal('edgeStrength', v); if(wireMat) wireMat.uniforms.uEdge.value       = parseFloat(v); });
+
+  // Particles
+  bind('particleCount', v => { setVal('particleCount', v); if(targetMesh){ buildParticlesFromGeometry(targetMesh.geometry); } });
+  bind('particleSize',  v => { setVal('particleSize', v); });
+  bind('particlePulse', v => { setVal('particlePulse', v); });
+  bind('particleOpacity', v => { setVal('particleOpacity', v); });
+  bind('linksPerNode', v => { setVal('linksPerNode', v); CONNECTIONS_PER_NODE = parseInt(v,10); rebuildLinks(); });
+  bind('linkDist',     v => { setVal('linkDist', v); rebuildLinks(); });
+  bind('rewireMs',     v => { setVal('rewireMs', v); });
+
+  // Motion
+  bind('rotSpeed',   v => setVal('rotSpeed', v));
+  bind('keepRatio',  v => { setVal('keepRatio', v); if(targetMesh){ buildWithRatio(parseFloat(v)); buildParticlesFromGeometry(targetMesh.geometry); } });
+
+  // Labels
+  bind('labelHoverScale', v => setVal('labelHoverScale', v));
+  bind('labelBaseScale',  v => setVal('labelBaseScale', v));
+
+  // simple toggles
+  ui.showParticles.addEventListener('change', () => { if (points) points.visible = ui.showParticles.checked; if (lines) lines.visible = ui.showParticles.checked && CONNECTIONS_PER_NODE>0; });
+  ui.showSurface.addEventListener('change', () => { if (targetMesh) targetMesh.material.visible = ui.showSurface.checked; });
+  ui.showEdges.addEventListener('change', () => { if (wire) wire.visible = ui.showEdges.checked; });
+  ui.flipFront.addEventListener('change', () => {
+    const sign = ui.flipFront.checked ? -1 : 1;
+    const fz = Math.abs(anchors.frontal.position.z);
+    const vz = Math.abs(anchors.visual.position.z);
+    anchors.frontal.position.z = +sign * fz;
+    anchors.visual.position.z  = -sign * vz;
+  });
+
+  window.addEventListener('resize', () => {
+    const w = window.innerWidth, h = window.innerHeight;
+    camera.aspect = w / h; camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  });
+
+  // ---------- Panel tabs + toggle ----------
+  const toggleBtn = document.getElementById('toggle');
+  const panelWrap = document.getElementById('panelWrap');
+  const tabs = Array.from(document.querySelectorAll('.tab'));
+  const sections = {
+    appearance: document.getElementById('appearance'),
+    particles:  document.getElementById('particles'),
+    motion:     document.getElementById('motion'),
+    labels:     document.getElementById('labels'),
+  };
+
+  function showPanel(show) { panelWrap.style.display = show ? 'block' : 'none'; }
+  let panelVisible = false; showPanel(panelVisible);
+  toggleBtn.addEventListener('click', () => { panelVisible = !panelVisible; showPanel(panelVisible); });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key.toLowerCase() === 'h') { panelVisible = !panelVisible; showPanel(panelVisible); }
+  });
+
+  tabs.forEach(t => {
+    t.addEventListener('click', () => {
+      tabs.forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      Object.values(sections).forEach(s => s.classList.remove('active'));
+      sections[t.dataset.tab].classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neural Network Skills — Hologram Brain Replica (Import-Map Fix)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --color-primary:#26a269; --color-secondary:rgba(255,255,255,.9); }
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;background:#0f1318;color:var(--color-secondary);font-family:'Montserrat',sans-serif;display:grid;place-items:center;padding:2rem}
+    .skills-section{max-width:1200px;width:100%;padding:1rem}
+    h2{text-align:center;font-size:2.4rem;margin:0 0 1.5rem;letter-spacing:.5px;background:linear-gradient(to right,var(--color-primary),#00ff9c);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    .skills-container{display:flex;align-items:center;justify-content:center;width:100%}
+    .network-container{position:relative;width:100%;height:720px;border-radius:18px;overflow:hidden;background:radial-gradient(1200px 600px at 60% -20%,rgba(38,162,105,.25),rgba(0,0,0,0)),linear-gradient(145deg,rgba(38,162,105,.06),rgba(0,255,156,.02));border:1px solid rgba(38,162,105,.12)}
+    #network-canvas{position:absolute;inset:0;width:100%!important;height:100%!important;cursor:grab;z-index:1}
+    .skill-tag{position:absolute;left:0;top:0;pointer-events:none;z-index:3;display:flex;flex-direction:column;align-items:center;gap:6px;transform-origin:center;background:none;border:none;box-shadow:none;backdrop-filter:none;padding:0;min-width:auto}
+    .skill-tag .icon-wrapper{width:42px;height:42px;display:flex;align-items:center;justify-content:center;background:none;border:none;box-shadow:none;border-radius:50%}
+    .skill-tag img{width:100%;height:100%;object-fit:contain;filter:brightness(0) invert(1);transition:transform .25s ease}
+    .skill-tag .skill-title{font-size:.75rem;font-weight:500;color:rgba(255,255,255,.9);text-align:center;white-space:nowrap;letter-spacing:.2px}
+    #diag{position:absolute;right:12px;bottom:12px;background:rgba(0,0,0,.6);color:#fff;padding:.5rem .75rem;border-radius:.5rem;font-size:.8rem;z-index:4;max-width:60ch;display:none;border:1px solid rgba(38,162,105,.25)}
+    #diag b{color:#9fffd7}
+    @media(max-width:992px){.network-container{height:560px}}
+    @media(max-width:480px){.network-container{height:460px}.skill-tag{transform:scale(.85)}}
+  </style>
+</head>
+<body>
+  <section class="skills-section">
+    <h2>Skills & Technologies</h2>
+    <div class="skills-container">
+      <div class="network-container">
+        <canvas id="network-canvas"></canvas>
+        <div id="diag"></div>
+      </div>
+    </div>
+  </section>
+
+  <!--
+    FIX: Use an import map so JSM helpers that import 'three' (a bare specifier)
+    can resolve to an actual URL. This directly addresses the error:
+    "Module name, 'three' does not resolve to a valid URL."
+  -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.128.0/build/three.module.js"
+    }
+  }
+  </script>
+
+  <!-- JSM helpers rely on the import map above -->
+  <script type="module">
+    import * as THREE from 'three';
+    import { GLTFLoader } from 'https://unpkg.com/three@0.128.0/examples/jsm/loaders/GLTFLoader.js';
+    import { BufferGeometryUtils } from 'https://unpkg.com/three@0.128.0/examples/jsm/utils/BufferGeometryUtils.js';
+
+    // === QUICK DIAGNOSTICS (acts like a "test case" for the environment) ===
+    const diag = document.getElementById('diag');
+    function ok(label, pass){ return `<div><b>${label}</b>: ${pass? 'OK' : 'FAIL'}</div>` }
+    function showDiag(html){ diag.innerHTML = html; diag.style.display = 'block'; }
+
+    let checks = '';
+    checks += ok('THREE loaded', !!THREE && !!THREE.WebGLRenderer);
+    checks += ok('GLTFLoader available', !!GLTFLoader);
+    checks += ok('BufferGeometryUtils available', !!BufferGeometryUtils);
+
+    // If any base dependency is missing, stop early with guidance
+    if (!THREE || !THREE.WebGLRenderer || !GLTFLoader || !BufferGeometryUtils){
+      showDiag(checks + '<div style="margin-top:.4rem">If these show FAIL, your environment is likely blocking external module URLs. In that case, switch to local copies of three.module.js and the JSM files, and update the import map paths accordingly.</div>');
+      throw new Error('Dependencies not available');
+    }
+
+    // === CONFIG ===
+    const BRAIN_MODEL_URL = 'https://limewire.com/d/1xKHQ#pCFzbJnP7j'; // drop your GLB next to this HTML
+    const NODE_COUNT = 900;            // centroid particles
+    const MAX_CONNECTIONS = 3;         // per-node link cap
+    const LINK_DIST = 2.8;             // link threshold (tune per model scale)
+
+    const skills = [
+      { name: 'Python',       image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
+      { name: 'TensorFlow',   image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg' },
+      { name: 'Docker',       image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg' },
+      { name: 'AWS',          image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg' },
+      { name: 'PostgreSQL',   image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
+      { name: 'Git',          image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg' },
+      { name: 'FastAPI',      image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg' },
+      { name: 'NumPy',        image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg' },
+      { name: 'Pandas',       image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg' },
+      { name: 'Kubernetes',   image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg' },
+    ];
+
+    const container = document.querySelector('.network-container');
+    const canvas = document.getElementById('network-canvas');
+
+    let renderer, scene, camera, root, brainSurface, brainWire, points, pointsMat, lineGeom, lineMat, lines;
+    let posArr, sizes, phases, tagNodes, tagIndices;
+    let linePositions, lineOpacities, linePhases, lineCount;
+
+    // === HOLOGRAM SHADER ===
+    const HologramMaterial = (color = new THREE.Color(0x26a269)) => new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+        uColor: { value: color },
+        uFresnelPower: { value: 1.8 },
+        uScanIntensity: { value: 0.7 },
+        uOpacity: { value: 0.18 }
+      },
+      vertexShader: `
+        varying vec3 vWorldPos;
+        varying vec3 vNormal;
+        void main(){
+          vNormal = normalize(normalMatrix * normal);
+          vec4 wp = modelMatrix * vec4(position,1.0);
+          vWorldPos = wp.xyz;
+          gl_Position = projectionMatrix * viewMatrix * wp;
+        }
+      `,
+      fragmentShader: `
+        precision mediump float;
+        uniform float uTime; uniform vec3 uColor; uniform float uFresnelPower; uniform float uScanIntensity; uniform float uOpacity;
+        varying vec3 vWorldPos; varying vec3 vNormal;
+        void main(){
+          vec3 V = normalize(cameraPosition - vWorldPos);
+          float fresnel = pow(1.0 - max(dot(normalize(vNormal), V), 0.0), uFresnelPower);
+          float scan = sin((vWorldPos.y*0.35) + uTime*2.2) * 0.5 + 0.5;
+          float grid = (step(0.48, fract(vWorldPos.y*0.08 + uTime*0.2)) * 0.2);
+          float holo = mix(scan, 1.0, fresnel);
+          float alpha = clamp(uOpacity + fresnel*0.35 + grid*0.25, 0.0, 1.0);
+          vec3 col = uColor * (0.45 + holo*0.75);
+          gl_FragColor = vec4(col, alpha);
+        }
+      `,
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending
+    });
+
+    // === HELPERS ===
+    function triangleCentroids(nonIndexedGeometry) {
+      const pos = nonIndexedGeometry.attributes.position.array;
+      const triCount = pos.length / 9; // 3 verts * 3 comps
+      const centroids = new Float32Array(triCount * 3);
+      for (let i = 0; i < triCount; i++) {
+        const i9 = i * 9;
+        const ax = pos[i9], ay = pos[i9+1], az = pos[i9+2];
+        const bx = pos[i9+3], by = pos[i9+4], bz = pos[i9+5];
+        const cx = pos[i9+6], cy = pos[i9+7], cz = pos[i9+8];
+        centroids[i*3]   = (ax + bx + cx) / 3.0;
+        centroids[i*3+1] = (ay + by + cy) / 3.0;
+        centroids[i*3+2] = (az + bz + cz) / 3.0;
+      }
+      return centroids;
+    }
+
+    function initRenderer() {
+      renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(container.offsetWidth, container.offsetHeight);
+    }
+
+    function initScene() {
+      scene = new THREE.Scene();
+      scene.fog = new THREE.Fog(0x0f1318, 40, 120);
+      camera = new THREE.PerspectiveCamera(60, container.offsetWidth / container.offsetHeight, 0.1, 1000);
+      camera.position.set(0, 0, 40);
+      root = new THREE.Group();
+      scene.add(root);
+
+      const hemi = new THREE.HemisphereLight(0xaaffdd, 0x0f1318, 0.6);
+      scene.add(hemi);
+      const dir = new THREE.DirectionalLight(0xffffff, 0.35);
+      dir.position.set(10, 20, 10);
+      scene.add(dir);
+    }
+
+    async function loadBrainAndBuild() {
+      const loader = new GLTFLoader();
+      loader.setCrossOrigin('anonymous');
+      let geom;
+      try {
+        const gltf = await loader.loadAsync(BRAIN_MODEL_URL);
+        let mesh = null; gltf.scene.traverse(o => { if (o.isMesh && !mesh) mesh = o; });
+        if (!mesh) throw new Error('No mesh in GLB');
+        geom = mesh.geometry.clone();
+        geom.computeBoundingSphere();
+        const bs = geom.boundingSphere;
+        const targetRadius = 18; // display size
+        const scale = targetRadius / bs.radius;
+        const m = new THREE.Matrix4().makeScale(scale, scale, scale);
+        geom.applyMatrix4(m);
+        const center = bs.center.clone().multiplyScalar(scale);
+        geom.translate(-center.x, -center.y, -center.z);
+      } catch (e) {
+        console.warn('GLB missing — using triangulated fallback (icosahedron).');
+        geom = new THREE.IcosahedronGeometry(18, 3);
+      }
+
+      const nonIdx = BufferGeometryUtils.mergeVertices(geom.toNonIndexed());
+      nonIdx.computeVertexNormals();
+
+      const holoMat = HologramMaterial(new THREE.Color(0x26a269));
+      brainSurface = new THREE.Mesh(nonIdx, holoMat);
+      root.add(brainSurface);
+
+      const wireGeom = new THREE.WireframeGeometry(nonIdx);
+      const wireMat = new THREE.LineBasicMaterial({ color: 0x26a269, transparent: true, opacity: 0.35, blending: THREE.AdditiveBlending });
+      brainWire = new THREE.LineSegments(wireGeom, wireMat);
+      root.add(brainWire);
+
+      // === Particles from triangle centroids ===
+      const centroids = triangleCentroids(nonIdx);
+      const triCount = centroids.length / 3;
+      const step = Math.max(1, Math.floor(triCount / NODE_COUNT));
+      const count = Math.min(NODE_COUNT, Math.floor(triCount / step));
+      posArr = new Float32Array(count * 3);
+      sizes = new Float32Array(count);
+      phases = new Float32Array(count);
+      for (let i = 0, j = 0; i < triCount && j < count; i += step, j++) {
+        posArr[j*3] = centroids[i*3];
+        posArr[j*3+1] = centroids[i*3+1];
+        posArr[j*3+2] = centroids[i*3+2];
+        sizes[j] = 0.9 + Math.random() * 0.8;
+        phases[j] = Math.random() * Math.PI * 2;
+      }
+
+      const pointsVert = `
+        uniform float uTime; uniform float uBaseSize; uniform float uPulseAmp; uniform float uOpacity;
+        attribute float aSize; attribute float aPhase; varying float vAlpha;
+        void main(){
+          vec3 p = position;
+          float wiggle = 0.2 * sin(uTime*0.8 + aPhase);
+          p += normalize(p) * wiggle;
+          vec4 mv = modelViewMatrix * vec4(p,1.0);
+          float pulse = 0.5 + 0.5 * sin(uTime*1.2 + aPhase);
+          float size = (uBaseSize + uPulseAmp * pulse) * aSize;
+          gl_PointSize = size * (300.0 / -mv.z);
+          vAlpha = uOpacity * (0.35 + 0.65 * pulse);
+          gl_Position = projectionMatrix * mv;
+        }
+      `;
+      const pointsFrag = `
+        precision mediump float; varying float vAlpha;
+        void main(){
+          vec2 c = gl_PointCoord - vec2(0.5);
+          float d = length(c);
+          float ring = smoothstep(0.5, 0.0, d);
+          float core = smoothstep(0.18, 0.0, d);
+          float a = clamp(ring*0.8 + core*0.4, 0.0, 1.0) * vAlpha;
+          gl_FragColor = vec4(0.62, 1.0, 0.84, a);
+        }
+      `;
+
+      const pGeom = new THREE.BufferGeometry();
+      pGeom.setAttribute('position', new THREE.BufferAttribute(posArr, 3));
+      pGeom.setAttribute('aSize', new THREE.BufferAttribute(sizes, 1));
+      pGeom.setAttribute('aPhase', new THREE.BufferAttribute(phases, 1));
+      pointsMat = new THREE.ShaderMaterial({
+        uniforms:{ uTime:{value:0}, uBaseSize:{value:2.0}, uPulseAmp:{value:2.0}, uOpacity:{value:0.95} },
+        vertexShader: pointsVert, fragmentShader: pointsFrag,
+        transparent:true, depthWrite:false, blending:THREE.AdditiveBlending
+      });
+      points = new THREE.Points(pGeom, pointsMat);
+      root.add(points);
+
+      // Dynamic connection lines
+      const maxSegments = count * MAX_CONNECTIONS;
+      linePositions = new Float32Array(maxSegments * 2 * 3);
+      lineOpacities = new Float32Array(maxSegments * 2);
+      linePhases = new Float32Array(maxSegments * 2);
+      lineCount = 0;
+
+      const lineVert = `
+        uniform float uTime; varying float vAlpha;
+        attribute float aOpacity; attribute float aPhase;
+        void main(){ vAlpha = aOpacity * (0.7 + 0.3 * sin(uTime*1.6 + aPhase)); gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }
+      `;
+      const lineFrag = `precision mediump float; varying float vAlpha; void main(){ gl_FragColor = vec4(0.15, 0.82, 0.53, vAlpha);} `;
+
+      lineGeom = new THREE.BufferGeometry();
+      lineGeom.setAttribute('position', new THREE.BufferAttribute(linePositions, 3).setUsage(THREE.DynamicDrawUsage));
+      lineGeom.setAttribute('aOpacity', new THREE.BufferAttribute(lineOpacities, 1).setUsage(THREE.DynamicDrawUsage));
+      lineGeom.setAttribute('aPhase', new THREE.BufferAttribute(linePhases, 1).setUsage(THREE.DynamicDrawUsage));
+      lineMat = new THREE.ShaderMaterial({ uniforms:{ uTime:{value:0} }, vertexShader: lineVert, fragmentShader: lineFrag, transparent:true, depthWrite:false, blending:THREE.AdditiveBlending });
+      lines = new THREE.LineSegments(lineGeom, lineMat);
+      root.add(lines);
+
+      // Skill tags pinned to selected centroid indices
+      tagNodes = new Map();
+      tagIndices = [];
+      while (tagIndices.length < skills.length) {
+        const idx = Math.floor(Math.random() * (posArr.length/3));
+        if (!tagIndices.includes(idx)) tagIndices.push(idx);
+      }
+      tagIndices.forEach((nodeIndex, i) => {
+        const tag = document.createElement('div');
+        tag.id = `skill-tag-${i}`; tag.className = 'skill-tag';
+        tag.innerHTML = `<div class=\"icon-wrapper\"><img src=\"${skills[i].image}\" alt=\"${skills[i].name}\" /></div><span class=\"skill-title\">${skills[i].name}</span>`;
+        container.appendChild(tag);
+        tagNodes.set(i, nodeIndex);
+      });
+
+      rebuildLinks();
+      animate();
+    }
+
+    function rebuildLinks() {
+      const count = posArr.length / 3;
+      const maxPerNode = new Uint8Array(count);
+      lineCount = 0;
+      for (let i = 0; i < count; i++) {
+        if (maxPerNode[i] >= MAX_CONNECTIONS) continue;
+        const ax = posArr[i*3], ay = posArr[i*3+1], az = posArr[i*3+2];
+        for (let j = i + 1; j < count; j++) {
+          if (maxPerNode[j] >= MAX_CONNECTIONS) continue;
+          const bx = posArr[j*3], by = posArr[j*3+1], bz = posArr[j*3+2];
+          const dx = ax - bx, dy = ay - by, dz = az - bz;
+          const d2 = dx*dx + dy*dy + dz*dz;
+          if (d2 < LINK_DIST * LINK_DIST) {
+            const k = lineCount * 2 * 3; if (k >= linePositions.length) break;
+            linePositions[k] = ax; linePositions[k+1] = ay; linePositions[k+2] = az;
+            linePositions[k+3] = bx; linePositions[k+4] = by; linePositions[k+5] = bz;
+            const opacity = Math.max(0.05, 1.0 - Math.sqrt(d2) / LINK_DIST) * 0.45;
+            const o = lineCount * 2; lineOpacities[o] = opacity; lineOpacities[o+1] = opacity;
+            const p = lineCount * 2; linePhases[p] = Math.random() * Math.PI * 2; linePhases[p+1] = Math.random() * Math.PI * 2;
+            lineCount++; maxPerNode[i]++; maxPerNode[j]++;
+            if (maxPerNode[i] >= MAX_CONNECTIONS) break;
+          }
+        }
+      }
+      lineGeom.setDrawRange(0, lineCount * 2);
+      lineGeom.attributes.position.needsUpdate = true;
+      lineGeom.attributes.aOpacity.needsUpdate = true;
+      lineGeom.attributes.aPhase.needsUpdate = true;
+    }
+
+    // Interaction
+    let isDragging = false, prev = {x:0,y:0}, rot = {x:0,y:0}, targetRot = {x:0.12,y:0.22};
+    function addInteraction() {
+      const onDown = e => { isDragging = true; prev.x=(e.touches?e.touches[0].clientX:e.clientX); prev.y=(e.touches?e.touches[0].clientY:e.clientY); };
+      const onMove = e => { if (!isDragging) return; const x=(e.touches?e.touches[0].clientX:e.clientX); const y=(e.touches?e.touches[0].clientY:e.clientY); targetRot.y += (x - prev.x) * 0.003; targetRot.x += (y - prev.y) * 0.003; prev.x = x; prev.y = y; };
+      const onUp = () => { isDragging = false; };
+      container.addEventListener('mousedown', onDown); container.addEventListener('touchstart', onDown, {passive:true});
+      document.addEventListener('mousemove', onMove); document.addEventListener('touchmove', onMove, {passive:true});
+      document.addEventListener('mouseup', onUp); document.addEventListener('touchend', onUp);
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      if (!isDragging) targetRot.y += 0.0010;
+      rot.x += (targetRot.x - rot.x) * 0.08;
+      rot.y += (targetRot.y - rot.y) * 0.08;
+      root.rotation.x = rot.x; root.rotation.y = rot.y;
+
+      if ((performance.now() % 700) < 16) rebuildLinks();
+
+      const t = performance.now() * 0.0016;
+      if (brainSurface) brainSurface.material.uniforms.uTime.value = t;
+      if (pointsMat) pointsMat.uniforms.uTime.value = t;
+      if (lineMat) lineMat.uniforms.uTime.value = t;
+
+      if (tagNodes && points) {
+        const camW = container.offsetWidth, camH = container.offsetHeight; const v = new THREE.Vector3();
+        const positions = points.geometry.attributes.position.array;
+        tagNodes.forEach((nodeIndex, tagIdx) => {
+          const tag = document.getElementById(`skill-tag-${tagIdx}`); if (!tag) return;
+          v.set(positions[nodeIndex*3], positions[nodeIndex*3+1], positions[nodeIndex*3+2]);
+          v.applyMatrix4(root.matrixWorld); v.project(camera);
+          const sx = (v.x + 1) / 2 * camW; const sy = -(v.y - 1) / 2 * camH; const front = v.z < 1.0;
+          const depth = 1 - Math.min(1, Math.max(0, v.z)); const scale = 0.85 + depth * 0.35; const opacity = 0.25 + depth * 0.75;
+          tag.style.transform = `translate(${sx}px, ${sy}px) translate(-50%, -50%) scale(${scale})`;
+          tag.style.opacity = front ? opacity : 0; tag.style.zIndex = Math.round(depth * 1000);
+        });
+      }
+
+      renderer.render(scene, camera);
+    }
+
+    function onResize() {
+      camera.aspect = container.offsetWidth / container.offsetHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.offsetWidth, container.offsetHeight);
+    }
+
+    // === BOOT ===
+    (function start(){
+      container.querySelectorAll('.skill-tag').forEach(t => t.remove());
+      initRenderer();
+      initScene();
+      addInteraction();
+      loadBrainAndBuild();
+      window.addEventListener('resize', onResize);
+    })();
+  </script>
+</body>
+</html>

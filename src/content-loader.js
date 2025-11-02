@@ -1,4 +1,21 @@
 // Reusable Content Loader Module
+
+// Helper to render auto-scrolling marquee if needed
+function renderMarquee(items, type = 'tag') {
+    if (!items || items.length === 0) return '';
+    if (items.length < 2) {
+        return `<div class="card-scroll-gallery">${items.map(item => `<span class="${type}">${item}</span>`).join('')}</div>`;
+    }
+    const content = items.map(item => `<span class="${type}">${item}</span>`).join('');
+    return `
+    <div class="marquee-scroll-gallery">
+        <div class="marquee-scroll-track">
+        ${content}${content}
+        </div>
+    </div>
+    `;
+}
+
 // Loads content from JSON files and populates DOM elements
 
 class ContentLoader {
@@ -26,6 +43,22 @@ class ContentLoader {
             console.error('Error loading content:', error);
             return { success: false, error: error.message };
         }
+    }
+
+    enableMarqueeIfOverflow(containerSelector = '.gallery-grid, #experience-gallery-grid') {
+        // Find all titles in the given container(s)
+        document.querySelectorAll(`${containerSelector} .card-title-marquee`).forEach(titleDiv => {
+            const span = titleDiv.querySelector('.marquee-inner');
+            // Remove marquee animation first
+            span.style.animation = 'none';
+            // Check if overflow
+            if (span.scrollWidth > titleDiv.clientWidth) {
+                span.style.animation = '';
+                titleDiv.classList.add('marquee-active');
+            } else {
+                titleDiv.classList.remove('marquee-active');
+            }
+        });
     }
 
     // Populate home section
@@ -103,10 +136,13 @@ class ContentLoader {
 
             if (galleryGrid) {
                 galleryGrid.innerHTML = experienceData.map(exp => {
-                    const tagsHTML = exp.tags.map(tag => `<span>${tag}</span>`).join('');
-                    const badgesHTML = exp.badges && exp.badges.length > 0
-                        ? `<div class="badges" aria-hidden="true">${exp.badges.map(badge => `<span class="badge">${badge}</span>`).join('')}</div>`
-                        : '';
+                    const tagsHTML = renderMarquee(exp.tags, 'tag');
+                    const badgesHTML = renderMarquee(exp.badges, 'badge');
+                    const titleHTML = `
+                        <div class="card-title-marquee" data-title>
+                            <span class="marquee-inner">${exp.title}</span>
+                        </div>
+                    `;
 
                     let logoHTML = '';
                     if (exp.logos && exp.logos.length > 0) {
@@ -124,20 +160,22 @@ class ContentLoader {
                             <div class="gallery-card">
                                 <div class="img-container">
                                     ${logoHTML}
+                                    ${titleHTML}
                                 </div>
                                 <div class="text-box">
-                                    <h4 class="tags">${tagsHTML}</h4>
-                                    <h3>${exp.title}</h3>
+                                    ${tagsHTML}
+                                    <p>${exp.description}</p>
+                                    ${badgesHTML}
                                     <h4 class="dates">${exp.dates}</h4>
                                 </div>
-                                <p>${exp.description}</p>
-                                ${badgesHTML}
                             </div>
                         </div>
                     `;
                 }).join('');
             }
         }
+        this.enableMarqueeIfOverflow('#experience-gallery-grid');
+        this.enableMarqueeIfOverflow('.gallery-grid');
     }
 
     // Populate projects section
@@ -149,7 +187,13 @@ class ContentLoader {
 
             if (galleryGrid) {
                 galleryGrid.innerHTML = projectsData.map(project => {
-                    const tagsHTML = project.tags.map(tag => `<span>${tag}</span>`).join('');
+                    const tagsHTML = renderMarquee(project.tags, 'tag');
+                    const badgesHTML = renderMarquee(project.badges, 'badge');
+                    const titleHTML = `
+                        <div class="card-title-marquee" data-title>
+                            <span class="marquee-inner">${project.title}</span>
+                        </div>
+                    `;
 
                     return `
                         <div class="gallery-item project-with-link" data-project="${project.id}">
@@ -158,16 +202,19 @@ class ContentLoader {
                                     <img class="symbolic-icon" src="${project.icon}" alt="${project.title}">
                                 </div>
                                 <div class="text-box">
-                                    <h4 class="tags">${tagsHTML}</h4>
-                                    <h3>${project.title}</h3>
+                                    ${titleHTML}
+                                    ${tagsHTML}
                                 </div>
                                 <p>${project.description}</p>
+                                ${badgesHTML}
                             </div>
                         </div>
                     `;
                 }).join('');
             }
         }
+        this.enableMarqueeIfOverflow('#experience-gallery-grid');
+        this.enableMarqueeIfOverflow('.gallery-grid');
     }
 
     // Populate contact section

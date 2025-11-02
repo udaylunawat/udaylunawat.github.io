@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neural Network Skills — Animated</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <style>
+    :root { --color-primary:#26a269; --color-secondary:rgba(255,255,255,.9); }
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;background:#0f1318;color:var(--color-secondary);font-family:'Montserrat',sans-serif;display:grid;place-items:center;padding:2rem}
+    .skills-section{max-width:1200px;width:100%;padding:1rem}
+    h2{text-align:center;font-size:2.4rem;margin:0 0 1.5rem;letter-spacing:.5px;background:linear-gradient(to right,var(--color-primary),#00ff9c);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    .skills-container{display:flex;align-items:center;justify-content:center;width:100%}
+    .network-container{position:relative;width:100%;height:680px;border-radius:18px;overflow:hidden;background:radial-gradient(1200px 600px at 60% -20%,rgba(38,162,105,.25),rgba(0,0,0,0)),linear-gradient(145deg,rgba(38,162,105,.06),rgba(0,255,156,.02));border:1px solid rgba(38,162,105,.12)}
+    #network-canvas{position:absolute;inset:0;width:100%!important;height:100%!important;cursor:grab;z-index:1}
+    .skill-tag{position:absolute;left:0;top:0;pointer-events:none;z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;transform-origin:center;background:none;border:none;box-shadow:none;backdrop-filter:none;padding:0;min-width:auto}
+    .skill-tag .icon-wrapper{width:42px;height:42px;display:flex;align-items:center;justify-content:center;background:none;border:none;box-shadow:none;border-radius:50%}
+    .skill-tag img{width:100%;height:100%;object-fit:contain;filter:brightness(0) invert(1);transition:transform .25s ease}
+    .skill-tag .skill-title{font-size:.75rem;font-weight:500;color:rgba(255,255,255,.9);text-align:center;white-space:nowrap;letter-spacing:.2px}
+    @media(max-width:992px){.network-container{height:520px}}
+    @media(max-width:480px){.network-container{height:440px}.skill-tag{transform:scale(.85)}}
+  </style>
+</head>
+<body>
+  <section class="skills-section">
+    <h2>Skills & Technologies</h2>
+    <div class="skills-container">
+      <div class="network-container">
+        <canvas id="network-canvas"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Skills to pin on prominent nodes
+    const skills = [
+      { name: 'Python',       image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
+      { name: 'TensorFlow',   image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg' },
+      { name: 'Docker',       image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg' },
+      { name: 'AWS',          image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg' },
+      { name: 'PostgreSQL',   image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
+      { name: 'Git',          image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg' },
+      { name: 'FastAPI',      image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg' },
+      { name: 'NumPy',        image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg' },
+      { name: 'Pandas',       image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg' },
+      { name: 'Kubernetes',   image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg' },
+    ];
+
+    function initNetwork(){
+      const container=document.querySelector('.network-container');
+      const canvas=document.getElementById('network-canvas');
+      container.querySelectorAll('.skill-tag').forEach(t=>t.remove());
+
+      const scene=new THREE.Scene();
+      const camera=new THREE.PerspectiveCamera(65, container.offsetWidth/container.offsetHeight, 0.1, 1000);
+      camera.position.set(0,0,28);
+      const renderer=new THREE.WebGLRenderer({canvas, alpha:true, antialias:true});
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+      renderer.setSize(container.offsetWidth, container.offsetHeight);
+      scene.fog=new THREE.Fog(0x0f1318, 35, 80);
+
+      // Root group so we can rotate everything consistently
+      const root=new THREE.Group();
+      scene.add(root);
+
+      // Nodes (points) data
+      const NODE_COUNT=100; const RADIUS=16;
+      const positions=new Float32Array(NODE_COUNT*3);
+      const velocities=new Float32Array(NODE_COUNT*3);
+      const sizes=new Float32Array(NODE_COUNT);
+      const phases=new Float32Array(NODE_COUNT);
+      for(let i=0;i<NODE_COUNT;i++){
+        const u=Math.random(); const v=Math.random();
+        const theta=2*Math.PI*u; const phi=Math.acos(2*v-1);
+        const r=RADIUS*(0.82+Math.random()*0.18);
+        const x=r*Math.sin(phi)*Math.cos(theta);
+        const y=r*Math.sin(phi)*Math.sin(theta);
+        const z=r*Math.cos(phi);
+        positions[i*3]=x; positions[i*3+1]=y; positions[i*3+2]=z;
+        velocities[i*3]=(Math.random()-0.5)*0.006;
+        velocities[i*3+1]=(Math.random()-0.5)*0.006;
+        velocities[i*3+2]=(Math.random()-0.5)*0.006;
+        sizes[i]=0.9+Math.random()*0.6;     // base size per node
+        phases[i]=Math.random()*Math.PI*2;  // phase offset per node
+      }
+
+      // Custom shader material for glowing, pulsing points
+      const pointsVert=`
+        uniform float uTime; uniform float uBaseSize; uniform float uPulseAmp; uniform float uOpacity;
+        attribute float aSize; attribute float aPhase; varying float vAlpha;
+        void main(){
+          vec4 mvPosition = modelViewMatrix * vec4(position,1.0);
+          float pulse = 0.5 + 0.5 * sin(uTime*0.9 + aPhase);
+          float size = (uBaseSize + uPulseAmp * pulse) * aSize;
+          gl_PointSize = size * (300.0 / -mvPosition.z);
+          vAlpha = uOpacity * (0.35 + 0.65 * pulse);
+          gl_Position = projectionMatrix * mvPosition;
+        }
+      `;
+      const pointsFrag=`
+        precision mediump float; varying float vAlpha;
+        void main(){
+          // circular sprite with soft edge + inner glow
+          vec2 c = gl_PointCoord - vec2(0.5);
+          float d = length(c);
+          float ring = smoothstep(0.5, 0.0, d);
+          float core = smoothstep(0.18, 0.0, d);
+          float a = clamp(ring*0.8 + core*0.4, 0.0, 1.0) * vAlpha;
+          gl_FragColor = vec4(0.62, 1.0, 0.84, a);
+        }
+      `;
+
+      const geom=new THREE.BufferGeometry();
+      geom.setAttribute('position', new THREE.BufferAttribute(positions,3));
+      geom.setAttribute('aSize', new THREE.BufferAttribute(sizes,1));
+      geom.setAttribute('aPhase', new THREE.BufferAttribute(phases,1));
+
+      const pointsMat=new THREE.ShaderMaterial({
+        uniforms:{ uTime:{value:0}, uBaseSize:{value:1.8}, uPulseAmp:{value:1.6}, uOpacity:{value:0.9} },
+        vertexShader:pointsVert, fragmentShader:pointsFrag,
+        transparent:true, depthWrite:false, blending:THREE.AdditiveBlending
+      });
+      const points=new THREE.Points(geom, pointsMat);
+      root.add(points);
+
+      // Dynamic connection lines with glow + fade (shader)
+      const MAX_CONNECTIONS=3; const LINK_DIST=8.4;
+      const MAX_SEGMENTS=NODE_COUNT*MAX_CONNECTIONS;
+      const linePositions=new Float32Array(MAX_SEGMENTS*2*3);
+      const lineOpacities=new Float32Array(MAX_SEGMENTS*2); // per-vertex opacity (same both ends)
+      const linePhases=new Float32Array(MAX_SEGMENTS*2);    // per-vertex phase for flicker
+      let lineCount=12;
+
+      const lineVert=`
+        uniform float uTime; varying float vAlpha;
+        attribute float aOpacity; attribute float aPhase;
+        void main(){
+          vAlpha = aOpacity * (0.75 + 0.25 * sin(uTime*1.4 + aPhase));
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+        }
+      `;
+      const lineFrag=`
+        precision mediump float; varying float vAlpha;
+        void main(){ gl_FragColor = vec4(0.15, 0.82, 0.53, vAlpha); }
+      `;
+
+      const lineGeom=new THREE.BufferGeometry();
+      lineGeom.setAttribute('position', new THREE.BufferAttribute(linePositions,3).setUsage(THREE.DynamicDrawUsage));
+      lineGeom.setAttribute('aOpacity', new THREE.BufferAttribute(lineOpacities,1).setUsage(THREE.DynamicDrawUsage));
+      lineGeom.setAttribute('aPhase', new THREE.BufferAttribute(linePhases,1).setUsage(THREE.DynamicDrawUsage));
+
+      const lineMat=new THREE.ShaderMaterial({
+        uniforms:{ uTime:{value:0} }, vertexShader:lineVert, fragmentShader:lineFrag,
+        transparent:true, depthWrite:false, blending:THREE.AdditiveBlending
+      });
+      const lines=new THREE.LineSegments(lineGeom, lineMat);
+      root.add(lines);
+
+      // Ambient wireframe sphere for subtle context
+      const glowGeom=new THREE.SphereGeometry(RADIUS+0.8, 32, 32);
+      const glowMat=new THREE.MeshBasicMaterial({color:0x26a269, wireframe:true, transparent:true, opacity:0.01});
+      const glow=new THREE.Mesh(glowGeom, glowMat);
+      root.add(glow);
+
+      // Skill tags pinned to select nodes
+      const tagNodes=new Map();
+      const chosen=[]; while(chosen.length<skills.length){ const idx=Math.floor(Math.random()*NODE_COUNT); if(!chosen.includes(idx)) chosen.push(idx); }
+      chosen.forEach((nodeIndex,i)=>{
+        const tag=document.createElement('div');
+        tag.id=`skill-tag-${i}`; tag.className='skill-tag';
+        tag.innerHTML=`<div class="icon-wrapper"><img src="${skills[i].image}" alt="${skills[i].name}" /></div><span class="skill-title">${skills[i].name}</span>`;
+        container.appendChild(tag); tagNodes.set(i,nodeIndex);
+      });
+
+      // Interaction
+      let isDragging=false; let prev={x:0,y:0}; let rot={x:0,y:0}; let targetRot={x:0.08,y:0.18};
+      const onDown=e=>{isDragging=true; prev.x=(e.touches?e.touches[0].clientX:e.clientX); prev.y=(e.touches?e.touches[0].clientY:e.clientY);} ;
+      const onMove=e=>{ if(!isDragging) return; const x=(e.touches?e.touches[0].clientX:e.clientX); const y=(e.touches?e.touches[0].clientY:e.clientY); targetRot.y+=(x-prev.x)*0.003; targetRot.x+=(y-prev.y)*0.003; prev.x=x; prev.y=y; };
+      const onUp=()=>{isDragging=false};
+      container.addEventListener('mousedown', onDown); container.addEventListener('touchstart', onDown, {passive:true});
+      document.addEventListener('mousemove', onMove); document.addEventListener('touchmove', onMove, {passive:true});
+      document.addEventListener('mouseup', onUp); document.addEventListener('touchend', onUp);
+
+      // Animation
+      let t=0; const posArr=geom.attributes.position.array;
+      function rebuildLinks(){
+        lineCount=0; const maxPerNode=new Uint8Array(NODE_COUNT);
+        for(let i=0;i<NODE_COUNT;i++){
+          if(maxPerNode[i]>=MAX_CONNECTIONS) continue;
+          const ax=posArr[i*3], ay=posArr[i*3+1], az=posArr[i*3+2];
+          for(let j=i+1;j<NODE_COUNT;j++){
+            if(maxPerNode[j]>=MAX_CONNECTIONS) continue;
+            const bx=posArr[j*3], by=posArr[j*3+1], bz=posArr[j*3+2];
+            const dx=ax-bx, dy=ay-by, dz=az-bz; const d2=dx*dx+dy*dy+dz*dz;
+            if(d2<LINK_DIST*LINK_DIST){
+              if(lineCount>=MAX_SEGMENTS) break;
+              const baseOpacity=Math.max(0.08, 1.0 - Math.sqrt(d2)/LINK_DIST) * 0.35; // softer lines
+              const k=lineCount*2*3; // 2 vertices per segment
+              linePositions[k]=ax; linePositions[k+1]=ay; linePositions[k+2]=az;
+              linePositions[k+3]=bx; linePositions[k+4]=by; linePositions[k+5]=bz;
+              const o=lineCount*2; lineOpacities[o]=baseOpacity; lineOpacities[o+1]=baseOpacity;
+              const p=lineCount*2; linePhases[p]=Math.random()*Math.PI*2; linePhases[p+1]=Math.random()*Math.PI*2;
+              lineCount++; maxPerNode[i]++; maxPerNode[j]++; if(maxPerNode[i]>=MAX_CONNECTIONS) break;
+            }
+          }
+        }
+        lineGeom.setDrawRange(0, lineCount*2);
+        lineGeom.attributes.position.needsUpdate=true;
+        lineGeom.attributes.aOpacity.needsUpdate=true;
+        lineGeom.attributes.aPhase.needsUpdate=true;
+      }
+
+      function animate(){
+        requestAnimationFrame(animate); t+=0.016;
+        if(!isDragging) targetRot.y += 0.0012; rot.x += (targetRot.x-rot.x)*0.08; rot.y += (targetRot.y-rot.y)*0.08; root.rotation.x=rot.x; root.rotation.y=rot.y;
+
+        // mild drift + shell pull
+        for(let i=0;i<NODE_COUNT;i++){
+          const ix=i*3, iy=i*3+1, iz=i*3+2; posArr[ix]+=velocities[ix]; posArr[iy]+=velocities[iy]; posArr[iz]+=velocities[iz];
+          const len=Math.hypot(posArr[ix], posArr[iy], posArr[iz])||1; const pull=(RADIUS/len-1)*0.004; posArr[ix]*=(1+pull); posArr[iy]*=(1+pull); posArr[iz]*=(1+pull);
+        }
+        geom.attributes.position.needsUpdate=true;
+
+        // re-link periodically for connect/disconnect effect
+        if((performance.now()%600)<16){ rebuildLinks(); }
+
+        // advance shader time
+        pointsMat.uniforms.uTime.value=t;
+        lineMat.uniforms.uTime.value=t;
+
+        // update tag screen positions using world matrix of root
+        const camW=container.offsetWidth, camH=container.offsetHeight; const v=new THREE.Vector3();
+        tagNodes.forEach((nodeIndex, tagIdx)=>{
+          const tag=document.getElementById(`skill-tag-${tagIdx}`); if(!tag) return;
+          v.set(posArr[nodeIndex*3], posArr[nodeIndex*3+1], posArr[nodeIndex*3+2]);
+          v.applyMatrix4(root.matrixWorld); v.project(camera);
+          const sx=(v.x+1)/2*camW; const sy=-(v.y-1)/2*camH; const front=v.z<1.0;
+          const depth=1-Math.min(1, Math.max(0, v.z)); const scale=0.85+depth*0.35; const opacity=0.25+depth*0.75;
+          tag.style.transform=`translate(${sx}px, ${sy}px) translate(-50%, -50%) scale(${scale})`;
+          tag.style.opacity=front?opacity:0; tag.style.zIndex=Math.round(depth*1000);
+        });
+
+        renderer.render(scene, camera);
+      }
+
+      rebuildLinks();
+      animate();
+
+      window.addEventListener('resize',()=>{
+        camera.aspect=container.offsetWidth/container.offsetHeight; camera.updateProjectionMatrix(); renderer.setSize(container.offsetWidth, container.offsetHeight);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', initNetwork);
+  </script>
+</body>
+</html>

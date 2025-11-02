@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills Section Demo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <style>
+        :root {
+            --color-primary: #26a269;
+            --color-secondary: rgba(255, 255, 255, 0.8);
+        }
+        
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #171b22;
+            color: var(--color-secondary);
+            font-family: 'Montserrat', sans-serif;
+            display: grid;
+            place-items: center;
+            padding: 2rem;
+        }
+
+        .skills-section {
+            max-width: 1200px;
+            width: 200%;
+            padding: 2rem;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(to right, var(--color-primary), #00ff00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .skills-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .sphere-container {
+            flex: 1;
+            height: 1000px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(145deg, rgba(38, 162, 105, 0.05), rgba(0, 255, 0, 0.02));
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(38, 162, 105, 0.1);
+        }
+
+        #sphere-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+            cursor: grab;
+            z-index: 1;
+        }
+
+        .skill-tag {
+            position: absolute;
+            padding: 0.5rem;
+            /* background: rgba(38, 162, 105, 0.08); */
+            /* border-radius: 12px; */
+            pointer-events: none;
+            transition: all 0.3s ease;
+            /* backdrop-filter: blur(4px); */
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            /* box-shadow: 0 4px 12px rgba(0, 255, 0, 0.1); */
+            transform-origin: center center;
+            min-width: 80px;
+            /* border: 1px solid rgba(38, 162, 105, 0.2); */
+            left: 0;
+            top: 0;
+        }
+
+        .skill-tag .icon-wrapper {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* background: rgba(38, 162, 105, 0.1); */
+            /* border-radius: 150%; */
+            padding: 0.5rem;
+        }
+
+        .skill-tag img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+            transition: transform 0.3s ease;
+        }
+
+        .skill-tag .skill-title {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            opacity: 0.9;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 992px) {
+            .skills-container {
+                flex-direction: column;
+            }
+            
+            .sphere-container {
+                width: 100%;
+                min-height: 400px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sphere-container {
+                min-height: 300px;
+            }
+            
+            .skill-tag {
+                transform: scale(0.8);
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="skills-section">
+        <h2>Skills & Technologies</h2>
+        
+        <div class="skills-container">
+            <div class="sphere-container">
+                <canvas id="sphere-canvas"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const skills = [
+            { name: 'Python', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
+            { name: 'TensorFlow', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg' },
+            { name: 'Docker', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg' },
+            { name: 'AWS', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg' },
+            { name: 'PostgreSQL', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
+            { name: 'Git', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg' },
+            { name: 'FastAPI', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg' },
+            { name: 'NumPy', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg' },
+            { name: 'Pandas', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg' },
+            { name: 'Kubernetes', image: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg' }
+        ];
+
+        function initSphere() {
+            const container = document.querySelector('.sphere-container');
+            const canvas = document.getElementById('sphere-canvas');
+            
+            container.querySelectorAll('.skill-tag').forEach(tag => tag.remove());
+            
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, container.offsetWidth / container.offsetHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+            
+            renderer.setSize(container.offsetWidth, container.offsetHeight);
+            camera.position.z = 10;
+
+            const geometry = new THREE.SphereGeometry(4, 48, 48);
+            const material = new THREE.MeshBasicMaterial({
+                color: 0x26a269,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.2
+            });
+            const sphere = new THREE.Mesh(geometry, material);
+            scene.add(sphere);
+
+            const points = [];
+            skills.forEach((skill, i) => {
+                const phi = Math.acos(-1 + (2 * i) / skills.length);
+                const theta = Math.sqrt(skills.length * Math.PI) * phi;
+                
+                const radius = 4.2;
+                const x = radius * Math.cos(theta) * Math.sin(phi);
+                const y = radius * Math.sin(theta) * Math.sin(phi);
+                const z = radius * Math.cos(phi);
+                
+                points.push(new THREE.Vector3(x, y, z));
+                
+                const tag = document.createElement('div');
+                tag.id = `skill-tag-${i}`;
+                tag.className = 'skill-tag';
+                tag.innerHTML = `
+                    <div class="icon-wrapper">
+                        <img src="${skill.image}" alt="${skill.name}">
+                    </div>
+                    <span class="skill-title">${skill.name}</span>
+                `;
+                container.appendChild(tag);
+            });
+
+            let rotation = { x: 0, y: 0 };
+            let targetRotation = { x: 0, y: 0 };
+            let isDragging = false;
+            let previousMousePosition = { x: 0, y: 0 };
+
+            container.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                previousMousePosition = { x: e.clientX, y: e.clientY };
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    targetRotation.x += (e.clientY - previousMousePosition.y) * 0.005;
+                    targetRotation.y += (e.clientX - previousMousePosition.x) * 0.005;
+                    previousMousePosition = { x: e.clientX, y: e.clientY };
+                }
+            });
+
+            document.addEventListener('mouseup', () => isDragging = false);
+
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                if (!isDragging) {
+                    targetRotation.y += 0.002;
+                }
+                
+                rotation.x += (targetRotation.x - rotation.x) * 0.1;
+                rotation.y += (targetRotation.y - rotation.y) * 0.1;
+                
+                sphere.rotation.x = rotation.x;
+                sphere.rotation.y = rotation.y;
+                
+                points.forEach((point, i) => {
+                    const position = point.clone();
+                    position.applyMatrix4(sphere.matrixWorld);
+                    
+                    const vector = position.project(camera);
+                    const x = (vector.x + 1) / 2 * container.offsetWidth;
+                    const y = -(vector.y - 1) / 2 * container.offsetHeight;
+                    
+                    const tag = document.getElementById(`skill-tag-${i}`);
+                    if (tag) {
+                        const opacity = position.z > 0 ? Math.min(1, 0.7 + position.z * 0.3) : 0;
+                        const scale = position.z > 0 ? Math.max(0.7, Math.min(1.1, 1 + position.z * 0.2)) : 0.7;
+                        const titleOpacity = position.z > 0 ? Math.min(1, 0.9 + position.z * 0.1) : 0;
+                        
+                        tag.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) scale(${scale})`;
+                        tag.style.opacity = opacity;
+                        tag.style.zIndex = Math.round((position.z + 1) * 100);
+                        
+                        const titleElement = tag.querySelector('.skill-title');
+                        if (titleElement) {
+                            titleElement.style.opacity = titleOpacity;
+                        }
+                    }
+                });
+                
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = container.offsetWidth / container.offsetHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.offsetWidth, container.offsetHeight);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', initSphere);
+    </script>
+</body>
+</html>
