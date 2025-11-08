@@ -11,6 +11,11 @@ homeTitleFade()
 let aboutFadeIn = () => about.style.opacity = 'calc(0 + ' + (y - viewporHeight/3)/50 + ')';
 // let aboutFadeOut = () => about.style.opacity = 'calc(1 - ' + (y - viewporHeight)/300 + ')';
 
+// Matrix effect state
+let matrixEffectTriggered = false;
+let matrixEffect = null;
+let brainLoaded = false;
+
 window.onscroll = () => {
     y = window.scrollY;
     colorBackground.style.opacity = 'calc(0 + ' + y/4000 + ')';
@@ -21,7 +26,10 @@ window.onscroll = () => {
         //     aboutFadeOut();
     }
     else about.style.opacity = 0;
-} 
+
+    // Check for matrix effect trigger at 80% into skills section
+    checkMatrixEffectTrigger();
+}
 
 //
 // SCROLL-INTO-VIEW ANIMATIONS
@@ -189,6 +197,160 @@ function resetAllAnimations() {
     });
 
     scrollState.activeCards.clear();
+}
+
+// Matrix effect trigger function
+function checkMatrixEffectTrigger() {
+    if (matrixEffectTriggered || brainLoaded) return;
+
+    const skillsSection = document.getElementById('skills');
+    if (!skillsSection) return;
+
+    const rect = skillsSection.getBoundingClientRect();
+    const skillsTop = rect.top;
+    const skillsHeight = rect.height;
+    const viewportHeight = window.innerHeight;
+
+    // Calculate 80% into the skills section
+    const triggerPoint = skillsTop + (skillsHeight * 0.8);
+
+    // Check if we've scrolled to 80% into the skills section
+    if (triggerPoint <= viewportHeight && triggerPoint >= 0) {
+        matrixEffectTriggered = true;
+        startMatrixEffect();
+    }
+}
+
+function startMatrixEffect() {
+    const brainHost = document.getElementById('brain-host');
+    if (!brainHost) return;
+
+    // Create matrix effect
+    matrixEffect = new window.MatrixEffect(brainHost);
+
+    // Set completion callback to load brain
+    matrixEffect.onComplete = () => {
+        loadBrain();
+    };
+
+    // Start the matrix effect
+    matrixEffect.start();
+}
+
+function loadBrain() {
+    if (brainLoaded) return;
+
+    brainLoaded = true;
+
+    // Load the brain script dynamically
+    const brainScript = document.createElement('script');
+    brainScript.type = 'module';
+    brainScript.textContent = `
+        import { mountBrainSkills } from './src/brainSkills.js';
+
+        const host = document.getElementById('brain-host');
+
+        const clusters = [
+            // Problem solving, agent design, planning, reasoning
+            { key: 'frontal', title: 'Reasoning · Planning', items: [
+              { label: 'Python' },
+              { label: 'LangChain' },
+              { label: 'LangGraph' },
+              { label: 'Google ADK' },
+              { label: 'Prompting' },
+              { label: 'Agents' },
+              { label: 'Evaluation' },
+              { label: 'RAG' }
+            ]},
+
+            // UI, viz, human-facing outputs
+            { key: 'visual', title: 'Visual Cortex', items: [
+              { label: 'Streamlit' },
+              { label: 'Gradio' },
+              { label: 'Tableau' },
+              { label: 'Plotly' },
+              { label: 'Dash' },
+              { label: 'Matplotlib' }
+            ]},
+
+            // Serving, deployment, CI/CD, observability
+            { key: 'motor', title: 'Motor · Control', items: [
+              { label: 'Docker' },
+              { label: 'Kubeflow' },
+              { label: 'Cloud Run' },
+              { label: 'MLflow' },
+              { label: 'GitHub Actions' },
+              { label: 'Jenkins' },
+              { label: 'Weights & Biases' },
+              { label: 'Langfuse' }
+            ]},
+
+            // Data engineering, analysis, feature work, pipelines
+            { key: 'temporalL', title: 'Temporal · L', items: [
+              { label: 'Pandas' },
+              { label: 'NumPy' },
+              { label: 'SQLModel' },
+              { label: 'Alembic' }
+            ]},
+
+            // Retrieval, memory, embeddings, knowledge access
+            { key: 'temporalR', title: 'Temporal · R', items: [
+              { label: 'Embeddings' },
+              { label: 'Vector DBs' },
+              { label: 'Redis' },
+              { label: 'MongoDB' },
+              { label: 'RAG Pipelines' }
+            ]},
+
+            // Infra, cloud, storage, OS/tooling
+            { key: 'infra', title: 'Infrastructure', items: [
+              { label: 'GCP Compute Engine' },
+              { label: 'Cloud Storage' },
+              { label: 'Cloud Functions' },
+              { label: 'Vertex AI' },
+              { label: 'MySQL' },
+              { label: 'PostgreSQL' },
+              { label: 'Linux' },
+              { label: 'macOS' },
+              { label: 'Windows' },
+              { label: 'VS Code' },
+              { label: 'Jupyter Notebook' }
+            ]}
+        ];
+
+        // Mount brain with skills data
+        const brain = mountBrainSkills({
+          container: host,
+          glbPath: './src/brain.glb',
+          clusters,
+          options: {
+            carousel: { visibleCount: 3, switchMs: 3200, switchMsMobile: 4200 },
+            baseOpacity: 0.005,
+            edgeStrength: 0.10,
+            hoverScale: 1.5,
+            labelBaseScale: 0.8,
+            particles: {
+              enabled: true,
+              count: 150,
+              baseSize: 0.01,
+              pulseAmp: 0.1,
+              opacity: 0.95,
+              linksPerNode: 3,
+              linkDist: 3.8,
+              rewireMs: 7000
+            }
+          }
+        });
+
+        if (matchMedia('(max-width: 768px)').matches) {
+          brain.setOptions({
+            baseOpacity: 0.04,
+            particles: { count: 320, baseSize: 1.8, linksPerNode: 2, linkDist: 2.4, rewireMs: 1100 }
+          });
+        }
+    `;
+
+    document.head.appendChild(brainScript);
 }
 
 // Initialize when DOM is ready

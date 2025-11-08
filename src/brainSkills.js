@@ -33,7 +33,7 @@ export function mountBrainSkills({
       rewireMs: 700
     },
     name: {
-      text: 'Uday Lunawat',
+      text: '',
       offset: { x: 0, y: -0.9, z: 0 },
       visible: true
     },
@@ -178,7 +178,7 @@ export function mountBrainSkills({
   let points, lines, pGeom, lineGeom, pointsMat, lineMat;
   let CONNECTIONS = cfg.particles.linksPerNode;
   let lastRewire = 0;
-  let dragging=false, prevX=0, rotY=0, targetRotY=0, rafId=null;
+  let dragging=true, prevX=0, rotY=0, targetRotY=0, rafId=null;
 
   // ---- Per-card HORIZONTAL chip carousels ----
   const chipCarousels = [];   // [{el, viewport, track, chips, widths, offsets, start, visible, paused, gap}]
@@ -597,10 +597,84 @@ export function mountBrainSkills({
     nameObj.visible = !!cfg.name.visible;
     rig.add(nameObj);
 
-    // input
+    // input - desktop mouse controls
     canvas.addEventListener('mousedown', e=>{ dragging=true; prevX=e.clientX; });
     window.addEventListener('mousemove', e=>{ if(!dragging) return; targetRotY += (e.clientX-prevX)*0.003; prevX=e.clientX; });
     window.addEventListener('mouseup', ()=> dragging=false);
+
+    // mobile touch controls
+    let touchDragging = false;
+    let lastTouchX = 0;
+    let lastTouchY = 0;
+    let initialPinchDistance = 0;
+    let initialCameraDistance = 4;
+    let minZoom = 2;
+    let maxZoom = 8;
+    let touchPointers = new Map();
+
+    function getTouchDistance(touches) {
+      if (touches.length < 2) return 0;
+      const dx = touches[0].clientX - touches[1].clientX;
+      const dy = touches[0].clientY - touches[1].clientY;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    canvas.addEventListener('touchstart', e => {
+      e.preventDefault();
+      const touches = e.touches;
+      for (let i = 0; i < touches.length; i++) {
+        touchPointers.set(touches[i].identifier, {
+          x: touches[i].clientX,
+          y: touches[i].clientY
+        });
+      }
+      if (touches.length === 1) {
+        touchDragging = true;
+        lastTouchX = touches[0].clientX;
+        lastTouchY = touches[0].clientY;
+      } else if (touches.length === 2) {
+        touchDragging = false;
+        initialPinchDistance = getTouchDistance(touches);
+        initialCameraDistance = camera.position.z;
+      }
+    }, { passive: false });
+
+    canvas.addEventListener('touchmove', e => {
+      e.preventDefault();
+      const touches = e.touches;
+      if (touches.length === 1 && touchDragging) {
+        const touch = touches[0];
+        const deltaX = touch.clientX - lastTouchX;
+        targetRotY += deltaX * 0.003;
+        lastTouchX = touch.clientX;
+        lastTouchY = touch.clientY;
+      } else if (touches.length === 2) {
+        const currentDistance = getTouchDistance(touches);
+        if (initialPinchDistance > 0) {
+          const scale = currentDistance / initialPinchDistance;
+          let newDistance = initialCameraDistance / scale;
+          newDistance = Math.max(minZoom, Math.min(maxZoom, newDistance));
+          camera.position.z = newDistance;
+          camera.updateProjectionMatrix();
+        }
+      }
+    }, { passive: false });
+
+    canvas.addEventListener('touchend', e => {
+      e.preventDefault();
+      const touches = e.changedTouches;
+      for (let i = 0; i < touches.length; i++) {
+        touchPointers.delete(touches[i].identifier);
+      }
+      if (e.touches.length === 0) {
+        touchDragging = false;
+        initialPinchDistance = 0;
+      } else if (e.touches.length === 1) {
+        touchDragging = true;
+        lastTouchX = e.touches[0].clientX;
+        lastTouchY = e.touches[0].clientY;
+      }
+    }, { passive: false });
 
     tuneForViewport();
     animate();

@@ -195,6 +195,9 @@ class ContentLoader {
                         </div>
                     `;
 
+                    // Create stats element ID based on project ID
+                    const statsId = `stats-${project.id.replace(/-/g, '-')}`;
+
                     return `
                         <div class="gallery-item project-with-link" data-project="${project.id}">
                             <div class="gallery-card">
@@ -207,6 +210,7 @@ class ContentLoader {
                                 </div>
                                 <p>${project.description}</p>
                                 ${badgesHTML}
+                                <div id="${statsId}" class="project-stats">⭐ — · 🍴 —</div>
                             </div>
                         </div>
                     `;
@@ -301,6 +305,10 @@ class ContentLoader {
 
             // Initialize event listeners after content is loaded
             this.initializeEventListeners();
+
+            // Signal that content loading is complete
+            window.contentLoaderInitialized = true;
+            document.dispatchEvent(new CustomEvent('contentLoaderReady'));
 
             console.log('Content loaded successfully');
         } else {

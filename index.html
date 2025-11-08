@@ -30,7 +30,7 @@
 
 <body>
 <div class="canvas-container" id="canvas">
-<div id="brain-name">Uday Lunawat</div>
+<!-- <div id="brain-name">Uday Lunawat</div> -->
 </div>
 <div id="particles-js"></div>
 
@@ -342,10 +342,17 @@
 
 <script src="./src/navigation.js" type="module"></script>
 <script src="./src/modals.js" type="module"></script>
-<script src="./src/scroll-animations.js" type="module"></script>
 
 <!-- Core dependencies -->
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
+
+<!-- Particles configuration (must load before scroll-animations.js) -->
+<script src="./src/particles-config.js" defer></script>
+
+<!-- Matrix effect for skills section -->
+<script src="./src/matrix-effect.js" defer></script>
+
+<script src="./src/scroll-animations.js" type="module"></script>
 
 <!-- Shaders for animated background (required by background.js) -->
 <script id="snoise-function" type="x-shader/x-vertex">
@@ -485,195 +492,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// Example for tags
-const tagsDiv = document.createElement('div');
-tagsDiv.className = 'card-scroll-gallery';
-experience.tags.forEach(tag => {
-  const tagSpan = document.createElement('span');
-  tagSpan.className = 'tag';
-  tagSpan.textContent = tag;
-  tagsDiv.appendChild(tagSpan);
-});
-card.appendChild(tagsDiv);
-
-// Example for badges
-if (experience.badges && experience.badges.length > 0) {
-  const badgesDiv = document.createElement('div');
-  badgesDiv.className = 'card-scroll-gallery';
-  experience.badges.forEach(badge => {
-    const badgeSpan = document.createElement('span');
-    badgeSpan.className = 'badge';
-    badgeSpan.textContent = badge;
-    badgesDiv.appendChild(badgeSpan);
-  });
-  card.appendChild(badgesDiv);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  // For each experience card title
-  document.querySelectorAll('.experience-gallery .gallery-card h3').forEach(h3 => {
-    if (h3.scrollWidth > h3.clientWidth + 2) {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'marquee-container';
-      const marquee = document.createElement('div');
-      marquee.className = 'marquee';
-      marquee.textContent = h3.textContent;
-      wrapper.appendChild(marquee);
-      h3.textContent = '';
-      h3.appendChild(wrapper);
-    }
-  });
-
-  // For tags
-  document.querySelectorAll('.experience-gallery .gallery-card .tags').forEach(tags => {
-    if (tags.scrollWidth > tags.clientWidth + 2) {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'marquee-container';
-      const marquee = document.createElement('div');
-      marquee.className = 'marquee-tags';
-      marquee.innerHTML = tags.innerHTML;
-      wrapper.appendChild(marquee);
-      tags.innerHTML = '';
-      tags.appendChild(wrapper);
-    }
-  });
-
-  // For description (p)
-  document.querySelectorAll('.experience-gallery .gallery-card p').forEach(p => {
-    if (p.scrollHeight > p.clientHeight + 2) {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'marquee-vertical-container';
-      const marquee = document.createElement('div');
-      marquee.className = 'marquee-vertical';
-      marquee.textContent = p.textContent;
-      wrapper.appendChild(marquee);
-      p.textContent = '';
-      p.appendChild(wrapper);
-    }
-  });
-});
-
-<!-- Three UMD + helpers (keep versions aligned) -->
-<script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
-<script src="https://unpkg.com/three@0.128.0/examples/js/renderers/CSS2DRenderer.js"></script>
-<script src="https://unpkg.com/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-<script src="https://unpkg.com/three@0.128.0/examples/js/utils/BufferGeometryUtils.js"></script>
-<script src="https://unpkg.com/three@0.128.0/examples/js/modifiers/SimplifyModifier.js"></script>
-<link rel="preload" href="https://fonts.gstatic.com/s/montserrat/v25/JTUHjIg1_i6t8kCHKm459WxZqh7g.woff2" as="font" type="font/woff2" crossorigin>
-
-<!-- Your module that exposes mountBrainSkills (rename to brain.js if you prefer) -->
-<script type="module">
-  import { mountBrainSkills } from './src/brainSkills.js';   // or './src/brainSkills.js'
-
-  const host = document.getElementById('brain-host');
-
-  const clusters = [
-    // Problem solving, agent design, planning, reasoning
-    { key: 'frontal', title: 'Reasoning · Planning', items: [
-      { label: 'Python' },
-      { label: 'LangChain' },
-      { label: 'LangGraph' },
-      { label: 'Google ADK' },
-      { label: 'Prompting' },
-      { label: 'Agents' },
-      { label: 'Evaluation' },
-      { label: 'RAG' } // conceptual here; implementation bits live in Temporal · R
-    ]},
-
-    // UI, viz, human-facing outputs
-    { key: 'visual', title: 'Visual Cortex', items: [
-      { label: 'Streamlit' },
-      { label: 'Gradio' },
-      { label: 'Tableau' },
-      { label: 'Plotly' },
-      { label: 'Dash' },
-      { label: 'Matplotlib' }
-    ]},
-
-    // Serving, deployment, CI/CD, observability
-    { key: 'motor', title: 'Motor · Control', items: [
-      { label: 'Docker' },
-      { label: 'Kubeflow' },
-      { label: 'Cloud Run' },
-      { label: 'MLflow' },
-      { label: 'GitHub Actions' },
-      { label: 'Jenkins' },
-      { label: 'Weights & Biases' },
-      { label: 'Langfuse' }
-    ]},
-
-    // Data engineering, analysis, feature work, pipelines
-    { key: 'temporalL', title: 'Temporal · L', items: [
-      { label: 'Pandas' },
-      { label: 'NumPy' },
-      { label: 'SQLModel' },
-      { label: 'Alembic' }
-    ]},
-
-    // Retrieval, memory, embeddings, knowledge access
-    { key: 'temporalR', title: 'Temporal · R', items: [
-      { label: 'Embeddings' },
-      { label: 'Vector DBs' },
-      { label: 'Redis' },
-      { label: 'MongoDB' },
-      { label: 'RAG Pipelines' }
-    ]},
-
-    // Infra, cloud, storage, OS/tooling
-    { key: 'infra', title: 'Infrastructure', items: [
-      { label: 'GCP Compute Engine' },
-      { label: 'Cloud Storage' },
-      { label: 'Cloud Functions' },
-      { label: 'Vertex AI' },
-      { label: 'MySQL' },
-      { label: 'PostgreSQL' },
-      { label: 'Linux' },
-      { label: 'macOS' },
-      { label: 'Windows' },
-      { label: 'VS Code' },
-      { label: 'Jupyter Notebook' }
-    ]}
-  ];
-
-  // Mount immediately
-  const brain = mountBrainSkills({
-    container: host,
-    glbPath: './src/brain.glb',       // ensure it’s served by your local server
-    clusters,
-    options: {
-      carousel: { visibleCount: 3, switchMs: 3200, switchMsMobile: 4200 },
-      baseOpacity: 0.005,          // dimmer surface so labels pop
-      edgeStrength: 0.10,
-      hoverScale: 1.5,
-      labelBaseScale: 0.8,
-      particles: {
-        enabled: true,
-        count: 150,
-        baseSize: 0.01,
-        pulseAmp: 0.1,
-        opacity: 0.95,
-        linksPerNode: 3,
-        linkDist: 3.8,
-        rewireMs: 7000
-      }
-    }
-  });
-
-  if (matchMedia('(max-width: 768px)').matches) {
-    brain.setOptions({
-      baseOpacity: 0.04,                // slightly brighter surface for readability
-      particles: { count: 320, baseSize: 1.8, linksPerNode: 2, linkDist: 2.4, rewireMs: 1100 }
-    });
-  }
-
-
-
-  // Optional: lazy-mount only when skills enters viewport
-  // const io = new IntersectionObserver(([e])=>{
-  //   if (e.isIntersecting) { io.disconnect(); /* mount here instead */ }
-  // }, { threshold: 0.2 });
-  // io.observe(host);
 </script>
+
+
 
 <script>
   // Tap to activate neon for ~1.2s
