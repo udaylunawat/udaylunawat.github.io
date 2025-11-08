@@ -35,7 +35,7 @@ class MatrixEffect {
     ];
 
     // Animation state
-    this.animationDuration = 8000; // 5 seconds total as requested
+    this.animationDuration = 7000; // 5 seconds total as requested
     this.startTime = 0;
     this.isAnimating = false;
     this.isComplete = false;
