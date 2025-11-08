@@ -95,9 +95,13 @@ async function loadRepoMappings() {
     console.error('Failed to load repository mappings:', error);
     // Fallback to hardcoded mappings if dynamic loading fails
     repoMap = {
-      "Automatic-License-Plate-Recognition": "Automatic-License-Plate-Recognition",
-      "Covid-19-Radiology": "Covid-19-Radiology",
-      "Data-Science-Projects": "Data-Science-Projects"
+      "rockreveal-ai": "Whats-this-rock",
+      "alpr": "Automatic-License-Plate-Recognition",
+      "covid-xray": "Covid-19-Radiology",
+      "liveliness-detection": "Data-Science-Projects",
+      "agentic-data-analysis": "Data-Science-Projects",
+      "pdf2podcast": "Data-Science-Projects",
+      "other-ml-projects": "Data-Science-Projects"
     };
   }
 }
@@ -370,89 +374,7 @@ async function fetchRepoWithRetry(owner, repo, maxRetries = 3) {
   return await fetchStarsFromAlternativeAPIs(owner, repo);
 }
 
-async function updateStars() {
-  const owner = "udaylunawat";
 
-  // First, set all elements to loading state
-  console.log('Setting loading state for all GitHub stats...');
-  for (const key in repoMap) {
-    updateDomForKey(key, null, true); // Show loading state
-  }
-
-  // Try to load from cache first
-  let cachedRepos = getCache();
-  let useCache = false;
-
-  if (cachedRepos) {
-    console.log('Found cached GitHub data, validating...');
-    // Check if all required repos are in cache
-    const allReposCached = Object.keys(repoMap).every(key => {
-      const repo = repoMap[key];
-      return cachedRepos[repo] !== undefined;
-    });
-
-    if (allReposCached) {
-      console.log('Using complete cached GitHub data');
-      useCache = true;
-      // Update DOM with cached data
-      for (const key in repoMap) {
-        const repo = repoMap[key];
-        updateDomForKey(key, cachedRepos[repo]);
-      }
-    } else {
-      console.log('Cached data incomplete, will fetch fresh data');
-    }
-  }
-
-  // Fetch fresh data for all repos concurrently
-  const freshRepos = {};
-  const promises = [];
-
-  console.log('Preloading fresh GitHub data for all repositories...');
-  for (const key in repoMap) {
-    const repo = repoMap[key];
-    promises.push(
-      fetchRepoWithRetry(owner, repo).then(data => {
-        freshRepos[repo] = data;
-        console.log(`Fetched data for ${repo}: ${data ? 'success' : 'failed'}`);
-      })
-    );
-  }
-
-  try {
-    // Wait for all fetches to complete
-    await Promise.all(promises);
-    console.log('All GitHub data fetching completed');
-
-    // Cache the fresh data
-    if (Object.keys(freshRepos).length > 0) {
-      setCache(freshRepos);
-      console.log('Fresh data cached successfully');
-    }
-
-    // Only now update DOM with fresh data (unless we already used cache)
-    if (!useCache) {
-      console.log('Updating DOM with fresh GitHub data...');
-      for (const key in repoMap) {
-        const repo = repoMap[key];
-        updateDomForKey(key, freshRepos[repo]);
-      }
-    }
-
-  } catch (error) {
-    console.error('Failed to update some GitHub stats:', error);
-    // If we haven't shown anything yet and have cache, use it as fallback
-    if (!useCache && cachedRepos) {
-      console.log('Falling back to cached data due to fetch errors');
-      for (const key in repoMap) {
-        const repo = repoMap[key];
-        if (cachedRepos[repo]) {
-          updateDomForKey(key, cachedRepos[repo]);
-        }
-      }
-    }
-  }
-}
 
 function updateDomForKey(key, data, isLoading = false) {
   // Generate element ID from key (project ID)
@@ -467,16 +389,21 @@ function updateDomForKey(key, data, isLoading = false) {
     // Show loading state
     el.textContent = '⏳ Loading...';
     el.title = 'Loading GitHub stats...';
+    el.style.display = ''; // Ensure element is visible during loading
     return;
   }
 
   if (!data) {
-    // Show error/fallback state
+    // This should not happen with static fallback data, but just in case
     el.textContent = '⭐ — · 🍴 —';
-    el.title = 'Unable to load GitHub stats';
+    el.title = 'GitHub stats unavailable';
+    el.style.display = '';
+    console.log(`No data available for ${elId}`);
     return;
   }
 
+  // Show element and update with data
+  el.style.display = '';
   const stars = data.stargazers_count ?? 0;
   const forks = data.forks_count ?? 0;
   el.textContent = `⭐ ${stars} · 🍴 ${forks}`;
@@ -539,16 +466,15 @@ window.checkGitHubToken = function() {
   }
 };
 
-// Static fallback data for when all APIs fail
+// Static fallback data with real GitHub stats (fetched and hardcoded)
 const STATIC_FALLBACK_DATA = {
-  "Whats-this-rock": { stargazers_count: 12, forks_count: 3 },
-  "Automatic-License-Plate-Recognition": { stargazers_count: 25, forks_count: 8 },
-  "Covid-19-Radiology": { stargazers_count: 18, forks_count: 5 },
-  "Data-Science-Projects": { stargazers_count: 45, forks_count: 12 },
-  "agentic-data-analysis": { stargazers_count: 8, forks_count: 2 },
-  "pdf2podcast": { stargazers_count: 15, forks_count: 4 },
-  "other-ml-projects": { stargazers_count: 22, forks_count: 6 }
+  "Whats-this-rock": { stargazers_count: 27, forks_count: 4 },
+  "Automatic-License-Plate-Recognition": { stargazers_count: 47, forks_count: 14 },
+  "Covid-19-Radiology": { stargazers_count: 15, forks_count: 1 },
+  "Data-Science-Projects": { stargazers_count: 45, forks_count: 1 }
 };
+
+
 
 async function updateStars() {
   const owner = "udaylunawat";
@@ -593,21 +519,19 @@ async function updateStars() {
     const repo = repoMap[key];
     promises.push(
       fetchRepoWithRetry(owner, repo).then(data => {
-        if (data) {
-          freshRepos[repo] = data;
-          console.log(`Fetched data for ${repo}: success`);
-        } else {
-          // Use static fallback if API fails
-          console.warn(`API failed for ${repo}, using static fallback data`);
-          freshRepos[repo] = STATIC_FALLBACK_DATA[repo] || { stargazers_count: 0, forks_count: 0 };
-        }
+        freshRepos[repo] = data; // Will be null if all APIs fail
+        console.log(`Fetched data for ${repo}: ${data ? 'success' : 'failed - no data available'}`);
       })
     );
   }
 
   try {
-    // Wait for all fetches to complete
-    await Promise.all(promises);
+    // Wait for all fetches to complete with a timeout
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('API calls timed out')), 2000)
+    );
+
+    await Promise.race([Promise.all(promises), timeoutPromise]);
     console.log('All GitHub data fetching completed');
 
     // Cache the fresh data
@@ -621,29 +545,19 @@ async function updateStars() {
       console.log('Updating DOM with fresh GitHub data...');
       for (const key in repoMap) {
         const repo = repoMap[key];
-        updateDomForKey(key, freshRepos[repo]);
+        const data = freshRepos[repo] || STATIC_FALLBACK_DATA[repo];
+        updateDomForKey(key, data);
       }
     }
 
   } catch (error) {
     console.error('Failed to update some GitHub stats:', error);
-    // If we haven't shown anything yet and have cache, use it as fallback
-    if (!useCache && cachedRepos) {
-      console.log('Falling back to cached data due to fetch errors');
-      for (const key in repoMap) {
-        const repo = repoMap[key];
-        if (cachedRepos[repo]) {
-          updateDomForKey(key, cachedRepos[repo]);
-        }
-      }
-    } else {
-      // Use static fallback as last resort
-      console.log('Using static fallback data as last resort');
-      for (const key in repoMap) {
-        const repo = repoMap[key];
-        const fallbackData = STATIC_FALLBACK_DATA[repo] || { stargazers_count: 0, forks_count: 0 };
-        updateDomForKey(key, fallbackData);
-      }
+    // Always fall back to static data on any error (including timeout)
+    console.log('Using static fallback data due to error or timeout');
+    for (const key in repoMap) {
+      const repo = repoMap[key];
+      const fallbackData = STATIC_FALLBACK_DATA[repo];
+      updateDomForKey(key, fallbackData);
     }
   }
 }
