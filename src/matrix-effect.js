@@ -1,4 +1,4 @@
-// Authentic Matrix Effect for Skills Section - Based on classic Matrix design
+// Authentic Matrix Effect for Skills Section - smoothed & slowed
 class MatrixEffect {
   constructor(container) {
     this.container = container;
@@ -6,11 +6,13 @@ class MatrixEffect {
     this.ctx = null;
     this.overlay = null;
     this.typedElement = null;
-    this.cursorElement = null;
 
     // Matrix rain properties
-    this.glyphs = 'アカサタナハマヤラワガザダバパイキシチニヒミリヰギジヂビピウクスツヌフムユルグズヅブプエケセテネヘメレヱゲゼデベペオコソトノホモヨロゴゾドボポヴヵヶABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+-*/=%<>|&^~';
-    this.fontSize = 18;
+    this.glyphs =
+      'アカサタナハマヤラワガザダバパイキシチニヒミリヰギジヂビピウクスツヌフムユルグズヅブプエケセテネヘメレヱゲゼデベペオコソトノホモヨロゴゾドボポヴヵヶABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+-*/=%<>|&^~';
+
+    // Bigger glyphs for “larger” feel
+    this.fontSize = 26; // was 18
     this.columns = 0;
     this.drops = [];
     this.running = true;
@@ -25,32 +27,36 @@ class MatrixEffect {
       '     /   .`      \\\\(_)//      `.   \\       ',
       '    ;   /    _.-._>   <_.-._    \\   ;      ',
       '    |  |   ."     .\\_/..     ".  |  |      ',
-      '    |  |  /  .-".  |  .-"-.  \\ |  |      ',
+      '    |  |  /  .-".  |  .-"-.  \\ |  |        ',
       '    ;  ; |  /  _  \\ | /  _  \\ | ;  ;      ',
       '     \\  \\\\ |  ( )  |||  ( )  | /  /       ',
       '      \\  `.|\\     /|||\\     /|.`  /       ',
-      '       `-.  `"-.  |  .-"`  .-"        ',
+      '       `-.  `"-.  |  .-"`  .-"            ',
       '          `-._   _.-^ -._   _.-`          ',
-      '               `"         `"            '
+      '               `"         `"              '
     ];
 
     // Animation state
-    this.animationDuration = 7000; // 5 seconds total as requested
+    this.animationDuration = 7000; // total time before auto-complete
     this.startTime = 0;
     this.isAnimating = false;
     this.isComplete = false;
     this.onComplete = null;
     this.animationTimer = null;
+    this.lastFrameTime = 0;
 
     // Typing state
     this.line = 0;
     this.col = 0;
     this.buffer = '';
-    this.typingActive = false;
 
     // Glitch state
     this.lastGlitchTime = 0;
-    this.glitchInterval = 1500; // Glitch every 1.5 seconds
+    this.glitchInterval = 3500; // not auto-used anymore, kept for manual use
+
+    // Speed controls
+    this.rainSpeed = 0.55; // rows per frame; lower = slower
+    this.trailFade = 0.07; // alpha for fade; lower = longer trails
 
     this.init();
   }
@@ -87,20 +93,24 @@ class MatrixEffect {
     this.animate = this.animate.bind(this);
     this.resize = this.resize.bind(this);
     this.typeNext = this.typeNext.bind(this);
-    this.glitch = this.glitch.bind(this);
 
     // Add resize listener
     window.addEventListener('resize', this.resize);
 
-    // Add keyboard controls
+    // Keyboard controls
     window.addEventListener('keydown', (e) => {
       if (e.key.toLowerCase() === 'g') this.glitch();
     });
 
-    // Add click to toggle rain
+    // Click to toggle rain
     window.addEventListener('click', () => {
       this.running = !this.running;
       if (this.running) requestAnimationFrame(this.animate);
+    });
+
+    // 🔽 ADD THIS: start rain + typing as soon as everything is ready
+    requestAnimationFrame(() => {
+      this.start();
     });
   }
 
@@ -164,7 +174,8 @@ class MatrixEffect {
         border: 1px solid rgba(0, 255, 65, 0.18);
         border-radius: 16px;
         padding: clamp(12px, 2vmin, 24px);
-        box-shadow: 0 0 0 1px rgba(0, 255, 65, 0.08), 0 10px 40px rgba(0,0,0,0.6);
+        box-shadow: 0 0 0 1px rgba(0, 255, 65, 0.08),
+          0 10px 40px rgba(0,0,0,0.6);
         backdrop-filter: blur(6px) saturate(120%);
         width: min(900px, 90vw);
       }
@@ -201,7 +212,7 @@ class MatrixEffect {
       .matrix-typed {
         margin: 0;
         line-height: 1.05;
-        font-size: clamp(10px, 1.9vmin, 16px);
+        font-size: clamp(11px, 2.1vmin, 17px);
         text-shadow: var(--glow);
         white-space: pre;
         color: var(--matrix);
@@ -220,7 +231,7 @@ class MatrixEffect {
       }
 
       .matrix-bar {
-        --w: 240px;
+        --w: 260px;
         position: relative;
         width: var(--w);
         height: 8px;
@@ -235,7 +246,10 @@ class MatrixEffect {
         inset: 0;
         display: block;
         transform: translateX(-100%);
-        background: linear-gradient(to right, rgba(0,255,65,0.2), rgba(0,255,65,0.85));
+        background: linear-gradient(to right,
+          rgba(0,255,65,0.2),
+          rgba(0,255,65,0.85)
+        );
         animation: matrix-load 7s linear infinite;
       }
 
@@ -263,14 +277,11 @@ class MatrixEffect {
   }
 
   createOverlay() {
-    // Add classes to body
     document.body.classList.add('matrix-active', 'scanlines', 'vignette');
 
-    // Create overlay
     this.overlay = document.createElement('div');
     this.overlay.className = 'matrix-overlay';
 
-    // Create terminal
     const terminal = document.createElement('div');
     terminal.className = 'matrix-terminal';
 
@@ -285,30 +296,29 @@ class MatrixEffect {
         <div class="matrix-bar"><i></i></div>
         <span class="matrix-cursor" aria-hidden="true">▌</span>
       </div>
-      <div class="matrix-hint">Click anywhere to toggle rain. Press <kbd>G</kbd> to glitch.</div>
+      <div class="matrix-hint">Click to toggle rain. Press <kbd>G</kbd> to glitch.</div>
     `;
 
     this.overlay.appendChild(terminal);
     document.body.appendChild(this.overlay);
-
-    // Get references
     this.typedElement = document.getElementById('matrix-typed');
   }
 
   resize() {
     if (!this.canvas) return;
 
-    // Use full viewport dimensions
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
 
-    // Recalculate columns for denser effect
+    // Set font once per resize for crisp text
+    this.ctx.font = `${this.fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`;
+
     this.columns = Math.floor(this.canvas.width / this.fontSize);
     this.drops = new Array(this.columns);
 
-    // Initialize drops with random starting positions
     for (let i = 0; i < this.columns; i++) {
-      this.drops[i] = Math.floor(Math.random() * -100); // Start higher for more dramatic effect
+      // Start above screen so streams flow in smoothly
+      this.drops[i] = -Math.random() * 40;
     }
   }
 
@@ -318,73 +328,62 @@ class MatrixEffect {
     this.isAnimating = true;
     this.isComplete = false;
     this.startTime = performance.now();
-    this.lastGlitchTime = this.startTime;
+    this.lastFrameTime = this.startTime;
     this.canvas.style.opacity = '1';
 
-    // Start Matrix rain
-    this.animate();
+    requestAnimationFrame(this.animate);
 
-    // Start typing animation after a brief delay
     setTimeout(() => {
       this.typeNext();
     }, 500);
 
-    // Set timer to complete animation after 5 seconds
     this.animationTimer = setTimeout(() => {
       this.complete();
     }, this.animationDuration);
   }
 
-  // Non-linear opacity easing function
-  easeInOutCubic(t) {
-    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-  }
-
-  animate() {
+  animate(timestamp) {
     if (!this.running) return;
+    if (!this.ctx) return;
 
-    const currentTime = performance.now();
+    const delta = this.lastFrameTime ? (timestamp - this.lastFrameTime) / 16.67 : 1;
+    this.lastFrameTime = timestamp;
 
-    // Trigger automatic glitches
-    if (currentTime - this.lastGlitchTime > this.glitchInterval) {
-      this.glitch();
-      this.lastGlitchTime = currentTime;
-    }
-
-    // Faint trails for Matrix effect
-    this.ctx.fillStyle = 'rgba(0, 0, 0, 0.11)';
+    // Smooth fading trails
+    this.ctx.fillStyle = `rgba(0, 0, 0, ${this.trailFade})`;
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // Draw Matrix rain
     for (let i = 0; i < this.columns; i++) {
-      const txt = this.glyphs[(Math.random() * this.glyphs.length) | 0];
+      const char = this.glyphs[(Math.random() * this.glyphs.length) | 0];
       const x = i * this.fontSize;
       const y = this.drops[i] * this.fontSize;
 
-      // Bright head character
+      // bright head
       this.ctx.fillStyle = '#00ff41';
-      this.ctx.fillText(txt, x, y);
+      this.ctx.fillText(char, x, y);
 
-      // Dim trailing character
+      // dim trail
       this.ctx.fillStyle = 'rgba(0,255,65,0.15)';
-      this.ctx.fillText(txt, x, y - this.fontSize);
+      this.ctx.fillText(char, x, y - this.fontSize);
 
-      // Reset when off screen
-      if (y > this.canvas.height + Math.random() * 1000) {
-        this.drops[i] = -Math.random() * 50;
+      if (y > this.canvas.height + this.fontSize * 2) {
+        this.drops[i] = -Math.random() * 30;
+      } else {
+        // slower, smoother movement
+        this.drops[i] += this.rainSpeed * delta;
       }
-      this.drops[i]++;
     }
 
     requestAnimationFrame(this.animate);
   }
 
   typeNext() {
+    if (!this.typedElement) return;
+
     if (this.line >= this.brain.length) {
-      // Brain is fully typed - complete the animation
       setTimeout(() => {
         this.complete();
-      }, 2000); // Brief pause before completing
+      }, 1800);
       return;
     }
 
@@ -397,95 +396,76 @@ class MatrixEffect {
       this.buffer += '\n';
       this.line++;
       this.col = 0;
-      setTimeout(this.typeNext, 60);
+      setTimeout(() => this.typeNext(), 70);
     } else {
-      setTimeout(this.typeNext, 10 + Math.random() * 25);
+      setTimeout(() => this.typeNext(), 16 + Math.random() * 22);
     }
   }
 
   glitch() {
     if (!this.typedElement) return;
 
-    const text = this.typedElement.textContent.split('');
-    const swaps = 12;
+    const original = this.typedElement.textContent;
+    const chars = original.split('');
+    const swaps = 8; // fewer swaps for subtle glitch
 
-    // Corrupt random characters
     for (let i = 0; i < swaps; i++) {
-      const idx = (Math.random() * text.length) | 0;
-      text[idx] = this.glyphs[(Math.random() * this.glyphs.length) | 0];
+      const idx = (Math.random() * chars.length) | 0;
+      chars[idx] = this.glyphs[(Math.random() * this.glyphs.length) | 0];
     }
 
-    const original = this.typedElement.textContent;
-    this.typedElement.textContent = text.join('');
+    this.typedElement.textContent = chars.join('');
 
-    // Restore after brief corruption (no automatic re-trigger since we do it in animate now)
     setTimeout(() => {
       if (this.typedElement) this.typedElement.textContent = original;
-    }, 90);
+    }, 70);
   }
 
   complete() {
+    if (this.isComplete) return;
     this.isAnimating = false;
     this.isComplete = true;
 
-    // Clear the animation timer
     if (this.animationTimer) {
       clearTimeout(this.animationTimer);
       this.animationTimer = null;
     }
 
-    // Reveal the brain by removing the hidden class
     const brainHost = document.getElementById('brain-host');
     if (brainHost) {
       brainHost.classList.remove('matrix-hidden');
     }
 
-    // Fade out canvas and overlay
     this.canvas.style.opacity = '0';
-    if (this.overlay) {
-      this.overlay.style.opacity = '0';
-    }
+    if (this.overlay) this.overlay.style.opacity = '0';
 
-    // Remove elements after fade
     setTimeout(() => {
-      // Remove Matrix-specific classes from body
       document.body.classList.remove('matrix-active', 'scanlines', 'vignette');
 
-      // Remove canvas
       if (this.canvas && this.canvas.parentNode) {
         this.canvas.parentNode.removeChild(this.canvas);
       }
-
-      // Remove overlay
       if (this.overlay && this.overlay.parentNode) {
         this.overlay.parentNode.removeChild(this.overlay);
       }
     }, 500);
 
-    // Call completion callback
-    if (this.onComplete) {
-      this.onComplete();
-    }
+    if (this.onComplete) this.onComplete();
   }
 
   destroy() {
     this.isAnimating = false;
 
-    // Clear the animation timer
     if (this.animationTimer) {
       clearTimeout(this.animationTimer);
       this.animationTimer = null;
     }
 
-    // Remove Matrix-specific classes from body
     document.body.classList.remove('matrix-active', 'scanlines', 'vignette');
 
-    // Remove canvas
     if (this.canvas && this.canvas.parentNode) {
       this.canvas.parentNode.removeChild(this.canvas);
     }
-
-    // Remove overlay
     if (this.overlay && this.overlay.parentNode) {
       this.overlay.parentNode.removeChild(this.overlay);
     }

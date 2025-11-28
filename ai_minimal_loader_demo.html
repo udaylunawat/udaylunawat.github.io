@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Minimal Neural Loader Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    :root {
+      --bg-amoled: #000000;
+      --primary: #26a269;
+      --primary-soft: rgba(38, 162, 105, 0.7);
+      --primary-faint: rgba(38, 162, 105, 0.18);
+      --text-main: rgba(255, 255, 255, 0.92);
+      --text-muted: rgba(255, 255, 255, 0.55);
+      --border: rgba(255, 255, 255, 0.08);
+      --surface: rgba(255, 255, 255, 0.02);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      background-color: var(--bg-amoled);
+      color: var(--text-main);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+      overflow: hidden;
+    }
+
+    /* Hide main page content until loader finishes */
+    body:not(.show-ui) .page-content {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(8px);
+      pointer-events: none;
+    }
+
+    .page-content {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.5s ease, visibility 0.5s ease, transform 0.5s ease;
+      padding: 4rem 2rem;
+    }
+
+    .page-content h1 {
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .page-content p {
+      max-width: 520px;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    .page-content code {
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 999px;
+      padding: 0.08rem 0.6rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 0.85em;
+    }
+
+    /* Fullscreen loader */
+
+    .ai-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.6rem;
+      background-color: #000;
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      transition: opacity 0.5s ease, visibility 0.5s ease, transform 0.5s ease;
+      overflow: hidden;
+    }
+
+    body.show-ui .ai-loader {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(16px);
+      pointer-events: none;
+    }
+
+    /* Background vibes: soft vertical columns, not full Matrix rain */
+
+    .ai-loader::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      background-image:
+        linear-gradient(
+          to bottom,
+          rgba(38, 162, 105, 0.0) 0,
+          rgba(38, 162, 105, 0.35) 40%,
+          rgba(38, 162, 105, 0.0) 80%
+        );
+      background-repeat: repeat-x;
+      background-size: 120px 260px;
+      opacity: 0.35;
+      mix-blend-mode: screen;
+      animation: columns-fall 18s linear infinite;
+      pointer-events: none;
+    }
+
+    .ai-loader::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 10% 0, rgba(38, 162, 105, 0.2), transparent 55%),
+        radial-gradient(circle at 80% 100%, rgba(38, 162, 105, 0.2), transparent 60%);
+      opacity: 0.35;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    /* Central card */
+
+    .ai-loader-inner {
+      position: relative;
+      max-width: 720px;
+      width: 100%;
+      padding: 1.6rem 1.8rem;
+      border-radius: 18px;
+      background: radial-gradient(circle at 0 0, rgba(38, 162, 105, 0.18), transparent 60%), var(--surface);
+      border: 1px solid var(--border);
+      box-shadow:
+        0 18px 60px rgba(0, 0, 0, 0.9),
+        0 0 80px rgba(38, 162, 105, 0.28);
+      display: grid;
+      grid-template-columns: auto minmax(0, 1.2fr);
+      column-gap: 1.75rem;
+      row-gap: 1.4rem;
+      align-items: center;
+      backdrop-filter: blur(18px);
+      z-index: 1;
+    }
+
+    @media (max-width: 640px) {
+      .ai-loader-inner {
+        grid-template-columns: 1fr;
+        padding: 1.4rem 1.25rem;
+        border-radius: 14px;
+      }
+    }
+
+    /* Minimal "neural grid" avatar */
+
+    .ai-grid {
+      position: relative;
+      width: 160px;
+      height: 160px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      background:
+        radial-gradient(circle at 20% 0, rgba(38, 162, 105, 0.25), transparent 60%),
+        radial-gradient(circle at 80% 100%, rgba(38, 162, 105, 0.25), transparent 60%),
+        radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.92));
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.04),
+        0 0 40px rgba(38, 162, 105, 0.3);
+      overflow: hidden;
+    }
+
+    .ai-grid::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 18px 18px;
+      opacity: 0.25;
+      mix-blend-mode: soft-light;
+    }
+
+    .ai-grid::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 50% 0, rgba(255, 255, 255, 0.18), transparent 60%);
+      opacity: 0.2;
+      pointer-events: none;
+    }
+
+    .ai-grid-nodes {
+      position: absolute;
+      inset: 12px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+      gap: 8px;
+      z-index: 1;
+    }
+
+    .ai-node-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      margin: auto;
+      background: radial-gradient(circle, #ffffff, var(--primary));
+      box-shadow: 0 0 12px rgba(38, 162, 105, 0.9);
+      opacity: 0.2;
+      transform: scale(0.8);
+    }
+
+    .ai-node-dot.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* A moving "signal" bar crossing the grid */
+
+    .ai-grid-scan {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        120deg,
+        transparent 0,
+        rgba(38, 162, 105, 0.0) 40%,
+        rgba(38, 162, 105, 0.17) 50%,
+        rgba(38, 162, 105, 0.0) 60%,
+        transparent 100%
+      );
+      mix-blend-mode: screen;
+      transform: translateX(-120%);
+      animation: grid-scan 3.6s ease-in-out infinite;
+    }
+
+    /* Text side */
+
+    .ai-loader-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      min-width: 0;
+    }
+
+    .ai-chipline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .ai-chip {
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.02);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .ai-chip-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 0 10px rgba(38, 162, 105, 0.9);
+      animation: chip-dot-pulse 1.7s ease-in-out infinite;
+    }
+
+    .ai-name {
+      font-size: 1.02rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    .ai-role {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .ai-status-line {
+      margin-top: 0.4rem;
+      font-family: "SF Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.7);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .ai-status-tag {
+      padding: 0.14rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.02);
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .ai-status-rotating {
+      min-height: 1.1em;
+      font-size: 0.86rem;
+      font-family: "SF Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      color: rgba(255, 255, 255, 0.88);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .ai-progress-row {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin-top: 0.3rem;
+    }
+
+    .ai-progress-bar {
+      position: relative;
+      flex: 1;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      overflow: hidden;
+    }
+
+    .ai-progress-fill {
+      position: absolute;
+      inset: 0;
+      transform-origin: left center;
+      background: linear-gradient(90deg, var(--primary), rgba(255, 255, 255, 0.9));
+      animation: progress-sweep 2.2s ease-in-out infinite;
+      box-shadow: 0 0 12px rgba(38, 162, 105, 0.8);
+    }
+
+    .ai-progress-percent {
+      font-size: 0.78rem;
+      font-family: "SF Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      color: rgba(255, 255, 255, 0.6);
+      min-width: 3.4rem;
+      text-align: right;
+    }
+
+    .ai-hints {
+      margin-top: 0.3rem;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.55);
+      font-family: "SF Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    .ai-hints code {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 999px;
+      padding: 0.12rem 0.55rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      margin-left: 0.4rem;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.75rem;
+    }
+
+    @media (max-width: 640px) {
+      .ai-grid {
+        width: 132px;
+        height: 132px;
+      }
+      .ai-name {
+        letter-spacing: 0.11em;
+      }
+    }
+
+    /* Keyframes */
+
+    @keyframes columns-fall {
+      from { background-position: 0 -260px; }
+      to   { background-position: 0 0; }
+    }
+
+    @keyframes grid-scan {
+      0%   { transform: translateX(-120%); opacity: 0; }
+      15%  { opacity: 0.85; }
+      70%  { opacity: 0.5; }
+      100% { transform: translateX(120%); opacity: 0; }
+    }
+
+    @keyframes chip-dot-pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 8px rgba(38, 162, 105, 0.7); }
+      50%      { transform: scale(1.25); box-shadow: 0 0 16px rgba(38, 162, 105, 1); }
+    }
+
+    @keyframes progress-sweep {
+      0%   { transform: translateX(-40%) scaleX(0.3); opacity: 0.3; }
+      30%  { transform: translateX(-5%) scaleX(0.8); opacity: 1; }
+      70%  { transform: translateX(5%) scaleX(1); opacity: 1; }
+      100% { transform: translateX(80%) scaleX(0.6); opacity: 0.15; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .ai-loader::before,
+      .ai-grid-scan,
+      .ai-node-dot,
+      .ai-progress-fill {
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ai-loader" id="ai-loader">
+    <div class="ai-loader-inner">
+      <div class="ai-grid">
+        <div class="ai-grid-nodes" id="ai-grid-nodes">
+          <!-- 16 nodes -->
+          <div class="ai-node-dot"></div>
+          <div class="ai-node-dot"></div>
+          <div class="ai-node-dot"></div>
+          <div class="ai-node-dot"></div>
+          <div class="ai-node-dot"></div>
+          <div class="ai-node-dot"></div>
+          <div class="ai-node-dot"></div>
+          <div class="ai-node-dot"></div>
+          <div class="ai-node-dot"></div>
+          <div class="ai-node-dot"></div>
+          <div class="ai-node-dot"></div>
+          <div class="ai-node-dot"></div>
+          <div class="ai-node-dot"></div>
+          <div class="ai-node-dot"></div>
+          <div class="ai-node-dot"></div>
+          <div class="ai-node-dot"></div>
+        </div>
+        <div class="ai-grid-scan"></div>
+      </div>
+
+      <div class="ai-loader-text">
+        <div>
+          <div class="ai-chipline">
+            <div class="ai-chip">
+              <span class="ai-chip-dot"></span>
+              <span>ai session</span>
+            </div>
+            <span>uday · neural portfolio</span>
+          </div>
+          <div class="ai-name">Uday Lunawat</div>
+          <div class="ai-role">Senior ML Engineer · LLMs · Agents · RAG</div>
+        </div>
+
+        <div class="ai-status-line">
+          <span class="ai-status-tag">BOOT</span>
+          <span id="ai-loader-status">linking workspace graph</span>
+        </div>
+
+        <div class="ai-progress-row">
+          <div class="ai-progress-bar">
+            <div class="ai-progress-fill"></div>
+          </div>
+          <div class="ai-progress-percent" id="ai-loader-percent">98.4%</div>
+        </div>
+
+        <div class="ai-hints">
+          <span>hint</span>
+          <code id="ai-loader-hint">hydrating /skills vector space</code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="page-content">
+    <h1>Portfolio main UI</h1>
+    <p>
+      Replace this content with your real landing page. In your actual site,
+      this loader will fade out once your scripts add <code>body.show-ui</code>,
+      revealing your particles, 3D brain, and sections.
+    </p>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const statusEl = document.getElementById("ai-loader-status");
+      const percentEl = document.getElementById("ai-loader-percent");
+      const hintEl = document.getElementById("ai-loader-hint");
+      const grid = document.getElementById("ai-grid-nodes");
+      const dots = grid ? Array.from(grid.querySelectorAll(".ai-node-dot")) : [];
+
+      const statuses = [
+        "linking workspace graph",
+        "mounting llm cores",
+        "warming attention heads",
+        "hydrating vector memory",
+        "syncing /projects manifest",
+        "initializing agent runtime"
+      ];
+
+      const hints = [
+        "loading /about/uday",
+        "compiling /experience timeline",
+        "indexing /skills/brain space",
+        "deploying /agents/vegas",
+        "refreshing /projects/llm-lab",
+        "arming /contact handshake"
+      ];
+
+      let statusIndex = 0;
+
+      function updateStatus() {
+        if (!statusEl) return;
+        statusEl.textContent = statuses[statusIndex];
+        statusIndex = (statusIndex + 1) % statuses.length;
+      }
+
+      function updateHint() {
+        if (!hintEl) return;
+        const value = hints[Math.floor(Math.random() * hints.length)];
+        hintEl.textContent = value;
+      }
+
+      function randomInt(max) {
+        return Math.floor(Math.random() * max);
+      }
+
+      function animateGrid() {
+        if (!dots.length) return;
+        dots.forEach(d => d.classList.remove("active"));
+        const activeCount = 4 + randomInt(5); // 4 to 8 nodes at once
+        for (let i = 0; i < activeCount; i++) {
+          const idx = randomInt(dots.length);
+          dots[idx].classList.add("active");
+        }
+      }
+
+      updateStatus();
+      updateHint();
+      animateGrid();
+
+      const statusTimer = setInterval(updateStatus, 1200);
+      const hintTimer = setInterval(updateHint, 2600);
+      const gridTimer = setInterval(animateGrid, 260);
+
+      if (percentEl) {
+        let pct = 94 + Math.random() * 3;
+        const pctTimer = setInterval(function () {
+          pct += Math.random() * 1.2;
+          if (pct > 99.4) {
+            pct = 96.5 + Math.random() * 2.5;
+          }
+          percentEl.textContent = pct.toFixed(1) + "%";
+        }, 420);
+
+        const stopTimers = function () {
+          clearInterval(statusTimer);
+          clearInterval(hintTimer);
+          clearInterval(gridTimer);
+          clearInterval(pctTimer);
+        };
+
+        // Simulate UI ready for this demo
+        setTimeout(function () {
+          document.body.classList.add("show-ui");
+          stopTimers();
+        }, 3400);
+      }
+    });
+  </script>
+</body>
+</html>

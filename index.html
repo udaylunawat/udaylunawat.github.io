@@ -40,21 +40,104 @@
     visibility: hidden !important;
     pointer-events: none !important;
   }
+    /* Base background is dark even before CSS file loads */
+  body {
+    background: #000;
+  }
+
+  /* Before the app is ready, show only the loader, hide everything else */
+  body:not(.show-ui) > :not(.ai-loader) {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
 </style>
 <script>
-  /* Reveal UI only after the page is fully loaded (and as a safety fallback after 3s).
-     This prevents flashes where the nav or modals briefly appear before styles/scripts run. */
   (function() {
-    function reveal() { try { document.body.classList.add('show-ui'); } catch (e) {} }
-    if (document.readyState === 'complete') reveal();
-    else window.addEventListener('load', reveal, { once: true });
-    // Fallback: ensure UI shows even if load hangs for some reason
-    setTimeout(reveal, 3000);
+    const MIN_LOADER_TIME = 5000;   // 5000 ms = 5 seconds minimum
+    const MAX_LOADER_TIME = 8000;   // hard safety cap
+    const startTime = performance.now ? performance.now() : Date.now();
+
+    function reveal() {
+      try {
+        document.body.classList.add('show-ui');
+      } catch (e) {}
+    }
+
+    // When the page finishes loading, wait until we've hit MIN_LOADER_TIME
+    window.addEventListener('load', function onLoad() {
+      const now = performance.now ? performance.now() : Date.now();
+      const elapsed = now - startTime;
+      const remaining = Math.max(0, MIN_LOADER_TIME - elapsed);
+      setTimeout(reveal, remaining);
+      window.removeEventListener('load', onLoad);
+    }, { once: true });
+
+    // Absolute fallback in case 'load' never fires or something hangs
+    setTimeout(reveal, MAX_LOADER_TIME);
   })();
 </script>
 </head>
 
 <body>
+<!-- Minimal AMOLED neural loader -->
+<div class="ai-loader" id="ai-loader">
+  <div class="ai-loader-inner">
+    <div class="ai-grid">
+      <div class="ai-grid-nodes" id="ai-grid-nodes">
+        <!-- 16 nodes -->
+        <div class="ai-node-dot"></div>
+        <div class="ai-node-dot"></div>
+        <div class="ai-node-dot"></div>
+        <div class="ai-node-dot"></div>
+        <div class="ai-node-dot"></div>
+        <div class="ai-node-dot"></div>
+        <div class="ai-node-dot"></div>
+        <div class="ai-node-dot"></div>
+        <div class="ai-node-dot"></div>
+        <div class="ai-node-dot"></div>
+        <div class="ai-node-dot"></div>
+        <div class="ai-node-dot"></div>
+        <div class="ai-node-dot"></div>
+        <div class="ai-node-dot"></div>
+        <div class="ai-node-dot"></div>
+        <div class="ai-node-dot"></div>
+      </div>
+      <div class="ai-grid-scan"></div>
+    </div>
+
+    <div class="ai-loader-text">
+      <div>
+        <div class="ai-chipline">
+          <div class="ai-chip">
+            <span class="ai-chip-dot"></span>
+            <span>ai session</span>
+          </div>
+          <span>neural portfolio</span>
+        </div>
+        <div class="ai-name">Uday Lunawat</div>
+        <div class="ai-role">Senior ML Engineer · LLMs · Agents · RAG</div>
+      </div>
+
+      <div class="ai-status-line">
+        <span class="ai-status-tag">BOOT</span>
+        <span id="ai-loader-status">linking workspace graph</span>
+      </div>
+
+      <div class="ai-progress-row">
+        <div class="ai-progress-bar">
+          <div class="ai-progress-fill"></div>
+        </div>
+        <div class="ai-progress-percent" id="ai-loader-percent">98.4%</div>
+      </div>
+
+      <div class="ai-hints">
+        <span>hint</span>
+        <code id="ai-loader-hint">hydrating /skills vector space</code>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="canvas-container" id="canvas">
 <!-- <div id="brain-name">Uday Lunawat</div> -->
 </div>
@@ -526,15 +609,130 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => el.classList.remove('is-active'), 1200);
   }, { passive: true });
 
-  /* Reveal UI only after the page is fully loaded (and as a safety fallback after 3s).
-     This prevents flashes where the nav or modals briefly appear before styles/scripts run. */
-  (function() {
-    function reveal() { try { document.body.classList.add('show-ui'); } catch (e) {} }
-    if (document.readyState === 'complete') reveal();
-    else window.addEventListener('load', reveal, { once: true });
-    // Fallback: ensure UI shows even if load hangs for some reason
-    setTimeout(reveal, 3000);
-  })();
+  // /* Reveal UI only after the page is fully loaded (and as a safety fallback after 3s).
+  //    This prevents flashes where the nav or modals briefly appear before styles/scripts run. */
+  // (function() {
+  //   function reveal() { try { document.body.classList.add('show-ui'); } catch (e) {} }
+  //   if (document.readyState === 'complete') reveal();
+  //   else window.addEventListener('load', reveal, { once: true });
+  //   // Fallback: ensure UI shows even if load hangs for some reason
+  //   setTimeout(reveal, 3000);
+  // })();
+</script>
+<!-- <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const resumeLink = document.getElementById('resume-link');
+  if (resumeLink) {
+    resumeLink.addEventListener('click', (e) => {
+      const link = document.createElement('a');
+      link.href = './src/Uday_Lunawat_Resume_Senior_ML_Engineer_V9.pdf';
+      link.download = 'Uday_Lunawat_Resume_Senior_ML_Engineer_V9.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+  }
+});
+
+// Tap to activate neon for ~1.2s
+document.addEventListener('touchstart', (e) => {
+  const el = e.target.closest('.brain-chip, .brain-cluster h4');
+  if (!el) return;
+  el.classList.add('is-active');
+  setTimeout(() => el.classList.remove('is-active'), 1200);
+}, { passive: true });
+</script> -->
+<script>
+
+  // Minimal neural loader logic
+  const statusEl = document.getElementById('ai-loader-status');
+  const percentEl = document.getElementById('ai-loader-percent');
+  const hintEl = document.getElementById('ai-loader-hint');
+  const grid = document.getElementById('ai-grid-nodes');
+  const dots = grid ? Array.from(grid.querySelectorAll('.ai-node-dot')) : [];
+
+  const statuses = [
+    'linking workspace graph',
+    'mounting llm cores',
+    'warming attention heads',
+    'hydrating vector memory',
+    'syncing /projects manifest',
+    'initializing agent runtime'
+  ];
+
+  const hints = [
+    'loading /about/uday',
+    'compiling /experience timeline',
+    'indexing /skills/brain space',
+    'deploying /agents/vegas',
+    'refreshing /projects/llm-lab',
+    'arming /contact handshake'
+  ];
+
+  let statusIndex = 0;
+
+  function updateStatus() {
+    if (!statusEl) return;
+    statusEl.textContent = statuses[statusIndex];
+    statusIndex = (statusIndex + 1) % statuses.length;
+  }
+
+  function updateHint() {
+    if (!hintEl) return;
+    const value = hints[Math.floor(Math.random() * hints.length)];
+    hintEl.textContent = value;
+  }
+
+  function randomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
+
+  function animateGrid() {
+    if (!dots.length) return;
+    dots.forEach(d => d.classList.remove('active'));
+    const activeCount = 4 + randomInt(5); // 4 to 8 nodes
+    for (let i = 0; i < activeCount; i++) {
+      const idx = randomInt(dots.length);
+      dots[idx].classList.add('active');
+    }
+  }
+
+  updateStatus();
+  updateHint();
+  animateGrid();
+
+  const statusTimer = setInterval(updateStatus, 1200);
+  const hintTimer = setInterval(updateHint, 2600);
+  const gridTimer = setInterval(animateGrid, 260);
+
+  let pctTimer = null;
+  if (percentEl) {
+    let pct = 94 + Math.random() * 3;
+    pctTimer = setInterval(() => {
+      pct += Math.random() * 1.2;
+      if (pct > 99.4) {
+        pct = 96.5 + Math.random() * 2.5;
+      }
+      percentEl.textContent = pct.toFixed(1) + '%';
+    }, 420);
+  }
+
+  function stopLoaderTimers() {
+    clearInterval(statusTimer);
+    clearInterval(hintTimer);
+    clearInterval(gridTimer);
+    if (pctTimer) clearInterval(pctTimer);
+  }
+
+  // Stop loader animations once UI is revealed
+  const observer = new MutationObserver(() => {
+    if (document.body.classList.contains('show-ui')) {
+      stopLoaderTimers();
+      observer.disconnect();
+    }
+  });
+
+  observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
 </script>
 </body>
 </html>
