@@ -5156,23 +5156,65 @@ input[type="range"]::-moz-range-thumb:hover {
   left:0; top:0;
   transform: translate(-50%,-50%) scale(1);
   min-width:190px;
-  background: rgba(18,24,28,.55);
-  border: 1px solid rgba(38,162,105,.28);
-  backdrop-filter: blur(8px) saturate(130%);
-  color: rgba(255,255,255,.95);
-  box-shadow: 0 8px 24px rgba(38,162,105,.10);
+
+  /* brighter, more solid card */
+  background: rgba(12, 24, 18, 0.95);
+  border: 1px solid rgba(120, 255, 190, 0.55);
+  backdrop-filter: blur(10px) saturate(140%);
+  color: rgba(252, 255, 254, 0.98);
+
+  box-shadow:
+    0 10px 32px rgba(0,0,0,0.9),
+    0 0 18px rgba(120, 255, 190, 0.25);
+
   border-radius: 14px;
   padding: 10px 12px;
   pointer-events: auto;
-  opacity: 0; /* JS sets actual opacity; hover override below */
-  transition: box-shadow .16s ease, border-color .16s ease;
+  opacity: 0; /* JS sets actual opacity; hover/active tweak it */
+  transition:
+    box-shadow .16s ease,
+    border-color .16s ease,
+    background-color .16s ease,
+    transform .16s ease,
+    opacity .18s ease;
+}
+
+/* Front-most card: pop, zoom, halo */
+.brain-cluster--active {
+  background: radial-gradient(circle at 10% 0,
+    rgba(30, 90, 60, 0.98) 0%,
+    rgba(8, 18, 12, 0.98) 45%,
+    rgba(4, 10, 8, 0.96) 100%
+  );
+  border-color: rgba(190, 255, 230, 1);
+  box-shadow:
+    0 0 0 1px rgba(120, 255, 200, 0.9),
+    0 0 16px rgba(120, 255, 200, 1),
+    0 0 40px rgba(120, 255, 200, 0.95),
+    0 0 90px rgba(120, 255, 200, 0.9);
+}
+
+.brain-cluster--active h4,
+.brain-cluster--active .brain-chip {
+  color: #faffff;
+  text-shadow:
+    0 0 10px rgba(120, 255, 200, 1),
+    0 0 26px rgba(120, 255, 200, 1);
+  filter: drop-shadow(0 0 20px rgba(120, 255, 200, 1));
 }
 
 .brain-cluster h4,
 .brain-chip {
-  color: rgba(255,255,255,.9);
-  -webkit-text-stroke: .25px rgba(0,0,0,.25);
-  transition: color .15s ease, text-shadow .2s ease, filter .2s ease, background .2s ease, opacity .18s ease;
+  color: #f5fff9; /* cleaner, almost pure white-green */
+  font-weight: 600;
+  -webkit-text-stroke: 0; /* remove outline, improves legibility */
+  text-shadow: 0 0 4px rgba(38,162,105,0.45);
+  transition:
+    color .15s ease,
+    text-shadow .2s ease,
+    filter .2s ease,
+    background .2s ease,
+    opacity .18s ease;
 }
 
 .brain-chip{
@@ -5332,9 +5374,13 @@ input[type="range"]::-moz-range-thumb:hover {
     0 0 90px rgba(38,162,105,.7);
 } */
 
-.brain-cluster:hover{
-  border-color: rgba(38,162,105,.45) !important;
-  box-shadow: 0 8px 24px rgba(0,0,0,.25);
+/* Only tweak non-active cards on hover so active glow always wins */
+.brain-cluster:not(.brain-cluster--active):hover {
+  border-color: rgba(120, 255, 190, 0.85);
+  box-shadow:
+    0 0 0 1px rgba(38,162,105,0.55),
+    0 10px 28px rgba(0, 0, 0, 0.85),
+    0 0 26px rgba(38,162,105,0.65);
 }
 
 /* ========= Mobile tweaks ========= */
@@ -5703,5 +5749,68 @@ body.show-ui .ai-loader {
   .ai-node-dot,
   .ai-progress-fill {
     animation: none !important;
+  }
+}
+
+/* ===== Neural link lines from brain -> cards ===== */
+
+/* The SVG overlay that holds the lines */
+#brain-links-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3; /* above brain canvas, below HTML cards */
+}
+
+/* Base line: solid neon, NOT dotted */
+.brain-link {
+  fill: none;
+  stroke: rgba(140, 255, 210, 0.75);
+  stroke-width: 2.1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  /* Strong glow */
+  filter:
+    drop-shadow(0 0 8px rgba(120, 255, 200, 0.9))
+    drop-shadow(0 0 22px rgba(120, 255, 200, 0.9));
+
+  /* keep smooth even when many lines move */
+  shape-rendering: geometricPrecision;
+  vector-effect: non-scaling-stroke;
+
+  /* no dotted pattern at all */
+  stroke-dasharray: none;
+}
+
+/* The line connected to the currently active card */
+.brain-link--active {
+  stroke-width: 3.0;
+  stroke: rgba(190, 255, 230, 1);
+
+  /* Pulsating neuron effect */
+  animation: brainLinkPulse 1.35s ease-in-out infinite;
+}
+
+@keyframes brainLinkPulse {
+  0% {
+    opacity: 0.45;
+    filter:
+      drop-shadow(0 0 6px rgba(140, 255, 210, 0.7))
+      drop-shadow(0 0 16px rgba(140, 255, 210, 0.8));
+  }
+  50% {
+    opacity: 1;
+    filter:
+      drop-shadow(0 0 12px rgba(190, 255, 230, 1))
+      drop-shadow(0 0 32px rgba(190, 255, 230, 1));
+  }
+  100% {
+    opacity: 0.5;
+    filter:
+      drop-shadow(0 0 6px rgba(140, 255, 210, 0.7))
+      drop-shadow(0 0 16px rgba(140, 255, 210, 0.8));
   }
 }

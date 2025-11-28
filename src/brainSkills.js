@@ -52,6 +52,23 @@ export function mountBrainSkills({
   container.style.position ||= 'relative';
   container.appendChild(canvas);
 
+  // ---- SVG overlay for brain → cluster links ----
+  // ---- SVG overlay for brain → cluster links ----
+  const linkSvgNS = 'http://www.w3.org/2000/svg';
+  const linkSvg = document.createElementNS(linkSvgNS, 'svg');
+
+  // id hooks into your #brain-links-layer CSS
+  linkSvg.setAttribute('id', 'brain-links-layer');
+  linkSvg.setAttribute('class', 'brain-links-svg');
+  linkSvg.setAttribute('width', '100%');
+  linkSvg.setAttribute('height', '100%');
+
+  linkSvg.style.position = 'absolute';
+  linkSvg.style.inset = '0';
+  linkSvg.style.pointerEvents = 'none';
+  // no inline zIndex, CSS controls stacking
+  container.appendChild(linkSvg);
+
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setClearColor(0x000000, 0);
   // initial DPR; we’ll also reset in resize()
@@ -188,31 +205,43 @@ export function mountBrainSkills({
   let nameObj = null, nameSpriteMat = null;
 
   // ---- CSS injection ----
+    // ---- CSS injection (only bits not already in style.css) ----
   const injectCSS = () => {
     if (document.getElementById('brain-label-css')) return;
     const el = document.createElement('style');
     el.id = 'brain-label-css';
     el.textContent = `
-      :root{ --ui-scale:1; --chip-font:12px; }
-      .brain-cluster{position:absolute;left:0;top:0;transform:translate(-50%,-50%) scale(1);min-width:190px;
-        background:rgba(18,24,28,.55);border:1px solid rgba(38,162,105,.28);backdrop-filter:blur(8px) saturate(130%);
-        border-radius:14px;padding:10px 12px;color:#fff;box-shadow:0 8px 24px rgba(38,162,105,.10);pointer-events:auto;opacity:0;
-        transition:box-shadow .16s ease,border-color .16s ease;}
-      .brain-cluster h4{margin:0 0 6px;font-weight:600;font-size:clamp(10px, calc(12px * var(--ui-scale)), 14px);letter-spacing:.35px;color:rgba(255,255,255,.9);text-shadow:0 0 6px rgba(38,162,105,.35);}      
-      .brain-chips-viewport{position:relative;overflow:hidden;width:100%;}
-      .brain-chips-track{display:flex;flex-direction:row;gap:6px;will-change:transform;transition:transform .55s ease;}
-      .brain-chip{display:inline-flex;align-items:center;gap:6px;padding:calc(5px * var(--ui-scale)) calc(7px * var(--ui-scale));border-radius:10px;background:rgba(38,162,105,.12);
-        border:1px solid rgba(38,162,105,.35);font-size:clamp(10px, calc(var(--chip-font) * var(--ui-scale)), 14px);color:#fff;white-space:nowrap;transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease,filter .12s ease,text-shadow .12s ease;}
-      .brain-cluster h4:hover,.brain-chip:hover,.brain-chip:focus-visible{
-        color:#f2fff8;text-shadow:0 0 12px rgba(38,162,105,1),0 0 26px rgba(38,162,105,1),0 0 42px rgba(38,162,105,.95),
-        0 0 80px rgba(38,162,105,.75),0 0 120px rgba(38,162,105,.6);filter:drop-shadow(0 0 22px rgba(38,162,105,1));outline:none;}
-      .brain-chip:hover,.brain-chip:focus-visible{ background: rgba(38,162,105,.22); border-color: rgba(38,162,105,.75); }
-      .brain-name2d{
-        pointer-events:none;font:700 clamp(18px, calc(3.6vw * var(--ui-scale)), 56px)/1.1 'Montserrat',sans-serif;letter-spacing:.06em;color:#e8fff3;
-        -webkit-text-stroke:.4px rgba(0,0,0,.25);
-        text-shadow:0 0 12px rgba(38,162,105,1),0 0 28px rgba(38,162,105,1),0 0 48px rgba(38,162,105,.9),0 0 90px rgba(38,162,105,.7);
+      :root {
+        --ui-scale: 1;
+        --chip-font: 12px;
       }
-      @media (max-width: 768px){ .brain-chip{ -webkit-text-stroke:0; } }
+
+      .brain-chips-viewport{
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+      }
+
+      .brain-chips-track{
+        display: flex;
+        flex-direction: row;
+        gap: 6px;
+        will-change: transform;
+        transition: transform .55s ease;
+      }
+
+      .brain-name2d{
+        pointer-events:none;
+        font:700 clamp(18px, calc(3.6vw * var(--ui-scale)), 56px)/1.1 'Montserrat',sans-serif;
+        letter-spacing:.06em;
+        color:#e8fff3;
+        -webkit-text-stroke:.4px rgba(0,0,0,.25);
+        text-shadow:
+          0 0 12px rgba(38,162,105,1),
+          0 0 28px rgba(38,162,105,1),
+          0 0 48px rgba(38,162,105,.9),
+          0 0 90px rgba(38,162,105,.7);
+      }
     `;
     document.head.appendChild(el);
   };
@@ -276,30 +305,43 @@ export function mountBrainSkills({
   }
 
   // Build cluster cards with per-card horizontal chip carousel
+  // Build cluster cards with per-card horizontal chip carousel
   function buildLabels() {
-    cards.forEach(c => c.el.remove()); cards.length = 0; hoverScale.clear();
+    cards.forEach(c => c.el.remove());
+    cards.length = 0;
+    hoverScale.clear();
     chipCarousels.length = 0;
 
-    clusters.forEach((c)=>{
+    clusters.forEach((c) => {
       const el = document.createElement('div');
       el.className = 'brain-cluster';
 
-      const chipsHTML = (c.items||[])
+      const chipsHTML = (c.items || [])
         .map(it => `<span class="brain-chip" tabindex="0">${it.label}</span>`)
         .join('');
 
       el.innerHTML = `
-        <h4>${c.title||c.key}</h4>
+        <h4>${c.title || c.key}</h4>
         <div class="brain-chips-viewport">
           <div class="brain-chips-track">${chipsHTML}</div>
         </div>
       `;
 
       container.appendChild(el);
+
+      // no hover zoom – always treat as scale 1
       hoverScale.set(el, 1.0);
-      el.addEventListener('mouseenter', ()=>hoverScale.set(el, cfg.hoverScale));
-      el.addEventListener('mouseleave', ()=>hoverScale.set(el, 1.0));
-      cards.push({key:c.key, el});
+
+      // Create solid link line in SVG, tied to this cluster
+      const linkEl = document.createElementNS(linkSvgNS, 'line');
+      linkEl.setAttribute('class', 'brain-link');
+      linkEl.setAttribute('x1', '0');
+      linkEl.setAttribute('y1', '0');
+      linkEl.setAttribute('x2', '0');
+      linkEl.setAttribute('y2', '0');
+      linkSvg.appendChild(linkEl);
+
+      cards.push({ key: c.key, el, link: linkEl });
 
       const viewport = el.querySelector('.brain-chips-viewport');
       const track    = el.querySelector('.brain-chips-track');
@@ -309,17 +351,17 @@ export function mountBrainSkills({
         el, viewport, track, chips,
         widths: [], offsets: [],
         start: 0,
-        visible: Math.max(1, cfg.carousel.visibleCount|0),
+        visible: Math.max(1, cfg.carousel.visibleCount | 0),
         paused: false,
         gap: 6 // must match CSS gap
       };
       chipCarousels.push(cc);
 
-      // pause on hover/focus to let users read
-      el.addEventListener('mouseenter', ()=>{ cc.paused = true; });
-      el.addEventListener('mouseleave', ()=>{ cc.paused = false; });
-      track.addEventListener('focusin', ()=>{ cc.paused = true; });
-      track.addEventListener('focusout', ()=>{ cc.paused = false; });
+      // pause marquee on hover/focus to let users read
+      el.addEventListener('mouseenter', () => { cc.paused = true; });
+      el.addEventListener('mouseleave', () => { cc.paused = false; });
+      track.addEventListener('focusin', () => { cc.paused = true; });
+      track.addEventListener('focusout', () => { cc.paused = false; });
     });
 
     queueMicrotask(measureAllChipCarousels);
@@ -483,54 +525,144 @@ export function mountBrainSkills({
     if (labelRenderer) labelRenderer.setSize(w, h);
   }
 
-  function animate(){
+  function animate() {
     rafId = requestAnimationFrame(animate);
     if (!root) return;
 
-    if(!cfg.pause && !dragging) targetRotY += cfg.rotSpeed;
-    rotY += (targetRotY - rotY)*0.08;
+    if (!cfg.pause && !dragging) targetRotY += cfg.rotSpeed;
+    rotY += (targetRotY - rotY) * 0.08;
     rig.rotation.y = rotY;
 
-    const t = performance.now()*0.001;
+    const t = performance.now() * 0.001;
     const now = performance.now();
 
     // per-card chip carousels
     tickChipCarousels(now);
 
     animatedMats.forEach(m => m.uniforms.uTime.value = t);
-    if(pointsMat){ pointsMat.uniforms.uTime.value = t; }
-    if(lineMat){ lineMat.uniforms.uTime.value = t; }
+    if (pointsMat) { pointsMat.uniforms.uTime.value = t; }
+    if (lineMat) { lineMat.uniforms.uTime.value = t; }
 
-    if(lines && now - lastRewire > cfg.particles.rewireMs){
-      lastRewire = now; buildParticlesFromGeometry(mesh.geometry);
+    if (lines && now - lastRewire > cfg.particles.rewireMs) {
+      lastRewire = now;
+      buildParticlesFromGeometry(mesh.geometry);
     }
 
-    // position cluster cards (screen space)
-    cards.forEach(({key, el})=>{
-      const node = anchors[key];
-      if(!node) return;
-      const s = project(node);
-      const depth = 1 - Math.min(1, Math.max(0, s.z));
-      const baseScale = cfg.labelBaseScale * (0.88 + depth*0.22);
-      const hScale = hoverScale.get(el) || 1.0;
+    // viewport + UI scale
+    const rect = container.getBoundingClientRect();
+    const cx = rect.width * 0.5;
+    const cy = rect.height * 0.5;
+    const ui = parseFloat(getComputedStyle(container).getPropertyValue('--ui-scale')) || 1;
 
-      const ui = parseFloat(getComputedStyle(container).getPropertyValue('--ui-scale')) || 1;
-      let finalScale = baseScale * hScale * ui;
-      const floor = isMobile ? 0.85 : 0.75; // never shrink below this
-      if (finalScale < floor) finalScale = floor;
+    // 1) Collect card state (so we can find the closest one)
+    const cardState = [];
+    cards.forEach(({ key, el, link }) => {
+      const anchor = anchors[key];
+      if (!anchor) return;
 
-      const opac = (s.z<1.0) ? (0.22 + depth*0.78) : 0;
-      el.style.transform = `translate(${s.x}px, ${s.y}px) translate(-50%,-50%) scale(${finalScale})`;
-      el.style.opacity = opac.toFixed(3);
-      el.style.zIndex = String(Math.round(depth*1000));
+      const s = project(anchor.node);
+      const depth = 1 - Math.min(1, Math.max(0, s.z)); // 0 = far, 1 = close
+
+      const dx = s.x - cx;
+      const dy = s.y - cy;
+      const len = Math.hypot(dx, dy) || 1;
+
+      cardState.push({ el, link, anchor, s, depth, dx, dy, len });
     });
 
-    if(wire) wire.visible = cfg.showEdges && cfg.edgeStrength>0.001;
-    if(mesh) mesh.material.visible = cfg.showSurface;
-    if(points) points.visible = cfg.particles.enabled;
-    if(lines)  lines.visible  = cfg.particles.enabled && cfg.particles.linksPerNode>0;
+    // 2) Choose the single "front" card by max depth
+    let active = null;
+    if (cardState.length) {
+      active = cardState.reduce((best, cur) =>
+        !best || cur.depth > best.depth ? cur : best,
+        null
+      );
+    }
 
-    renderer.render(scene,camera);
+    // 3) Position cards + links, highlight active
+    cardState.forEach(st => {
+      const { el, link, s, depth, dx, dy, len } = st;
+
+      // radial push so cards sit comfortably outside the brain
+      const basePush = 90 * ui;       // base distance
+      const depthPush = 50 * depth;   // extra for closer ones
+      const push = basePush + depthPush;
+
+      const cardX = s.x + (dx / len) * push;
+      const cardY = s.y + (dy / len) * push;
+
+      // base scaling by depth
+      let baseScale = cfg.labelBaseScale * (0.95 + depth * 0.45);
+      const floor = isMobile ? 1.0 : 0.9;
+      if (baseScale < floor) baseScale = floor;
+
+      let finalScale = baseScale * ui;
+
+      // opacity tied to depth (always fairly visible)
+      let opac = (s.z < 1.0) ? (0.60 + depth * 0.40) : 0.40;
+
+      const isActive = active && active.el === el && depth > 0.25;
+
+      if (isActive) {
+        el.classList.add('brain-cluster--active');
+
+        // strong pop-out for the front card
+        const boost = isMobile ? 1.45 : 1.30;
+        finalScale *= boost;
+        opac = Math.max(opac, 0.98);
+      } else {
+        el.classList.remove('brain-cluster--active');
+      }
+
+      // apply transform & layering
+      el.style.transform = `translate(${cardX}px, ${cardY}px) translate(-50%,-50%) scale(${finalScale})`;
+      el.style.opacity = opac.toFixed(3);
+      el.style.zIndex = String(500 + Math.round(depth * 500));
+
+      // neon link line from brain to card
+      if (link) {
+        const innerX = s.x + (dx / len) * 14; // just outside brain surface
+        const innerY = s.y + (dy / len) * 14;
+
+        link.setAttribute('x1', innerX.toFixed(1));
+        link.setAttribute('y1', innerY.toFixed(1));
+        link.setAttribute('x2', cardX.toFixed(1));
+        link.setAttribute('y2', cardY.toFixed(1));
+
+        const baseLinkOpacity = 0.35 + depth * 0.55;
+        const linkOpacity = isActive ? 1.0 : baseLinkOpacity;
+        link.style.opacity = linkOpacity.toFixed(3);
+
+        if (isActive) {
+          link.classList.add('brain-link--active');
+        } else {
+          link.classList.remove('brain-link--active');
+        }
+      }
+    });
+
+    // 4) Pulse inner cluster “keys” inside the brain (small neon spheres)
+    const pulse = 0.5 + 0.5 * Math.sin(t * 2.1);
+    Object.values(anchors).forEach(({ glow }) => {
+      if (!glow) return;
+
+      const baseScale = 0.7;
+      const pulseScale = 0.35;
+      const sVal = baseScale + pulse * pulseScale;
+
+      glow.scale.setScalar(sVal);
+      const mat = glow.material;
+      if (mat) {
+        mat.opacity = 0.35 + 0.45 * pulse;
+      }
+    });
+
+    if (wire) wire.visible = cfg.showEdges && cfg.edgeStrength > 0.001;
+    if (mesh) mesh.material.visible = cfg.showSurface;
+    if (points) points.visible = cfg.particles.enabled;
+    if (lines)  lines.visible  = cfg.particles.enabled && cfg.particles.linksPerNode > 0;
+
+    renderer.render(scene, camera);
     if (labelRenderer) labelRenderer.render(scene, camera);
   }
 
@@ -574,7 +706,32 @@ export function mountBrainSkills({
       infra:      new THREE.Vector3(0,        -0.62*extY, -0.20*extZ),
     };
     anchors = {};
-    Object.entries(anchorVecs).forEach(([k,v])=>{ const n=new THREE.Object3D(); n.position.copy(v); mesh.add(n); anchors[k]=n; });
+
+    // Smaller glow radius
+    const brainDiag = size.length(); // diagonal of the brain bounding box
+    const glowRadius = brainDiag * 0.008; // was effectively ~0.02 before
+
+    const glowGeo = new THREE.SphereGeometry(glowRadius, 16, 16);
+    const glowMatBase = new THREE.MeshBasicMaterial({
+      color: accent,
+      transparent: true,
+      opacity: 0.9,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+
+    Object.entries(anchorVecs).forEach(([k, v]) => {
+      const node = new THREE.Object3D();
+      node.position.copy(v);
+      mesh.add(node);
+
+      // Small neon “key” inside the brain
+      const glow = new THREE.Mesh(glowGeo, glowMatBase.clone());
+      glow.scale.setScalar(0.9);
+      node.add(glow);
+
+      anchors[k] = { node, glow };
+    });
 
     buildLabels();
     document.querySelectorAll('.brain-chips-track').forEach(t=>{
