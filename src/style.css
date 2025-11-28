@@ -5308,6 +5308,14 @@ input[type="range"]::-moz-range-thumb:hover {
   aspect-ratio: 16 / 11;
   z-index: 2;
   pointer-events: auto;
+  opacity: 1;
+  transition: opacity 0.4s ease-in-out;
+}
+
+/* Hidden state for brain during matrix effect */
+#skills .brain-host.matrix-hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* Name on top */

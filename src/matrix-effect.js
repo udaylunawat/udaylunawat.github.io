@@ -281,7 +281,7 @@ class MatrixEffect {
       </div>
       <pre class="matrix-typed" id="matrix-typed"></pre>
       <div class="matrix-status">
-        <span>Generating AI brain</span>
+        <span>Generating Latest Brain Scans</span>
         <div class="matrix-bar"><i></i></div>
         <span class="matrix-cursor" aria-hidden="true">▌</span>
       </div>
@@ -432,6 +432,12 @@ class MatrixEffect {
     if (this.animationTimer) {
       clearTimeout(this.animationTimer);
       this.animationTimer = null;
+    }
+
+    // Reveal the brain by removing the hidden class
+    const brainHost = document.getElementById('brain-host');
+    if (brainHost) {
+      brainHost.classList.remove('matrix-hidden');
     }
 
     // Fade out canvas and overlay

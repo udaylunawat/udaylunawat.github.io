@@ -21,11 +21,37 @@
     <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css"></noscript>
 
     <!-- Critical JavaScript resources -->
-    <link rel="preload" href="./src/navigation.js" as="script">
-    <link rel="preload" href="./src/modals.js" as="script">
-    <link rel="preload" href="./src/scroll-animations.js" as="script">
-    <link rel="preload" href="./src/particles-config.js" as="script">
-    <link rel="preload" href="./src/particles-controls.js" as="script">
+    <link rel="preload" href="./src/navigation.js" as="script" crossorigin>
+    <link rel="preload" href="./src/modals.js" as="script" crossorigin>
+    <link rel="preload" href="./src/scroll-animations.js" as="script" crossorigin>
+    <link rel="preload" href="./src/particles-config.js" as="script" crossorigin>
+    <link rel="preload" href="./src/particles-controls.js" as="script" crossorigin>
+    <!-- Prevent brief flash of navigation, modals and control UI before CSS/JS initialise -->
+<style>
+  /* Hide potentially flashing UI until we explicitly reveal it */
+  body:not(.show-ui) .main-nav,
+  body:not(.show-ui) .nav-open-icon,
+  body:not(.show-ui) .nav-close-icon,
+  body:not(.show-ui) #experience-modal,
+  body:not(.show-ui) #project-modal,
+  body:not(.show-ui) .particles-control-toggle-btn,
+  body:not(.show-ui) .particles-control-panel {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+</style>
+<script>
+  /* Reveal UI only after the page is fully loaded (and as a safety fallback after 3s).
+     This prevents flashes where the nav or modals briefly appear before styles/scripts run. */
+  (function() {
+    function reveal() { try { document.body.classList.add('show-ui'); } catch (e) {} }
+    if (document.readyState === 'complete') reveal();
+    else window.addEventListener('load', reveal, { once: true });
+    // Fallback: ensure UI shows even if load hangs for some reason
+    setTimeout(reveal, 3000);
+  })();
+</script>
 </head>
 
 <body>
@@ -245,17 +271,17 @@
     <div class="wrapper">
       <div class="flex-container">
         <div class="flex-container">
-          <div class="img-container">
-            <img src="loading.jpg" alt="Loading..." class="profile-photo">
+<div class="img-container">
+            <img src="./src/img/uday.webp" alt="Loading..." class="profile-photo">
           </div>
           <div class="contact-col">
             <p>
-              Loading...
+              Senior Machine Learning Engineer with experience in developing and deploying AI solutions for various industries. Passionate about using AI to solve real-world problems and create innovative products.
             </p>
             <div class="flex-container">
-              <a href="#"><button class="secondary-btn">Loading...</button></a>
-              <a href="#"><button class="secondary-btn">Loading...</button></a>
-              <a href="#"><button class="secondary-btn">Loading...</button></a>
+              <a href="https://www.linkedin.com/in/udaylunawat/"><button class="secondary-btn">LinkedIn</button></a>
+              <a href="https://github.com/udaylunawat"><button class="secondary-btn">GitHub</button></a>
+              <a href="https://twitter.com/UdayLunawat"><button class="secondary-btn">Twitter</button></a>
             </div>
 
             <div style="margin-top:12px;">
@@ -270,7 +296,7 @@
         </div>
 
         <div class="contact-form-container contact-col">
-          <h4>Loading...</h4>
+          <h4>Contact Me</h4>
           <div class="contact-form">
             <form
             action="https://formspree.io/f/mvgbvdbq"
@@ -492,11 +518,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-</script>
-
-
-
-<script>
   // Tap to activate neon for ~1.2s
   document.addEventListener('touchstart', (e) => {
     const el = e.target.closest('.brain-chip, .brain-cluster h4');
@@ -504,7 +525,16 @@ document.addEventListener('DOMContentLoaded', () => {
     el.classList.add('is-active');
     setTimeout(() => el.classList.remove('is-active'), 1200);
   }, { passive: true });
-</script>
 
-</script></body>
+  /* Reveal UI only after the page is fully loaded (and as a safety fallback after 3s).
+     This prevents flashes where the nav or modals briefly appear before styles/scripts run. */
+  (function() {
+    function reveal() { try { document.body.classList.add('show-ui'); } catch (e) {} }
+    if (document.readyState === 'complete') reveal();
+    else window.addEventListener('load', reveal, { once: true });
+    // Fallback: ensure UI shows even if load hangs for some reason
+    setTimeout(reveal, 3000);
+  })();
+</script>
+</body>
 </html>

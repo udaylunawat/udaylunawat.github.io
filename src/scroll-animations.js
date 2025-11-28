@@ -225,13 +225,14 @@ function startMatrixEffect() {
     const brainHost = document.getElementById('brain-host');
     if (!brainHost) return;
 
+    // Hide brain host immediately
+    brainHost.classList.add('matrix-hidden');
+
     // Create matrix effect
     matrixEffect = new window.MatrixEffect(brainHost);
 
-    // Set completion callback to load brain
-    matrixEffect.onComplete = () => {
-        loadBrain();
-    };
+    // Start loading brain in background (immediately, don't wait for matrix effect to complete)
+    loadBrain();
 
     // Start the matrix effect
     matrixEffect.start();
