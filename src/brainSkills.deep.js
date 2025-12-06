@@ -35,6 +35,7 @@ import './matrix-effect.js';
       transform-style: preserve-3d;
 
       --neural-pulse: 0.4;
+      --ui-scale: 1;
     }
     #brain-host.brain-visible {
       opacity: 1 !important;
@@ -50,18 +51,16 @@ import './matrix-effect.js';
     }
     .brain-link {
       fill: none;
-      stroke: #10ff7f;                         /* bright neon green */
+      stroke: #10ff7f;
       stroke-width: 2.4;
       stroke-linecap: round;
       stroke-linejoin: round;
 
-      /* segments so the pulse can travel */
       stroke-dasharray: 3 14;
       stroke-dashoffset: 0;
 
       opacity: 0.9;
 
-      /* soft neon halo */
       filter:
         drop-shadow(0 0 6px rgba(16, 255, 127, 0.85))
         drop-shadow(0 0 18px rgba(16, 255, 127, 0.75));
@@ -69,16 +68,13 @@ import './matrix-effect.js';
       shape-rendering: geometricPrecision;
       vector-effect: non-scaling-stroke;
 
-      /* travelling electrical pulse */
       animation: neuralTravel 1.2s linear infinite,
                  neuralIdleGlow 2.4s ease-in-out infinite;
     }
 
     .brain-link--active {
-      stroke: #7bffbf;                          /* hotter green for active path */
+      stroke: #7bffbf;
       stroke-width: 4.2;
-
-      /* faster, energized, + more glow */
       animation:
         neuralTravel 0.7s linear infinite,
         neuralActiveGlow 0.65s ease-in-out infinite;
@@ -133,12 +129,11 @@ import './matrix-effect.js';
           drop-shadow(0 0 30px rgba(123, 255, 191, 0.9));
       }
     }
+
     .brain-cluster {
       position: absolute;
       left: 0;
       top: 0;
-
-      /* JS controls full 3d transform */
       transform: translate(-50%, -50%) scale(1);
       transform-style: preserve-3d;
       will-change: transform, opacity;
@@ -146,7 +141,6 @@ import './matrix-effect.js';
       min-width: 230px;
       max-width: 290px;
 
-      /* no visible card box */
       padding: 0;
       background: transparent;
       border-radius: 0;
@@ -167,13 +161,13 @@ import './matrix-effect.js';
     }
 
     .brain-cluster::before {
-      content: none;   /* kill scanline overlay */
+      content: none;
     }
 
     .brain-cluster:hover {
       min-width: 340px;
       max-width: 560px;
-      padding: 0;  /* no card padding */
+      padding: 18px 18px 16px;
       opacity: 1 !important;
       z-index: 9999 !important;
     }
@@ -218,6 +212,7 @@ import './matrix-effect.js';
       gap: 6px;
       padding: 0 4px;
       transition: transform 0.5s ease;
+      will-change: transform;
     }
 
     .skill-item {
@@ -234,7 +229,6 @@ import './matrix-effect.js';
       height: 40px;
       padding: 0;
 
-      /* no box UI */
       background: transparent;
       border: none;
       box-shadow: none;
@@ -250,7 +244,6 @@ import './matrix-effect.js';
     }
 
     .skill-item:hover {
-      /* only zoom / subtle tilt, no borders, no shadows */
       transform:
         translateY(-2px)
         scale(1.2)
@@ -267,7 +260,7 @@ import './matrix-effect.js';
       align-items: center;
       justify-content: center;
       overflow: visible;
-      box-shadow: none;  /* no box */
+      box-shadow: none;
     }
 
     .skill-icon {
@@ -287,7 +280,6 @@ import './matrix-effect.js';
       filter: saturate(1.18) brightness(1.06);
     }
 
-    /* Optional tooltip if you still want it, now a compact HUD box */
     .skill-tooltip {
       display: none !important;
     }
@@ -295,15 +287,6 @@ import './matrix-effect.js';
     .skill-item:hover .skill-tooltip {
       opacity: 0;
       transform: translateY(0);
-    }
-
-    /* Hover expansion to grid (HUD "detail mode") */
-    .brain-cluster:hover {
-      min-width: 340px;
-      max-width: 560px;
-      padding: 18px 18px 16px;
-      opacity: 1 !important;
-      z-index: 9999 !important;
     }
 
     .brain-cluster:hover .skills-carousel {
@@ -323,20 +306,27 @@ import './matrix-effect.js';
     .brain-cluster:hover .skill-item {
       flex: 0 0 calc(33.333% - 8px);
       min-width: 0;
-      height: auto;          /* keep compact */
+      height: auto;
       padding: 4px 0;
     }
 
     .brain-name2d {
+      position: absolute;
+      left: 50%;
+      bottom: 3%;
+      transform: translateX(-50%);
       pointer-events: none;
       font: 700 clamp(18px, calc(3.6vw * var(--ui-scale)), 56px)/1.1 'Montserrat', sans-serif;
       letter-spacing: .06em;
       color: #e8fff3;
       -webkit-text-stroke: .4px rgba(0,0,0,.25);
-      text-shadow: 0 0 12px rgba(38,162,105,1),
-                   0 0 28px rgba(38,162,105,1),
-                   0 0 48px rgba(38,162,105,.9),
-                   0 0 90px rgba(38,162,105,.7);
+      text-shadow:
+        0 0 12px rgba(38,162,105,1),
+        0 0 28px rgba(38,162,105,1),
+        0 0 48px rgba(38,162,105,.9),
+        0 0 90px rgba(38,162,105,.7);
+      z-index: 4;
+      white-space: nowrap;
     }
 
     @media (max-width: 768px) {
@@ -465,7 +455,9 @@ const skillLogos = {
 function getSkillLogo(skillName) {
   const sources = skillLogos[skillName];
   if (!sources || !sources.length) {
-    return `https://via.placeholder.com/32x32/ffffff/000000?text=${encodeURIComponent(skillName)}`;
+    return `https://via.placeholder.com/32x32/ffffff/000000?text=${encodeURIComponent(
+      skillName
+    )}`;
   }
   return sources[0];
 }
@@ -490,7 +482,7 @@ async function ensureThreeDeps() {
   await loadScript('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/renderers/CSS2DRenderer.js');
 }
 
-// --- BrainConfig (from brain_deep2.html) ---
+// --- BrainConfig ---
 class BrainConfig {
   static getDefault() {
     return {
@@ -527,8 +519,9 @@ class BrainConfig {
         labelScale: 1.25
       },
       carousel: {
-        speed: 0.5,
-        pauseOnHover: true
+        speed: 0.5,       // interpreted as px per frame at 60 fps
+        pauseOnHover: true,
+        enabled: true
       }
     };
   }
@@ -549,14 +542,26 @@ class BrainConfig {
 class BrainVisualization {
   constructor(container, glbPath, clusters, options = {}) {
     this.container = container;
+    this.scaleMultiplier = typeof options.scaleMultiplier === 'number' ? options.scaleMultiplier : 2;
+    this.disableNeuralPulse = !!options.disableNeuralPulse;
     this.glbPath = glbPath;
     this.clusters = clusters;
     this.cfg = BrainConfig.merge(BrainConfig.getDefault(), options);
     this.THREE = window.THREE;
 
-    // Carousel state
     this.carousels = new Map();
-    this.carouselAnimations = new Map();
+    this.cards = [];
+    this.anchors = {};
+    this.neuralLights = [];
+    this.animatedMats = [];
+    this.dragging = false;
+    this.prevX = 0;
+    this.rotY = 0;
+    this.targetRotY = 0;
+    this.rafId = null;
+    this.lastTime = null;
+    this.resizeObserver = null;
+    this.isDestroyed = false;
 
     this.init();
   }
@@ -569,11 +574,11 @@ class BrainVisualization {
     this.setupRenderer();
     this.setupScene();
     this.setupEventListeners();
+    this.setupNameLabel();
     this.loadBrainModel();
   }
 
   setupRenderer() {
-    // Canvas renderer
     this.canvas = document.createElement('canvas');
     this.canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:auto;';
     this.container.style.position = 'relative';
@@ -589,10 +594,7 @@ class BrainVisualization {
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     this.renderer.setSize(this.container.clientWidth, this.container.clientHeight, false);
 
-    // SVG overlay for links
     this.setupSVGLayer();
-
-    // CSS2D renderer for labels
     this.setupLabelRenderer();
   }
 
@@ -633,14 +635,11 @@ class BrainVisualization {
     this.rig = new this.THREE.Group();
     this.scene.add(this.rig);
 
-    // Lighting
     this.scene.add(new this.THREE.AmbientLight(0xa0ffd0, 0.25));
     const dirLight = new this.THREE.DirectionalLight(0xffffff, 0.35);
     dirLight.position.set(5, 10, 7);
     this.scene.add(dirLight);
 
-    // Neural point lights
-    this.neuralLights = [];
     for (let i = 0; i < 5; i++) {
       const light = new this.THREE.PointLight(0x80ffc0, 0.3, 10);
       light.position.set(
@@ -652,20 +651,8 @@ class BrainVisualization {
       this.neuralLights.push(light);
     }
 
-    // State
-    this.anchors = {};
-    this.cards = [];
-    this.dragging = false;
-    this.prevX = 0;
-    this.rotY = 0;
-    this.targetRotY = 0;
-    this.rafId = null;
-
-    // Neural firing
     this.neuralFiring = new Map();
     this.lastNeuralUpdate = 0;
-
-    // Mobile detection
     this.isMobile = window.matchMedia('(max-width: 768px)').matches;
     this.mq = window.matchMedia('(max-width: 768px)');
     this.mq.addEventListener('change', e => {
@@ -675,23 +662,41 @@ class BrainVisualization {
   }
 
   setupEventListeners() {
-    // Mouse controls
     this.canvas.addEventListener('mousedown', e => {
       this.dragging = true;
       this.prevX = e.clientX;
     });
 
-    window.addEventListener('mousemove', e => {
-      if (!this.dragging) return;
-      this.targetRotY += (e.clientX - this.prevX) * 0.003;
-      this.prevX = e.clientX;
-    });
+    window.addEventListener('mousemove', this.onMouseMove);
+    window.addEventListener('mouseup', this.onMouseUp);
 
-    window.addEventListener('mouseup', () => (this.dragging = false));
-
-    // Touch controls
     this.setupTouchControls();
+
+    if (window.ResizeObserver) {
+      this.resizeObserver = new ResizeObserver(() => {
+        this.resize();
+        this.fitBrain(this.isMobile ? 0.88 : 0.82);
+      });
+      this.resizeObserver.observe(this.container);
+    } else {
+      window.addEventListener('resize', this.onWindowResize);
+    }
   }
+
+  onMouseMove = e => {
+    if (!this.dragging) return;
+    this.targetRotY += (e.clientX - this.prevX) * 0.003;
+    this.prevX = e.clientX;
+  };
+
+  onMouseUp = () => {
+    this.dragging = false;
+  };
+
+  onWindowResize = () => {
+    this.resize();
+    this.fitBrain(window.matchMedia('(max-width: 768px)').matches ? 0.88 : 0.82);
+  };
 
   setupTouchControls() {
     let touchDragging = false;
@@ -732,16 +737,36 @@ class BrainVisualization {
     );
   }
 
+  setupNameLabel() {
+    if (!this.cfg.name?.visible || !this.cfg.name.text) return;
+    const el = document.createElement('div');
+    el.className = 'brain-name2d';
+    el.textContent = this.cfg.name.text;
+    this.container.appendChild(el);
+    this.nameLabelEl = el;
+  }
+
   loadBrainModel() {
     const loader = new this.THREE.GLTFLoader();
-    loader.load(this.glbPath, gltf => {
-      this.onBrainLoaded(gltf);
-    });
+    loader.load(
+      this.glbPath,
+      gltf => this.onBrainLoaded(gltf),
+      undefined,
+      err => {
+        console.error('Failed to load brain GLB', err);
+      }
+    );
   }
 
   onBrainLoaded(gltf) {
+    if (this.isDestroyed) return;
+
     this.root = gltf.scene;
     this.mesh = this.findFirstMesh(this.root);
+
+    if (this.root && typeof this.scaleMultiplier === 'number') {
+      this.root.scale.multiplyScalar(this.scaleMultiplier);
+    }
 
     if (!this.mesh) {
       throw new Error('No mesh found in GLB');
@@ -749,6 +774,9 @@ class BrainVisualization {
 
     this.processBrainGeometry();
     this.setupAnchors();
+
+    this.updateBrainHighlightForCluster('frontal', 1.0);
+
     this.buildClusterCards();
     this.setupEnhancedParticles();
     this.tuneForViewport();
@@ -794,7 +822,11 @@ class BrainVisualization {
         uColor: { value: accent },
         uFresnelPow: { value: this.cfg.fresnelPow },
         uBaseOpacity: { value: this.cfg.baseOpacity },
-        uNeuralPulse: { value: 0.0 }
+        uNeuralPulse: { value: 0.0 },
+
+        uHighlightCenter: { value: new this.THREE.Vector3(0, 0, 0) },
+        uHighlightRadius: { value: 0.6 },
+        uHighlightStrength: { value: 0.0 }
       },
       vertexShader: `
         varying vec3 vW;
@@ -814,6 +846,11 @@ class BrainVisualization {
         uniform float uFresnelPow;
         uniform float uBaseOpacity;
         uniform float uNeuralPulse;
+
+        uniform vec3 uHighlightCenter;
+        uniform float uHighlightRadius;
+        uniform float uHighlightStrength;
+
         varying vec3 vW;
         varying vec3 vN;
         varying vec2 vUv;
@@ -828,8 +865,29 @@ class BrainVisualization {
           float scan = 0.5 + 0.5 * sin(vW.y * 0.30 + uTime * 1.2);
           float grid = step(0.48, fract(vW.y * 0.05 + uTime * 0.10)) * 0.12;
 
-          float a = clamp(uBaseOpacity + fres * 0.18 + grid + neuralGlow, 0.0, 0.4);
-          vec3 col = uColor * (0.30 + mix(scan, 1.0, fres) * 0.45 + neuralGlow);
+          float hDist = length(vW - uHighlightCenter);
+          float r = max(uHighlightRadius, 0.0001);
+          float hMask = exp(-pow(hDist / r, 2.0));
+          hMask = clamp(hMask * uHighlightStrength, 0.0, 1.0);
+
+          float a = clamp(
+            uBaseOpacity
+            + fres * 0.18
+            + grid
+            + neuralGlow,
+            0.0, 0.5
+          );
+
+          vec3 baseCol = uColor * (
+            0.30
+            + mix(scan, 1.0, fres) * 0.45
+            + neuralGlow
+          );
+
+          vec3 highlightCol = vec3(0.85, 1.0, 0.9);
+          vec3 col = mix(baseCol, highlightCol, hMask);
+
+          a = max(a, hMask * 0.9);
 
           gl_FragColor = vec4(col, a);
         }`,
@@ -845,17 +903,20 @@ class BrainVisualization {
         uTime: { value: 0 },
         uColor: { value: accent },
         uEdge: { value: this.cfg.edgeStrength },
-        uNeuralPulse: { value: 0.0 }
+        uNeuralPulse: { value: 0.0 },
+
+        uHighlightCenter: { value: new this.THREE.Vector3(0, 0, 0) },
+        uHighlightRadius: { value: 0.6 },
+        uHighlightStrength: { value: 0.0 }
       },
       vertexShader: `
+        uniform float uTime;
         varying vec3 vW;
         varying float vNeural;
         void main(){
           vec4 wp = modelMatrix * vec4(position, 1.0);
           vW = wp.xyz;
-
           vNeural = sin(uTime * 4.0 + position.y * 5.0) * 0.5 + 0.5;
-
           gl_Position = projectionMatrix * viewMatrix * wp;
         }`,
       fragmentShader: `
@@ -864,6 +925,11 @@ class BrainVisualization {
         uniform vec3 uColor;
         uniform float uEdge;
         uniform float uNeuralPulse;
+
+        uniform vec3 uHighlightCenter;
+        uniform float uHighlightRadius;
+        uniform float uHighlightStrength;
+
         varying vec3 vW;
         varying float vNeural;
 
@@ -871,8 +937,28 @@ class BrainVisualization {
           float baseWave = 0.5 + 0.5 * sin(uTime * 0.9 + vW.y * 1.0);
           float neuralImpulse = vNeural * uNeuralPulse * 0.8;
 
-          vec3 col = uColor * (0.40 + 0.36 * baseWave + neuralImpulse);
-          float a = clamp(uEdge * (0.5 + 0.8 * baseWave) + neuralImpulse * 0.5, 0., 1.);
+          float hDist = length(vW - uHighlightCenter);
+          float r = max(uHighlightRadius, 0.0001);
+          float hMask = exp(-pow(hDist / r, 2.0));
+          hMask = clamp(hMask * uHighlightStrength, 0.0, 1.0);
+
+          vec3 baseCol = uColor * (
+            0.40
+            + 0.36 * baseWave
+            + neuralImpulse
+          );
+
+          vec3 highlightCol = vec3(0.9, 1.0, 0.95);
+          vec3 col = mix(baseCol, highlightCol, hMask);
+
+          float a = clamp(
+            uEdge * (0.5 + 0.8 * baseWave)
+            + neuralImpulse * 0.5,
+            0.0, 1.0
+          );
+
+          a = max(a, hMask * 0.9);
+
           gl_FragColor = vec4(col, a);
         }`,
       transparent: true,
@@ -1009,6 +1095,12 @@ class BrainVisualization {
   }
 
   updateNeuralActivity(time) {
+    if (this.disableNeuralPulse) {
+      if (this.holoMat) this.holoMat.uniforms.uNeuralPulse.value = 0;
+      if (this.wireMat) this.wireMat.uniforms.uNeuralPulse.value = 0;
+      return;
+    }
+
     if (!this.particleGeometry) return;
 
     const firingStates = this.particleGeometry.attributes.aFiringState;
@@ -1044,6 +1136,7 @@ class BrainVisualization {
     const center = new this.THREE.Vector3();
     box.getCenter(center);
     this.root.position.sub(center);
+    this.brainRadius = size.length() / 2;
 
     const extX = size.x / 2;
     const extY = size.y / 2;
@@ -1069,7 +1162,6 @@ class BrainVisualization {
     this.cards.forEach(card => card.el.remove());
     this.cards = [];
     this.carousels.clear();
-    this.carouselAnimations.clear();
 
     this.clusters.forEach((cluster, clusterIndex) => {
       const el = document.createElement('div');
@@ -1113,8 +1205,7 @@ class BrainVisualization {
         track,
         items: cluster.items,
         position: 0,
-        paused: false,
-        direction: 1
+        paused: false
       };
       this.carousels.set(el, carouselData);
 
@@ -1125,38 +1216,42 @@ class BrainVisualization {
         clusterIndex
       });
 
-      el.addEventListener('mouseenter', () => {
-        carouselData.paused = true;
-      });
-      el.addEventListener('mouseleave', () => {
-        carouselData.paused = false;
-      });
+      if (this.cfg.carousel.pauseOnHover) {
+        el.addEventListener('mouseenter', () => {
+          carouselData.paused = true;
+        });
+        el.addEventListener('mouseleave', () => {
+          carouselData.paused = false;
+        });
+      }
     });
-
-    this.startCarousels();
   }
 
-  startCarousels() {
+  updateCarousels(dt) {
+    if (!this.cfg.carousel.enabled) return;
+
+    const speedPerSecond = this.cfg.carousel.speed * 60.0; // interpret as px per frame at 60 fps
+    const deltaPx = speedPerSecond * dt;
+
     this.carousels.forEach(carousel => {
-      const animateCarousel = () => {
-        if (!carousel.paused && this.cfg.carousel.enabled !== false) {
-          const track = carousel.track;
-          const totalWidth = track.scrollWidth;
-          const visibleWidth = track.parentElement.clientWidth;
+      if (carousel.paused) return;
+      const track = carousel.track;
+      if (!track) return;
+      const totalWidth = track.scrollWidth;
+      const visibleWidth = track.parentElement.clientWidth;
 
-          if (totalWidth > visibleWidth) {
-            carousel.position -= this.cfg.carousel.speed;
+      if (totalWidth > visibleWidth) {
+        carousel.position -= deltaPx;
 
-            if (Math.abs(carousel.position) >= totalWidth - visibleWidth) {
-              carousel.position = 0;
-            }
-
-            track.style.transform = `translateX(${carousel.position}px)`;
-          }
+        if (Math.abs(carousel.position) >= totalWidth - visibleWidth) {
+          carousel.position = 0;
         }
-        requestAnimationFrame(animateCarousel);
-      };
-      animateCarousel();
+
+        track.style.transform = `translateX(${carousel.position}px)`;
+      } else {
+        carousel.position = 0;
+        track.style.transform = 'translateX(0px)';
+      }
     });
   }
 
@@ -1191,6 +1286,7 @@ class BrainVisualization {
   }
 
   resize() {
+    if (!this.renderer) return;
     const rect = this.container.getBoundingClientRect();
     const w = Math.max(1, Math.floor(rect.width));
     const h = Math.max(1, Math.floor(rect.height));
@@ -1223,14 +1319,18 @@ class BrainVisualization {
   }
 
   startAnimation() {
+    this.lastTime = performance.now() * 0.001;
     this.animate();
   }
 
   animate() {
+    if (this.isDestroyed) return;
     this.rafId = requestAnimationFrame(() => this.animate());
     if (!this.root) return;
 
     const time = performance.now() * 0.001;
+    const dt = Math.max(0.001, time - (this.lastTime || time));
+    this.lastTime = time;
 
     if (!this.cfg.pause && !this.dragging) {
       this.targetRotY += this.cfg.rotSpeed;
@@ -1249,11 +1349,36 @@ class BrainVisualization {
     });
 
     this.updateClusterCards();
+    this.updateCarousels(dt);
 
     this.renderer.render(this.scene, this.camera);
     if (this.labelRenderer) {
       this.labelRenderer.render(this.scene, this.camera);
     }
+  }
+
+  updateBrainHighlightForCluster(clusterKey, strength = 1.0) {
+    if (!this.holoMat || !this.wireMat || !this.mesh) return;
+
+    if (!clusterKey || !this.anchors[clusterKey]) {
+      this.holoMat.uniforms.uHighlightStrength.value = 0.0;
+      this.wireMat.uniforms.uHighlightStrength.value = 0.0;
+      return;
+    }
+
+    const anchor = this.anchors[clusterKey];
+    const worldPos = new this.THREE.Vector3();
+    anchor.node.getWorldPosition(worldPos);
+
+    this.holoMat.uniforms.uHighlightCenter.value.copy(worldPos);
+    this.wireMat.uniforms.uHighlightCenter.value.copy(worldPos);
+
+    const r = (this.brainRadius || 1.0) * 0.2;
+    this.holoMat.uniforms.uHighlightRadius.value = r;
+    this.wireMat.uniforms.uHighlightRadius.value = r;
+
+    this.holoMat.uniforms.uHighlightStrength.value = strength;
+    this.wireMat.uniforms.uHighlightStrength.value = strength;
   }
 
   updateClusterCards() {
@@ -1287,9 +1412,16 @@ class BrainVisualization {
       );
     }
 
+    if (activeCard && activeCard.depth > 0.2) {
+      this.updateBrainHighlightForCluster(activeCard.card.key, activeCard.depth);
+    } else {
+      this.updateBrainHighlightForCluster(null, 0.0);
+    }
+
     cardState.forEach(state => {
       const { card, screenPos, depth, dx, dy, len } = state;
-      const push = 130 * ui;  // was 80 * ui; tweak 120–160 to taste
+      const scale = this.root?.scale?.x || 1;
+      const push = 1 * ui * scale;
       const cardX = screenPos.x + (dx / len) * push;
       const cardY = screenPos.y + (dy / len) * push;
 
@@ -1307,17 +1439,15 @@ class BrainVisualization {
         card.el.classList.remove('brain-cluster--active');
       }
 
-      // 3D tilt + lift
-      const normDx = dx / rect.width;     // -0.5 .. 0.5 approx
-      const normDy = dy / rect.height;    // -0.5 .. 0.5 approx
-      const tiltMax = 10;                 // degrees
-      const liftMax = 80;                 // px translateZ
+      const normDx = dx / rect.width;
+      const normDy = dy / rect.height;
+      const tiltMax = 10;
+      const liftMax = 80;
 
-      const tiltY = -normDx * tiltMax * depth;  // left/right tilt
-      const tiltX =  normDy * tiltMax * depth;  // up/down tilt
-      const zLift  = liftMax * depth;           // bring closer when "front"
+      const tiltY = -normDx * tiltMax * depth;
+      const tiltX =  normDy * tiltMax * depth;
+      const zLift  = liftMax * depth;
 
-      // expose depth to CSS for shadows etc.
       card.el.style.setProperty('--card-depth', depth.toFixed(3));
 
       card.el.style.transform =
@@ -1331,20 +1461,23 @@ class BrainVisualization {
       card.el.style.zIndex = String(500 + Math.round(depth * 500));
 
       if (card.link) {
-        // point near the brain / anchor
-        const innerX = screenPos.x + (dx / len) * 10;
-        const innerY = screenPos.y + (dy / len) * 10;
+        const centerX = cx;
+        const centerY = cy;
+        const insideRatio = 0.5;
 
-        // point at the cluster title itself
+        const anchorX = screenPos.x;
+        const anchorY = screenPos.y;
+        const innerX = anchorX + (centerX - anchorX) * insideRatio;
+        const innerY = anchorY + (centerY - anchorY) * insideRatio;
+
         let titleX = cardX;
         let titleY = cardY;
 
         const titleEl = card.el.querySelector('.cluster-title');
         if (titleEl) {
           const tRect = titleEl.getBoundingClientRect();
-          const cRect = rect; // container rect from earlier
+          const cRect = rect;
 
-          // center of the title (use tRect.bottom instead of center if you prefer bottom edge)
           titleX = (tRect.left + tRect.right) * 0.5 - cRect.left;
           titleY = (tRect.top + tRect.bottom) * 0.5 - cRect.top;
         }
@@ -1379,18 +1512,60 @@ class BrainVisualization {
 
   setOptions(newOptions) {
     this.cfg = BrainConfig.merge(this.cfg, newOptions);
+    if (newOptions.name && this.nameLabelEl) {
+      this.nameLabelEl.textContent = this.cfg.name.text || '';
+    } else if (newOptions.name && !this.nameLabelEl && this.cfg.name.text) {
+      this.setupNameLabel();
+    }
     this.tuneForViewport();
   }
 
   destroy() {
-    cancelAnimationFrame(this.rafId);
-    this.renderer.dispose();
+    this.isDestroyed = true;
+
+    if (this.rafId) {
+      cancelAnimationFrame(this.rafId);
+      this.rafId = null;
+    }
+
+    window.removeEventListener('mousemove', this.onMouseMove);
+    window.removeEventListener('mouseup', this.onMouseUp);
+    window.removeEventListener('resize', this.onWindowResize);
+
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+      this.resizeObserver = null;
+    }
+
+    if (this.renderer) {
+      this.renderer.dispose();
+    }
+
     if (this.labelRenderer) {
       this.labelRenderer.dispose();
-      this.labelRenderer.domElement.remove();
+      if (this.labelRenderer.domElement?.parentNode) {
+        this.labelRenderer.domElement.parentNode.removeChild(this.labelRenderer.domElement);
+      }
     }
-    this.canvas.remove();
-    this.cards.forEach(card => card.el.remove());
+
+    if (this.canvas?.parentNode) {
+      this.canvas.parentNode.removeChild(this.canvas);
+    }
+
+    this.cards.forEach(card => {
+      if (card.el.parentNode) card.el.parentNode.removeChild(card.el);
+    });
+
+    if (this.linkSvg?.parentNode) {
+      this.linkSvg.parentNode.removeChild(this.linkSvg);
+    }
+
+    if (this.nameLabelEl?.parentNode) {
+      this.nameLabelEl.parentNode.removeChild(this.nameLabelEl);
+    }
+
+    this.cards = [];
+    this.carousels.clear();
   }
 }
 
@@ -1408,29 +1583,36 @@ export async function mountBrainDeepSkills({
 } = {}) {
   await ensureThreeDeps();
 
+  const autoReveal = options.autoReveal !== false;
+
   if (!container) {
     container = document.createElement('div');
     container.id = 'brain-host';
     document.body.appendChild(container);
   }
+
   container.classList.remove('brain-visible');
   container.style.opacity = '0';
 
   let matrixDone = false;
   let matrix;
-  if (window.MatrixEffect) {
-    matrix = new window.MatrixEffect(document.body);
-    matrix.onComplete = () => {
-      matrixDone = true;
-      container.classList.add('brain-visible');
-      container.style.opacity = '1';
-    };
+  if (autoReveal) {
+    if (window.MatrixEffect) {
+      matrix = new window.MatrixEffect(document.body);
+      matrix.onComplete = () => {
+        matrixDone = true;
+        container.classList.add('brain-visible');
+        container.style.opacity = '1';
+      };
+    } else {
+      setTimeout(() => {
+        matrixDone = true;
+        container.classList.add('brain-visible');
+        container.style.opacity = '1';
+      }, 7000);
+    }
   } else {
-    setTimeout(() => {
-      matrixDone = true;
-      container.classList.add('brain-visible');
-      container.style.opacity = '1';
-    }, 7000);
+    matrixDone = false;
   }
 
   if (!clusters.length) {
@@ -1520,14 +1702,11 @@ export async function mountBrainDeepSkills({
 
   const brain = new BrainVisualization(container, glbPath, clusters, options);
 
-  window.addEventListener('resize', () => {
-    brain.resize();
-    brain.fitBrain(window.matchMedia('(max-width: 768px)').matches ? 0.88 : 0.82);
-  });
-
-  if (!matrixDone) {
+  if (!matrixDone && autoReveal) {
     container.classList.remove('brain-visible');
     container.style.opacity = '0';
+  } else if (!autoReveal) {
+    // caller controls visibility
   }
 
   return brain;

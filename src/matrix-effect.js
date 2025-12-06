@@ -37,7 +37,7 @@ class MatrixEffect {
     ];
 
     // Animation state
-    this.animationDuration = 7000; // total time before auto-complete
+    this.animationDuration = 3000; // total time before auto-complete
     this.startTime = 0;
     this.isAnimating = false;
     this.isComplete = false;
@@ -55,8 +55,8 @@ class MatrixEffect {
     this.glitchInterval = 3500; // not auto-used anymore, kept for manual use
 
     // Speed controls
-    this.rainSpeed = 0.55; // rows per frame; lower = slower
-    this.trailFade = 0.07; // alpha for fade; lower = longer trails
+    this.rainSpeed = 0.70; // rows per frame; lower = slower
+    this.trailFade = 0.05; // alpha for fade; lower = longer trails
 
     this.init();
   }
@@ -467,9 +467,9 @@ class MatrixEffect {
       this.buffer += '\n';
       this.line++;
       this.col = 0;
-      setTimeout(() => this.typeNext(), 70);
+      setTimeout(() => this.typeNext(), 10);
     } else {
-      setTimeout(() => this.typeNext(), 16 + Math.random() * 22);
+      setTimeout(() => this.typeNext(), 2 + Math.random() * 2);
     }
   }
 

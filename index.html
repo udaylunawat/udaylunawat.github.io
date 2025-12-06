@@ -55,7 +55,7 @@
 <script>
   (function() {
     const MIN_LOADER_TIME = 3000;   // 5000 ms = 5 seconds minimum
-    const MAX_LOADER_TIME = 8000;   // hard safety cap
+    const MAX_LOADER_TIME = 4000;   // hard safety cap
     const startTime = performance.now ? performance.now() : Date.now();
 
     function reveal() {
@@ -323,10 +323,6 @@
     <p>Please enable JavaScript to view the interactive skills brain.</p>
   </noscript>
 </section>
-<!-- <script type="module">
-  import { mountBrainDeepSkills } from './src/brainSkills.deep.js';
-  mountBrainDeepSkills();
-</script> -->
 
 <!-------- PROJECTS -------->
 
