@@ -185,7 +185,7 @@ import './matrix-effect.js';
 
     .cluster-title {
       color: #d5ffe9;
-      font-size: 25px;
+      font-size: 15px;
       font-weight: 600;
       text-align: center;
       margin-bottom: 8px;
@@ -199,46 +199,6 @@ import './matrix-effect.js';
 
       text-shadow: 0 0 8px rgba(38, 162, 105, 0.7);
       white-space: nowrap;
-    }
-
-    .cluster-title {
-      position: relative;
-      transition:
-        text-shadow 0.25s ease-out,
-        opacity 0.25s ease-out,
-        transform 0.25s ease-out;
-    }
-
-    /* Active cluster: pulsing neural glow */
-    .brain-cluster--active .cluster-title {
-      animation: clusterTitlePulse 1.4s ease-in-out infinite;
-    }
-
-    @keyframes clusterTitlePulse {
-      0% {
-        opacity: 0.75;
-        transform: translateY(0);
-        text-shadow:
-          0 0 6px rgba(16, 255, 127, 0.6),
-          0 0 14px rgba(16, 255, 127, 0.7),
-          0 0 22px rgba(16, 255, 127, 0.4);
-      }
-      50% {
-        opacity: 1;
-        transform: translateY(-1px);
-        text-shadow:
-          0 0 10px rgba(123, 255, 191, 1),
-          0 0 24px rgba(123, 255, 191, 1),
-          0 0 42px rgba(123, 255, 191, 0.95);
-      }
-      100% {
-        opacity: 0.8;
-        transform: translateY(0);
-        text-shadow:
-          0 0 6px rgba(16, 255, 127, 0.6),
-          0 0 16px rgba(16, 255, 127, 0.5),
-          0 0 26px rgba(16, 255, 127, 0.35);
-      }
     }
 
     .skills-carousel {
@@ -293,7 +253,7 @@ import './matrix-effect.js';
       /* only zoom / subtle tilt, no borders, no shadows */
       transform:
         translateY(-2px)
-        scale(1.08)
+        scale(1.2)
         rotateX(3deg)
         rotateY(-3deg);
     }
@@ -323,7 +283,7 @@ import './matrix-effect.js';
     }
 
     .skill-item:hover .skill-icon {
-      transform: scale(1.03);
+      transform: scale(1.2);
       filter: saturate(1.18) brightness(1.06);
     }
 
@@ -363,7 +323,8 @@ import './matrix-effect.js';
     .brain-cluster:hover .skill-item {
       flex: 0 0 calc(33.333% - 8px);
       min-width: 0;
-      height: 60px;
+      height: auto;          /* keep compact */
+      padding: 4px 0;
     }
 
     .brain-name2d {

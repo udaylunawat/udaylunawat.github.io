@@ -182,9 +182,11 @@ class MatrixEffect {
 
       @media (max-width: 768px) {
         .matrix-overlay {
-          align-items: flex-start;
-          padding-top: calc(16px + env(safe-area-inset-top, 0px));
-          overflow-y: auto;
+          align-items: center;   /* keep it centered */
+          justify-content: center;
+          padding-top: max(16px, env(safe-area-inset-top, 0px));
+          padding-bottom: max(20px, env(safe-area-inset-bottom, 0px));
+          overflow-y: auto;      /* allow scroll if content taller than viewport */
         }
       }
 
@@ -207,10 +209,10 @@ class MatrixEffect {
         width: 100%;
       }
 
-      @media (max-width: 576px) {
+      @media (max-width: 768px) {
         .matrix-terminal {
-          padding: 10px 12px;
-          border-radius: 12px;
+          max-height: calc(100vh - max(36px, env(safe-area-inset-top, 0px)) - max(40px, env(safe-area-inset-bottom, 0px)));
+          overflow-y: auto;
         }
       }
 
