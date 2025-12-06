@@ -54,7 +54,7 @@
 </style>
 <script>
   (function() {
-    const MIN_LOADER_TIME = 5000;   // 5000 ms = 5 seconds minimum
+    const MIN_LOADER_TIME = 3000;   // 5000 ms = 5 seconds minimum
     const MAX_LOADER_TIME = 8000;   // hard safety cap
     const startTime = performance.now ? performance.now() : Date.now();
 
@@ -132,7 +132,7 @@
       </div>
 
       <div class="ai-hints">
-        <span>hint</span>
+        <span></span>
         <code id="ai-loader-hint">hydrating /skills vector space</code>
       </div>
     </div>
@@ -318,11 +318,15 @@
 <!--------- SKILLS ---------->
 <section class="skills" id="skills">
   <h2>Skills</h2>
-  <div class="brain-host" id="brain-host"></div>
+  <div id="brain-host"></div>
   <noscript>
     <p>Please enable JavaScript to view the interactive skills brain.</p>
   </noscript>
 </section>
+<!-- <script type="module">
+  import { mountBrainDeepSkills } from './src/brainSkills.deep.js';
+  mountBrainDeepSkills();
+</script> -->
 
 <!-------- PROJECTS -------->
 
@@ -566,11 +570,11 @@
 <script src="./src/content-loader.js"></script>
 
 <!-- Three UMD + helpers (same version) -->
-<script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
-<script src="https://unpkg.com/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-<script src="https://unpkg.com/three@0.128.0/examples/js/utils/BufferGeometryUtils.js"></script>
-<script src="https://unpkg.com/three@0.128.0/examples/js/modifiers/SimplifyModifier.js"></script>
-<script type="module" src="./src/brainSkills.boot.js"></script>
+<!-- <script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script> -->
+<!-- <script src="https://unpkg.com/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script> -->
+<!-- <script src="https://unpkg.com/three@0.128.0/examples/js/utils/BufferGeometryUtils.js"></script> -->
+<!-- <script src="https://unpkg.com/three@0.128.0/examples/js/modifiers/SimplifyModifier.js"></script> -->
+<!-- <script type="module" src="./src/brainSkills.boot.js"></script> -->
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap" rel="stylesheet" />
 
 <!-- Utility functions -->
@@ -619,120 +623,3 @@ document.addEventListener('DOMContentLoaded', () => {
   //   setTimeout(reveal, 3000);
   // })();
 </script>
-<!-- <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const resumeLink = document.getElementById('resume-link');
-  if (resumeLink) {
-    resumeLink.addEventListener('click', (e) => {
-      const link = document.createElement('a');
-      link.href = './src/Uday_Lunawat_Resume_Senior_ML_Engineer_V9.pdf';
-      link.download = 'Uday_Lunawat_Resume_Senior_ML_Engineer_V9.pdf';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    });
-  }
-});
-
-// Tap to activate neon for ~1.2s
-document.addEventListener('touchstart', (e) => {
-  const el = e.target.closest('.brain-chip, .brain-cluster h4');
-  if (!el) return;
-  el.classList.add('is-active');
-  setTimeout(() => el.classList.remove('is-active'), 1200);
-}, { passive: true });
-</script> -->
-<script>
-
-  // Minimal neural loader logic
-  const statusEl = document.getElementById('ai-loader-status');
-  const percentEl = document.getElementById('ai-loader-percent');
-  const hintEl = document.getElementById('ai-loader-hint');
-  const grid = document.getElementById('ai-grid-nodes');
-  const dots = grid ? Array.from(grid.querySelectorAll('.ai-node-dot')) : [];
-
-  const statuses = [
-    'linking workspace graph',
-    'mounting llm cores',
-    'warming attention heads',
-    'hydrating vector memory',
-    'syncing /projects manifest',
-    'initializing agent runtime'
-  ];
-
-  const hints = [
-    'loading /about/uday',
-    'compiling /experience timeline',
-    'indexing /skills/brain space',
-    'deploying /agents/vegas',
-    'refreshing /projects/llm-lab',
-    'arming /contact handshake'
-  ];
-
-  let statusIndex = 0;
-
-  function updateStatus() {
-    if (!statusEl) return;
-    statusEl.textContent = statuses[statusIndex];
-    statusIndex = (statusIndex + 1) % statuses.length;
-  }
-
-  function updateHint() {
-    if (!hintEl) return;
-    const value = hints[Math.floor(Math.random() * hints.length)];
-    hintEl.textContent = value;
-  }
-
-  function randomInt(max) {
-    return Math.floor(Math.random() * max);
-  }
-
-  function animateGrid() {
-    if (!dots.length) return;
-    dots.forEach(d => d.classList.remove('active'));
-    const activeCount = 4 + randomInt(5); // 4 to 8 nodes
-    for (let i = 0; i < activeCount; i++) {
-      const idx = randomInt(dots.length);
-      dots[idx].classList.add('active');
-    }
-  }
-
-  updateStatus();
-  updateHint();
-  animateGrid();
-
-  const statusTimer = setInterval(updateStatus, 1200);
-  const hintTimer = setInterval(updateHint, 2600);
-  const gridTimer = setInterval(animateGrid, 260);
-
-  let pctTimer = null;
-  if (percentEl) {
-    let pct = 94 + Math.random() * 3;
-    pctTimer = setInterval(() => {
-      pct += Math.random() * 1.2;
-      if (pct > 99.4) {
-        pct = 96.5 + Math.random() * 2.5;
-      }
-      percentEl.textContent = pct.toFixed(1) + '%';
-    }, 420);
-  }
-
-  function stopLoaderTimers() {
-    clearInterval(statusTimer);
-    clearInterval(hintTimer);
-    clearInterval(gridTimer);
-    if (pctTimer) clearInterval(pctTimer);
-  }
-
-  // Stop loader animations once UI is revealed
-  const observer = new MutationObserver(() => {
-    if (document.body.classList.contains('show-ui')) {
-      stopLoaderTimers();
-      observer.disconnect();
-    }
-  });
-
-  observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
-</script>
-</body>
-</html>

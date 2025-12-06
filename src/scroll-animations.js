@@ -203,6 +203,9 @@ function resetAllAnimations() {
 function checkMatrixEffectTrigger() {
     if (matrixEffectTriggered || brainLoaded) return;
 
+    // Prevent triggering if UI not revealed (still loading)
+    if (!document.body.classList.contains('show-ui')) return;
+
     const skillsSection = document.getElementById('skills');
     if (!skillsSection) return;
 
@@ -211,147 +214,38 @@ function checkMatrixEffectTrigger() {
     const skillsHeight = rect.height;
     const viewportHeight = window.innerHeight;
 
-    // Calculate 80% into the skills section
-    const triggerPoint = skillsTop + (skillsHeight * 0.8);
-
-    // Check if we've scrolled to 80% into the skills section
-    if (triggerPoint <= viewportHeight && triggerPoint >= 0) {
-        matrixEffectTriggered = true;
-        startMatrixEffect();
+    // Only trigger if the top of the skills section is at least halfway into the viewport
+    if (skillsTop <= viewportHeight * 0.5 && skillsTop + skillsHeight > 0) {
+        // Now check if we've scrolled at least 80% into the section
+        const triggerPoint = skillsTop + (skillsHeight * 0.8);
+        if (triggerPoint <= viewportHeight && triggerPoint >= 0) {
+            matrixEffectTriggered = true;
+            startMatrixEffect();
+        }
     }
 }
 
-function startMatrixEffect() {
+async function startMatrixEffect() {
+    if (matrixEffect || brainLoaded) return;
+
     const brainHost = document.getElementById('brain-host');
     if (!brainHost) return;
 
-    // Hide brain host immediately
-    brainHost.classList.add('matrix-hidden');
-
-    // Create matrix effect
-    matrixEffect = new window.MatrixEffect(brainHost);
-
-    // Start loading brain in background (immediately, don't wait for matrix effect to complete)
-    loadBrain();
-
-    // Start the matrix effect
-    matrixEffect.start();
-}
-
-function loadBrain() {
-    if (brainLoaded) return;
-
-    brainLoaded = true;
-
-    // Load the brain script dynamically
-    const brainScript = document.createElement('script');
-    brainScript.type = 'module';
-    brainScript.textContent = `
-        import { mountBrainSkills } from './src/brainSkills.js';
-
-        const host = document.getElementById('brain-host');
-
-        const clusters = [
-            // Problem solving, agent design, planning, reasoning
-            { key: 'frontal', title: 'Reasoning · Planning', items: [
-              { label: 'Python' },
-              { label: 'LangChain' },
-              { label: 'LangGraph' },
-              { label: 'Google ADK' },
-              { label: 'Prompting' },
-              { label: 'Agents' },
-              { label: 'Evaluation' },
-              { label: 'RAG' }
-            ]},
-
-            // UI, viz, human-facing outputs
-            { key: 'visual', title: 'Visual Cortex', items: [
-              { label: 'Streamlit' },
-              { label: 'Gradio' },
-              { label: 'Tableau' },
-              { label: 'Plotly' },
-              { label: 'Dash' },
-              { label: 'Matplotlib' }
-            ]},
-
-            // Serving, deployment, CI/CD, observability
-            { key: 'motor', title: 'Motor · Control', items: [
-              { label: 'Docker' },
-              { label: 'Kubeflow' },
-              { label: 'Cloud Run' },
-              { label: 'MLflow' },
-              { label: 'GitHub Actions' },
-              { label: 'Jenkins' },
-              { label: 'Weights & Biases' },
-              { label: 'Langfuse' }
-            ]},
-
-            // Data engineering, analysis, feature work, pipelines
-            { key: 'temporalL', title: 'Temporal · L', items: [
-              { label: 'Pandas' },
-              { label: 'NumPy' },
-              { label: 'SQLModel' },
-              { label: 'Alembic' }
-            ]},
-
-            // Retrieval, memory, embeddings, knowledge access
-            { key: 'temporalR', title: 'Temporal · R', items: [
-              { label: 'Embeddings' },
-              { label: 'Vector DBs' },
-              { label: 'Redis' },
-              { label: 'MongoDB' },
-              { label: 'RAG Pipelines' }
-            ]},
-
-            // Infra, cloud, storage, OS/tooling
-            { key: 'infra', title: 'Infrastructure', items: [
-              { label: 'GCP Compute Engine' },
-              { label: 'Cloud Storage' },
-              { label: 'Cloud Functions' },
-              { label: 'Vertex AI' },
-              { label: 'MySQL' },
-              { label: 'PostgreSQL' },
-              { label: 'Linux' },
-              { label: 'macOS' },
-              { label: 'Windows' },
-              { label: 'VS Code' },
-              { label: 'Jupyter Notebook' }
-            ]}
-        ];
-
-        // Mount brain with skills data
-        const brain = mountBrainSkills({
-          container: host,
-          glbPath: './src/brain.glb',
-          clusters,
-          options: {
-            carousel: { visibleCount: 3, switchMs: 3200, switchMsMobile: 4200 },
-            baseOpacity: 0.005,
-            edgeStrength: 0.10,
-            hoverScale: 1.5,
-            labelBaseScale: 0.8,
-            particles: {
-              enabled: true,
-              count: 150,
-              baseSize: 0.01,
-              pulseAmp: 0.1,
-              opacity: 0.95,
-              linksPerNode: 3,
-              linkDist: 3.8,
-              rewireMs: 7000
+    // Create and start the matrix effect (if available)
+    if (window.MatrixEffect) {
+        setTimeout(async () => {
+            try {
+                const mod = await import('./brainSkills.deep.js');
+                await mod.mountBrainDeepSkills({ container: brainHost });
+                brainLoaded = true;
+            } catch (err) {
+                console.error('Error mounting brain (fallback):', err);
+            } finally {
+                document.body.classList.remove('show-loader');
+                document.body.classList.remove('loading-block');
             }
-          }
-        });
-
-        if (matchMedia('(max-width: 768px)').matches) {
-          brain.setOptions({
-            baseOpacity: 0.04,
-            particles: { count: 320, baseSize: 1.8, linksPerNode: 2, linkDist: 2.4, rewireMs: 1100 }
-          });
-        }
-    `;
-
-    document.head.appendChild(brainScript);
+        }, 400); // brief delay for perceived transition
+    }
 }
 
 // Initialize when DOM is ready

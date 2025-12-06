@@ -114,6 +114,8 @@ class MatrixEffect {
     });
   }
 
+
+
   addMatrixStyles() {
     const style = document.createElement('style');
     style.textContent = `
@@ -130,6 +132,12 @@ class MatrixEffect {
         color: var(--matrix);
         overflow: hidden;
         font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      }
+
+      @media (max-width: 576px) {
+        .matrix-active {
+          overflow: hidden;
+        }
       }
 
       .matrix-active .scanlines::before {
@@ -161,11 +169,23 @@ class MatrixEffect {
       .matrix-overlay {
         position: fixed;
         inset: 0;
-        display: grid;
-        place-items: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: max(10px, env(safe-area-inset-top, 0px)) 10px max(16px, env(safe-area-inset-bottom, 0px)) 10px;
         pointer-events: none;
-        padding: 6vmin;
         z-index: 10001;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+      }
+
+      @media (max-width: 768px) {
+        .matrix-overlay {
+          align-items: flex-start;
+          padding-top: calc(16px + env(safe-area-inset-top, 0px));
+          overflow-y: auto;
+        }
       }
 
       .matrix-terminal {
@@ -173,11 +193,25 @@ class MatrixEffect {
         background: rgba(0, 20, 10, 0.28);
         border: 1px solid rgba(0, 255, 65, 0.18);
         border-radius: 16px;
-        padding: clamp(12px, 2vmin, 24px);
+        padding: clamp(10px, 2.5vmin, 20px);
         box-shadow: 0 0 0 1px rgba(0, 255, 65, 0.08),
           0 10px 40px rgba(0,0,0,0.6);
         backdrop-filter: blur(6px) saturate(120%);
-        width: min(900px, 90vw);
+        width: min(900px, 100%);
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+
+      /* Bootstrap-friendly wrapper */
+      .matrix-terminal-bootstrap {
+        width: 100%;
+      }
+
+      @media (max-width: 576px) {
+        .matrix-terminal {
+          padding: 10px 12px;
+          border-radius: 12px;
+        }
       }
 
       .matrix-terminal-header {
@@ -189,6 +223,13 @@ class MatrixEffect {
         text-transform: uppercase;
         opacity: 0.9;
         margin-bottom: 10px;
+      }
+
+      @media (max-width: 576px) {
+        .matrix-terminal-header {
+          font-size: 10px;
+          margin-bottom: 6px;
+        }
       }
 
       .matrix-dot {
@@ -212,28 +253,40 @@ class MatrixEffect {
       .matrix-typed {
         margin: 0;
         line-height: 1.05;
-        font-size: clamp(11px, 2.1vmin, 17px);
+        font-size: clamp(10px, 2.1vmin, 17px);
         text-shadow: var(--glow);
         white-space: pre;
         color: var(--matrix);
-        min-height: 260px;
+        min-height: 220px;
+        max-height: 60vh;
+        overflow-y: auto;
+      }
+
+      @media (max-width: 576px) {
+        .matrix-typed {
+          min-height: 180px;
+          max-height: 50vh;
+          font-size: 11px;
+        }
       }
 
       .matrix-status {
         margin-top: 8px;
-        font-size: clamp(12px, 2vmin, 18px);
+        font-size: clamp(11px, 2vmin, 16px);
         letter-spacing: 0.06em;
         color: #8effc1;
         text-shadow: var(--glow);
         display: flex;
         align-items: center;
         gap: 12px;
+        flex-wrap: wrap;
       }
 
       .matrix-bar {
         --w: 260px;
         position: relative;
         width: var(--w);
+        max-width: 60vw;
         height: 8px;
         border: 1px solid rgba(0,255,65,0.4);
         border-radius: 999px;
@@ -263,6 +316,12 @@ class MatrixEffect {
         font-size: 11px;
       }
 
+      @media (max-width: 576px) {
+        .matrix-hint {
+          font-size: 10px;
+        }
+      }
+
       .matrix-cursor {
         opacity: 1;
         animation: matrix-blink 1s infinite;
@@ -271,6 +330,16 @@ class MatrixEffect {
       @keyframes matrix-blink {
         0%, 50% { opacity: 1; }
         51%, 100% { opacity: 0; }
+      }
+
+      /* Respect prefers-reduced-motion */
+      @media (prefers-reduced-motion: reduce) {
+        .matrix-bar > i {
+          animation-duration: 14s;
+        }
+        .matrix-dot {
+          animation-duration: 4s;
+        }
       }
     `;
     document.head.appendChild(style);
