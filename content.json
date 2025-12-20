@@ -7,7 +7,7 @@
   "about": {
     "title": "Passion",
     "icon": "./src/img/icon-rocket.svg",
-    "content": "I am a Senior Machine Learning Engineer and Software Engineer with over 6 years delivering enterprise-grade AI and software solutions. I focus on moving models into production — writing reliable model code, robust APIs, and repeatable deployment pipelines.<br><br>My work spans Computer Vision, NLP, and agentic systems that automate analytics and workflows. I prefer shipping maintainable code and building observability into ML systems from day one.<br><br>I enjoy open-source tooling and pragmatic engineering: making complex systems simple to operate and measure."
+    "content": "Senior Machine Learning Engineer and Software Engineer with over 6 years delivering enterprise-grade AI and software solutions. I focus on moving models into production — writing reliable model code, robust APIs, and repeatable deployment pipelines.<br><br>My work spans Computer Vision, NLP, and agentic systems that automate analytics and workflows. I prefer shipping maintainable code and building observability into ML systems from day one.<br><br>I enjoy open-source tooling and pragmatic engineering: making complex systems simple to operate and measure."
   },
   "experience": [
     {

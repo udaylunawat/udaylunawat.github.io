@@ -547,6 +547,19 @@ header.home, section.home {
     z-index: 2;
 }
 
+.home h1 {
+    font-size: 7.5rem;
+    line-height: 1.1;
+    margin-top: -7.1rem;
+    margin-bottom: 0.2rem;
+    display: block;
+    color: #fff;
+    text-align: left;
+    font-weight: 200;
+    padding-left: var(--g1);
+    padding-right: var(--g1);
+}
+
 .home h2 {
     font-size: 5.5rem;
     line-height: 1.1;
@@ -624,6 +637,8 @@ header.home, section.home {
 @media screen and (min-width: 600px) {
     .home h1 {
         width:fit-content;
+        font-size: 7.601rem;
+        margin-bottom: 0.2rem;
     }
     .home .wrapper {
         align-items:normal;
@@ -640,6 +655,11 @@ header.home, section.home {
     }
 }
 @media screen and (min-width: 800px) {
+    .home h1 {
+        width:fit-content;
+        font-size: 7.601rem;
+        margin-bottom: 0.2rem;
+    }
     .home > svg {
         display: block;
         position: absolute;
@@ -650,6 +670,10 @@ header.home, section.home {
     }
 }
 @media screen and (min-width: 1200px) {
+    .home h1 {
+        width:fit-content;
+        font-size: 7.601rem;
+    }
     .home .wrapper div h4 {
         padding: 2.71rem;
         width: 300px;
@@ -661,6 +685,11 @@ header.home, section.home {
 
 /* Responsive: slightly less padding on mobile */
 @media (max-width: 600px) {
+    .home h1 {
+        width:fit-content;
+        font-size: 4.601rem;
+        margin-bottom: 0.2rem;
+    }
     .home h2,
     .home .tagline {
         padding-left: var(--space-sm);
@@ -1067,7 +1096,7 @@ header.home, section.home {
 .projects-gallery .gallery-card:hover img,
 .projects-gallery .gallery-card:hover .experience-logo {
     filter: grayscale(0%) brightness(100%);
-    transform: scale(1.26);
+    transform: scale(1.45);
 }
 
 /* Ensure smooth transitions */
@@ -2236,7 +2265,8 @@ header.home, section.home {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 1.5rem 2rem; /* Increased padding for better touch targets */
+  padding: 0.5rem 1.25rem; /* Increased padding for better touch targets */
+  padding-top: 0.4rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -2318,9 +2348,15 @@ header.home, section.home {
   }
 }
 
-.modal-header-content {
+/* .modal-header-content {
   flex: 1;
   margin-right: 1rem;
+} */
+
+.modal-header-content {
+  margin-top: 0;
+  padding-top: 0;
+  align-self: flex-start;
 }
 
 .modal-header h1 {
@@ -2409,10 +2445,7 @@ header.home, section.home {
 
 /* Modal Content Wrapper - Adjusted margins now that navigation buttons are removed */
 .modal-content-wrapper {
-  flex: 1;
-  max-width: 100%;
-  margin: 0 auto;
-  padding: 0 2rem;
+  margin: 0 40px; /* was 70px */
 }
 
 .modal-header {
@@ -2658,11 +2691,11 @@ header.home, section.home {
   }
 
   .modal-content-wrapper {
-    margin: 0 70px; /* Reduced margins to increase content area */
+    margin: 0 1rem;
   }
 
   .modal-body {
-    max-height: calc(80vh - 80px);
+    max-height: calc(65.4vh - 120px);
   }
 
   .blog-content {
