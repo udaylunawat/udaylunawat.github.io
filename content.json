@@ -16,7 +16,7 @@
       "dates": "Nov 2024 – Present · Pune",
       "tags": ["LangGraph", "LangChain", "Multi-Agent", "Python"],
       "description": "Led engineering for Fractal AI (India's First AI Unicorn Company), a multi-agent orchestration platform (LangGraph / LangChain). Owned tool onboarding and metadata lifecycle to productize agent behaviors for largest US telecom's business use.",
-      "badges": ["60+ agents onboarded", "3,000+ CI/CD in just a few weeks"],
+      "badges": ["300+ agents onboarded", "11,000+ automated workflows"],
       "logo": "./src/img/fractal2.png"
     },
     {
