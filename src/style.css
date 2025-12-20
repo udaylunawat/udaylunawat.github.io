@@ -2217,21 +2217,19 @@ header.home, section.home {
     filter: grayscale(100%) brightness(70%);
   }
 
-/* ---------------- PROJECT MODAL ---------------- */
+  /* =========================================================
+   MODAL FOUNDATION
+   ========================================================= */
 
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(23, 27, 34, 0.95);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
+  inset: 0;
+  background: rgba(23, 27, 34, 0.96);
+  backdrop-filter: blur(12px);
   z-index: 1000;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.3s ease-in-out;
+  transition: opacity 0.2s ease;
 }
 
 .modal-overlay.active {
@@ -2239,750 +2237,352 @@ header.home, section.home {
   visibility: visible;
 }
 
+/* =========================================================
+   MODAL CONTAINER
+   ========================================================= */
+
 .modal-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.9);
-  background-color: rgba(23, 27, 34, 0.98);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  width: 95vw;
-  height: 85vh; /* Increased from 65.4vh for better utilization */
-  max-width: 1400px;
-  max-height: 90vh; /* Increased from 1200px max-height */
-  transition: transform 0.3s ease-in-out;
+  position: fixed;
+  inset: 4vh 2vw;
+  max-width: 1320px;
+  margin: auto;
+  background: rgba(23, 27, 34, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: 'Oswald', sans-serif;
 }
 
-.modal-overlay.active .modal-content {
-  transform: translate(-50%, -50%) scale(1);
-}
+/* =========================================================
+   HEADER
+   ========================================================= */
 
 .modal-header {
+  flex-shrink: 0;
   position: sticky;
   top: 0;
-  background-color: rgba(23, 27, 34, 0.98);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 0.5rem 1.25rem; /* Increased padding for better touch targets */
-  padding-top: 0.4rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   z-index: 10;
-  min-height: 100px; /* Increased from 80px for better touch targets */
-  position: relative;
-}
-
-/* Experience and Project modal logos */
-.modal-header .experience-logo,
-.modal-header .project-logo {
-  position: absolute;
-  top: 50%;
-  right: 20px; /* Move to right side instead of center */
-  transform: translateY(-50%); /* Center vertically instead of overlapping title */
-  width: px; /* Smaller size to not overwhelm */
-  height: 60px;
-  border-radius: 50%;
-  background-color: rgba(23, 27, 34, 0.98);
-  border: 3px solid rgba(255, 255, 255, 0.1);
-  border-top: 3px solid #00ff00;
   display: flex;
   align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  z-index: 11;
-  opacity: 0.9;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.modal-experience-logo-img {
-  width: 36px !important;
-  height: 36px !important;
-  max-width: 36px !important;
-  max-height: 36px !important;
-  object-fit: contain !important;
-}
-
-.modal-header .experience-logo:hover,
-.modal-header .project-logo:hover {
-  opacity: 1;
-  transform: translateY(-50%) scale(1.05);
-}
-
-.modal-header .experience-logo img,
-.modal-header .project-logo img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: brightness(100%);
-  transition: filter 0.3s ease;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  padding: 2px;
-}
-
-.modal-header .experience-logo:hover img,
-.modal-header .project-logo:hover img {
-  filter: grayscale(0%) brightness(100%);
-  transform: scale(1);
-}
-
-/* Mobile adjustments for modal logos */
-@media screen and (max-width: 768px) {
-  .modal-header .experience-logo,
-  .modal-header .project-logo {
-    width: 50px;
-    height: 50px;
-    right: 1rem;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    border-top: 2px solid #00ff00;
-  }
-
-  .modal-header .experience-logo img,
-  .modal-header .project-logo img {
-    border-width: 1px;
-    padding: 1px;
-  }
-}
-
-/* .modal-header-content {
-  flex: 1;
-  margin-right: 1rem;
-} */
-
-.modal-header-content {
-  margin-top: 0;
-  padding-top: 0;
-  align-self: flex-start;
+  justify-content: flex-start;
+  gap: 1rem;
+  padding: 0.75rem 1.25rem;
+  padding-left: 8rem; /* aligns with content gutter */
+  background: rgba(23, 27, 34, 0.96);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: left;
 }
 
 .modal-header h1 {
-  color: #00ff00;
-  font-size: 1.4rem;
-  font-weight: 300;
-  margin: 0 0 0.5rem 0;
-  border-bottom: 2px solid rgba(0, 255, 0, 0.3);
-  padding-bottom: 0.25rem;
-  line-height: 1.2;
-}
-
-.modal-header .tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
   margin: 0;
+  font-family: 'Oswald', sans-serif;
+  font-size: 2.85rem;            /* BIGGEST TEXT */
+  font-weight: 200;
+  letter-spacing: 0.02em;
+  color: #00ff00;
+  line-height: 1.25;
+}
+/* =========================================================
+   EXPERIENCE / PROJECT LOGOS
+   ========================================================= */
+
+/* ---------- BASE LOGO CONTAINER ---------- */
+/* This is the default for SINGLE logos */
+
+.experience-logo,
+.project-logo {
+  margin-left: auto;
+  width: 88px;
+  height: 88px;
+  flex-shrink: 0;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  border-top-color: #00ff00;
+
+  background: rgba(23, 27, 34, 0.95);
 }
 
-.modal-header .tags span {
-  padding: 0.25rem 0.75rem;
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 15px;
-  font-size: 0.8rem;
-  color: #fff;
-  font-weight: 500;
+/* Single logo image */
+.experience-logo img,
+.project-logo img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
 }
 
-/* Modal Layout */
-.modal-content {
+/* =========================================================
+   MULTI-LOGO MODE (TCS + INFOSYS, ETC.)
+   ========================================================= */
+
+/*
+  IMPORTANT:
+  - Same container element
+  - We override shape + layout
+  - We DO NOT duplicate base rules
+*/
+
+.experience-logo.multi {
+  width: auto;
+  height: auto;
+
+  padding: 8px 12px;
+  gap: 10px;
+
   display: flex;
   align-items: center;
-  justify-content: center;
-  position: relative;
+
+  border-radius: 999px; /* pill */
 }
 
-/* Modal Tap Zones (invisible overlay for accessible navigation) */
-.modal-tap-zones {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 100;
-  pointer-events: none;
+/* Individual logos inside multi container */
+.experience-logo.multi img {
+  width: 44px;
+  height: 44px;
+
+  padding: 4px;
+
+  object-fit: contain;
+  border-radius: 50%;
+
+  background: rgba(23, 27, 34, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-.modal-tap-zone {
-  position: absolute;
-  background: transparent;
-  pointer-events: auto;
-  transition: background-color 0.2s ease;
+/* =========================================================
+   OPTIONAL OPTICAL CORRECTION
+   (brand logos rarely align perfectly)
+   ========================================================= */
+
+/* Slight vertical tweak for text-heavy logos like Infosys */
+.experience-logo.multi img:nth-child(1) {
+  transform: translateY(1px);
 }
 
-.modal-tap-zone.left {
-  left: 0;
-  width: 30%;
-  height: 100%;
-}
+/* =========================================================
+   CONTENT WRAPPER (SCROLL FIX)
+   ========================================================= */
 
-.modal-tap-zone.right {
-  right: 0;
-  width: 30%;
-  height: 100%;
-}
-
-.modal-tap-zone.center {
-  left: 30%;
-  width: 40%;
-  height: 100%;
-}
-
-/* Optional: Subtle visual feedback for tap zones on hover (desktop only) */
-@media screen and (min-width: 1024px) {
-  .modal-tap-zone.left:hover {
-    background: rgba(0, 255, 0, 0.02);
-  }
-
-  .modal-tap-zone.right:hover {
-    background: rgba(0, 255, 0, 0.02);
-  }
-}
-
-/* Modal navigation buttons have been removed - modal now uses tap zone navigation */
-
-/* Modal Content Wrapper - Adjusted margins now that navigation buttons are removed */
 .modal-content-wrapper {
-  margin: 0 40px; /* was 70px */
-}
-
-.modal-header {
+  flex: 1;
+  min-height: 0;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
+  flex-direction: column;
 }
 
-/* Modal navigation styles */
+/* =========================================================
+   BODY (ONLY SCROLL CONTAINER)
+   ========================================================= */
+
+.modal-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+
+.modal-body::-webkit-scrollbar {
+  display: none;
+}
+
+/* =========================================================
+   BLOG CONTENT
+   ========================================================= */
+
+.blog-content {
+  width: 100%;
+  max-width: 1100px;              /* WIDE, NOT BLOGGY */
+  margin-right: auto;
+  margin-left: 0;
+  padding: 1.2rem 3rem 2.2rem 8rem;
+  box-sizing: border-box;
+}
+
+/* ---------------- TYPOGRAPHY ---------------- */
+
+.blog-content p {
+  font-size: 1.15rem;
+  line-height: 1.55;
+  margin: 0 0 0.65rem 0; /* tighter paragraph end */
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.blog-content h2 {
+  font-size: 1.65rem;
+  font-weight: 200;
+  letter-spacing: 0.015em;
+  color: #00ff00;
+  margin: 0.9rem 0 0.35rem; /* LESS GAP ABOVE */
+}
+
+.blog-content h3 {
+  font-size: 1.25rem;
+  font-weight: 200;
+  margin: 0.75rem 0 0.3rem;
+  color: #ffffff;
+}
+
+/* Lists */
+
+.blog-content ul,
+.blog-content ol {
+  padding-left: 1.2rem;
+  margin: 0.6rem 0;
+}
+
+.blog-content li {
+  margin-bottom: 0.45rem;
+}
+
+.blog-content li strong {
+  color: #00ff00;
+  font-weight: 300;
+}
+
+/* Images */
+
+.blog-content img,
+.blog-content .project-image {
+  max-width: 100%;
+  border-radius: 6px;
+  margin: 0.9rem 0;
+}
+
+/* =========================================================
+   NAVIGATION (SUBTLE)
+   ========================================================= */
+
 .modal-navigation {
-  position: absolute;
-  bottom: 20px;
+  position: absolute;          /* 🔥 KEY CHANGE */
   left: 50%;
+  bottom: 12px;
   transform: translateX(-50%);
+
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 20px;
-  background: rgba(23, 27, 34, 0.9);
+  gap: 12px;
+
+  padding: 0.5rem 0.75rem;
+
+  background: rgba(23, 27, 34, 0.85);
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 30px;
-  padding: 12px 20px;
-  z-index: 100;
+
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  z-index: 20;                /* ABOVE CONTENT */
+  pointer-events: auto;
 }
+
+/* Arrow Buttons */
 
 .nav-arrow {
-  background: none;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  width: 30px;
+  height: 30px;
+
   border-radius: 50%;
-  width: 48px;
-  height: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.05);
+
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+
+  color: #ffffff;
   cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
+
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .nav-arrow:hover:not(:disabled) {
+  background: rgba(0, 255, 0, 0.15);
   border-color: #00ff00;
-  background-color: rgba(0, 255, 0, 0.1);
-  transform: scale(1.1);
 }
 
 .nav-arrow:disabled {
-  opacity: 0.3;
+  opacity: 0.35;
   cursor: not-allowed;
-  transform: none;
-}
-
-.nav-arrow:disabled:hover {
-  border-color: rgba(255, 255, 255, 0.3);
-  background-color: transparent;
-  transform: none;
 }
 
 .nav-arrow svg {
-  stroke: currentColor;
-  transition: stroke 0.3s ease;
+  width: 14px;
+  height: 14px;
 }
 
-.nav-arrow:hover:not(:disabled) svg {
-  stroke: #00ff00;
-}
+/* Indicators */
 
 .nav-indicators {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   align-items: center;
 }
 
 .nav-indicator {
-  width: 10px;
-  height: 10px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.3);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-}
-
-.nav-indicator:hover {
-  background-color: rgba(255, 255, 255, 0.6);
-  transform: scale(1.2);
+  background: rgba(255, 255, 255, 0.35);
 }
 
 .nav-indicator.active {
-  background-color: #00ff00;
-  transform: scale(1.3);
+  background: #00ff00;
 }
 
-.nav-indicator.active:hover {
-  background-color: #00ff00;
-  transform: scale(1.5);
-}
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
-/* Mobile navigation adjustments */
-@media screen and (max-width: 768px) {
-  .modal-navigation {
-    bottom: 15px;
-    gap: 15px;
-    padding: 10px 15px;
-  }
-
-  .nav-arrow {
-    width: 44px;
-    height: 44px;
-  }
-
-  .nav-arrow svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  .nav-indicators {
-    gap: 6px;
-  }
-
-  .nav-indicator {
-    width: 8px;
-    height: 8px;
-  }
-}
-
-/* Very small screens */
-@media screen and (max-width: 480px) {
-  .modal-navigation {
-    bottom: 10px;
-    gap: 10px;
-    padding: 8px 12px;
-  }
-
-  .nav-arrow {
-    width: 40px;
-    height: 40px;
-  }
-
-  .nav-arrow svg {
-    width: 18px;
-    height: 18px;
-  }
-}
-
-.modal-body {
-  padding: 0;
-  max-height: calc(65.4vh - 120px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
-}
-
-.modal-body::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, and Opera */
-}
-
-.blog-content {
-  padding: 0 2rem 2rem 2rem;
-  min-height: 100%;
-  overflow-y: visible;
-}
-
-/* Blog content styles - removed h1 and .tags since they're now in header */
-.blog-content h2 {
-  color: #00ff00;
-  font-size: 2rem;
-  font-weight: 300;
-  margin: 0.25rem 0 1rem 0;
-}
-
-.blog-content h3 {
-  color: #fff;
-  font-size: 1.5rem;
-  font-weight: 400;
-  margin: 1.5rem 0 1rem 0;
-}
-
-.blog-content p {
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 1.5rem;
-  font-size: 1.1rem;
-}
-
-.blog-content .project-image {
-  width: 100%;
-  max-width: 600px;
-  height: auto;
-  border-radius: 8px;
-  margin: 2rem 0;
-  box-shadow: 0 4px 20px rgba(0, 255, 0, 0.1);
-}
-
-.blog-content .action-buttons {
-  display: flex;
-  gap: 1rem;
-  margin: 0rem 0;
-  flex-wrap: wrap;
-}
-
-.blog-content .secondary-btn {
-  padding: 0.75rem 1.5rem;
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #00ff00;
-  text-decoration: none;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-}
-
-.blog-content .secondary-btn:hover {
-  background-color: rgba(0, 255, 0, 0.1);
-  border-color: #00ff00;
-  color: #fff;
-}
-
-.blog-content .loading {
-  text-align: center;
-  padding: 3rem;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 1.2rem;
-}
-
-/* Modal responsive design - Increased size for better real estate */
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) {
   .modal-content {
-    max-width: 95vw;
-    max-height: 90vh;
-    height: 80vh; /* Fixed height for better utilization */
+    inset: 2vh 2vw;
   }
 
   .modal-header {
-    padding: 0.75rem 1rem;
-    min-height: 60px;
-  }
-
-  .modal-header h1 {
-    font-size: 1.2rem;
-  }
-
-  .modal-content-wrapper {
-    margin: 0 1rem;
-  }
-
-  .modal-body {
-    max-height: calc(65.4vh - 120px);
-  }
-
-  .blog-content {
-    padding: 1rem;
-    font-size: 0.9rem; /* Smaller font size for content on mobile */
-  }
-
-
-
-  .blog-content h3 {
-    font-size: 1.2rem;
-    margin: 1.2rem 0 0.75rem 0;
-  }
-
-  .blog-content p {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin-bottom: 1.2rem;
-  }
-
-  .blog-content .secondary-btn {
-    font-size: 0.85rem;
-    padding: 0.6rem 1.2rem;
-  }
-}
-
-/* Enhanced mobile padding for better readability */
-@media screen and (max-width: 480px) {
-    .experience-gallery .gallery-card h3 {
-        font-size: 0.9rem;
-    }
-
-  .blog-content h1 {
-    font-size: 1.5rem;
-  }
-
-  .blog-content {
-    padding: 1.5rem 1rem; /* Slightly more padding for better readability */
-  }
-
-  .blog-content .project-image {
-    max-width: 100%;
-    margin: 1.5rem 0;
-  }
-
-  .blog-content p {
-    line-height: 1.6;
-    margin-bottom: 1.2rem;
-    text-align: left; /* Ensure proper text alignment on mobile */
-  }
-
-  .blog-content h2, .blog-content h3 {
-    margin: 2rem 0 1rem 0;
-    text-align: left;
-  }
-
-  .modal-header {
-    padding: 1rem 1.5rem;
+    padding-left: 1.5rem; /* 🔥 REMOVE DESKTOP GUTTER */
   }
 
   .modal-header h1 {
     font-size: 1.4rem;
-  }
-
-  .modal-tap-zone {
-    /* Ensure tap zones are properly sized on mobile */
-    transition: background-color 0.3s ease; /* Slightly slower for mobile responsiveness */
-  }
-}
-
-/* Additional mobile enhancements for better usability */
-@media screen and (max-width: 768px) {
-  /* Enhanced modal close button for mobile with improved accessibility */
-  .modal-close {
-    display: flex !important; /* Make close button visible on mobile */
-    width: 48px !important;
-    height: 48px !important;
-    background-color: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: static; /* Change from absolute for better layout */
-    opacity: 0.8;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    box-shadow: 0 2px 8px rgba(0, 255, 0, 0.1);
-  }
-
-  .modal-close:hover {
-    opacity: 1;
-    background-color: rgba(0, 255, 0, 0.1);
-    border-color: rgba(0, 255, 0, 0.5);
-    transform: scale(1.1);
-    box-shadow: 0 4px 16px rgba(0, 255, 0, 0.2);
-  }
-
-  .modal-close:active {
-    transform: scale(0.95);
-  }
-
-  .modal-close:focus {
-    outline: 2px solid #00ff00;
-    outline-offset: 2px;
-    opacity: 1;
-  }
-
-  .modal-close:hover {
-    background-color: rgba(0, 255, 0, 0.15);
-    border-color: rgba(0, 255, 0, 0.8);
-    transform: scale(1.05);
-  }
-
-  .modal-close img {
-    width: 16px !important;
-    height: 16px !important;
-  }
-
-  /* Adjust header layout for mobile with visible close button */
-  .modal-header {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .modal-header-content {
-    flex: 1;
-    margin-right: 0.5rem;
-  }
-
-  /* Better mobile typography */
-  .modal-header h1 {
-    font-size: clamp(1.2rem, 3vw, 1.4rem);
-    line-height: 1.3;
-  }
-
-  .modal-body {
-    max-height: calc(85vh - 120px); /* Adjust for larger header */
-  }
-
-  /* Enhanced touch targets */
-  .blog-content .secondary-btn {
-    min-height: 48px;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-  }
-
-  /* Better spacing for mobile reading */
-  .blog-content p {
-    line-height: 1.7;
-    font-size: clamp(1rem, 2.5vw, 1.1rem);
-  }
-
-  .blog-content h2 {
-    font-size: 1.3rem;
-    margin: 0rem 0 0.75rem 0;
-  }
-
-  .blog-content h2 {
-    margin: 0rem 0 0.75rem 0;
-  }
-
-  .blog-content h3 {
-    font-size: clamp(1.2rem, 3vw, 1.4rem);
-    margin: 1.5rem 0 0.75rem 0;
-  }
-
-  /* Fix mobile bullet point visibility */
-  .blog-content ul, .blog-content ol {
-    list-style-position: outside;
-    padding-left: 1.5rem;
-    margin: 1rem 0;
-  }
-
-  /* Ensure bullet points are visible on mobile */
-  .blog-content li {
-    margin-bottom: 0.8rem;
-    line-height: 1.5;
-    position: relative;
-    color: rgba(255, 255, 255, 0.95);
-  }
-
-  /* Enhanced bullet styling for better mobile visibility */
-  .blog-content li:before {
-    content: "•";
-    display: inline-block;
-    width: 1em;
-    color: #00ff00;
-    font-weight: bold;
-    position: relative;
-  }
-
-  /* Adjust strong elements in mobile */
-  .blog-content li strong {
-    color: #00ff00;
-    font-weight: 600;
-  }
-}
-
-/* Ultra-small screen adjustments */
-@media screen and (max-width: 480px) {
-  .modal-content {
-    width: 98vw;
-    height: 85vh;
-    max-height: 85vh;
-  }
-
-  .modal-content-wrapper {
-    margin: 0 0.5rem;
+    line-height: 1.25;
   }
 
   .blog-content {
-    padding: 1rem 0.75rem;
+    max-width: 100%;
+    padding: 1rem 1.25rem 4rem 1.25rem; /* 🔥 RESET LEFT GUTTER */
   }
 
-  /* Larger touch targets for very small screens */
-  .modal-close {
-    width: 52px !important;
-    height: 52px !important;
+  .blog-content p {
+    font-size: 0.95rem; /* readable, not zoomed */
+    line-height: 1.55;
   }
 
-  .modal-close img {
-    width: 18px !important;
-    height: 18px !important;
+  .blog-content h2 {
+    font-size: 1.15rem;
+  }
+
+  .blog-content h3 {
+    font-size: 1rem;
   }
 }
 
-/* Improved accessibility and usability */
-@media screen and (max-width: 768px) {
-  /* Better focus indicators for mobile */
-  .modal-close:focus,
-  .blog-content .secondary-btn:focus,
-  .modal-header button:focus {
-    outline: 2px solid #00ff00;
-    outline-offset: 2px;
-    background-color: rgba(0, 255, 0, 0.1);
+@media (max-width: 480px) {
+  .modal-content {
+    inset: 1vh 1vw;
   }
 
-  /* Prevent text selection on tap zones */
-  .modal-tap-zone {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-touch-callout: none;
-    -webkit-tap-highlight-color: rgba(0, 255, 0, 0.1);
+  .modal-header h1 {
+    font-size: 1.25rem;
   }
 
-  /* Enhanced reduced motion support */
-  @media (prefers-reduced-motion: reduce) {
-    .modal-overlay {
-      transition: none;
-    }
-
-    .modal-content {
-      transition: none;
-    }
-
-    .modal-close,
-    .blog-content .secondary-btn {
-      transition: none;
-    }
-  }
-
-  /* High contrast mode support */
-  @media (prefers-contrast: high) {
-    .modal-overlay {
-      background-color: rgba(0, 0, 0, 0.95);
-    }
-
-    .modal-content {
-      border-color: rgba(255, 255, 255, 0.4);
-    }
-
-    .modal-close,
-    .blog-content .secondary-btn {
-      border-color: rgba(255, 255, 255, 0.6);
-      background-color: transparent;
-    }
-
-    .modal-close:focus,
-    .blog-content .secondary-btn:focus {
-      outline-color: #fff;
-      background-color: rgba(255, 255, 255, 0.1);
-    }
+  .blog-content {
+    padding: 0.9rem 1rem 4rem 1rem;
   }
 }
 

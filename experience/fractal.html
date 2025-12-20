@@ -53,14 +53,80 @@ table {
 table th, table td {
   vertical-align: top;
 }
+
+/* =========================================================
+   EXPERIENCE META SECTION
+   ========================================================= */
+
+.experience-meta {
+  margin-top: 0.6rem;
+  margin-bottom: 1.4rem;
+}
+
+/* Subtitle just below main H1 */
+.experience-subtitle {
+  font-size: 1.75rem;
+  font-weight: 300;
+  line-height: 1.35;
+  margin: 0 0 0.75rem 0;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* Facts list */
+.experience-facts {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  row-gap: 0.35rem;
+}
+
+/* Each fact row */
+.experience-facts li {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  column-gap: 1rem;
+  align-items: baseline;
+}
+
+/* Labels */
+.fact-label {
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* Values */
+.fact-value {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
 </style>
 
 <h2>From Fragmented Prototypes to an Enterprise "Agentic Factory"</h2>
 
-<h3>Scaling Agentic AI: Building the "Vegas" Factory for a Fortune 5 U.S. Telecom</h3>
-<p><strong>Client: </strong> Fortune 5 U.S. Telecom (Project Vegas)<br>
-<strong>Role: </strong> Senior MLOps Engineer & DevOps Lead<br>
-<strong>Timeline: </strong> 2024 – Present</p>
+<div class="experience-meta">
+  <h3 class="experience-subtitle">
+    Scaling Agentic AI: Building the “Vegas” Factory for a Fortune 5 U.S. Telecom
+  </h3>
+
+  <ul class="experience-facts">
+    <li>
+      <span class="fact-label">Client</span>
+      <span class="fact-value">Fortune 5 U.S. Telecom (Project Vegas)</span>
+    </li>
+    <li>
+      <span class="fact-label">Role</span>
+      <span class="fact-value">Senior MLOps Engineer & DevOps Lead</span>
+    </li>
+    <li>
+      <span class="fact-label">Timeline</span>
+      <span class="fact-value">2024 – Present</span>
+    </li>
+  </ul>
+</div>
 
 <h2>Executive Summary</h2>
 <p>I transformed a fragile, prototype-heavy GenAI platform into a production-grade Agentic Factory capable of deploying, governing, and scaling hundreds of AI agents reliably, securely, and at enterprise speed.</p>
