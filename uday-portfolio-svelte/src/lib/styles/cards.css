@@ -1,0 +1,330 @@
+/* =========================================================
+   HORIZONTAL CARD SYSTEM (FINAL, LOCKED)
+   Used by: Experience + Projects
+   Layout model: Flexbox + horizontal scroll only
+   ========================================================= */
+
+/* =========================================================
+   GALLERY (SCROLL CONTAINER)
+   ========================================================= */
+
+.gallery-viewport {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.gallery-viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.gallery-track {
+  display: flex;
+  gap: 1.5rem;
+
+  width: max-content;
+  padding: 0.75rem 1.5rem 1.5rem;
+
+  scroll-snap-type: x mandatory;
+}
+
+.gallery-track > * {
+  scroll-snap-align: start;
+}
+
+/* =========================================================
+   CARD BASE (SHARED)
+   ========================================================= */
+
+.gallery-card {
+  flex-shrink: 0;
+  width: 320px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+
+  padding: 1rem;
+
+  cursor: pointer;
+  text-align: left;
+
+  overflow: hidden;
+  white-space: normal;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.gallery-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(0, 255, 0, 0.35);
+  box-shadow: 0 10px 35px rgba(0, 255, 0, 0.18);
+}
+
+/* =========================================================
+   RESPONSIVE CARD WIDTH CONTRACT
+   ========================================================= */
+
+@media (max-width: 1024px) {
+  .gallery-card { width: 300px; }
+}
+
+@media (max-width: 768px) {
+  .gallery-card { width: 260px; }
+}
+
+@media (max-width: 480px) {
+  .gallery-card { width: 220px; }
+}
+
+/* =========================================================
+   LOGOS
+   ========================================================= */
+
+.card-logos {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.card-logo {
+  height: 36px;
+  max-width: 80px;
+  object-fit: contain;
+  flex-shrink: 0;
+
+  filter: grayscale(100%) brightness(80%);
+  transition: filter 0.25s ease, transform 0.25s ease;
+}
+
+.gallery-card:hover .card-logo {
+  filter: grayscale(0%) brightness(100%);
+  transform: scale(1.05);
+}
+
+/* =========================================================
+   PROJECT COVER (OPTIONAL)
+   ========================================================= */
+
+.project-cover {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 0.6rem;
+}
+
+/* =========================================================
+   TEXT HIERARCHY (SHARED)
+   ========================================================= */
+
+.card-title {
+  width: 100%;
+
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-subtitle {
+  font-size: 0.82rem;
+  line-height: 1.2;
+  color: rgba(255, 255, 255, 0.65);
+  letter-spacing: 0.02em;
+
+  margin-top: 0.15rem;
+  margin-bottom: 0.35rem;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* =========================================================
+   DESCRIPTION (SAFE, CLAMPED)
+   ========================================================= */
+
+.card-description {
+  margin-top: 0.4rem;
+
+  font-size: 0.9rem;
+  line-height: 1.45;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.gallery-card:hover .card-description {
+  -webkit-line-clamp: 5;
+}
+
+/* =========================================================
+   TAGS (WITH OVERFLOW MARQUEE SUPPORT)
+   ========================================================= */
+
+.card-tags {
+  margin-top: 0.45rem;
+  width: 100%;
+
+  position: relative;
+  overflow: hidden;
+}
+
+.card-tags .tags-track {
+  display: inline-flex;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+.card-tags.marquee-active .tags-track {
+  padding-left: 100%;
+  animation: tags-marquee 10s linear infinite;
+}
+
+.card-tags:hover .tags-track {
+  animation-play-state: paused;
+}
+
+@keyframes tags-marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+.tag {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+
+  padding: 0.18rem 0.55rem;
+  border-radius: 999px;
+
+  white-space: nowrap;
+  line-height: 1.3;
+}
+
+/* Priority tags */
+.tag-primary {
+  background: rgba(0, 255, 0, 0.16);
+  color: rgba(180, 255, 180, 1);
+  border: 1px solid rgba(0, 255, 0, 0.5);
+  font-weight: 600;
+}
+
+/* Secondary tags */
+.tag-secondary {
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* =========================================================
+   BADGES / METRICS
+   ========================================================= */
+
+.card-badges {
+  margin-top: 0.45rem;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.card-badges .badge {
+  list-style: none;
+
+  font-size: 0.72rem;
+  font-weight: 500;
+
+  padding: 0.22rem 0.6rem;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.9);
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  white-space: nowrap;
+}
+
+/* =========================================================
+   EXPERIENCE-ONLY TIMELINE DATE
+   ========================================================= */
+
+.timeline-date {
+  position: relative;
+  padding-left: 1.2rem;
+
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.65);
+  letter-spacing: 0.03em;
+}
+
+.timeline-date::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+
+  background: #00ff00;
+  box-shadow: 0 0 6px rgba(0, 255, 0, 0.6);
+}
+
+.timeline-date::after {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 1.2em;
+  bottom: -0.6em;
+
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 255, 0, 0.5),
+    rgba(0, 255, 0, 0)
+  );
+}
+
+/* =========================================================
+   OPTIONAL MARQUEE TITLE (OPT-IN)
+   ========================================================= */
+
+.card-title.marquee {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-title.marquee > span {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee-title-scroll 7s linear infinite;
+}
+
+@keyframes marquee-title-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}

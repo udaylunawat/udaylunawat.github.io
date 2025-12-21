@@ -1,0 +1,92 @@
+/* ================================
+   RICH CONTENT / TYPOGRAPHY BASE
+   ================================ */
+
+.blog-content {
+  font-family: 'Montserrat', system-ui, sans-serif;
+  line-height: 1.7;
+  color: #e8e8e8;
+  font-size: 0.95rem;
+
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Headings */
+.blog-content h1,
+.blog-content h2,
+.blog-content h3 {
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 0.04em;
+  margin: 2.2rem 0 1rem;
+}
+
+.blog-content h1 { font-size: 1.6rem; }
+.blog-content h2 { font-size: 1.3rem; }
+.blog-content h3 { font-size: 1.1rem; }
+
+/* Paragraphs */
+.blog-content p {
+  margin: 1rem 0;
+  opacity: 0.92;
+}
+
+/* Lists */
+.blog-content ul,
+.blog-content ol {
+  margin: 1.2rem 0 1.2rem 1.4rem;
+}
+
+.blog-content li {
+  margin: 0.4rem 0;
+}
+
+/* Links */
+.blog-content a {
+  color: #6ee7ff;
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(110, 231, 255, 0.4);
+}
+
+.blog-content a:hover {
+  border-bottom-style: solid;
+}
+
+/* Code */
+.blog-content pre {
+  background: #0b0b0b;
+  padding: 1rem;
+  overflow-x: auto;
+  border-radius: 8px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.85rem;
+}
+
+.blog-content code {
+  font-family: 'Roboto Mono', monospace;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.2em 0.35em;
+  border-radius: 4px;
+}
+
+/* Images */
+.blog-content img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+}
+
+/* Blockquotes */
+.blog-content blockquote {
+  border-left: 3px solid rgba(110, 231, 255, 0.6);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  opacity: 0.9;
+}
+
+/* Separators */
+.blog-content hr {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin: 2rem 0;
+}

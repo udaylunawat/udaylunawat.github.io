@@ -1,0 +1,49 @@
+{
+  "experience": [
+    {
+      "id": "fractal",
+      "title": "Senior Machine Learning / SWE",
+      "dates": "Nov 2024 – Present · Pune",
+      "tags": ["LangGraph", "LangChain", "Multi-Agent", "Python"],
+      "description": "Led engineering for Fractal AI (India's First AI Unicorn Company), a multi-agent orchestration platform (LangGraph / LangChain). Owned tool onboarding and metadata lifecycle to productize agent behaviors for largest US telecom's business use.",
+      "badges": ["300+ agents onboarded", "11,000+ automated workflows"],
+      "logos": ["./src/img/fractal2.png"]
+    },
+    {
+      "id": "hcl",
+      "title": "Technical Lead ML Engineer",
+      "dates": "2024 · Bangalore",
+      "tags": ["Human-in-the-Loop", "Label Studio", "FastAPI", "MLflow"],
+      "description": "Implemented human-in-the-loop feedback and automated deployment flows; added Label Studio + FastAPI annotation pipelines, Trivy scanning, MLflow tracking and Seldon serving.",
+      "badges": [],
+      "logos": ["./src/img/hcltech.jpeg"]
+    },
+    {
+      "id": "chugani",
+      "title": "ML Engineer — Chugani",
+      "dates": "2022 – 2023 · Remote",
+      "tags": ["MTCNN", "FaceNet", "Liveliness Detection", "AWS"],
+      "description": "Built a real-time liveliness detection service (MTCNN + FaceNet), converted prototypes to modular MLOps pipelines, and established monitoring + retraining flows on AWS.",
+      "badges": [],
+      "logos": ["./src/img/pagers-icon.svg"]
+    },
+    {
+      "id": "yang",
+      "title": "ML & ETL Engineer — Yang",
+      "dates": "2019 – 2022 · Remote",
+      "tags": ["AI + ETL", "Smart Factory", "IPQC System", "Tableau"],
+      "description": "Delivered AI + ETL systems for smart-factory operations; shipped a 24/7 IPQC audit system (≈200 hours/week saved) and dashboards across 20+ vendor sites.",
+      "badges": [],
+      "logos": ["./src/img/planet-icon.svg"]
+    },
+    {
+      "id": "tcs-infosys",
+      "title": "Internships - Junior ML Engineer and Data Analyst",
+      "dates": "2018 – 2019",
+      "tags": ["Data Analysis", "Machine Learning", "Internship", "Python"],
+      "description": "Completed internships at Tata Consultancy Services and Infosys, gaining hands-on experience in machine learning, data analysis, and software development practices.",
+      "badges": [],
+      "logos": ["./src/img/Infosys_logo.svg.png", "./src/img/tcs.webp"]
+    }
+  ]
+}

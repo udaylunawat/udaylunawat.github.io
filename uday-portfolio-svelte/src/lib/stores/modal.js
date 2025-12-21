@@ -2,19 +2,21 @@ import { writable } from 'svelte/store';
 
 export const modal = writable({
   open: false,
-  type: null,     // 'project' | 'experience'
+  type: null,
   id: null,
   title: '',
-  content: ''
+  content: '',
+  meta: null   // 👈 NEW
 });
 
-export function openModal(type, id, title = '', content = '') {
+export function openModal(type, id, title, content, meta = null) {
   modal.set({
     open: true,
     type,
     id,
     title,
-    content
+    content,
+    meta
   });
 
   document.body.style.overflow = 'hidden';
@@ -26,7 +28,8 @@ export function closeModal() {
     type: null,
     id: null,
     title: '',
-    content: ''
+    content: '',
+    logos: []
   });
 
   document.body.style.overflow = '';

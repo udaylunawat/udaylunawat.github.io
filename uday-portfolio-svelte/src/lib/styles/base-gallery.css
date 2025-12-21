@@ -1,0 +1,41 @@
+/* =========================================================
+   BASE GALLERY
+   ========================================================= */
+
+.gallery-section {
+  width: 100%;
+  position: relative;
+}
+
+.gallery-title {
+  margin-bottom: 1rem;
+}
+
+/* Horizontal scroll container */
+.gallery-viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.gallery-viewport::-webkit-scrollbar {
+  display: none;
+}
+
+/* Horizontal track */
+.gallery-track {
+  display: flex;
+  gap: 1.5rem;
+
+  padding: 0.5rem 1.5rem 1.5rem;
+  width: max-content;
+
+  scroll-snap-type: x mandatory;
+}
+
+/* All cards snap consistently */
+.gallery-track > * {
+  scroll-snap-align: start;
+}

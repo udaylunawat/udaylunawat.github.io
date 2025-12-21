@@ -1,0 +1,53 @@
+{
+  "projects": [
+    {
+      "id": "rockreveal-ai",
+      "title": "RockReveal AI",
+      "tags": ["Python", "Telegram Bot", "MLOps", "W&B"],
+      "description": "Image classification deployed as a Telegram bot. Integrated Weights & Biases for experiment & artifact tracking and a simple MLOps workflow for continuous improvements.",
+      "logos": ["/src/img/icon-rocket.svg"]
+    },
+    {
+      "id": "alpr",
+      "title": "Automatic License Plate Recognition (ALPR)",
+      "tags": ["Computer Vision", "Deployment", "Streamlit"],
+      "description": "High-accuracy ALPR system with end-to-end pipeline and a Streamlit web app for demo and deployment.",
+      "logos": ["/src/img/vision-icon.svg"]
+    },
+    {
+      "id": "liveliness-detection",
+      "title": "Real-Time Liveliness Detection",
+      "tags": ["MTCNN", "FaceNet", "AWS"],
+      "description": "Anti-spoofing pipeline (MTCNN + FaceNet) optimized for low-latency deployment on AWS with pruning/quantization applied.",
+      "logos": ["/src/img/pagers-icon.svg"]
+    },
+    {
+      "id": "covid-xray",
+      "title": "Covid-19 X-ray Analysis",
+      "tags": ["Deep Learning", "Healthcare", "Deployment"],
+      "description": "Real-time deep learning classifier for X-ray images, with notebooks and deployment tooling for evaluation and demo.",
+      "logos": ["/src/img/planet-icon.svg"]
+    },
+    {
+      "id": "agentic-data-analysis",
+      "title": "Agentic Data Analysis (Google ADK)",
+      "tags": ["Agentic", "Google ADK", "Data Analysis"],
+      "description": "Autonomous data-analysis agents that automate EDA, visualization, and report generation — implemented as a folder inside Data-Science-Projects.",
+      "logos": ["/src/img/ai-agent.png"]
+    },
+    {
+      "id": "pdf2podcast",
+      "title": "PDF2Podcast",
+      "tags": ["Generative AI", "TTS", "Productivity"],
+      "description": "Extracts text from PDFs and converts to podcast-style audio using TTS + summarization, with demo scripts and deployment notes inside the parent repo.",
+      "logos": ["/src/img/podcast-grey.png"]
+    },
+    {
+      "id": "other-ml-projects",
+      "title": "Other ML / DS Projects",
+      "tags": ["Notebooks", "ML Experiments", "Data Pipelines"],
+      "description": "Collection of notebooks and demos logosing model prototyping, data pipelines, visualizations and small utilities.",
+      "logos": ["/src/img/kernel-logo.svg"]
+    }
+  ]
+}

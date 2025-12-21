@@ -1,10 +1,11 @@
 <script>
-	import './layout.css';
 	import '../app.css';
-	import favicon from '$lib/assets/favicon.svg';
-
-	let { children } = $props();
+	import '$lib/styles/base.css';
+	import '$lib/styles/modal.css';
+	import '$lib/styles/cards.css';
+	import '$lib/styles/skills.css';
+	import UnifiedModal from '$lib/components/UnifiedModal.svelte';
 </script>
 
-<svelte:head><link rel="icon" href={favicon} /></svelte:head>
-{@render children()}
+<slot />
+<UnifiedModal />
