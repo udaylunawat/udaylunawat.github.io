@@ -4,43 +4,51 @@ import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
 
 /* ======================================================
-   TUNABLE PARAMETERS
+   TUNABLE PARAMETERS (SAFE ZONE)
    ====================================================== */
 
-// Nodes
-const NODE_COUNT_DESKTOP = 100;
-const NODE_COUNT_MOBILE = 45;
-const NODE_DRIFT_SPEED = 0.52;
-const NODE_BASE_SIZE = 4.8;
-const NODE_SIZE_VARIANCE = 4.0;
+// ---------- Nodes ----------
+const NODE_COUNT_DESKTOP = 70;
+const NODE_COUNT_MOBILE = 40;
 
-// Depth layers
+const NODE_DRIFT_SPEED = 0.6;
+const NODE_BASE_SIZE = 3.2;
+const NODE_SIZE_VARIANCE = 2.0;
+
+// ---------- Depth ----------
 const DEPTH_LAYERS = 3;
-const DEPTH_RANGE = 400;
+const DEPTH_RANGE = 300;
 
-// Dynamic connections
-const CONNECTION_DISTANCE = 100;
-const CONNECTION_FADE_DISTANCE = 80;
-const CONNECTION_PULSE_SPEED = 1.5;
+// ---------- Twinkle ----------
+const TWINKLE_SPEED = 0.5;
+const TWINKLE_STRENGTH = 0.9;
+const TWINKLE_VARIANCE = 0.5;
 
-// Animation
-const SHIMMER_SPEED = 0.9;
-const SHIMMER_STRENGTH = 0.3;
+// ---------- Connections ----------
+const CONNECTION_DISTANCE_MIN = 80;
+const CONNECTION_DISTANCE_MAX = 120;
+const CONNECTION_BREATHE_SPEED = 0.7;
+const CONNECTION_FADE_RANGE = 100;
 
-// Colors
-const STAR_COLOR = new THREE.Color(0.75, 0.85, 1.0);
-const CONNECTION_COLOR = new THREE.Color(0.5, 0.8, 1.0);
+// ---------- Pulse ----------
+const PULSE_SPEED = 0.3;
+const PULSE_INTENSITY = 0.9;
 
-// Shooting stars
+// ---------- Activity Bursts ----------
+const BURST_CHANCE = 0.005;
+const BURST_RADIUS = 250;
+const BURST_STRENGTH = 0.8;
+
+// ---------- Shooting Stars ----------
 const SHOOTING_STAR_CHANCE = 0.01;
-const SHOOTING_STAR_SPEED = 10.0;
-const SHOOTING_STAR_LIFETIME = 1.5;
-const SHOOTING_STAR_TRAIL_LENGTH = 150;
+const SHOOTING_STAR_SPEED = 12;
+const SHOOTING_STAR_LIFETIME = 1.8;
+const SHOOTING_STAR_TRAIL = 180;
 
-// Bloom
-const BLOOM_STRENGTH = 1.4;
-const BLOOM_RADIUS = 0.8;
-const BLOOM_THRESHOLD = 0.08;
+// ---------- Bloom ----------
+const BLOOM_STRENGTH = 1.6;
+const BLOOM_RADIUS = 0.95;
+const BLOOM_THRESHOLD = 0.1;
 
 /* ====================================================== */
 
@@ -48,7 +56,8 @@ type Node = {
   position: THREE.Vector3;
   velocity: THREE.Vector3;
   size: number;
-  shimmerPhase: number;
+  twinklePhase: number;
+  twinkleSpeed: number;
   depth: number;
   activity: number;
   phase: number;
@@ -68,6 +77,12 @@ type ShootingStar = {
   age: number;
 };
 
+type Edge = {
+  from: number;
+  to: number;
+  age: number;
+};
+
 class NeuralParticlesService {
   private mounted = false;
   private paused = false;
@@ -82,6 +97,7 @@ class NeuralParticlesService {
   private nodes: Node[] = [];
   private activeConnections: ActiveConnection[] = [];
   private shootingStars: ShootingStar[] = [];
+  private activeEdges: Edge[] = [];
 
   private nodePoints!: THREE.Points;
   private connectionLines!: THREE.LineSegments;
@@ -111,17 +127,19 @@ class NeuralParticlesService {
 
     this.renderer = new THREE.WebGLRenderer({
       alpha: true,
+      antialias: true,
       powerPreference: 'high-performance'
     });
 
     this.renderer.setSize(w, h);
-    this.renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(this.renderer.domElement);
 
     this.initNodes(isMobile ? NODE_COUNT_MOBILE : NODE_COUNT_DESKTOP);
     this.initNodePoints();
     this.initConnectionLines();
     this.initShootingStars();
+    this.initEdges();
     this.initPost();
 
     window.addEventListener('resize', this.onResize);
@@ -136,7 +154,7 @@ class NeuralParticlesService {
 
     for (let i = 0; i < count; i++) {
       const depth = Math.floor(Math.random() * DEPTH_LAYERS);
-      const depthFactor = depth / (DEPTH_LAYERS - 1);
+      const depthFactor = depth / Math.max(1, DEPTH_LAYERS - 1);
       const z = -DEPTH_RANGE * depthFactor;
 
       this.nodes.push({
@@ -151,7 +169,8 @@ class NeuralParticlesService {
           0
         ),
         size: NODE_BASE_SIZE + Math.random() * NODE_SIZE_VARIANCE,
-        shimmerPhase: Math.random() * Math.PI * 2,
+        twinklePhase: Math.random() * Math.PI * 2,
+        twinkleSpeed: 0.8 + Math.random() * 0.4,
         depth: depth,
         activity: Math.random() * 0.3,
         phase: Math.random() * Math.PI * 2
@@ -160,9 +179,11 @@ class NeuralParticlesService {
   }
 
   private initNodePoints() {
+    const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(this.nodes.length * 3);
     const sizes = new Float32Array(this.nodes.length);
     const phases = new Float32Array(this.nodes.length);
+    const speeds = new Float32Array(this.nodes.length);
     const depths = new Float32Array(this.nodes.length);
 
     this.nodes.forEach((node, i) => {
@@ -170,59 +191,74 @@ class NeuralParticlesService {
       positions[i * 3 + 1] = node.position.y;
       positions[i * 3 + 2] = node.position.z;
       sizes[i] = node.size;
-      phases[i] = node.shimmerPhase;
+      phases[i] = node.twinklePhase;
+      speeds[i] = node.twinkleSpeed;
       depths[i] = node.depth;
     });
 
-    const geometry = new THREE.BufferGeometry();
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     geometry.setAttribute('a_size', new THREE.BufferAttribute(sizes, 1));
     geometry.setAttribute('a_phase', new THREE.BufferAttribute(phases, 1));
+    geometry.setAttribute('a_speed', new THREE.BufferAttribute(speeds, 1));
     geometry.setAttribute('a_depth', new THREE.BufferAttribute(depths, 1));
+    geometry.setAttribute('a_activity', new THREE.BufferAttribute(new Float32Array(this.nodes.length), 1));
 
     const material = new THREE.ShaderMaterial({
       transparent: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
       uniforms: {
-        u_time: { value: 0 },
-        u_color: { value: STAR_COLOR }
+        u_time: { value: 0 }
       },
       vertexShader: `
         uniform float u_time;
         attribute float a_size;
         attribute float a_phase;
+        attribute float a_speed;
         attribute float a_depth;
+        attribute float a_activity;
         varying float v_alpha;
-        varying float v_brightness;
+        varying float v_glow;
 
         void main() {
-          float shimmer = sin(u_time * ${SHIMMER_SPEED} + a_phase) * ${SHIMMER_STRENGTH};
-          float depthFactor = 1.0 - (a_depth / ${DEPTH_LAYERS - 1}.0) * 0.5;
+          // Complex twinkling with multiple frequencies
+          float twinkle1 = sin(u_time * ${TWINKLE_SPEED} * a_speed + a_phase);
+          float twinkle2 = sin(u_time * ${TWINKLE_SPEED} * 1.7 * a_speed + a_phase * 2.1);
+          float twinkle = (twinkle1 + twinkle2 * 0.5) * ${TWINKLE_STRENGTH};
           
-          v_alpha = 0.4 + shimmer * 0.4;
-          v_brightness = 0.7 + shimmer * 0.3;
+          // Depth-based scaling
+          float depthFactor = 1.0 - (a_depth / ${DEPTH_LAYERS}.0) * 0.5;
           
-          gl_PointSize = a_size * depthFactor * (1.0 + shimmer * 0.4);
+          // Activity burst effect
+          float activityGlow = a_activity * 1.5;
+          
+          v_alpha = 0.5 + twinkle * 0.4 + activityGlow * 0.3;
+          v_glow = 1.0 + twinkle + activityGlow;
+          
+          float finalSize = a_size * depthFactor * (1.0 + twinkle * 0.5 + activityGlow * 0.8);
+          gl_PointSize = finalSize;
+          
           gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
         }
       `,
       fragmentShader: `
-        uniform vec3 u_color;
         varying float v_alpha;
-        varying float v_brightness;
+        varying float v_glow;
 
         void main() {
-          float d = length(gl_PointCoord - 0.5);
+          vec2 center = gl_PointCoord - 0.5;
+          float d = length(center);
           if (d > 0.5) discard;
           
-          float soft = smoothstep(0.5, 0.0, d);
-          float core = smoothstep(0.2, 0.0, d) * 0.8;
+          // Multi-layer glow
+          float core = smoothstep(0.5, 0.0, d);
+          float glow1 = smoothstep(0.5, 0.2, d);
+          float glow2 = smoothstep(0.5, 0.35, d);
           
-          vec3 finalColor = u_color * v_brightness;
-          float finalAlpha = soft * v_alpha + core;
+          vec3 color = vec3(0.7, 0.85, 1.0) * v_glow;
+          float alpha = core * v_alpha + glow1 * 0.5 + glow2 * 0.2;
           
-          gl_FragColor = vec4(finalColor, finalAlpha);
+          gl_FragColor = vec4(color, alpha);
         }
       `
     });
@@ -234,39 +270,47 @@ class NeuralParticlesService {
   /* ========================= DYNAMIC CONNECTIONS ========================= */
 
   private initConnectionLines() {
-    // Create buffer for maximum possible connections
-    const maxConnections = this.nodes.length * 5;
+    const maxConnections = this.nodes.length * 6;
     const geometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(maxConnections * 6);
-    const alphas = new Float32Array(maxConnections * 2);
     
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    geometry.setAttribute('a_alpha', new THREE.BufferAttribute(alphas, 1));
+    geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(maxConnections * 6), 3));
+    geometry.setAttribute('a_alpha', new THREE.BufferAttribute(new Float32Array(maxConnections * 2), 1));
+    geometry.setAttribute('a_pulse', new THREE.BufferAttribute(new Float32Array(maxConnections * 2), 1));
 
     const material = new THREE.ShaderMaterial({
       transparent: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
       uniforms: {
-        u_time: { value: 0 },
-        u_color: { value: CONNECTION_COLOR }
+        u_time: { value: 0 }
       },
       vertexShader: `
         attribute float a_alpha;
+        attribute float a_pulse;
         varying float v_alpha;
+        varying float v_pulse;
 
         void main() {
           v_alpha = a_alpha;
+          v_pulse = a_pulse;
           gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
         }
       `,
       fragmentShader: `
         uniform float u_time;
-        uniform vec3 u_color;
         varying float v_alpha;
+        varying float v_pulse;
 
         void main() {
-          gl_FragColor = vec4(u_color, v_alpha);
+          // Smooth wave pulse
+          float pulse = sin(u_time * ${PULSE_SPEED} + v_pulse) * 0.5 + 0.5;
+          pulse = pow(pulse, 2.5);
+          
+          vec3 color = vec3(0.5, 0.75, 1.0);
+          float brightness = 0.5 + pulse * ${PULSE_INTENSITY};
+          float alpha = v_alpha * (0.6 + pulse * 0.4);
+          
+          gl_FragColor = vec4(color * brightness, alpha);
         }
       `
     });
@@ -277,8 +321,13 @@ class NeuralParticlesService {
 
   private updateDynamicConnections(dt: number, time: number) {
     this.activeConnections = [];
+    
+    // Breathing connection distance
+    const breathe = Math.sin(time * CONNECTION_BREATHE_SPEED) * 0.5 + 0.5;
+    const connectionDistance = CONNECTION_DISTANCE_MIN + 
+      (CONNECTION_DISTANCE_MAX - CONNECTION_DISTANCE_MIN) * breathe;
 
-    // Find all pairs within connection distance
+    // Find connections
     for (let i = 0; i < this.nodes.length; i++) {
       for (let j = i + 1; j < this.nodes.length; j++) {
         const a = this.nodes[i];
@@ -286,28 +335,34 @@ class NeuralParticlesService {
         
         const dist = a.position.distanceTo(b.position);
         
-        if (dist < CONNECTION_DISTANCE) {
-          // Calculate connection strength based on distance
-          const strength = 1.0 - Math.max(0, (dist - (CONNECTION_DISTANCE - CONNECTION_FADE_DISTANCE)) / CONNECTION_FADE_DISTANCE);
+        if (dist < connectionDistance) {
+          const fadeStart = connectionDistance - CONNECTION_FADE_RANGE;
+          let strength = 1.0;
           
-          if (strength > 0) {
-            // Add pulsing effect
-            const pulse = Math.sin(time * CONNECTION_PULSE_SPEED + (i + j) * 0.5) * 0.3 + 0.7;
+          if (dist > fadeStart) {
+            strength = 1.0 - ((dist - fadeStart) / CONNECTION_FADE_RANGE);
+          }
+          
+          if (strength > 0.01) {
+            // Add activity influence
+            const activityBoost = (a.activity + b.activity) * 0.5;
+            strength = Math.min(1.0, strength + activityBoost);
             
             this.activeConnections.push({
               from: i,
               to: j,
-              strength: strength * pulse,
-              pulsePhase: (i + j) * 0.1
+              strength: strength,
+              pulsePhase: (i * 0.41 + j * 0.73) * Math.PI * 2
             });
           }
         }
       }
     }
 
-    // Update line geometry
+    // Update geometry
     const pos = this.connectionLines.geometry.attributes.position as THREE.BufferAttribute;
     const alpha = this.connectionLines.geometry.attributes.a_alpha as THREE.BufferAttribute;
+    const pulse = this.connectionLines.geometry.attributes.a_pulse as THREE.BufferAttribute;
 
     this.activeConnections.forEach((conn, idx) => {
       const from = this.nodes[conn.from].position;
@@ -316,21 +371,38 @@ class NeuralParticlesService {
       pos.setXYZ(idx * 2, from.x, from.y, from.z);
       pos.setXYZ(idx * 2 + 1, to.x, to.y, to.z);
       
-      const opacity = conn.strength * 0.25;
+      const opacity = conn.strength * 0.4;
       alpha.setX(idx * 2, opacity);
       alpha.setX(idx * 2 + 1, opacity);
+      
+      pulse.setX(idx * 2, conn.pulsePhase);
+      pulse.setX(idx * 2 + 1, conn.pulsePhase);
     });
 
-    // Hide unused connections
+    // Clear unused
     for (let i = this.activeConnections.length; i < pos.count / 2; i++) {
-      pos.setXYZ(i * 2, 0, 0, 0);
-      pos.setXYZ(i * 2 + 1, 0, 0, 0);
       alpha.setX(i * 2, 0);
       alpha.setX(i * 2 + 1, 0);
     }
 
     pos.needsUpdate = true;
     alpha.needsUpdate = true;
+    pulse.needsUpdate = true;
+  }
+
+  /* ========================= ACTIVITY BURSTS ========================= */
+
+  private triggerActivityBurst() {
+    const burstNode = Math.floor(Math.random() * this.nodes.length);
+    const center = this.nodes[burstNode].position;
+    
+    this.nodes.forEach((node) => {
+      const dist = node.position.distanceTo(center);
+      if (dist < BURST_RADIUS) {
+        const influence = 1.0 - (dist / BURST_RADIUS);
+        node.activity = Math.min(1.0, node.activity + influence * BURST_STRENGTH);
+      }
+    });
   }
 
   /* ========================= SHOOTING STARS ========================= */
@@ -338,29 +410,31 @@ class NeuralParticlesService {
   private initShootingStars() {
     const maxStars = 10;
     const geometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(maxStars * 6);
     
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(maxStars * 6), 3));
+    geometry.setAttribute('a_alpha', new THREE.BufferAttribute(new Float32Array(maxStars * 2), 1));
 
     const material = new THREE.ShaderMaterial({
       transparent: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
       uniforms: {
-        u_color: { value: new THREE.Color(1, 1, 1) }
+        u_time: { value: 0 }
       },
       vertexShader: `
-        varying float v_position;
+        attribute float a_alpha;
+        varying float v_alpha;
+        
         void main() {
-          v_position = position.x;
+          v_alpha = a_alpha;
           gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
         }
       `,
       fragmentShader: `
-        uniform vec3 u_color;
-        varying float v_position;
+        varying float v_alpha;
+        
         void main() {
-          gl_FragColor = vec4(u_color, 0.8);
+          gl_FragColor = vec4(1.0, 1.0, 1.0, v_alpha);
         }
       `
     });
@@ -381,7 +455,7 @@ class NeuralParticlesService {
     else if (side === 2) { x = (Math.random() - 0.5) * w; y = -h * 1.2; }
     else { x = (Math.random() - 0.5) * w; y = h * 1.2; }
     
-    const angle = Math.atan2(-y, -x) + (Math.random() - 0.5) * 0.3;
+    const angle = Math.atan2(-y, -x) + (Math.random() - 0.5) * 0.4;
     
     this.shootingStars.push({
       position: new THREE.Vector3(x, y, -50),
@@ -407,10 +481,11 @@ class NeuralParticlesService {
     });
 
     const pos = this.shootingStarLines.geometry.attributes.position as THREE.BufferAttribute;
+    const alpha = this.shootingStarLines.geometry.attributes.a_alpha as THREE.BufferAttribute;
     
     this.shootingStars.forEach((star, i) => {
       const fadeOut = 1.0 - (star.age / star.lifetime);
-      const trailLength = SHOOTING_STAR_TRAIL_LENGTH * fadeOut;
+      const trailLength = SHOOTING_STAR_TRAIL * fadeOut;
       
       const tail = star.position.clone().sub(
         star.velocity.clone().normalize().multiplyScalar(trailLength)
@@ -418,14 +493,18 @@ class NeuralParticlesService {
       
       pos.setXYZ(i * 2, star.position.x, star.position.y, star.position.z);
       pos.setXYZ(i * 2 + 1, tail.x, tail.y, tail.z);
+      
+      alpha.setX(i * 2, 0.9 * fadeOut);
+      alpha.setX(i * 2 + 1, 0.0);
     });
     
     for (let i = this.shootingStars.length; i < 10; i++) {
-      pos.setXYZ(i * 2, 0, 0, 0);
-      pos.setXYZ(i * 2 + 1, 0, 0, 0);
+      alpha.setX(i * 2, 0);
+      alpha.setX(i * 2 + 1, 0);
     }
     
     pos.needsUpdate = true;
+    alpha.needsUpdate = true;
   }
 
   /* ========================= EDGES (for compatibility) ========================= */
@@ -458,26 +537,33 @@ class NeuralParticlesService {
 
   private updateNodes(dt: number) {
     const pos = this.nodePoints.geometry.attributes.position as THREE.BufferAttribute;
+    const act = this.nodePoints.geometry.attributes.a_activity as THREE.BufferAttribute;
     const w = window.innerWidth / 2;
     const h = window.innerHeight / 2;
 
     this.nodes.forEach((node, i) => {
+      // Movement
       node.position.add(node.velocity);
 
-      // Wrap around screen edges for continuous movement
+      // Wrap around
       if (node.position.x > w * 1.2) node.position.x = -w * 1.2;
       if (node.position.x < -w * 1.2) node.position.x = w * 1.2;
       if (node.position.y > h * 1.2) node.position.y = -h * 1.2;
       if (node.position.y < -h * 1.2) node.position.y = h * 1.2;
 
+      // Decay activity
+      node.activity *= 0.97;
+
       pos.setXYZ(i, node.position.x, node.position.y, node.position.z);
+      act.setX(i, node.activity);
     });
 
     pos.needsUpdate = true;
+    act.needsUpdate = true;
   }
 
   private updateEdges(dt: number) {
-    // Compatibility stub - connections now handled dynamically
+    // Compatibility stub
   }
 
   /* ========================= ANIMATION LOOP ========================= */
@@ -488,6 +574,11 @@ class NeuralParticlesService {
 
     const dt = this.clock.getDelta();
     const t = this.clock.getElapsedTime();
+
+    // Random activity bursts
+    if (Math.random() < BURST_CHANCE) {
+      this.triggerActivityBurst();
+    }
 
     this.updateNodes(dt);
     this.updateDynamicConnections(dt, t);
