@@ -120,7 +120,3 @@
 .absolute { position: absolute; }
 .fixed { position: fixed; }
 
-.flex-container {
-    gap: 1.618rem;
-    display: flex;
-}

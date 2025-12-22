@@ -35,7 +35,7 @@ const PULSE_SPEED = 0.3;
 const PULSE_INTENSITY = 0.9;
 
 // ---------- Activity Bursts ----------
-const BURST_CHANCE = 0.005;
+const BURST_CHANCE = 0.01;
 const BURST_RADIUS = 250;
 const BURST_STRENGTH = 0.8;
 
@@ -46,7 +46,7 @@ const SHOOTING_STAR_LIFETIME = 1.8;
 const SHOOTING_STAR_TRAIL = 180;
 
 // ---------- Bloom ----------
-const BLOOM_STRENGTH = 1.6;
+const BLOOM_STRENGTH = 2.6;
 const BLOOM_RADIUS = 0.95;
 const BLOOM_THRESHOLD = 0.1;
 
@@ -136,8 +136,8 @@ class NeuralParticlesService {
     if (this.mounted) return;
     this.mounted = true;
 
-    const w = window.innerWidth;
-    const h = window.innerHeight;
+    const w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    const h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
     const isMobile = w < 768;
 
     this.scene = new THREE.Scene();
@@ -154,8 +154,11 @@ class NeuralParticlesService {
       powerPreference: 'high-performance'
     });
 
-    this.renderer.setSize(w, h);
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1 : 2));
+    this.renderer.setSize(w, h, false);   // 🔑 no auto resize
+    this.renderer.setPixelRatio(
+      Math.min(window.devicePixelRatio || 1, isMobile ? 1.25 : 2)
+    );
+
     container.appendChild(this.renderer.domElement);
 
     this.initNodes(isMobile ? NODE_COUNT_MOBILE : NODE_COUNT_DESKTOP);
@@ -903,16 +906,16 @@ class NeuralParticlesService {
   }
 
   private onResize = () => {
-    const w = window.innerWidth;
-    const h = window.innerHeight;
+    const w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    const h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
 
-    this.camera.left = -w / 2;
-    this.camera.right = w / 2;
-    this.camera.top = h / 2;
+    this.camera.left   = -w / 2;
+    this.camera.right  =  w / 2;
+    this.camera.top    =  h / 2;
     this.camera.bottom = -h / 2;
     this.camera.updateProjectionMatrix();
 
-    this.renderer.setSize(w, h);
+    this.renderer.setSize(w, h, false);
     this.composer.setSize(w, h);
     this.bloomComposer.setSize(w, h);
   };

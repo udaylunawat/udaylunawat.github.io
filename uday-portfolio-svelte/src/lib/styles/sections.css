@@ -2,11 +2,11 @@
    SECTION SYSTEM — GLOBAL
    =============================== */
 
-section {
+/* section {
   position: relative;
   z-index: 2;
   scroll-margin-top: 8rem;
-}
+} */
 
 /* Base spacing */
 section:not(.home) {
@@ -84,19 +84,19 @@ section:not(.about) > .wrapper > *:not(h2) {
    MODERN SECTIONS (Svelte)
    =============================== */
 
-.section {
+/* .section {
   position: relative;
   z-index: 2;
   padding: 11.52rem var(--g2);
-}
+} */
 
-.section .wrapper {
+/* .section .wrapper {
   border: none;
   padding: 0;
-}
+} */
 
 /* Section title — big cinematic */
-.section-title {
+/* .section-title {
   font-family: 'Oswald', sans-serif;
   font-weight: 200;
   font-size: clamp(3.5rem, 7vw, 6.5rem);
@@ -104,11 +104,57 @@ section:not(.about) > .wrapper > *:not(h2) {
   text-transform: uppercase;
   margin-bottom: 6rem;
   color: rgba(255, 255, 255, 0.95);
-}
+} */
 
 /* Desktop offset like old site */
-@media (min-width: 800px) {
+/* @media (min-width: 800px) {
   .section {
     margin-left: 6rem;
   }
+} */
+
+section {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+}
+
+section {
+  position: relative;
+  z-index: 2;
+  scroll-margin-top: 8rem;
+}
+
+/* Vertical rhythm */
+section:not(.home) {
+  padding: clamp(6rem, 12vh, 12rem) 0;
+}
+
+/* Desktop offset */
+@media (min-width: 800px) {
+  section:not(.home) {
+    margin-left: 6rem;
+  }
+}
+
+/* Wrapper */
+section > .wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--g2);
+}
+
+/* Headings */
+section h2 {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 200;
+  font-size: clamp(3.5rem, 7vw, 6.5rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 6rem;
+}
+
+/* Content offset */
+section:not(.about) > .wrapper > *:not(h2) {
+  margin-left: var(--g4);
 }

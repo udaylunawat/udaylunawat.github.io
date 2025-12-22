@@ -1,0 +1,372 @@
+
+/* ======================================================
+BRAIN DEEP SKILLS — LEGACY CSS (RESTORED)
+====================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background: transparent !important;
+    color: #e8fff3;
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+#brain-host {
+    position: relative;
+    width: 100%;
+    height: min(88svh, 88dvh, 760px);
+    aspect-ratio: 16 / 11;
+    z-index: 2;
+    pointer-events: auto;
+    opacity: 0;
+    transition: opacity 0.7s cubic-bezier(.7,.2,.2,1);
+    margin: 0 auto;
+    background: transparent;
+
+    /* 3D stage */
+    perspective: 1200px;
+    transform-style: preserve-3d;
+
+    --neural-pulse: 0.4;
+    --ui-scale: 1;
+}
+#brain-host.brain-visible {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+#brain-links-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 3;
+}
+.brain-link {
+    fill: none;
+    stroke: #10ff7f;
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    stroke-dasharray: 3 14;
+    stroke-dashoffset: 0;
+
+    opacity: 0.9;
+
+    filter:
+    drop-shadow(0 0 6px rgba(16, 255, 127, 0.85))
+    drop-shadow(0 0 18px rgba(16, 255, 127, 0.75));
+
+    shape-rendering: geometricPrecision;
+    vector-effect: non-scaling-stroke;
+
+    animation: neuralTravel 1.2s linear infinite,
+                neuralIdleGlow 2.4s ease-in-out infinite;
+}
+
+.brain-link--active {
+    stroke: #7bffbf;
+    stroke-width: 4.2;
+    animation:
+    neuralTravel 0.7s linear infinite,
+    neuralActiveGlow 0.65s ease-in-out infinite;
+}
+
+@keyframes neuralTravel {
+    0%   { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: -70; }
+}
+
+@keyframes neuralIdleGlow {
+    0% {
+    opacity: 0.55;
+    filter:
+        drop-shadow(0 0 6px rgba(16, 255, 127, 0.75))
+        drop-shadow(0 0 16px rgba(16, 255, 127, 0.55));
+    }
+    50% {
+    opacity: 1;
+    filter:
+        drop-shadow(0 0 12px rgba(16, 255, 127, 1))
+        drop-shadow(0 0 28px rgba(16, 255, 127, 0.95));
+    }
+    100% {
+    opacity: 0.7;
+    filter:
+        drop-shadow(0 0 6px rgba(16, 255, 127, 0.75))
+        drop-shadow(0 0 16px rgba(16, 255, 127, 0.55));
+    }
+}
+
+@keyframes neuralActiveGlow {
+    0% {
+    opacity: 0.7;
+    stroke-width: 3.0;
+    filter:
+        drop-shadow(0 0 10px rgba(123, 255, 191, 1))
+        drop-shadow(0 0 22px rgba(123, 255, 191, 0.95));
+    }
+    45% {
+    opacity: 1;
+    stroke-width: 3.8;
+    filter:
+        drop-shadow(0 0 18px rgba(180, 255, 210, 1))
+        drop-shadow(0 0 40px rgba(180, 255, 210, 0.98));
+    }
+    100% {
+    opacity: 0.75;
+    stroke-width: 3.2;
+    filter:
+        drop-shadow(0 0 12px rgba(123, 255, 191, 1))
+        drop-shadow(0 0 30px rgba(123, 255, 191, 0.9));
+    }
+}
+
+.brain-cluster {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translate(-50%, -50%) scale(1);
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
+
+    min-width: 230px;
+    max-width: 290px;
+
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+
+    color: rgba(245, 255, 252, 0.98);
+    pointer-events: auto;
+    opacity: 0;
+    z-index: 10;
+    overflow: visible;
+
+    transition:
+    transform 0.22s ease-out,
+    opacity 0.20s ease-out;
+}
+
+.brain-cluster::before {
+    content: none;
+}
+
+.brain-cluster:hover {
+    min-width: 340px;
+    max-width: 560px;
+    padding: 18px 18px 16px;
+    opacity: 1 !important;
+    z-index: 9999 !important;
+}
+
+.brain-cluster--active {
+    border-color: transparent;
+    box-shadow: none;
+}
+
+.cluster-title {
+    color: #d5ffe9;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 8px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+
+    background: linear-gradient(120deg, #c0ffe4, #73ffd0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    text-shadow: 0 0 8px rgba(38, 162, 105, 0.7);
+    white-space: nowrap;
+}
+
+.skills-carousel {
+    position: relative;
+    width: 100%;
+    height: 72px;
+    overflow: hidden;
+    margin-top: 4px;
+    padding-top: 6px;
+    border-top: none;
+}
+
+.skills-track {
+    display: flex;
+    align-items: stretch;
+    height: 100%;
+    gap: 6px;
+    padding: 0 4px;
+    transition: transform 0.5s ease;
+    will-change: transform;
+}
+
+.skill-item {
+    all: unset;
+    box-sizing: border-box;
+
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 72px;
+    height: 40px;
+    padding: 0;
+
+    background: transparent;
+    border: none;
+    box-shadow: none;
+
+    cursor: default;
+    position: relative;
+    overflow: visible;
+
+    transform-origin: 50% 50%;
+    transition:
+    transform 0.18s ease-out,
+    opacity 0.18s ease-out;
+}
+
+.skill-item:hover {
+    transform:
+    translateY(-2px)
+    scale(1.2)
+    rotateX(3deg)
+    rotateY(-3deg);
+}
+
+.skill-icon-wrap {
+    width: 100%;
+    height: 30px;
+    border-radius: 0;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    box-shadow: none;
+}
+
+.skill-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 4px;
+    filter: saturate(1.05) contrast(1.05);
+    transform-origin: center;
+    transition:
+    transform 0.18s ease-out,
+    filter 0.18s ease-out;
+}
+
+.skill-item:hover .skill-icon {
+    transform: scale(1.2);
+    filter: saturate(1.18) brightness(1.06);
+}
+
+.skill-tooltip {
+    display: none !important;
+}
+
+.skill-item:hover .skill-tooltip {
+    opacity: 0;
+    transform: translateY(0);
+}
+
+.brain-cluster:hover .skills-carousel {
+    height: auto;
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.brain-cluster:hover .skills-track {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    transform: none !important;
+    padding: 6px 2px 2px;
+    gap: 8px;
+}
+
+.brain-cluster:hover .skill-item {
+    flex: 0 0 calc(33.333% - 8px);
+    min-width: 0;
+    height: auto;
+    padding: 4px 0;
+}
+
+.brain-name2d {
+    position: absolute;
+    left: 50%;
+    bottom: 3%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    font: 700 clamp(18px, calc(3.6vw * var(--ui-scale)), 56px)/1.1 'Montserrat', sans-serif;
+    letter-spacing: .06em;
+    color: #e8fff3;
+    -webkit-text-stroke: .4px rgba(0,0,0,.25);
+    text-shadow:
+    0 0 12px rgba(38,162,105,1),
+    0 0 28px rgba(38,162,105,1),
+    0 0 48px rgba(38,162,105,.9),
+    0 0 90px rgba(38,162,105,.7);
+    z-index: 4;
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    #brain-host { height: 72svh; }
+
+    .brain-cluster {
+    min-width: 170px;
+    max-width: 210px;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    }
+
+    .brain-cluster:hover {
+    min-width: 210px;
+    max-width: 260px;
+    }
+
+    .cluster-title {
+    font-size: 13px;
+    margin-bottom: 6px;
+    letter-spacing: 0.10em;
+    }
+
+    .skills-carousel { height: 54px; }
+
+    .skill-item {
+    min-width: 70px;
+    height: 50px;
+    padding: 5px 5px 4px;
+    }
+
+    .skill-icon-wrap {
+    height: 26px;
+    }
+
+    .skill-label {
+    font-size: 10px;
+    }
+
+    .skill-tooltip {
+    top: -24px;
+    font-size: 9px;
+    }
+}

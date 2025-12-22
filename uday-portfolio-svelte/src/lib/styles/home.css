@@ -1,171 +1,206 @@
+/* ===============================
+   HOME — BASE
+   =============================== */
 
-
-/* --------------- HOME ---------------*/
-
-header.home, section.home {
-    height: 100vh;
-    display: block; /* Ensure it's displayed */
-    position: relative;
-    z-index: 2;
-}
-
-.home h1 {
-    font-size: 7.5rem;
-    line-height: 1.1;
-    margin-top: -7.1rem;
-    margin-bottom: 0.2rem;
-    display: block;
-    color: #fff;
-    text-align: left;
-    font-weight: 200;
-    padding-left: var(--g1);
-    padding-right: var(--g1);
-}
-
-.home h2 {
-    font-size: 5.5rem;
-    line-height: 1.1;
-    margin-top: -1.1rem;
-    margin-bottom: 0.2rem;
-    display: block;
-    color: #fff;
-    text-align: left;
-    font-weight: 200;
-    padding-left: var(--g1);
-    padding-right: var(--g1);
-}
-
-.home > svg {
-    display: none;
+header.home,
+section.home {
+  position: relative;
+  height: 100vh;
+  min-height: 100svh;
+  display: block;
+  z-index: 2;
 }
 
 .home .wrapper {
-    justify-content: space-between;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100%;
-    min-height: 100vh;
+  position: relative;
+  height: 100%;
+  min-height: 100svh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-.home .wrapper .home-grid{
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: max-content 100px max-content;
-    grid-template-areas:
-        "title1"
-        "line"
-        "title2";
-    justify-items: center;
-    margin-bottom: 3rem;
-}
-.home .wrapper div svg {
-    width: 200px;
-    transform: translateX(-25%);
-    opacity: 1;
-}
-.home .wrapper div h4 {
-    padding: 1.618rem;
-    width: 200px;
-    text-align: justify;
-    letter-spacing: 1px;
-    border: #ffffff37 1px solid;
-    line-height: 3.6rem;
-    font-size: 2.71rem;
-    font-weight: 100;
-    color: #fff;
-    background: rgba(255, 255, 255, 0.02);
-}
-.home .wrapper div h4#homeTitle1 {
-    grid-area: title1;
-}
-.home .wrapper div h4#homeTitle2{
-    grid-area: title2;
-}
-.home .wrapper svg {
-    grid-area: line;
+
+/* ===============================
+   HERO TEXT (NAME + TAGLINE)
+   =============================== */
+
+.home h1 {
+  font-size: 7.5rem;
+  line-height: 1.1;
+  margin: 0;
+  font-weight: 200;
+  color: #fff;
+
+  padding-left: var(--g1);
+  padding-right: var(--g1);
 }
 
 .home .tagline {
-    margin-top: -10rem;
-    margin-bottom: 4.0rem;
-    line-height: 1.35;
-    color: rgba(255, 255, 255, 0.8);
-    display: block;
-    text-align: left;
-    padding-left: var(--g1);
-    padding-right: var(--g1);
+  margin: 0;
+  margin-top: 0.8rem;
+
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 42rem;
+
+  padding-left: var(--g1);
+  padding-right: var(--g1);
 }
 
-@media screen and (min-width: 600px) {
-    .home h1 {
-        width:fit-content;
-        font-size: 7.601rem;
-        margin-bottom: 0.2rem;
-    }
-    .home .wrapper {
-        align-items:normal;
-    }
-    .home .wrapper .home-grid{
-        justify-items: end;
-    }
-    .home .wrapper div h4 {
-        width: 250px;
-    }
-    .home .wrapper div svg {
-        width: 275px;
-        transform: none;
-    }
-}
-@media screen and (min-width: 800px) {
-    .home h1 {
-        width:fit-content;
-        font-size: 7.601rem;
-        margin-bottom: 0.2rem;
-    }
-    .home > svg {
-        display: block;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translateY(-50%) translateX(-50%);
-        z-index: 0;
-    }
-}
-@media screen and (min-width: 1200px) {
-    .home h1 {
-        width:fit-content;
-        font-size: 7.601rem;
-    }
-    .home .wrapper div h4 {
-        padding: 2.71rem;
-        width: 300px;
-    }
-    .home .wrapper div svg {
-        width: 300px;
-    }
-    .home .tagline {
-        margin-top: -10rem;
-    }
+/* Anchor hero block bottom-left on desktop */
+.home h1,
+.home .tagline {
+  align-self: flex-start;
 }
 
-/* Responsive: slightly less padding on mobile */
-@media (max-width: 600px) {
-    .home h1 {
-        width:fit-content;
-        font-size: 4.601rem;
-        margin-bottom: 0.2rem;
-    }
-    .home h2,
-    .home .tagline {
-        margin-top: -10rem;
-        padding-left: var(--space-sm);
-        padding-right: var(--space-sm);
-    }
-    .home h2 {
-        margin-bottom: 0.5rem; /* Reduce space below h2 */
-    }
-    .home .tagline {
-        margin-top: -10rem;    /* Reduce space above tagline */
-        margin-bottom: 2.5rem; /* Optional: less space below tagline */
-    }
+/* ===============================
+   TITLE GRID (DECORATIVE)
+   =============================== */
+
+.home .home-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: max-content 100px max-content;
+  grid-template-areas:
+    "title1"
+    "line"
+    "title2";
+
+  justify-items: center;
+  margin-top: 4rem;
+}
+
+.home .home-grid h4 {
+  padding: 1.618rem;
+  width: 200px;
+
+  text-align: center;
+  letter-spacing: 1px;
+  line-height: 3.6rem;
+  font-size: 2.71rem;
+  font-weight: 100;
+  color: #fff;
+
+  border: 1px solid #ffffff37;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.home .home-grid svg {
+  width: 200px;
+  opacity: 1;
+}
+
+/* ===============================
+   LARGE SCREENS
+   =============================== */
+
+@media (min-width: 600px) {
+  .home h1 {
+    font-size: 7.6rem;
+  }
+
+  .home .home-grid {
+    justify-items: end;
+    margin-top: 5rem;
+  }
+
+  .home .home-grid h4 {
+    width: 250px;
+  }
+
+  .home .home-grid svg {
+    width: 275px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .home .home-grid h4 {
+    padding: 2.7rem;
+    width: 300px;
+  }
+
+  .home .home-grid svg {
+    width: 300px;
+  }
+}
+
+/* ===============================
+   MOBILE — CLEAN & FLOWING
+   =============================== */
+
+@media (max-width: 768px) {
+  header.home,
+  section.home {
+    height: auto;
+    min-height: 100svh;
+    padding: 4rem 0 3rem;
+  }
+
+  .home .wrapper {
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  /* Remove decorative grid */
+  .home .home-grid {
+    display: none;
+  }
+
+  /* Center hero text block */
+  .home h1,
+  .home .tagline {
+    align-self: center;
+    text-align: center;
+    padding-left: var(--space-sm);
+    padding-right: var(--space-sm);
+  }
+
+  .home h1 {
+    font-size: clamp(2.6rem, 9vw, 3.4rem);
+    letter-spacing: 0.06em;
+  }
+
+  .home .tagline {
+    font-size: 1rem;
+    line-height: 1.55;
+    max-width: 34rem;
+  }
+}
+
+/* ===============================
+   SMALL MOBILE
+   =============================== */
+
+@media (max-width: 480px) {
+  .home h1 {
+    font-size: clamp(2.3rem, 10vw, 3rem);
+  }
+
+  .home .tagline {
+    font-size: 0.95rem;
+  }
+}
+
+/* ===============================
+   HOME — HERO OFFSET FIX
+   =============================== */
+
+/* Desktop + large screens */
+.home h1 {
+  margin-bottom: 0.6rem; /* tighten gap slightly */
+}
+
+/* Lift the whole hero block */
+.home h1,
+.home .tagline {
+  transform: translateY(-1.2rem);
+}
+
+/* Mobile needs less lift */
+@media (max-width: 768px) {
+  .home h1,
+  .home .tagline {
+    transform: translateY(-0.6rem);
+  }
 }

@@ -1,114 +1,160 @@
 /* ===============================
-   PASSION — PIXEL-CORRECT LAYOUT
+   ABOUT / PASSION — FINAL STABLE
    =============================== */
 
 section.about {
   position: relative;
-  height: 100vh;
-  min-height: 100vh;
-  padding: 0;
+  min-height: 100svh;
   background: transparent;
-  transform: none !important;
-  opacity: 1 !important;
-  overflow: hidden;
+
+  /* 🔑 CRITICAL: reserve space so EXPERIENCE never collides */
+  padding-bottom: clamp(10rem, 18vh, 16rem);
+
+  overflow: visible;
 }
 
-/* Treat wrapper as canvas */
+/* Canvas wrapper */
 section.about .wrapper {
   position: relative;
   width: 100%;
-  height: 100%;
-  border: none !important;
-  padding: 0;
-}
-
-/* Neutralize legacy layout rules */
-.about .text-box {
-  position: static;
-  padding: 0;
-  display: block;
+  min-height: 100svh;
 }
 
 /* ===============================
-   PASSION TITLE (bottom-left)
+   PASSION TITLE — DESKTOP
    =============================== */
+
 .about h2 {
   position: absolute;
-  left: calc(var(--g2) - 10.6rem);
-  bottom: 1vh;
+
+  /* 🔒 Align with Experience exactly */
+  left: calc(var(--g1) - 10.25rem);
+
+  /* 🔒 Lift it ABOVE section boundary */
+  bottom: clamp(6rem, 10vh, 9rem);
 
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 0.9rem;
 
-  font-size: clamp(7.2rem, 6vw, 4.6rem);
+  font-size: clamp(4.4rem, 6vw, 6.8rem);
   font-weight: 100;
-  letter-spacing: 0.0em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   white-space: nowrap;
 
+  color: #fff;
   opacity: 0.95;
+
+  z-index: 5;
+  pointer-events: none;
 }
 
-/* Rocket icon above title */
+/* Rocket icon */
 .about h2 img {
-  width: 120px;
-  height: 120px;
+  width: 84px;
+  height: 84px;
   filter: invert(1);
-  opacity: 0.9;
-  margin-left: 16.25rem;
+  opacity: 0.85;
+  margin-left: 13.2rem;
 }
 
 /* ===============================
-   PASSION CONTENT (top-right)
+   PASSION CONTENT — DESKTOP
    =============================== */
+
 .about .passion-content {
   position: absolute;
   top: 12vh;
-  right: calc(var(--g2) + 0.5rem);
+  right: var(--g2);
 
-  max-width: 786px;
+  max-width: 44rem;
+  z-index: 4;
 }
 
-/* Paragraphs */
 .about .passion-content p {
-  margin-bottom: 1.9rem;
+  margin-bottom: 1.8rem;
   font-size: 1.05rem;
   line-height: 1.75;
   opacity: 0.9;
 }
 
-/* First paragraph emphasis */
 .about .passion-content p:first-child {
   font-weight: 500;
   opacity: 1;
 }
 
 /* ===============================
-   MOBILE FALLBACK
+   TABLET & BELOW
    =============================== */
+
 @media (max-width: 900px) {
   section.about {
-    height: auto;
     min-height: auto;
-    padding: 6rem var(--g2);
+    padding-top: 5rem;
+    padding-bottom: 5rem;
   }
 
-  .about h2,
+  section.about .wrapper {
+    min-height: auto;
+  }
+
+  /* Title becomes in-flow */
+  .about h2 {
+    position: relative;
+    left: auto;
+    bottom: auto;
+
+    flex-direction: row;
+    align-items: center;
+    gap: 0.8rem;
+
+    margin-bottom: 2.5rem;
+
+    font-size: clamp(2.4rem, 7vw, 3.2rem);
+    letter-spacing: 0.08em;
+    white-space: normal;
+
+    pointer-events: auto;
+  }
+
+  .about h2 img {
+    width: 40px;
+    height: 40px;
+    margin-left: 0;
+  }
+
   .about .passion-content {
-    position: static;
+    position: relative;
+    top: auto;
+    right: auto;
+    max-width: 100%;
+  }
+
+  .about .passion-content p {
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+}
+
+/* ===============================
+   MOBILE FINAL POLISH
+   =============================== */
+
+@media (max-width: 600px) {
+  section.about {
+    padding-top: 3.5rem;
+    padding-bottom: 4.5rem;
   }
 
   .about h2 {
-    flex-direction: row;
-    align-items: center;
-    gap: 0.75rem;
-    letter-spacing: 0.1em;
-    margin-bottom: 2.5rem;
+    font-size: clamp(2rem, 8vw, 2.8rem);
+    margin-bottom: 1.6rem;
   }
 
-  .about .passion-content {
-    max-width: 100%;
+  .about .passion-content p {
+    font-size: 0.95rem;
+    line-height: 1.6;
   }
 }

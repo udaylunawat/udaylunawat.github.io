@@ -1,100 +1,116 @@
-
-/* --------------- SECTIONS ---------------*/
+/* ===============================
+   GLOBAL SECTION LAYOUT
+   =============================== */
 
 section {
-    position: relative;
-    z-index: 2;
-    scroll-behavior: smooth;
+  position: relative;
+  z-index: 2;
+  scroll-behavior: smooth;
+  padding: 4.201rem 1.618rem;
 }
-section {
-    padding: 4.201rem 1.618rem;
-}
-/* section:not(.projects, .home, .about, .credentials) .wrapper {
-    border: hsla(0, 0%, 100%, 0.216) 1px solid;
-} */
-section .wrapper .text-box {
-    padding: 1.618rem;
-    display: flex;
-    justify-content: space-between;
-    gap: 1.5rem;
-}
-/* section h2, section h3 {
-    width: min-content;
-    padding-right: 0;
-    flex-basis: calc(33.33% - var(--g1) / 2);
-} */
 
 section h2 {
-    width: 100%;
-    margin-bottom: 1.618rem;
+  width: 100%;
+  margin-bottom: 1.618rem;
 }
+
+/* ===============================
+   WRAPPER / TEXT BOX
+   =============================== */
+
+section .wrapper .text-box {
+  padding: 1.618rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+/* ===============================
+   GRID SYSTEM
+   =============================== */
 
 .grid {
-    display: grid;
-    grid-template-columns: auto auto;
-    justify-content: space-around;
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: space-around;
 }
 
-/* Experience section should size to content */
+@media (min-width: 480px) and (max-width: 699px) {
+  .grid {
+    grid-template-columns: auto auto auto;
+    justify-content: space-between;
+  }
+}
+
+@media (min-width: 700px) {
+  .grid {
+    grid-template-columns: auto auto auto auto;
+    justify-content: space-between;
+  }
+}
+
+/* ===============================
+   EXPERIENCE / CREDENTIALS
+   =============================== */
+
 section.credentials {
-  padding-top: 6rem !important;
-  padding-bottom: 6rem !important;
+  padding-top: 6rem;
+  padding-bottom: 6rem;
 }
 
-@media screen and (min-width: 480px) and (max-width: 699px) {
-    .grid {
-        grid-template-columns: auto auto auto;
-        justify-content: space-between;
-    }
+/* ===============================
+   DESKTOP — LEFT RAIL ENABLED
+   =============================== */
+
+@media (min-width: 800px) {
+  section {
+    margin-left: 4.401rem; /* rail width */
+  }
+
+  header.home,
+  section.home,
+  section.about {
+    margin-left: 6rem; /* extra offset for hero / passion */
+    padding-left: var(--g2);
+    padding-right: var(--g2);
+  }
+
+  section h2 {
+    margin-bottom: 4.401rem;
+  }
+
+  section.skills > *:not(h2),
+  section.contact > *:not(h2) {
+    margin-left: var(--g4);
+  }
+
+  section.credentials .experience-gallery {
+    padding-left: 0;
+  }
 }
 
-@media screen and (min-width: 700px) {
-    .grid {
-        grid-template-columns: auto auto auto auto;
-        justify-content: space-between;
-    }
+/* ===============================
+   ABOUT / PASSION — DESKTOP HEIGHT
+   =============================== */
+
+@media (min-width: 700px) {
+  section.about {
+    min-height: 100vh;
+  }
+
+  .about .wrapper .text-box {
+    align-items: flex-start;
+    gap: var(--g4);
+  }
+
+  .about .text-box > div {
+    gap: 2.712rem;
+  }
 }
 
-@media screen and (min-width: 800px) {
-    section {
-        margin-left: 4.401rem;
-    }
-    /* section:not(.home, .about) {
-        padding: 11.52rem 1.618rem;
-        padding-left: var(--g2);
-        padding-right: var(--g2);
-    } */
-    section h2 {
-        margin-bottom: 4.401rem;
-    }
-    section.credentials .experience-gallery {
-        padding-left: 0;
-    }
-    section.skills > *:not(h2), section.contact > *:not(h2) {
-        margin-left: var(--g4);
-    }
-    header.home, section.home, section.about {
-        padding: 4.201rem 0;
-        padding-left: var(--g2);
-        padding-right: var(--g2);
-        margin-left: 6rem;
-    }
-}
-
-@media screen and (min-width: 700px) {
-    section.about {
-        height: 100vh;
-    }
-    .about .wrapper .text-box {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: var(--g4);
-    }
-    .about .text-box > div {
-        gap: 2.712rem;
-    }
-}
+/* ===============================
+   GLOBAL TRANSPARENCY
+   =============================== */
 
 section,
 header,
@@ -108,9 +124,48 @@ footer,
   background: transparent !important;
 }
 
+/* ===============================
+   PASSION SAFETY
+   =============================== */
+
 .passion {
   position: relative;
   z-index: 3;
   opacity: 1;
   transform: none;
+}
+
+/* ===============================
+   MOBILE — FULL RESET
+   =============================== */
+
+@media (max-width: 799px) {
+  section,
+  header.home,
+  section.about {
+    margin-left: 0 !important;
+    padding-left: var(--space-sm) !important;
+    padding-right: var(--space-sm) !important;
+  }
+
+  .wrapper {
+    margin-left: 0 !important;
+  }
+}
+
+/* ===============================
+   MOBILE FOUNDATION
+   =============================== */
+
+@media (max-width: 768px) {
+  section {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    min-height: auto;
+  }
+
+  /* Kill any calc-based layout drift */
+  [style*="calc("] {
+    max-width: 100%;
+  }
 }

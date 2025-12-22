@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
-  import { mountBrainDeepSkills } from '$lib/brain/brainDeepSkills';
+  import { mountBrainDeepSkills } from '$lib/brain/mountBrainDeepSkills';
 
   let host: HTMLDivElement;
   let brain: any;
@@ -28,9 +28,13 @@
 
 <style>
   #brain-host {
-    width: 100%;
-    height: min(88svh, 88dvh, 760px);
     position: relative;
-    overflow: hidden;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  #brain-host.hidden {
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
   }
 </style>

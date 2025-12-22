@@ -1,9 +1,9 @@
 
-.background-layer canvas {
+/* .background-layer canvas {
   display: block;
-}
+} */
 
-#svelte {
+/* #svelte {
   position: relative;
   background: transparent;
 }
@@ -11,13 +11,13 @@
 body > *:not(.background-layer) {
   position: relative;
   z-index: 1;
-}
+} */
 
-.background-layer canvas {
+/* .background-layer canvas {
   width: 100%;
   height: 100%;
   display: block;
-}
+} */
 
 /* All content ABOVE background */
 #svelte,
@@ -27,7 +27,7 @@ body > *:not(.background-layer) {
 }
 
 
-.particles-layer {
+/* .particles-layer {
   position: fixed;
   inset: 0;
   z-index: -6;
@@ -39,7 +39,7 @@ body > *:not(.background-layer) {
   inset: 0;
   z-index: -5;
   pointer-events: none;
-}
+} */
 
 .particles-layer canvas {
   width: 100%;
@@ -57,9 +57,9 @@ body > *:not(.background-layer) {
 }
 
 
-body {
+/* body {
     background-color: rgb(23, 27, 34);
-}
+} */
 
 /* .color-background {
     background-color: rgb(23, 27, 34);
@@ -71,14 +71,14 @@ body {
     z-index: 1;
     opacity: 0;
 } */
-#canvas, canvas {
+/* #canvas, canvas {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: 0;
-}
+} */
 
 
 /* ========= Canvas host & stacking ========= */
@@ -112,3 +112,78 @@ body {
 /* Optional background */
 /* html, body { background: radial-gradient(circle at 50% 50%, #0f1318 0%, #05070b 90%); } */
 
+/* ===============================
+   GLOBAL BACKGROUND & PARTICLES
+   =============================== */
+
+.background-layer,
+.particles-layer {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+
+  pointer-events: none;
+  overflow: visible;              /* 🔑 NO CLIPPING */
+  isolation: auto;                /* 🔑 REMOVE isolate */
+
+  z-index: -10;
+}
+
+.particles-layer {
+  z-index: -5;
+  mix-blend-mode: screen;         /* safe once unclipped */
+}
+
+/* Canvas MUST be absolute and full screen */
+.background-layer canvas,
+.particles-layer canvas {
+  position: absolute;
+  inset: 0;
+
+  width: 100vw !important;
+  height: 100vh !important;
+
+  display: block;
+}
+
+/* Make sure NOTHING clips the viewport */
+html,
+body,
+#svelte {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* Kill any accidental canvas clipping */
+canvas {
+  max-width: none !important;
+  max-height: none !important;
+}
+
+
+
+/* hides brain until matrix completes */
+.matrix-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.matrix-revealed {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 1.2s ease;
+}
+
+#brain-host.matrix-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#brain-host.matrix-revealed {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.8s ease;
+}

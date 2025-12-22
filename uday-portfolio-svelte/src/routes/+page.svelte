@@ -7,6 +7,7 @@
   import Navigation from '$lib/components/Navigation.svelte';
   import PassionSection from '$lib/components/PassionSection.svelte';
   import SkillsGrid from '$lib/components/skills/SkillsGrid.svelte';
+  import { MatrixEffect } from '$lib/brain/matrix/matrixEffect';
   import ExperienceGrid from '$lib/components/experience/ExperienceGrid.svelte';
   import ProjectsGrid from '$lib/components/projects/ProjectsGrid.svelte';
   import BaseGallery from '$lib/components/BaseGallery.svelte';
@@ -14,30 +15,35 @@
 
   let currentTheme: 'experience' | 'projects' | null = null;
 
+  // 🔥 MATRIX STATE
+  let skillsSection: HTMLElement;
+  let matrixHasRun = false;
+
   onMount(() => {
-  /* =========================
-     LOADER RELEASE
-     ========================= */
+    /* =========================
+       LOADER RELEASE
+       ========================= */
 
-  const MIN_LOADER_TIME = 1200;
-  const startTime = performance.now();
+    const MIN_LOADER_TIME = 1200;
+    const startTime = performance.now();
 
-  const reveal = () => {
-    document.body.classList.add('show-ui');
-  };
+    const reveal = () => {
+      document.body.classList.add('show-ui');
+    };
 
-  window.addEventListener(
-    'load',
-    () => {
-      const elapsed = performance.now() - startTime;
-      const remaining = Math.max(0, MIN_LOADER_TIME - elapsed);
-      setTimeout(reveal, remaining);
-    },
-    { once: true }
-  );
+    window.addEventListener(
+      'load',
+      () => {
+        const elapsed = performance.now() - startTime;
+        const remaining = Math.max(0, MIN_LOADER_TIME - elapsed);
+        setTimeout(reveal, remaining);
+      },
+      { once: true }
+    );
 
-  // Safety fallback
-  setTimeout(reveal, 2500);
+    // Safety fallback
+    setTimeout(reveal, 2500);
+
     /* =========================
        BACKGROUND + PARTICLES
        ========================= */
@@ -74,7 +80,7 @@
        SECTION THEMES
        ========================= */
 
-    const observer = new IntersectionObserver(
+    const themeObserver = new IntersectionObserver(
       entries => {
         for (const e of entries) {
           if (!e.isIntersecting) continue;
@@ -92,8 +98,47 @@
 
     ['experience', 'projects'].forEach(id => {
       const el = document.getElementById(id);
-      if (el) observer.observe(el);
+      if (el) themeObserver.observe(el);
     });
+
+    /* =========================
+       MATRIX EFFECT (SKILLS)
+       ========================= */
+
+    const matrixObserver = new IntersectionObserver(
+      entries => {
+        const entry = entries[0];
+        if (!entry.isIntersecting) return;
+        if (matrixHasRun) return;
+
+        matrixHasRun = true;
+        matrixObserver.disconnect();
+
+        // Hide brain initially
+        const brainHost = document.getElementById('brain-host');
+        if (brainHost) {
+          brainHost.classList.add('matrix-hidden');
+        }
+
+        // Start Matrix
+        const matrix = new MatrixEffect();
+
+        matrix.onComplete = () => {
+          if (brainHost) {
+            brainHost.classList.remove('matrix-hidden');
+            brainHost.classList.add('matrix-revealed');
+          }
+        };
+      },
+      {
+        threshold: 0.6,
+        rootMargin: '-10% 0px -10% 0px'
+      }
+    );
+
+    if (skillsSection) {
+      matrixObserver.observe(skillsSection);
+    }
 
     /* =========================
        MODAL PAUSE
@@ -106,7 +151,8 @@
 
     return () => {
       unsubscribe();
-      observer.disconnect();
+      themeObserver.disconnect();
+      matrixObserver.disconnect();
       window.removeEventListener('scroll', onScroll);
     };
   });
@@ -192,6 +238,7 @@
      ========================= -->
 <header class="home" id="homeTitle">
   <div class="wrapper">
+
     <div class="home-grid">
       <h4>{content.home.title1}</h4>
 
@@ -203,11 +250,15 @@
       <h4>{content.home.title2}</h4>
     </div>
 
-    <h1>{content.contact.name}</h1>
+    <!-- 🔒 SINGLE ANCHORED BLOCK -->
+    <div class="hero-text">
+      <h1>{content.contact.name}</h1>
 
-    <p class="tagline">
-      {@html content.home.tagline}
-    </p>
+      <p class="tagline">
+        {@html content.home.tagline}
+      </p>
+    </div>
+
   </div>
 </header>
 
@@ -246,8 +297,14 @@
   }
 </style> -->
 
-<section class="section skills" id="skills">
+<section
+  bind:this={skillsSection}
+  class="section skills"
+  id="skills"
+>
   <h2 class="section-title">Skills</h2>
+
+  <!-- Brain is mounted immediately, but hidden -->
   <BrainSkills />
 </section>
 
