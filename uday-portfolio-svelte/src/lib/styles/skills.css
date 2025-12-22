@@ -44,3 +44,78 @@
   font-size: 0.9rem;
   opacity: 0.92;
 }
+
+
+
+
+
+/* --------------- SKILLS ---------------*/
+
+
+.skills .grid{
+    padding: 1rem;
+}
+.skills .grid > * {
+    padding: 1rem 0;
+}
+.skills .flex-container {
+    flex-direction: column;
+    gap: 0.618rem;
+    align-items: center;
+}
+.skills .grid i {
+    font-size: 4.401rem;
+}
+.skills .grid img {
+    object-fit: cover;
+    height: 4.401rem;
+    filter: invert();
+    -webkit-filter: invert();
+    box-sizing: content-box;
+}
+
+@media screen and (min-width: 480px) and (max-width: 699px) {
+    .skills .grid{
+        padding: 1.618rem;
+    }
+    .skills .grid > * {
+        padding: 1.618rem 0;
+    }
+}
+@media screen and (min-width: 700px) {
+    .skills .grid > * {
+        padding: 2.712rem;
+    }
+}
+
+
+/* Skills host variant */
+#skills .brain-host{
+  position: relative;
+  width: 100%;
+  height: min(88svh, 88dvh, 760px);
+  aspect-ratio: 16 / 11;
+  z-index: 2;
+  pointer-events: auto;
+  opacity: 1;
+  transition: opacity 0.4s ease-in-out;
+}
+
+/* Hidden state for brain during matrix effect */
+#skills .brain-host.matrix-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+
+/* ========= Mobile tweaks ========= */
+@media (max-width: 768px){
+  .canvas-container{ height: 72svh; }
+  .brain-cluster{ background: rgba(6, 10, 12, 0.85); }
+  .brain-chip{ -webkit-text-stroke:0; }
+  /* #brain-name{ bottom:3vh; } */
+  .brain-chips-track{
+    animation-duration: var(--marquee-duration-mobile);
+  }
+}

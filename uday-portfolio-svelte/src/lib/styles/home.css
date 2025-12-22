@@ -1,0 +1,171 @@
+
+
+/* --------------- HOME ---------------*/
+
+header.home, section.home {
+    height: 100vh;
+    display: block; /* Ensure it's displayed */
+    position: relative;
+    z-index: 2;
+}
+
+.home h1 {
+    font-size: 7.5rem;
+    line-height: 1.1;
+    margin-top: -7.1rem;
+    margin-bottom: 0.2rem;
+    display: block;
+    color: #fff;
+    text-align: left;
+    font-weight: 200;
+    padding-left: var(--g1);
+    padding-right: var(--g1);
+}
+
+.home h2 {
+    font-size: 5.5rem;
+    line-height: 1.1;
+    margin-top: -1.1rem;
+    margin-bottom: 0.2rem;
+    display: block;
+    color: #fff;
+    text-align: left;
+    font-weight: 200;
+    padding-left: var(--g1);
+    padding-right: var(--g1);
+}
+
+.home > svg {
+    display: none;
+}
+
+.home .wrapper {
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    min-height: 100vh;
+}
+.home .wrapper .home-grid{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: max-content 100px max-content;
+    grid-template-areas:
+        "title1"
+        "line"
+        "title2";
+    justify-items: center;
+    margin-bottom: 3rem;
+}
+.home .wrapper div svg {
+    width: 200px;
+    transform: translateX(-25%);
+    opacity: 1;
+}
+.home .wrapper div h4 {
+    padding: 1.618rem;
+    width: 200px;
+    text-align: justify;
+    letter-spacing: 1px;
+    border: #ffffff37 1px solid;
+    line-height: 3.6rem;
+    font-size: 2.71rem;
+    font-weight: 100;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.02);
+}
+.home .wrapper div h4#homeTitle1 {
+    grid-area: title1;
+}
+.home .wrapper div h4#homeTitle2{
+    grid-area: title2;
+}
+.home .wrapper svg {
+    grid-area: line;
+}
+
+.home .tagline {
+    margin-top: -10rem;
+    margin-bottom: 4.0rem;
+    line-height: 1.35;
+    color: rgba(255, 255, 255, 0.8);
+    display: block;
+    text-align: left;
+    padding-left: var(--g1);
+    padding-right: var(--g1);
+}
+
+@media screen and (min-width: 600px) {
+    .home h1 {
+        width:fit-content;
+        font-size: 7.601rem;
+        margin-bottom: 0.2rem;
+    }
+    .home .wrapper {
+        align-items:normal;
+    }
+    .home .wrapper .home-grid{
+        justify-items: end;
+    }
+    .home .wrapper div h4 {
+        width: 250px;
+    }
+    .home .wrapper div svg {
+        width: 275px;
+        transform: none;
+    }
+}
+@media screen and (min-width: 800px) {
+    .home h1 {
+        width:fit-content;
+        font-size: 7.601rem;
+        margin-bottom: 0.2rem;
+    }
+    .home > svg {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+        z-index: 0;
+    }
+}
+@media screen and (min-width: 1200px) {
+    .home h1 {
+        width:fit-content;
+        font-size: 7.601rem;
+    }
+    .home .wrapper div h4 {
+        padding: 2.71rem;
+        width: 300px;
+    }
+    .home .wrapper div svg {
+        width: 300px;
+    }
+    .home .tagline {
+        margin-top: -10rem;
+    }
+}
+
+/* Responsive: slightly less padding on mobile */
+@media (max-width: 600px) {
+    .home h1 {
+        width:fit-content;
+        font-size: 4.601rem;
+        margin-bottom: 0.2rem;
+    }
+    .home h2,
+    .home .tagline {
+        margin-top: -10rem;
+        padding-left: var(--space-sm);
+        padding-right: var(--space-sm);
+    }
+    .home h2 {
+        margin-bottom: 0.5rem; /* Reduce space below h2 */
+    }
+    .home .tagline {
+        margin-top: -10rem;    /* Reduce space above tagline */
+        margin-bottom: 2.5rem; /* Optional: less space below tagline */
+    }
+}

@@ -1,0 +1,355 @@
+
+/* =============================
+   Minimal AMOLED Neural Loader
+   ============================= */
+
+.ai-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.6rem;
+  background-color: #000;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity 0.5s ease, visibility 0.5s ease, transform 0.5s ease;
+  overflow: hidden;
+}
+
+/* Hide loader once main UI is ready */
+body.show-ui .ai-loader {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px);
+  pointer-events: none;
+}
+
+/* Subtle vertical columns in the background - matrix adjacent but minimal */
+
+.ai-loader::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgba(38, 162, 105, 0.0) 0,
+      rgba(38, 162, 105, 0.35) 40%,
+      rgba(38, 162, 105, 0.0) 80%
+    );
+  background-repeat: repeat-x;
+  background-size: 120px 260px;
+  opacity: 0.35;
+  mix-blend-mode: screen;
+  animation: ai-columns-fall 18s linear infinite;
+  pointer-events: none;
+}
+
+.ai-loader::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 10% 0, rgba(38, 162, 105, 0.2), transparent 55%),
+    radial-gradient(circle at 80% 100%, rgba(38, 162, 105, 0.2), transparent 60%);
+  opacity: 0.35;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* Loader card */
+
+.ai-loader-inner {
+  position: relative;
+  max-width: 720px;
+  width: 100%;
+  padding: 1.6rem 1.8rem;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 0 0, rgba(38, 162, 105, 0.18), transparent 60%),
+    rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 18px 60px rgba(0, 0, 0, 0.9),
+    0 0 80px rgba(38, 162, 105, 0.28);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1.2fr);
+  column-gap: 1.75rem;
+  row-gap: 1.4rem;
+  align-items: center;
+  backdrop-filter: blur(18px);
+  z-index: 1;
+}
+
+@media (max-width: 640px) {
+  .ai-loader-inner {
+    grid-template-columns: 1fr;
+    padding: 1.4rem 1.25rem;
+    border-radius: 14px;
+  }
+}
+
+/* Neural grid avatar */
+
+.ai-grid {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background:
+    radial-gradient(circle at 20% 0, rgba(38, 162, 105, 0.25), transparent 60%),
+    radial-gradient(circle at 80% 100%, rgba(38, 162, 105, 0.25), transparent 60%),
+    radial-gradient(circle at 50% 50%, #000000, #050505);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 0 40px rgba(38, 162, 105, 0.3);
+  overflow: hidden;
+}
+
+.ai-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 18px 18px;
+  opacity: 0.25;
+  mix-blend-mode: soft-light;
+}
+
+.ai-grid::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 50% 0, rgba(255, 255, 255, 0.18), transparent 60%);
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.ai-grid-nodes {
+  position: absolute;
+  inset: 12px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 8px;
+  z-index: 1;
+}
+
+.ai-node-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  margin: auto;
+  background: radial-gradient(circle, #ffffff, #26a269);
+  box-shadow: 0 0 12px rgba(38, 162, 105, 0.9);
+  opacity: 0.2;
+  transform: scale(0.8);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.ai-node-dot.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Scanning bar across the grid */
+
+.ai-grid-scan {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 0,
+    rgba(38, 162, 105, 0.0) 40%,
+    rgba(38, 162, 105, 0.17) 50%,
+    rgba(38, 162, 105, 0.0) 60%,
+    transparent 100%
+  );
+  mix-blend-mode: screen;
+  transform: translateX(-120%);
+  animation: ai-grid-scan 3.6s ease-in-out infinite;
+}
+
+/* Text side */
+
+.ai-loader-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  min-width: 0;
+}
+
+.ai-chipline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  white-space: nowrap;
+}
+
+.ai-chip {
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.02);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.ai-chip-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #26a269;
+  box-shadow: 0 0 10px rgba(38, 162, 105, 0.9);
+  animation: ai-chip-dot-pulse 1.7s ease-in-out infinite;
+}
+
+.ai-name {
+  font-size: 1.02rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.ai-role {
+  font-size: 0.86rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.ai-status-line {
+  margin-top: 0.4rem;
+  font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.ai-status-tag {
+  padding: 0.14rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.02);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.ai-status-rotating {
+  min-height: 1.1em;
+  font-size: 0.86rem;
+  font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  color: rgba(255, 255, 255, 0.88);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ai-progress-row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: 0.3rem;
+}
+
+.ai-progress-bar {
+  position: relative;
+  flex: 1;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  overflow: hidden;
+}
+
+.ai-progress-fill {
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
+  background: linear-gradient(90deg, #26a269, rgba(255, 255, 255, 0.9));
+  animation: ai-progress-sweep 2.2s ease-in-out infinite;
+  box-shadow: 0 0 12px rgba(38, 162, 105, 0.8);
+}
+
+.ai-progress-percent {
+  font-size: 0.78rem;
+  font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  color: rgba(255, 255, 255, 0.6);
+  min-width: 3.4rem;
+  text-align: right;
+}
+
+.ai-hints {
+  margin-top: 0.3rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.55);
+  font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.ai-hints code {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 999px;
+  padding: 0.12rem 0.55rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  margin-left: 0.4rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.75rem;
+}
+
+@media (max-width: 640px) {
+  .ai-grid {
+    width: 132px;
+    height: 132px;
+  }
+  .ai-name {
+    letter-spacing: 0.11em;
+  }
+}
+
+/* Keyframes */
+
+@keyframes ai-columns-fall {
+  from { background-position: 0 -260px; }
+  to   { background-position: 0 0; }
+}
+
+@keyframes ai-grid-scan {
+  0%   { transform: translateX(-120%); opacity: 0; }
+  15%  { opacity: 0.85; }
+  70%  { opacity: 0.5; }
+  100% { transform: translateX(120%); opacity: 0; }
+}
+
+@keyframes ai-chip-dot-pulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 8px rgba(38, 162, 105, 0.7); }
+  50%      { transform: scale(1.25); box-shadow: 0 0 16px rgba(38, 162, 105, 1); }
+}
+
+@keyframes ai-progress-sweep {
+  0%   { transform: translateX(-40%) scaleX(0.3); opacity: 0.3; }
+  30%  { transform: translateX(-5%) scaleX(0.8); opacity: 1; }
+  70%  { transform: translateX(5%) scaleX(1); opacity: 1; }
+  100% { transform: translateX(80%) scaleX(0.6); opacity: 0.15; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-loader::before,
+  .ai-grid-scan,
+  .ai-node-dot,
+  .ai-progress-fill {
+    animation: none !important;
+  }
+}

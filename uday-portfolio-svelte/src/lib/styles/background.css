@@ -1,0 +1,114 @@
+
+.background-layer canvas {
+  display: block;
+}
+
+#svelte {
+  position: relative;
+  background: transparent;
+}
+
+body > *:not(.background-layer) {
+  position: relative;
+  z-index: 1;
+}
+
+.background-layer canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* All content ABOVE background */
+#svelte,
+body > *:not(.background-layer) {
+  position: relative;
+  z-index: 1;
+}
+
+
+.particles-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -6;
+  pointer-events: none;
+}
+
+.particles-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -5;
+  pointer-events: none;
+}
+
+.particles-layer canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: blur(0.2px);
+}
+
+.particles-layer {
+  mix-blend-mode: screen;
+}
+
+#brain-host {
+  overflow: hidden;
+}
+
+
+body {
+    background-color: rgb(23, 27, 34);
+}
+
+/* .color-background {
+    background-color: rgb(23, 27, 34);
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    opacity: 0;
+} */
+#canvas, canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+
+/* ========= Canvas host & stacking ========= */
+.canvas-container{
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: min(78svh, 78dvh, 640px);
+  aspect-ratio: 16 / 10;
+  z-index: 2;
+  pointer-events: auto;
+}
+.canvas-container > canvas{ position:absolute; inset:0; z-index:1; }
+
+
+
+/* Name on top */
+/* #brain-name{
+  position:absolute; bottom: 6vh; left:50%; transform:translateX(-50%);
+  z-index: 2147483647; pointer-events:none;
+  font: 700 clamp(18px, calc(3.6vw * var(--ui-scale)), 56px)/1.1 'Montserrat', sans-serif;
+  letter-spacing:.06em; color:#e8fff3;
+  -webkit-text-stroke:.4px rgba(0,0,0,.25);
+  text-shadow:
+    0 0 12px rgba(38,162,105,1),
+    0 0 28px rgba(38,162,105,1),
+    0 0 48px rgba(38,162,105,.9),
+    0 0 90px rgba(38,162,105,.7);
+} */
+
+/* Optional background */
+/* html, body { background: radial-gradient(circle at 50% 50%, #0f1318 0%, #05070b 90%); } */
+

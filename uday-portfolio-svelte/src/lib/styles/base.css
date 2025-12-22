@@ -90,3 +90,151 @@
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   margin: 2rem 0;
 }
+
+
+h1 {
+    font-size: 5.5rem;
+    line-height: 5.5rem;
+    text-transform: uppercase;
+    font-family: 'Oswald', sans-serif;
+}
+h2 {
+    font-size: 3.5rem;
+    line-height: 3.5rem;;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 200;
+    text-transform: uppercase;
+}
+h3 {
+    font-size: 2rem;
+    line-height: 2rem;
+    text-transform: uppercase;
+    font-weight: 400;
+}
+h4, h4 span, h4 span a {
+    font-size: 1.2rem;
+    line-height: 1.4rem;
+    text-transform: uppercase;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 300;
+}
+
+p {
+    line-height: 1.5rem;
+    letter-spacing: 0.3px;
+    font-weight: 300;
+}
+
+ul {
+    list-style: none;
+}
+a, a span {
+    text-decoration: none;
+    font-family: 'Oswald', sans-serif;
+}
+h4 span a {
+    text-decoration: underline;
+}
+a:hover, a:hover span {
+    transition: all 250ms ease-in-out;
+}
+
+
+button {
+    border: none;
+    background-color: #26a269;
+    color: black;
+    padding: 1rem;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+button:hover {
+    background-color: #185b42;
+}
+button:active {
+    background-color: #1e5d43;
+}
+button img {
+    padding-left: 0.618rem;
+}
+.secondary-btn {
+    padding: 0.618rem 1rem;
+    background-color: #35393d6f;
+    color: #26a269;
+    transition: all 300ms ease-in-out !important;
+}
+.secondary-btn:hover {
+    background-color: #ffffff6f;
+    color: #fff;
+}
+
+@media screen and (min-width:600px) {
+    * {
+        font-size: 15px;
+    }
+    h2 {
+        font-size: 4.401rem;
+        line-height: 4.401rem;
+    }
+}
+
+@media screen and (min-width:900px) {
+    h1 {
+        font-size: 7.12rem;
+        line-height: 7.12rem;
+    }
+}
+
+@media screen and (min-width: 1000px)  {
+    h2 {
+        font-size: 7.12rem;
+        line-height: 7.12rem;
+    }
+    h3 {
+        font-size: 2.72rem;
+        line-height: 2.72rem;
+    }
+    h4, h4 span, h4 span a {
+        font-size: 1.618rem;
+        line-height: 2rem;
+    }
+}  
+
+@media screen and (min-width: 1200px) {
+    .flex-container {
+        gap:var(--g2);
+    }
+    .contact .wrapper {
+        padding: var(--g2);
+    }
+    .projects .wrapper .flex-container, section .wrapper .text-box  {
+        padding: var(--g1);
+    }
+}
+
+
+/* ========= _base.css ========= */
+
+/* ===============================
+   EXPERIENCE BASE
+   =============================== */
+
+h1 {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 200;
+  font-size: 2.6rem;
+  color: #00ff00;
+  margin-bottom: 0.6rem;
+}
+
+h2 {
+  margin-top: 2.2rem;
+  font-size: 1.6rem;
+  font-weight: 200;
+}
+
+h3 {
+  font-weight: 300;
+}

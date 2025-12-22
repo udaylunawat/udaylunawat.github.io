@@ -214,29 +214,26 @@
 <!-- =========================
      ABOUT
      ========================= -->
-<PassionSection about={content.about} />
+
+<section class="section about" id="about">
+  <PassionSection about={content.about} />
+</section>
 
 <!-- =========================
      EXPERIENCE
      ========================= -->
-<section
-  class="experience credentials"
-  id="experience"
-  on:introend={setExperienceTheme}
->
-  <div class="wrapper">
-    <h2>Experience</h2>
+<section class="section experience" id="experience">
+  <h2 class="section-title">Experience</h2>
 
-    <BaseGallery showDots ariaLabel="Experience gallery">
-      <ExperienceGrid />
-    </BaseGallery>
-  </div>
+  <BaseGallery showDots>
+    <ExperienceGrid />
+  </BaseGallery>
 </section>
 
 <!-- =========================
      SKILLS
      ========================= -->
-<section id="skills-brain" class="skills-brain">
+<!-- <section id="skills-brain" class="skills-brain">
   <h2>Skills</h2>
   <BrainSkills />
 </section>
@@ -247,30 +244,29 @@
     width: 100%;
     padding: 4rem 0;
   }
-</style>
+</style> -->
+
+<section class="section skills" id="skills">
+  <h2 class="section-title">Skills</h2>
+  <BrainSkills />
+</section>
 
 <!-- =========================
      PROJECTS
      ========================= -->
-<section
-  class="projects"
-  id="projects"
-  on:introend={setProjectsTheme}
->
-  <div class="wrapper">
-    <h2>Projects</h2>
+<section class="section projects" id="projects">
+  <h2 class="section-title">Projects</h2>
 
-    <BaseGallery showDots ariaLabel="Projects gallery">
-      <ProjectsGrid />
-    </BaseGallery>
-  </div>
+  <BaseGallery showDots>
+    <ProjectsGrid />
+  </BaseGallery>
 </section>
 
 <!-- =========================
      CONTACT
      ========================= -->
-<section class="contact" id="contact">
-  <h2>{content.contact.title}</h2>
+<section class="section contact" id="contact">
+  <h2 class="section-title">Contact</h2>
 
   <div class="wrapper">
     <div class="flex-container contact-grid">

@@ -1,0 +1,114 @@
+/* ===============================
+   SECTION SYSTEM — GLOBAL
+   =============================== */
+
+section {
+  position: relative;
+  z-index: 2;
+  scroll-margin-top: 8rem;
+}
+
+/* Base spacing */
+section:not(.home) {
+  padding: 6rem 0;
+}
+
+/* Desktop spacing */
+@media (min-width: 800px) {
+  section:not(.home) {
+    padding: 11.52rem 0;
+    margin-left: 6rem;
+  }
+}
+
+/* ===============================
+   SECTION WRAPPER
+   =============================== */
+
+section > .wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--g2);
+  position: relative;
+}
+
+/* Remove legacy borders everywhere */
+section .wrapper {
+  border: none !important;
+}
+
+/* ===============================
+   SECTION HEADING (h2)
+   =============================== */
+
+section h2 {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 100;
+  font-size: clamp(2.4rem, 4vw, 3.6rem);
+  letter-spacing: -0.9em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.95);
+
+  margin-bottom: 4.401rem;
+}
+
+/* Align headings consistently */
+section:not(.about) h2 {
+  margin-left: var(--g4);
+}
+
+/* ===============================
+   SECTION CONTENT OFFSET
+   =============================== */
+
+section:not(.about) > .wrapper > *:not(h2) {
+  margin-left: var(--g4);
+}
+
+/* ===============================
+   GRID HELPERS (used by skills/projects)
+   =============================== */
+
+.grid {
+  display: grid;
+  gap: 2.4rem;
+}
+
+@media (min-width: 700px) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}
+
+/* ===============================
+   MODERN SECTIONS (Svelte)
+   =============================== */
+
+.section {
+  position: relative;
+  z-index: 2;
+  padding: 11.52rem var(--g2);
+}
+
+.section .wrapper {
+  border: none;
+  padding: 0;
+}
+
+/* Section title — big cinematic */
+.section-title {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 200;
+  font-size: clamp(3.5rem, 7vw, 6.5rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 6rem;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* Desktop offset like old site */
+@media (min-width: 800px) {
+  .section {
+    margin-left: 6rem;
+  }
+}

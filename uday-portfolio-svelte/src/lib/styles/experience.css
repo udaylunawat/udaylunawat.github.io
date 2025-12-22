@@ -1,0 +1,87 @@
+
+/* ===============================
+   EXPERIENCE META
+   =============================== */
+
+.experience-meta {
+  margin: 0.6rem 0 1.6rem;
+}
+
+.experience-subtitle {
+  font-size: 1.7rem;
+  font-weight: 300;
+  margin-bottom: 0.75rem;
+  color: rgba(255,255,255,0.95);
+}
+
+.experience-facts {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  row-gap: 0.4rem;
+}
+
+.experience-facts li {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  column-gap: 1rem;
+}
+
+.fact-label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.55);
+}
+
+.fact-value {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.9);
+}
+
+/* Divider */
+hr {
+  margin: 2.8rem 0;
+  opacity: 0.35;
+}
+
+
+
+
+
+
+
+/* ===============================
+   ALIGNED LISTS
+   =============================== */
+
+.aligned-list {
+  list-style: none;
+  padding: 0;
+}
+
+.aligned-list li {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 1rem;
+  margin-bottom: 0.6rem;
+}
+
+.aligned-list .label {
+  font-weight: 500;
+  color: #2ecc71;
+}
+
+.aligned-list .value {
+  line-height: 1.55;
+}
+
+/* ===============================
+   QUOTES
+   =============================== */
+
+.custom-quote {
+  border-left: 3px solid rgba(255,255,255,0.35);
+  padding-left: 1rem;
+  opacity: 0.95;
+}

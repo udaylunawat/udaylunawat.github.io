@@ -1,0 +1,316 @@
+/* =========================
+   CONTACT SECTION
+   ========================= */
+
+.contact {
+  position: relative;
+  padding: 6rem 1.5rem;
+}
+
+.contact h2 {
+  text-align: left;
+  margin-bottom: 3rem;
+}
+
+/* Main layout */
+.contact .wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.contact .flex-container {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+/* Image column */
+.contact .img-container {
+  flex: 0 0 180px;
+  display: flex;
+  justify-content: center;
+}
+
+.contact .profile-photo {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+/* Text column */
+.contact .contact-col {
+  flex: 1;
+  min-width: 260px;
+}
+
+.contact .contact-col p {
+  opacity: 0.9;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+/* Links */
+.contact .contact-col .flex-container {
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.contact .contact-col a {
+  text-decoration: none;
+}
+
+.contact .contact-col a button,
+.contact .contact-col a:not(:has(button)) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: inherit;
+  font-size: 0.85rem;
+  transition: all 0.15s ease;
+}
+
+.contact .contact-col a:hover button,
+.contact .contact-col a:hover {
+  background: rgba(255,255,255,0.12);
+  transform: translateY(-1px);
+}
+
+/* Resume button */
+.contact .contact-col button {
+  cursor: pointer;
+  background: linear-gradient(90deg, #00ff99, #66ffcc);
+  color: #0b1f16;
+  border: none;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .contact {
+    padding: 4rem 1.25rem;
+  }
+
+  .contact .flex-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .contact .contact-col {
+    width: 100%;
+  }
+
+  .contact .contact-col .flex-container {
+    justify-content: center;
+  }
+}
+
+
+
+/* --------------- CONTACT ---------------*/
+
+.contact .wrapper {
+    padding: 1.618rem;
+}
+.contact .img-container {
+    display: block;
+}
+.contact .img-container img {
+    width: 11.52rem;
+    background-color: #35393d6f;
+    padding-top: 1rem;
+    opacity: 0.8;
+}
+.contact-col h4  {
+    margin-bottom: 1.618rem;
+}
+.contact-col:not(.contact-form-container) .flex-container {
+    gap: 4px;
+    flex-wrap: wrap;
+    padding: 1.618rem 0;
+}
+.contact .wrapper > .flex-container {
+    gap: 1.618rem;
+    flex-direction: column;
+}
+
+
+.contact-form-container {
+    margin: 0;
+    width: 100%;
+    flex-basis: 100%;
+  }
+  form .flex {
+    align-items: flex-start !important;
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+  .flex.form-flex {
+    flex-direction: column;
+  }
+  .form-col {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px
+  }
+  .contact-form input, .contact-form textarea{
+    width: 100%;
+    padding: 1rem 1.618rem;
+    outline: none;
+    border: none;
+    background-color: #35393d6f;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    color: #fff;
+    transition: all 0.3s ease;
+  }
+  .contact-form input:focus, .contact-form textarea:focus {
+    background-color: #35393d8f;
+    box-shadow: 0 0 0 2px #26a269;
+  }
+  .contact-form textarea {
+    min-height: 130px;
+    width: 100%;
+    margin-top: 5px;
+    resize: vertical;
+  }
+  .contact-form p {
+    padding: 0;
+  }
+
+  /* Mobile-optimized contact section */
+  @media screen and (max-width: 768px) {
+    .contact .flex-container {
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .contact-col {
+      width: 100%;
+      order: 1;
+    }
+
+    .contact-form-container {
+      order: 2;
+    }
+
+    .contact .secondary-btn {
+      min-width: 120px;
+      min-height: 44px;
+      font-size: 0.9rem;
+    }
+
+    .contact-form input, .contact-form textarea {
+      font-size: 16px; /* Prevent zoom on iOS */
+      padding: 1.2rem 1rem;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .contact .secondary-btn {
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+
+    .contact .flex-container {
+      gap: 1.5rem;
+    }
+  }
+  
+
+@media screen and (min-width: 1200px) {
+
+    .contact .wrapper > .flex-container {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: var(--g2);
+    }
+    .contact .flex-container > .flex-container {
+        flex-direction: row;
+    }
+    .contact-form-container {
+        min-width: 450px;
+        width: auto;
+        max-width: 800px;
+        flex-basis: 50%;
+    }
+}
+@media screen and (min-width: 800px) {
+    .contact {
+        padding-top: 0 !important;
+    }
+}
+@media screen and (min-width: 600px) {
+    .flex.form-flex {
+      flex-direction: row !important;
+    }
+    .contact .img-container {
+        display: block;
+    }
+  }
+
+
+
+/* Added: explicit layout for credentials grid to prevent items drifting */
+.credentials-grid {
+    display: grid;
+    grid-template-columns: 1fr 120px 1fr;
+    grid-auto-rows: auto;
+    gap: 32px 24px;
+    align-items: start;
+  }
+  
+  /* place explicit cells */
+  .credentials-grid > .wrapper.left  { grid-column: 1; }
+  .credentials-grid > .center-divider { grid-column: 2; justify-self: center; display: flex; align-items: center; }
+  .credentials-grid > .wrapper.right { grid-column: 3; }
+  
+  /* make text boxes fill their cell */
+  .credentials-grid .text-box { width: 100%; }
+  
+  /* mobile: collapse to single column and show mobile SVG only */
+  @media (max-width: 800px) {
+    .credentials-grid {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+    .credentials-grid > .wrapper.left,
+    .credentials-grid > .center-divider,
+    .credentials-grid > .wrapper.right {
+      grid-column: 1;
+    }
+    .center-divider .desktop-svg { display: none; }
+    .center-divider .mobile-svg  { display: block; }
+    .center-divider { justify-self: start; }
+  }
+
+/* Make image grayscale by default */
+.profile-photo {
+    filter: grayscale(100%);
+    transition: filter 0.3s ease;
+  }
+  
+  /* On hover, show color */
+  .profile-photo:hover {
+    filter: grayscale(0%);
+  }
+
+  #particles-js {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+  }
+  
