@@ -1,72 +1,139 @@
-<script>
-  import { onMount } from 'svelte';
+<script lang="ts">
+  import { onMount, onDestroy } from 'svelte';
 
-  export let title;
-  export let description;
-  export let logos = [];
-  export let tags = [];
-  export let dates = null;        // Experience only
-  export let onOpen;              // click handler
-  export let type = 'project';    // 'project' | 'experience'
+  /* ========================
+     Public API
+     ======================== */
 
-  let tagsEl;
-  let tagsOverflow = false;
+  export let title: string;
+  export let subtitle: string | null = null;        // dates, timeline
+  export let description: string | null = null;
+
+  export let logos: string[] = [];
+  export let tags: { label: string; priority?: 'primary' | 'secondary' }[] = [];
+  export let badges: string[] = [];
+
+  export let onOpen: () => void;
+
+  /* ========================
+     Internal state
+     ======================== */
+
+  let tagContainer: HTMLDivElement | null = null;
+  let isTagOverflowing = false;
+  let resizeObserver: ResizeObserver | null = null;
+
+  function checkTagOverflow() {
+    if (!tagContainer) return;
+    isTagOverflowing =
+      tagContainer.scrollWidth > tagContainer.clientWidth + 2;
+  }
 
   onMount(() => {
-    if (tagsEl) {
-      requestAnimationFrame(() => {
-        tagsOverflow = tagsEl.scrollWidth > tagsEl.clientWidth;
-      });
-    }
+    checkTagOverflow();
+
+    resizeObserver = new ResizeObserver(checkTagOverflow);
+    if (tagContainer) resizeObserver.observe(tagContainer);
   });
+
+  onDestroy(() => {
+    resizeObserver?.disconnect();
+  });
+
+  function handleKeydown(e: KeyboardEvent) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onOpen();
+    }
+  }
 </script>
 
-<button
-  type="button"
-  class="gallery-card base-card {type}"
+<div
+  class="gallery-card"
+  role="button"
+  tabindex="0"
   aria-label={`Open ${title}`}
+  aria-describedby={"more-hint-" + title.replace(/\s+/g, '-').toLowerCase()}
   on:click={onOpen}
+  on:keydown={handleKeydown}
 >
-  <!-- Logos -->
-  {#if logos?.length}
-    <div class="card-logos">
+  <!-- ========================
+       Logos
+       ======================== -->
+  {#if logos.length}
+    <div class="card-logos" aria-hidden="true">
       {#each logos as logo}
-        <img src={logo} alt="" class="card-logo" />
+        <img
+          src={logo}
+          alt=""
+          class="card-logo"
+          loading="lazy"
+        />
       {/each}
     </div>
   {/if}
 
-  <!-- Title -->
-  <h3 class="card-title">{title}</h3>
+  <div class="card-body">
+    <!-- title -->
+    <!-- subtitle -->
+    <!-- description -->
+  </div>
 
-  <!-- Dates (Experience only) -->
-  {#if dates}
-    <div class="card-dates">
-      <span class="timeline-dot"></span>
-      <span>{dates}</span>
+  <!-- ========================
+       Title
+       ======================== -->
+  <!-- Header -->
+  <div class="card-header">
+    <h3 class="card-title">
+      {title}
+    </h3>
+
+  <!-- <h3 class="card-title">{title}</h3> -->
+
+  {#if subtitle}
+    <div class="card-subtitle timeline-date">
+      {subtitle}
     </div>
   {/if}
 
-  <!-- Description -->
-  <p class="card-description">
-    {description}
-  </p>
+  {#if description}
+    <p class="card-description">
+      {description}
+      <!-- <span class="more-affordance">More</span> -->
+      <span class="card-more">More</span>
+    </p>
+  {/if}
+  </div>
 
-  <!-- Tags -->
-  {#if tags?.length}
+  <!-- ========================
+       Badges / Metrics
+       ======================== -->
+  {#if badges.length}
+    <div class="card-badges">
+      {#each badges as badge}
+        <span class="badge">{badge}</span>
+      {/each}
+    </div>
+  {/if}
+
+  <!-- ========================
+       Tags (marquee only if overflowing)
+       ======================== -->
+  {#if tags.length}
     <div
-      class="card-tags {tagsOverflow ? 'marquee-active' : ''}"
-      bind:this={tagsEl}
+      class="card-tags {isTagOverflowing ? 'marquee-active' : ''}"
+      bind:this={tagContainer}
     >
       <div class="tags-track">
-        {#each tags.slice(0, 2) as tag}
-          <span class="tag tag-primary">{tag}</span>
-        {/each}
-
-        {#each tags.slice(2) as tag}
-          <span class="tag tag-secondary">{tag}</span>
+        {#each tags as tag}
+          <span
+            class="tag {tag.priority === 'primary' ? 'tag-primary' : 'tag-secondary'}"
+          >
+            {tag.label}
+          </span>
         {/each}
       </div>
     </div>
   {/if}
-</button>
+
+</div>

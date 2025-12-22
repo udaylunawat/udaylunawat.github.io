@@ -38,7 +38,7 @@
   <ul>
     <li><a href="#homeTitle" on:click={hideMenu}>Home</a></li>
     <li><a href="#about" on:click={hideMenu}>About</a></li>
-    <li><a href="#credentials" on:click={hideMenu}>Experience</a></li>
+    <li><a href="#experience" on:click={hideMenu}>Experience</a></li>
     <li><a href="#skills" on:click={hideMenu}>Skills</a></li>
     <li><a href="#projects" on:click={hideMenu}>Projects</a></li>
     <li><a href="#contact" on:click={hideMenu}>Contact / <span>resume</span></a></li>

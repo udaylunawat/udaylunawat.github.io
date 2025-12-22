@@ -1,33 +1,114 @@
-<script>
+<script lang="ts">
   import { onMount } from 'svelte';
+  import { modal } from '$lib/stores/modal';
+  import { backgroundService } from '$lib/background/backgroundService';
+  import { neuralParticlesService } from '$lib/background/neuralParticlesService';
+
   import Navigation from '$lib/components/Navigation.svelte';
-//   import UnifiedModal from '$lib/components/UnifiedModal.svelte';
-  import SkillsGrid from '$lib/components/skills/SkillsGrid.svelte';
-  import content from '$lib/data/content.json';
-  import ProjectsGrid from '$lib/components/projects/ProjectsGrid.svelte';
   import PassionSection from '$lib/components/PassionSection.svelte';
+  import SkillsGrid from '$lib/components/skills/SkillsGrid.svelte';
   import ExperienceGrid from '$lib/components/experience/ExperienceGrid.svelte';
-  import { openModal } from '$lib/stores/modal';
+  import ProjectsGrid from '$lib/components/projects/ProjectsGrid.svelte';
+  import BaseGallery from '$lib/components/BaseGallery.svelte';
+  import content from '$lib/data/content.json';
+
+  let currentTheme: 'experience' | 'projects' | null = null;
+
   onMount(() => {
-    const MIN_LOADER_TIME = 3000;
-    const MAX_LOADER_TIME = 4000;
-    const startTime = performance.now();
+  /* =========================
+     LOADER RELEASE
+     ========================= */
 
-    function reveal() {
-      document.body.classList.add('show-ui');
-    }
+  const MIN_LOADER_TIME = 1200;
+  const startTime = performance.now();
 
-    window.addEventListener(
-      'load',
-      () => {
-        const elapsed = performance.now() - startTime;
-        const remaining = Math.max(0, MIN_LOADER_TIME - elapsed);
-        setTimeout(reveal, remaining);
+  const reveal = () => {
+    document.body.classList.add('show-ui');
+  };
+
+  window.addEventListener(
+    'load',
+    () => {
+      const elapsed = performance.now() - startTime;
+      const remaining = Math.max(0, MIN_LOADER_TIME - elapsed);
+      setTimeout(reveal, remaining);
+    },
+    { once: true }
+  );
+
+  // Safety fallback
+  setTimeout(reveal, 2500);
+    /* =========================
+       BACKGROUND + PARTICLES
+       ========================= */
+
+    const bgContainer = document.getElementById('bg-canvas');
+    const particleContainer = document.getElementById('particles-canvas');
+
+    if (bgContainer) backgroundService.mount(bgContainer);
+    if (particleContainer) neuralParticlesService.mount(particleContainer);
+
+    /* =========================
+       SCROLL VELOCITY
+       ========================= */
+
+    let lastScroll = window.scrollY;
+    let lastTime = performance.now();
+
+    const onScroll = () => {
+      const now = performance.now();
+      const deltaY = Math.abs(window.scrollY - lastScroll);
+      const deltaT = Math.max(16, now - lastTime);
+
+      const velocity = Math.min(deltaY / deltaT, 1.5);
+
+      neuralParticlesService.setScrollVelocity(velocity);
+
+      lastScroll = window.scrollY;
+      lastTime = now;
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    /* =========================
+       SECTION THEMES
+       ========================= */
+
+    const observer = new IntersectionObserver(
+      entries => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+
+          const id = e.target.id as 'experience' | 'projects';
+          if (id === currentTheme) return;
+
+          currentTheme = id;
+          backgroundService.setTheme(id);
+          neuralParticlesService.setTheme(id);
+        }
       },
-      { once: true }
+      { threshold: 0.45, rootMargin: '-10% 0px -10% 0px' }
     );
 
-    setTimeout(reveal, MAX_LOADER_TIME);
+    ['experience', 'projects'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    /* =========================
+       MODAL PAUSE
+       ========================= */
+
+    const unsubscribe = modal.subscribe(m => {
+      backgroundService.setPaused(m.open);
+      neuralParticlesService.setPaused(m.open);
+    });
+
+    return () => {
+      unsubscribe();
+      observer.disconnect();
+      window.removeEventListener('scroll', onScroll);
+    };
   });
 </script>
 
@@ -47,12 +128,17 @@
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css"
   />
-
-  <!-- TEMP: legacy scripts (will be removed later) -->
-  <!-- <script src="/src/modals.js" type="module"></script> -->
 </svelte:head>
 
-<!-- ========== LOADER ========== -->
+<!-- =========================
+     BACKGROUND
+     ========================= -->
+<div id="bg-canvas" class="background-layer" aria-hidden="true"></div>
+<div id="particles-canvas" class="particles-layer" aria-hidden="true"></div>
+
+<!-- =========================
+     LOADER
+     ========================= -->
 <div class="ai-loader" id="ai-loader">
   <div class="ai-loader-inner">
     <div class="ai-grid">
@@ -69,11 +155,12 @@
         <div class="ai-chipline">
           <div class="ai-chip">
             <span class="ai-chip-dot"></span>
-            <span>neural portfolio - Uday Lunawat</span>
+            <span>neural portfolio · Uday Lunawat</span>
           </div>
-          <span></span>
         </div>
-        <div class="ai-role">Senior ML Engineer · LLMs · Agents · RAG</div>
+        <div class="ai-role">
+          Senior ML Engineer · LLMs · Agents · RAG
+        </div>
       </div>
 
       <div class="ai-status-line">
@@ -95,15 +182,14 @@
   </div>
 </div>
 
-<!-- ========== CANVAS / BACKGROUND PLACEHOLDERS ========== -->
-<div class="canvas-container" id="canvas"></div>
-<div id="particles-js"></div>
-<div class="color-background" id="colorBackground"></div>
-
-<!-- ========== NAVIGATION ========== -->
+<!-- =========================
+     NAV
+     ========================= -->
 <Navigation />
 
-<!-- ========== HOME ========== -->
+<!-- =========================
+     HOME
+     ========================= -->
 <header class="home" id="homeTitle">
   <div class="wrapper">
     <div class="home-grid">
@@ -125,47 +211,56 @@
   </div>
 </header>
 
-<!-- ========== ABOUT ========== -->
+<!-- =========================
+     ABOUT
+     ========================= -->
 <PassionSection about={content.about} />
 
-<!-- ========== EXPERIENCE ========== -->
-
-<section class="credentials" id="credentials">
+<!-- =========================
+     EXPERIENCE
+     ========================= -->
+<section
+  class="experience credentials"
+  id="experience"
+  on:introend={setExperienceTheme}
+>
   <div class="wrapper">
     <h2>Experience</h2>
 
-    <div class="experience-gallery">
-      <div class="gallery-container">
-        <ExperienceGrid />
-      </div>
-    </div>
+    <BaseGallery showDots ariaLabel="Experience gallery">
+      <ExperienceGrid />
+    </BaseGallery>
   </div>
 </section>
 
+<!-- =========================
+     SKILLS
+     ========================= -->
 <section class="skills" id="skills">
   <h2>Skills</h2>
-
-  <!-- Temporary static skills grid -->
   <SkillsGrid skills={content.skills} />
-
-  <!-- Brain placeholder (kept for later) -->
-  <!-- <div id="brain-host"></div> -->
 </section>
 
-<!-- ========== PROJECTS ========== -->
-<section class="projects" id="projects">
+<!-- =========================
+     PROJECTS
+     ========================= -->
+<section
+  class="projects"
+  id="projects"
+  on:introend={setProjectsTheme}
+>
   <div class="wrapper">
     <h2>Projects</h2>
 
-    <div class="infinite-gallery">
-      <div class="gallery-container">
-        <ProjectsGrid />
-      </div>
-    </div>
+    <BaseGallery showDots ariaLabel="Projects gallery">
+      <ProjectsGrid />
+    </BaseGallery>
   </div>
 </section>
 
-<!-- ========== CONTACT ========== -->
+<!-- =========================
+     CONTACT
+     ========================= -->
 <section class="contact" id="contact">
   <h2>{content.contact.title}</h2>
 
@@ -180,9 +275,7 @@
       </div>
 
       <div class="contact-col">
-        <p>
-          {@html content.contact.description}
-        </p>
+        <p>{@html content.contact.description}</p>
 
         <div class="flex-container">
           {#each content.contact.links as link}
@@ -194,9 +287,7 @@
 
         <div style="margin-top:12px;">
           <a href={content.contact.resume} download>
-            <button>
-              DOWNLOAD RESUME
-            </button>
+            <button>DOWNLOAD RESUME</button>
           </a>
         </div>
       </div>

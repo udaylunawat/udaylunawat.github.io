@@ -18,7 +18,7 @@
 
 {#if $modal.open}
   <!-- Backdrop -->
-  <div class="modal-overlay active" aria-hidden="false"></div>
+  <div class="modal-overlay active" aria-hidden="true"></div>
 
   <!-- Dialog -->
   <div
@@ -30,42 +30,51 @@
     bind:this={dialogEl}
   >
     <div class="modal-content">
-      <div class="modal-content-wrapper">
 
-        <!-- Header -->
-        <header class="modal-header">
-          <div class="modal-header-main">
-            <h1 id="modal-title" class="modal-title">
-              {$modal.title}
-            </h1>
-
-            {#if $modal.logos?.length}
-              <div class="modal-logos">
-                {#each $modal.logos as logo}
-                  <img src={logo} alt="" />
-                {/each}
-              </div>
-            {/if}
-          </div>
-
-          <button
-            type="button"
-            class="modal-close"
-            aria-label="Close modal"
-            on:click={closeModal}
-          >
-            ×
-          </button>
-        </header>
-
-        <!-- Body -->
-        <div class="modal-body">
-          <div class="blog-content">
-            {@html $modal.content}
-          </div>
+      <!-- ================= HEADER ================= -->
+      <header class="modal-header">
+        <!-- Title zone -->
+        <div class="modal-header-title">
+          <h1 id="modal-title" class="modal-title">
+            {$modal.title || ''}
+          </h1>
         </div>
 
+        <!-- Logos zone (optional, isolated) -->
+        {#if $modal.logos?.length}
+          <div
+            class="modal-header-logos"
+            aria-hidden="true"
+          >
+            {#each $modal.logos as logo}
+              <img
+                src={logo}
+                alt=""
+                loading="lazy"
+              />
+            {/each}
+          </div>
+        {/if}
+
+        <!-- Close button (fixed position) -->
+        <button
+          type="button"
+          class="modal-close"
+          aria-label="Close modal"
+          on:click={closeModal}
+        >
+          ×
+        </button>
+      </header>
+      <!-- =============== END HEADER =============== -->
+
+      <!-- Body -->
+      <div class="modal-body">
+        <div class="blog-content">
+          {@html $modal.content}
+        </div>
       </div>
+
     </div>
   </div>
 {/if}

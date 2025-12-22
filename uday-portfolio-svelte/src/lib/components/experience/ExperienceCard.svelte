@@ -16,17 +16,17 @@
       experience.id,
       title,
       content,
-      experience.logos ?? experience.logo ? [experience.logo] : []
+      experience.logos ? experience.logos : experience.logo ? [experience.logo] : []
     );
   }
 </script>
 
 <BaseCard
-  type="experience"
   title={experience.title}
+  subtitle={experience.dates}
   description={experience.description}
-  dates={experience.dates}
-  tags={experience.tags}
   logos={experience.logos ?? (experience.logo ? [experience.logo] : [])}
+  tags={experience.tags.map(t => ({ label: t, priority: 'primary' }))}
+  badges={experience.badges}
   onOpen={openExperience}
 />

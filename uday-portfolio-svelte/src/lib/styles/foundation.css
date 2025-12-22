@@ -1,0 +1,72 @@
+/* ================================
+   RESET / NORMALIZE
+   ================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  background: #0b0e11;
+  color: #eaeaea;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  line-height: 1.5;
+}
+
+/* ================================
+   TYPOGRAPHY BASE
+   ================================ */
+
+h1, h2, h3, h4 {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 500;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+/* ================================
+   LINKS / BUTTON RESET
+   ================================ */
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* ================================
+   UTILITIES (VERY FEW)
+   ================================ */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.canvas-container {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}

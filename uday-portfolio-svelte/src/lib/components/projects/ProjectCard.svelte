@@ -6,7 +6,10 @@
   export let project;
 
   async function openProject() {
-    const { title, content } = await loadModalContent('project', project.id);
+    const { title, content } = await loadModalContent(
+      'project',
+      project.id
+    );
 
     openModal(
       'project',
@@ -19,10 +22,11 @@
 </script>
 
 <BaseCard
-  type="project"
   title={project.title}
+  subtitle={null}
   description={project.description}
-  tags={project.tags}
-  logos={project.logos}
+  logos={project.logos ?? []}
+  tags={project.tags.map(t => ({ label: t, priority: 'secondary' }))}
+  badges={[]}
   onOpen={openProject}
 />

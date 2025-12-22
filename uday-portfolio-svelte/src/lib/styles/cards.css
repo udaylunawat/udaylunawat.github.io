@@ -42,10 +42,10 @@
 .gallery-card {
   flex-shrink: 0;
   width: 320px;
+  min-height: 360px;
 
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
 
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -56,8 +56,7 @@
   cursor: pointer;
   text-align: left;
 
-  overflow: hidden;
-  white-space: normal;
+  overflow: visible;
 
   transition:
     transform 0.25s ease,
@@ -67,8 +66,47 @@
 
 .gallery-card:hover {
   transform: translateY(-6px);
-  border-color: rgba(0, 255, 0, 0.35);
-  box-shadow: 0 10px 35px rgba(0, 255, 0, 0.18);
+  outline: none;
+  border-color: rgba(0, 255, 0, 0.45);
+  box-shadow: 0 0 0 2px rgba(0, 255, 0, 0.15);
+}
+
+.gallery-card:focus-visible .tags-track {
+  animation-play-state: paused;
+}
+
+.gallery-card:nth-child(even) {
+  transform: translateY(2px);
+}
+
+/* =========================================================
+   ACCESSIBLE FOCUS RING (KEYBOARD ONLY)
+   ========================================================= */
+
+.gallery-card:focus-visible {
+  outline: none;
+
+  border-color: rgba(0, 255, 0, 0.55);
+  box-shadow:
+    0 0 0 2px rgba(0, 255, 0, 0.35),
+    0 10px 35px rgba(0, 255, 0, 0.25);
+
+  transform: translateY(-4px);
+}
+
+/* Prevent focus ring on mouse click */
+.gallery-card:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
+}
+
+.gallery-card:focus-visible .card-more {
+  color: #00ff00;
+  text-decoration: underline;
+}
+
+.experience .gallery-card {
+  min-height: 460px;
 }
 
 /* =========================================================
@@ -76,15 +114,21 @@
    ========================================================= */
 
 @media (max-width: 1024px) {
-  .gallery-card { width: 300px; }
+  .gallery-card {
+    min-height: 360px;
+  }
 }
 
 @media (max-width: 768px) {
-  .gallery-card { width: 260px; }
+  .gallery-card {
+    min-height: 320px;
+  }
 }
 
 @media (max-width: 480px) {
-  .gallery-card { width: 220px; }
+  .gallery-card {
+    min-height: 280px;
+  }
 }
 
 /* =========================================================
@@ -93,7 +137,7 @@
 
 .card-logos {
   display: flex;
-  gap: 0.75rem;
+  gap: 1.95rem;
   align-items: center;
   margin-bottom: 0.6rem;
 }
@@ -110,7 +154,7 @@
 
 .gallery-card:hover .card-logo {
   filter: grayscale(0%) brightness(100%);
-  transform: scale(1.05);
+  transform: scale(1.25);
 }
 
 /* =========================================================
@@ -125,6 +169,12 @@
   margin-bottom: 0.6rem;
 }
 
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
 /* =========================================================
    TEXT HIERARCHY (SHARED)
    ========================================================= */
@@ -135,6 +185,7 @@
   font-size: 1rem;
   font-weight: 600;
   line-height: 1.3;
+  margin-bottom: 0.1rem;
 
   white-space: nowrap;
   overflow: hidden;
@@ -147,12 +198,22 @@
   color: rgba(255, 255, 255, 0.65);
   letter-spacing: 0.02em;
 
-  margin-top: 0.15rem;
-  margin-bottom: 0.35rem;
+  margin-top: 0;
+  margin-bottom: 0.6rem;
+  opacity: 0.65;
 
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.card-subtitle::after {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  margin-top: 0.4rem;
+  background: rgba(0, 255, 0, 0.25);
 }
 
 /* =========================================================
@@ -160,41 +221,127 @@
    ========================================================= */
 
 .card-description {
-  margin-top: 0.4rem;
+  margin-top: 0.45rem;
 
   font-size: 0.9rem;
-  line-height: 1.45;
+  line-height: 1.5;
 
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4;
 
   overflow: hidden;
   text-overflow: ellipsis;
 
   word-break: break-word;
   overflow-wrap: anywhere;
+
+  /* 🔥 THIS IS THE KEY */
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.card-subtitle,
+.card-tags,
+.card-badges {
+  flex-shrink: 0;
 }
 
 .gallery-card:hover .card-description {
-  -webkit-line-clamp: 5;
+  -webkit-line-clamp: 6;
+}
+
+.card-description-wrap {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* More indicator */
+.card-more {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  color: #00ff00;
+  opacity: 0.7;
+  align-self: flex-end;
+
+  color: rgba(0, 255, 0, 0.85);
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(23, 27, 34, 0.9) 40%
+  );
+
+  padding-left: 1.5rem;
+  padding-right: 0.2rem;
+
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* Show More only when description is clamped */
+.card-description {
+  position: relative;
+}
+
+/* Visible by default */
+.card-description-wrap .card-more {
+  opacity: 1;
+}
+
+/* Hide when expanded on hover */
+.gallery-card:hover .card-more {
+  opacity: 1;
+}
+
+.gallery-card:hover .more-affordance {
+  text-decoration: underline;
+}
+
+.more-affordance {
+  display: inline-block;
+  margin-left: 0.35rem;
+  color: #00ff00;
+  font-size: 0.8rem;
+  opacity: 0.85;
 }
 
 /* =========================================================
    TAGS (WITH OVERFLOW MARQUEE SUPPORT)
    ========================================================= */
 
+/* =========================================================
+   TAGS (MARQUEE-SAFE)
+   ========================================================= */
+
 .card-tags {
-  margin-top: 0.45rem;
+  margin-top: auto;
+  padding-top: 0.6rem;
   width: 100%;
 
   position: relative;
+
+  /* Allow vertical breathing room */
+  padding: 0.25rem 0;
+  padding-block: 0.25rem;
   overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: visible;
 }
 
 .card-tags .tags-track {
   display: inline-flex;
-  gap: 0.35rem;
+  align-items: center;      /* 👈 critical */
+  gap: 0.4rem;
   white-space: nowrap;
 }
 
@@ -204,6 +351,10 @@
 }
 
 .card-tags:hover .tags-track {
+  animation-play-state: paused;
+}
+
+.card-tags:focus-within .tags-track {
   animation-play-state: paused;
 }
 
@@ -324,7 +475,64 @@
   animation: marquee-title-scroll 7s linear infinite;
 }
 
+.card-title:focus-within > span,
+.gallery-card:focus-visible .card-title > span {
+  animation-play-state: paused;
+}
+
 @keyframes marquee-title-scroll {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tags-track,
+  .card-title > span {
+    animation: none !important;
+  }
+}
+
+/* =========================================================
+   BASE GALLERY (HORIZONTAL SNAP)
+   ========================================================= */
+
+.gallery-container {
+  position: relative;
+
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 1rem;
+
+  -webkit-overflow-scrolling: touch;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.gallery-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* =========================================================
+   TRACK
+   ========================================================= */
+
+.gallery-track {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+
+  width: max-content;
+  padding: 1rem 2rem 2rem;
+}
+
+/* =========================================================
+   SNAP TARGET
+   ========================================================= */
+
+.gallery-track > * {
+  scroll-snap-align: start;
 }

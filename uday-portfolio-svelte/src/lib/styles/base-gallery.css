@@ -1,41 +1,165 @@
 /* =========================================================
-   BASE GALLERY
+   BASE GALLERY (HORIZONTAL SNAP)
    ========================================================= */
 
-.gallery-section {
-  width: 100%;
+.gallery-container {
   position: relative;
-}
 
-.gallery-title {
-  margin-bottom: 1rem;
-}
-
-/* Horizontal scroll container */
-.gallery-viewport {
+  width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
 
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 1rem;
+
   -webkit-overflow-scrolling: touch;
+
   scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-.gallery-viewport::-webkit-scrollbar {
+.gallery-container::-webkit-scrollbar {
   display: none;
 }
 
-/* Horizontal track */
+/* =========================================================
+   TRACK
+   ========================================================= */
+
 .gallery-track {
   display: flex;
+  flex-direction: row;
   gap: 1.5rem;
 
-  padding: 0.5rem 1.5rem 1.5rem;
   width: max-content;
-
-  scroll-snap-type: x mandatory;
+  padding: 0.5rem 1rem 1.2rem;
 }
 
-/* All cards snap consistently */
+/* =========================================================
+   SNAP TARGET
+   ========================================================= */
+
 .gallery-track > * {
   scroll-snap-align: start;
+}
+
+/* =========================================================
+   GALLERY DOTS
+   ========================================================= */
+
+.gallery-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.gallery-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  cursor: pointer;
+}
+
+.gallery-dot.active {
+  background: #00ff00;
+  transform: scale(1.3);
+}
+
+/* =========================================================
+   GALLERY WRAPPER (FADE EDGES)
+   ========================================================= */
+
+.gallery-wrapper {
+  position: relative;
+}
+
+/* Left fade */
+.gallery-wrapper::before,
+.gallery-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 2.5rem; /* leaves dots visible */
+  width: 48px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 2;
+}
+
+.gallery-wrapper::before {
+  left: 0;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.85),
+    rgba(0, 0, 0, 0)
+  );
+}
+
+.gallery-wrapper::after {
+  right: 0;
+  background: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 0.85),
+    rgba(0, 0, 0, 0)
+  );
+}
+
+/* Activate fades based on scroll state */
+.gallery-wrapper.can-left::before {
+  opacity: 1;
+}
+
+.gallery-wrapper.can-right::after {
+  opacity: 1;
+}
+
+.gallery-hint {
+  margin-top: 0.4rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.45);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.gallery-container:focus-visible + .gallery-hint {
+  opacity: 1;
+}
+
+.gallery-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+}
+
+.gallery-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.gallery-dot.active {
+  background: #00ff00;
+  box-shadow: 0 0 6px rgba(0, 255, 0, 0.6);
+  transform: scale(1.25);
+}
+
+.gallery-dot:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.gallery-container:focus-visible {
+  outline: none;
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 255, 0, 0.45),
+    0 0 0 2px rgba(0, 255, 0, 0.15);
 }

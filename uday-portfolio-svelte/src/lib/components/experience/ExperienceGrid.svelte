@@ -1,12 +1,16 @@
 <script>
+  import BaseGallery from '$lib/components/BaseGallery.svelte';
   import ExperienceCard from './ExperienceCard.svelte';
   import content from '$lib/data/content.json';
 
   const experiences = content.experience;
 </script>
 
-<div class="gallery-grid">
+<BaseGallery
+  title="Experience"
+  ariaLabel="Experience timeline gallery"
+>
   {#each experiences as experience (experience.id)}
     <ExperienceCard {experience} />
   {/each}
-</div>
+</BaseGallery>
