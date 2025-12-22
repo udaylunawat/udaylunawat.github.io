@@ -11,9 +11,9 @@ import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPa
 const NODE_COUNT_DESKTOP = 70;
 const NODE_COUNT_MOBILE = 40;
 
-const NODE_DRIFT_SPEED = 0.9;
+const NODE_DRIFT_SPEED = 3.6;
 const NODE_BASE_SIZE = 3.2;
-const NODE_SIZE_VARIANCE = 2.0;
+const NODE_SIZE_VARIANCE = 4.0;
 
 // ---------- Depth ----------
 const DEPTH_LAYERS = 3;

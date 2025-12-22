@@ -3,7 +3,7 @@
   import { modal } from '$lib/stores/modal';
   import { backgroundService } from '$lib/background/backgroundService';
   import { neuralParticlesService } from '$lib/background/neuralParticlesService';
-
+  import BrainSkills from '$lib/components/BrainSkills.svelte';
   import Navigation from '$lib/components/Navigation.svelte';
   import PassionSection from '$lib/components/PassionSection.svelte';
   import SkillsGrid from '$lib/components/skills/SkillsGrid.svelte';
@@ -236,10 +236,18 @@
 <!-- =========================
      SKILLS
      ========================= -->
-<section class="skills" id="skills">
+<section id="skills-brain" class="skills-brain">
   <h2>Skills</h2>
-  <SkillsGrid skills={content.skills} />
+  <BrainSkills />
 </section>
+
+<style>
+  .skills-brain {
+    position: relative;
+    width: 100%;
+    padding: 4rem 0;
+  }
+</style>
 
 <!-- =========================
      PROJECTS
@@ -265,31 +273,83 @@
   <h2>{content.contact.title}</h2>
 
   <div class="wrapper">
-    <div class="flex-container">
-      <div class="img-container">
-        <img
-          src={content.contact.photo}
-          alt={content.contact.name}
-          class="profile-photo"
-        />
-      </div>
-
+    <div class="flex-container contact-grid">
+      <!-- LEFT: Profile + Links -->
       <div class="contact-col">
-        <p>{@html content.contact.description}</p>
+        <div class="img-container">
+          <img
+            src={content.contact.photo}
+            alt={content.contact.name}
+            class="profile-photo"
+          />
+        </div>
 
-        <div class="flex-container">
+        <p class="contact-description">
+          {@html content.contact.description}
+        </p>
+
+        <div class="flex-container contact-links">
           {#each content.contact.links as link}
-            <a href={link.url} target="_blank" rel="noopener">
+            <a
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="secondary-btn"
+            >
               {link.text}
             </a>
           {/each}
         </div>
 
-        <div style="margin-top:12px;">
-          <a href={content.contact.resume} download>
-            <button>DOWNLOAD RESUME</button>
+        <div class="resume-wrap">
+          <a
+            href={content.contact.resume}
+            download
+            class="primary-btn"
+          >
+            DOWNLOAD RESUME
+            {#if content.contact.resumeIcon}
+              <img
+                src={content.contact.resumeIcon}
+                alt="PDF"
+                class="resume-icon"
+              />
+            {/if}
           </a>
         </div>
+      </div>
+
+      <!-- RIGHT: Contact Form -->
+      <div class="contact-col contact-form-container">
+        <h4>Contact Me</h4>
+
+        <form
+          class="contact-form"
+          action="https://formspree.io/f/mvgbvdbq"
+          method="POST"
+        >
+          <label>
+            Your email
+            <input
+              type="email"
+              name="email"
+              required
+            />
+          </label>
+
+          <label>
+            Your message
+            <textarea
+              name="message"
+              rows="4"
+              required
+            ></textarea>
+          </label>
+
+          <button type="submit" class="primary-btn">
+            Send
+          </button>
+        </form>
       </div>
     </div>
   </div>

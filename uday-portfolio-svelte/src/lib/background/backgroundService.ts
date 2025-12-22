@@ -125,8 +125,8 @@ class BackgroundService {
     }
 
     if (name === 'projects') {
-      this.targetColor1.set(10, 10, 25);
-      this.targetColor2.set(0, 40, 80);
+      this.targetColor1.set(5, 6, 14);     // almost black
+      this.targetColor2.set(30, 20, 60);   // faint violet-blue
     }
   }
 

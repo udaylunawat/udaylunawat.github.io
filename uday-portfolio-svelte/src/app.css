@@ -3740,3 +3740,8 @@ section.credentials {
 .particles-layer {
   mix-blend-mode: screen;
 }
+
+#brain-host {
+  overflow: hidden;
+}
+
