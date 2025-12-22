@@ -11,7 +11,7 @@ import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPa
 const NODE_COUNT_DESKTOP = 70;
 const NODE_COUNT_MOBILE = 40;
 
-const NODE_DRIFT_SPEED = 0.6;
+const NODE_DRIFT_SPEED = 0.9;
 const NODE_BASE_SIZE = 3.2;
 const NODE_SIZE_VARIANCE = 2.0;
 
@@ -21,8 +21,8 @@ const DEPTH_RANGE = 300;
 
 // ---------- Twinkle ----------
 const TWINKLE_SPEED = 0.5;
-const TWINKLE_STRENGTH = 0.9;
-const TWINKLE_VARIANCE = 0.5;
+const TWINKLE_STRENGTH = 0.85;
+const TWINKLE_VARIANCE = 0.4;
 
 // ---------- Connections ----------
 const CONNECTION_DISTANCE_MIN = 80;
@@ -52,6 +52,12 @@ const BLOOM_THRESHOLD = 0.1;
 
 /* ====================================================== */
 
+// Performance constants
+const SPATIAL_GRID_SIZE = 150;
+const TARGET_FPS = 50;
+const FPS_SAMPLE_SIZE = 30;
+const MOUSE_INTERACTION_RADIUS = 150;
+
 type Node = {
   position: THREE.Vector3;
   velocity: THREE.Vector3;
@@ -61,6 +67,8 @@ type Node = {
   depth: number;
   activity: number;
   phase: number;
+  gridX: number;
+  gridY: number;
 };
 
 type ActiveConnection = {
@@ -77,10 +85,12 @@ type ShootingStar = {
   age: number;
 };
 
-type Edge = {
-  from: number;
-  to: number;
-  age: number;
+type SignalParticle = {
+  from: THREE.Vector3;
+  to: THREE.Vector3;
+  progress: number;
+  speed: number;
+  life: number;
 };
 
 class NeuralParticlesService {
@@ -97,15 +107,28 @@ class NeuralParticlesService {
   private nodes: Node[] = [];
   private activeConnections: ActiveConnection[] = [];
   private shootingStars: ShootingStar[] = [];
-  private activeEdges: Edge[] = [];
+  private signalParticles: SignalParticle[] = [];
 
   private nodePoints!: THREE.Points;
   private connectionLines!: THREE.LineSegments;
   private shootingStarLines!: THREE.LineSegments;
-  private edgeMesh!: THREE.InstancedMesh;
+  private signalPoints!: THREE.Points;
 
   private clock = new THREE.Clock();
   private scrollEnergy = 0;
+
+  // Spatial partitioning
+  private spatialGrid: Map<string, number[]> = new Map();
+  
+  // Adaptive quality
+  private fpsSamples: number[] = [];
+  private qualityLevel = 1.0;
+  private lastFrameTime = 0;
+  
+  // Mouse interaction
+  private mouse = new THREE.Vector2();
+  private mouseWorldPos = new THREE.Vector3();
+  private isMouseActive = false;
 
   /* ====================================================== */
 
@@ -127,23 +150,157 @@ class NeuralParticlesService {
 
     this.renderer = new THREE.WebGLRenderer({
       alpha: true,
-      antialias: true,
+      antialias: !isMobile,
       powerPreference: 'high-performance'
     });
 
     this.renderer.setSize(w, h);
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1 : 2));
     container.appendChild(this.renderer.domElement);
 
     this.initNodes(isMobile ? NODE_COUNT_MOBILE : NODE_COUNT_DESKTOP);
     this.initNodePoints();
     this.initConnectionLines();
     this.initShootingStars();
-    this.initEdges();
+    this.initSignalParticles();
     this.initPost();
+    this.initMouseInteraction(container);
 
     window.addEventListener('resize', this.onResize);
     this.animate();
+  }
+
+  /* ========================= SPATIAL PARTITIONING ========================= */
+
+  private getGridKey(x: number, y: number): string {
+    const gx = Math.floor(x / SPATIAL_GRID_SIZE);
+    const gy = Math.floor(y / SPATIAL_GRID_SIZE);
+    return `${gx},${gy}`;
+  }
+
+  private updateSpatialGrid() {
+    this.spatialGrid.clear();
+    
+    this.nodes.forEach((node, i) => {
+      const key = this.getGridKey(node.position.x, node.position.y);
+      node.gridX = Math.floor(node.position.x / SPATIAL_GRID_SIZE);
+      node.gridY = Math.floor(node.position.y / SPATIAL_GRID_SIZE);
+      
+      if (!this.spatialGrid.has(key)) {
+        this.spatialGrid.set(key, []);
+      }
+      this.spatialGrid.get(key)!.push(i);
+    });
+  }
+
+  private getNeighborNodes(node: Node): number[] {
+    const neighbors: number[] = [];
+    
+    // Check 3x3 grid around node
+    for (let dx = -1; dx <= 1; dx++) {
+      for (let dy = -1; dy <= 1; dy++) {
+        const key = `${node.gridX + dx},${node.gridY + dy}`;
+        const cells = this.spatialGrid.get(key);
+        if (cells) {
+          neighbors.push(...cells);
+        }
+      }
+    }
+    
+    return neighbors;
+  }
+
+  /* ========================= ADAPTIVE QUALITY ========================= */
+
+  private updateAdaptiveQuality(fps: number) {
+    this.fpsSamples.push(fps);
+    if (this.fpsSamples.length > FPS_SAMPLE_SIZE) {
+      this.fpsSamples.shift();
+    }
+
+    if (this.fpsSamples.length === FPS_SAMPLE_SIZE) {
+      const avgFps = this.fpsSamples.reduce((a, b) => a + b) / FPS_SAMPLE_SIZE;
+      
+      if (avgFps < TARGET_FPS * 0.8) {
+        this.qualityLevel = Math.max(0.5, this.qualityLevel - 0.05);
+      } else if (avgFps > TARGET_FPS * 1.1 && this.qualityLevel < 1.0) {
+        this.qualityLevel = Math.min(1.0, this.qualityLevel + 0.02);
+      }
+    }
+  }
+
+  /* ========================= MOUSE INTERACTION ========================= */
+
+  private initMouseInteraction(container: HTMLElement) {
+    const updateMouse = (e: MouseEvent | Touch) => {
+      const rect = container.getBoundingClientRect();
+      this.mouse.x = e.clientX - rect.left - rect.width / 2;
+      this.mouse.y = -(e.clientY - rect.top - rect.height / 2);
+      this.mouseWorldPos.set(this.mouse.x, this.mouse.y, 0);
+      this.isMouseActive = true;
+    };
+
+    container.addEventListener('mousemove', (e) => updateMouse(e));
+    container.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      updateMouse(e.touches[0]);
+    });
+
+    container.addEventListener('click', (e) => this.addNodeAtMouse(e));
+    container.addEventListener('touchend', (e) => {
+      if (e.changedTouches.length > 0) {
+        this.addNodeAtMouse(e.changedTouches[0]);
+      }
+    });
+
+    container.addEventListener('mouseleave', () => {
+      this.isMouseActive = false;
+    });
+  }
+
+  private addNodeAtMouse(e: MouseEvent | Touch) {
+    const rect = this.renderer.domElement.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = -(e.clientY - rect.top - rect.height / 2);
+
+    const newNode: Node = {
+      position: new THREE.Vector3(x, y, -DEPTH_RANGE * 0.5),
+      velocity: new THREE.Vector3(
+        (Math.random() - 0.5) * NODE_DRIFT_SPEED,
+        (Math.random() - 0.5) * NODE_DRIFT_SPEED,
+        0
+      ),
+      size: NODE_BASE_SIZE * 1.5,
+      twinklePhase: Math.random() * Math.PI * 2,
+      twinkleSpeed: 1.2,
+      depth: 1,
+      activity: 1.0,
+      phase: Math.random() * Math.PI * 2,
+      gridX: 0,
+      gridY: 0
+    };
+
+    this.nodes.push(newNode);
+    this.resizeNodeBuffers();
+    this.triggerActivityBurstAt(newNode.position);
+  }
+
+  private applyMouseInfluence() {
+    if (!this.isMouseActive) return;
+
+    this.nodes.forEach(node => {
+      const dist = node.position.distanceTo(this.mouseWorldPos);
+      if (dist < MOUSE_INTERACTION_RADIUS) {
+        const influence = 1.0 - (dist / MOUSE_INTERACTION_RADIUS);
+        const force = this.mouseWorldPos.clone()
+          .sub(node.position)
+          .normalize()
+          .multiplyScalar(influence * 0.5);
+        
+        node.velocity.add(force);
+        node.activity = Math.min(1.0, node.activity + influence * 0.1);
+      }
+    });
   }
 
   /* ========================= NODES ========================= */
@@ -173,7 +330,9 @@ class NeuralParticlesService {
         twinkleSpeed: 0.8 + Math.random() * 0.4,
         depth: depth,
         activity: Math.random() * 0.3,
-        phase: Math.random() * Math.PI * 2
+        phase: Math.random() * Math.PI * 2,
+        gridX: 0,
+        gridY: 0
       });
     }
   }
@@ -221,15 +380,11 @@ class NeuralParticlesService {
         varying float v_glow;
 
         void main() {
-          // Complex twinkling with multiple frequencies
           float twinkle1 = sin(u_time * ${TWINKLE_SPEED} * a_speed + a_phase);
           float twinkle2 = sin(u_time * ${TWINKLE_SPEED} * 1.7 * a_speed + a_phase * 2.1);
           float twinkle = (twinkle1 + twinkle2 * 0.5) * ${TWINKLE_STRENGTH};
           
-          // Depth-based scaling
           float depthFactor = 1.0 - (a_depth / ${DEPTH_LAYERS}.0) * 0.5;
-          
-          // Activity burst effect
           float activityGlow = a_activity * 1.5;
           
           v_alpha = 0.5 + twinkle * 0.4 + activityGlow * 0.3;
@@ -250,7 +405,6 @@ class NeuralParticlesService {
           float d = length(center);
           if (d > 0.5) discard;
           
-          // Multi-layer glow
           float core = smoothstep(0.5, 0.0, d);
           float glow1 = smoothstep(0.5, 0.2, d);
           float glow2 = smoothstep(0.5, 0.35, d);
@@ -265,6 +419,25 @@ class NeuralParticlesService {
 
     this.nodePoints = new THREE.Points(geometry, material);
     this.scene.add(this.nodePoints);
+  }
+
+  private resizeNodeBuffers() {
+    const geometry = this.nodePoints.geometry;
+    const newSize = this.nodes.length;
+    
+    geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(newSize * 3), 3));
+    geometry.setAttribute('a_size', new THREE.BufferAttribute(new Float32Array(newSize), 1));
+    geometry.setAttribute('a_phase', new THREE.BufferAttribute(new Float32Array(newSize), 1));
+    geometry.setAttribute('a_speed', new THREE.BufferAttribute(new Float32Array(newSize), 1));
+    geometry.setAttribute('a_depth', new THREE.BufferAttribute(new Float32Array(newSize), 1));
+    geometry.setAttribute('a_activity', new THREE.BufferAttribute(new Float32Array(newSize), 1));
+
+    this.nodes.forEach((node, i) => {
+      (geometry.attributes.a_size as THREE.BufferAttribute).setX(i, node.size);
+      (geometry.attributes.a_phase as THREE.BufferAttribute).setX(i, node.twinklePhase);
+      (geometry.attributes.a_speed as THREE.BufferAttribute).setX(i, node.twinkleSpeed);
+      (geometry.attributes.a_depth as THREE.BufferAttribute).setX(i, node.depth);
+    });
   }
 
   /* ========================= DYNAMIC CONNECTIONS ========================= */
@@ -302,7 +475,6 @@ class NeuralParticlesService {
         varying float v_pulse;
 
         void main() {
-          // Smooth wave pulse
           float pulse = sin(u_time * ${PULSE_SPEED} + v_pulse) * 0.5 + 0.5;
           pulse = pow(pulse, 2.5);
           
@@ -320,22 +492,29 @@ class NeuralParticlesService {
   }
 
   private updateDynamicConnections(dt: number, time: number) {
+    this.updateSpatialGrid();
     this.activeConnections = [];
     
-    // Breathing connection distance
     const breathe = Math.sin(time * CONNECTION_BREATHE_SPEED) * 0.5 + 0.5;
     const connectionDistance = CONNECTION_DISTANCE_MIN + 
       (CONNECTION_DISTANCE_MAX - CONNECTION_DISTANCE_MIN) * breathe;
+    const connectionDistSq = connectionDistance * connectionDistance;
 
-    // Find connections
-    for (let i = 0; i < this.nodes.length; i++) {
-      for (let j = i + 1; j < this.nodes.length; j++) {
-        const a = this.nodes[i];
-        const b = this.nodes[j];
+    const maxConnectionsPerFrame = Math.floor(this.nodes.length * 3 * this.qualityLevel);
+    let connectionCount = 0;
+
+    for (let i = 0; i < this.nodes.length && connectionCount < maxConnectionsPerFrame; i++) {
+      const nodeA = this.nodes[i];
+      const neighbors = this.getNeighborNodes(nodeA);
+      
+      for (const j of neighbors) {
+        if (j <= i || connectionCount >= maxConnectionsPerFrame) continue;
         
-        const dist = a.position.distanceTo(b.position);
+        const nodeB = this.nodes[j];
+        const distSq = nodeA.position.distanceToSquared(nodeB.position);
         
-        if (dist < connectionDistance) {
+        if (distSq < connectionDistSq) {
+          const dist = Math.sqrt(distSq);
           const fadeStart = connectionDistance - CONNECTION_FADE_RANGE;
           let strength = 1.0;
           
@@ -344,8 +523,7 @@ class NeuralParticlesService {
           }
           
           if (strength > 0.01) {
-            // Add activity influence
-            const activityBoost = (a.activity + b.activity) * 0.5;
+            const activityBoost = (nodeA.activity + nodeB.activity) * 0.5;
             strength = Math.min(1.0, strength + activityBoost);
             
             this.activeConnections.push({
@@ -354,12 +532,18 @@ class NeuralParticlesService {
               strength: strength,
               pulsePhase: (i * 0.41 + j * 0.73) * Math.PI * 2
             });
+            
+            connectionCount++;
+            
+            // Spawn signal particles on strong connections
+            if (Math.random() < 0.02 * strength && this.signalParticles.length < 50) {
+              this.spawnSignalParticle(nodeA.position, nodeB.position);
+            }
           }
         }
       }
     }
 
-    // Update geometry
     const pos = this.connectionLines.geometry.attributes.position as THREE.BufferAttribute;
     const alpha = this.connectionLines.geometry.attributes.a_alpha as THREE.BufferAttribute;
     const pulse = this.connectionLines.geometry.attributes.a_pulse as THREE.BufferAttribute;
@@ -379,7 +563,6 @@ class NeuralParticlesService {
       pulse.setX(idx * 2 + 1, conn.pulsePhase);
     });
 
-    // Clear unused
     for (let i = this.activeConnections.length; i < pos.count / 2; i++) {
       alpha.setX(i * 2, 0);
       alpha.setX(i * 2 + 1, 0);
@@ -390,16 +573,107 @@ class NeuralParticlesService {
     pulse.needsUpdate = true;
   }
 
+  /* ========================= SIGNAL PARTICLES ========================= */
+
+  private initSignalParticles() {
+    const maxSignals = 50;
+    const geometry = new THREE.BufferGeometry();
+    
+    const positions = new Float32Array(maxSignals * 3);
+    const sizes = new Float32Array(maxSignals);
+    const alphas = new Float32Array(maxSignals);
+    
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('a_size', new THREE.BufferAttribute(sizes, 1));
+    geometry.setAttribute('a_alpha', new THREE.BufferAttribute(alphas, 1));
+
+    const material = new THREE.ShaderMaterial({
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      vertexShader: `
+        attribute float a_size;
+        attribute float a_alpha;
+        varying float v_alpha;
+        
+        void main() {
+          v_alpha = a_alpha;
+          gl_PointSize = a_size;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        varying float v_alpha;
+        
+        void main() {
+          vec2 center = gl_PointCoord - 0.5;
+          float d = length(center);
+          if (d > 0.5) discard;
+          
+          float core = smoothstep(0.5, 0.0, d);
+          vec3 color = vec3(0.3, 0.8, 1.0);
+          
+          gl_FragColor = vec4(color, core * v_alpha);
+        }
+      `
+    });
+
+    this.signalPoints = new THREE.Points(geometry, material);
+    this.scene.add(this.signalPoints);
+  }
+
+  private spawnSignalParticle(from: THREE.Vector3, to: THREE.Vector3) {
+    this.signalParticles.push({
+      from: from.clone(),
+      to: to.clone(),
+      progress: 0,
+      speed: 1.5 + Math.random() * 0.5,
+      life: 1.0
+    });
+  }
+
+  private updateSignalParticles(dt: number) {
+    this.signalParticles = this.signalParticles.filter(signal => {
+      signal.progress += signal.speed * dt;
+      signal.life = 1.0 - signal.progress;
+      return signal.progress < 1.0;
+    });
+
+    const pos = this.signalPoints.geometry.attributes.position as THREE.BufferAttribute;
+    const size = this.signalPoints.geometry.attributes.a_size as THREE.BufferAttribute;
+    const alpha = this.signalPoints.geometry.attributes.a_alpha as THREE.BufferAttribute;
+    
+    this.signalParticles.forEach((signal, i) => {
+      const current = signal.from.clone().lerp(signal.to, signal.progress);
+      pos.setXYZ(i, current.x, current.y, current.z);
+      size.setX(i, 4 + signal.life * 3);
+      alpha.setX(i, signal.life);
+    });
+    
+    for (let i = this.signalParticles.length; i < 50; i++) {
+      alpha.setX(i, 0);
+    }
+    
+    pos.needsUpdate = true;
+    size.needsUpdate = true;
+    alpha.needsUpdate = true;
+  }
+
   /* ========================= ACTIVITY BURSTS ========================= */
 
   private triggerActivityBurst() {
     const burstNode = Math.floor(Math.random() * this.nodes.length);
     const center = this.nodes[burstNode].position;
+    this.triggerActivityBurstAt(center);
+  }
+
+  private triggerActivityBurstAt(center: THREE.Vector3) {
+    const burstRadiusSq = BURST_RADIUS * BURST_RADIUS;
     
     this.nodes.forEach((node) => {
-      const dist = node.position.distanceTo(center);
-      if (dist < BURST_RADIUS) {
-        const influence = 1.0 - (dist / BURST_RADIUS);
+      const distSq = node.position.distanceToSquared(center);
+      if (distSq < burstRadiusSq) {
+        const influence = 1.0 - (Math.sqrt(distSq) / BURST_RADIUS);
         node.activity = Math.min(1.0, node.activity + influence * BURST_STRENGTH);
       }
     });
@@ -470,7 +744,7 @@ class NeuralParticlesService {
   }
 
   private updateShootingStars(dt: number) {
-    if (Math.random() < SHOOTING_STAR_CHANCE && this.shootingStars.length < 10) {
+    if (Math.random() < SHOOTING_STAR_CHANCE * this.qualityLevel && this.shootingStars.length < 10) {
       this.spawnShootingStar();
     }
 
@@ -507,12 +781,6 @@ class NeuralParticlesService {
     alpha.needsUpdate = true;
   }
 
-  /* ========================= EDGES (for compatibility) ========================= */
-
-  private initEdges() {
-    // Stub for compatibility
-  }
-
   /* ========================= POST PROCESSING ========================= */
 
   private initPost() {
@@ -520,7 +788,7 @@ class NeuralParticlesService {
 
     const bloomPass = new UnrealBloomPass(
       new THREE.Vector2(window.innerWidth, window.innerHeight),
-      BLOOM_STRENGTH,
+      BLOOM_STRENGTH * this.qualityLevel,
       BLOOM_RADIUS,
       BLOOM_THRESHOLD
     );
@@ -541,9 +809,14 @@ class NeuralParticlesService {
     const w = window.innerWidth / 2;
     const h = window.innerHeight / 2;
 
+    // Apply scroll velocity influence
+    const scrollInfluence = this.scrollEnergy * 0.3;
+
     this.nodes.forEach((node, i) => {
-      // Movement
-      node.position.add(node.velocity);
+      // Movement with scroll influence
+      const velocity = node.velocity.clone();
+      velocity.y += scrollInfluence;
+      node.position.add(velocity);
 
       // Wrap around
       if (node.position.x > w * 1.2) node.position.x = -w * 1.2;
@@ -554,16 +827,18 @@ class NeuralParticlesService {
       // Decay activity
       node.activity *= 0.97;
 
+      // Dampen velocity
+      node.velocity.multiplyScalar(0.99);
+
       pos.setXYZ(i, node.position.x, node.position.y, node.position.z);
       act.setX(i, node.activity);
     });
 
+    // Decay scroll energy
+    this.scrollEnergy *= 0.95;
+
     pos.needsUpdate = true;
     act.needsUpdate = true;
-  }
-
-  private updateEdges(dt: number) {
-    // Compatibility stub
   }
 
   /* ========================= ANIMATION LOOP ========================= */
@@ -572,22 +847,36 @@ class NeuralParticlesService {
     requestAnimationFrame(this.animate);
     if (this.paused) return;
 
+    const now = performance.now();
     const dt = this.clock.getDelta();
     const t = this.clock.getElapsedTime();
 
+    // FPS tracking
+    if (this.lastFrameTime > 0) {
+      const fps = 1000 / (now - this.lastFrameTime);
+      this.updateAdaptiveQuality(fps);
+    }
+    this.lastFrameTime = now;
+
     // Random activity bursts
-    if (Math.random() < BURST_CHANCE) {
+    if (Math.random() < BURST_CHANCE * this.qualityLevel) {
       this.triggerActivityBurst();
     }
 
+    // Mouse interaction
+    this.applyMouseInfluence();
+
+    // Updates
     this.updateNodes(dt);
     this.updateDynamicConnections(dt, t);
     this.updateShootingStars(dt);
-    this.updateEdges(dt);
+    this.updateSignalParticles(dt);
 
+    // Update uniforms
     (this.nodePoints.material as THREE.ShaderMaterial).uniforms.u_time.value = t;
     (this.connectionLines.material as THREE.ShaderMaterial).uniforms.u_time.value = t;
 
+    // Render
     this.renderer.clear();
     this.composer.render();
     this.bloomComposer.render();
@@ -596,11 +885,21 @@ class NeuralParticlesService {
   /* ========================= API ========================= */
 
   setScrollVelocity(v: number) {
-    this.scrollEnergy = Math.min(v, 1.5);
+    this.scrollEnergy = Math.min(Math.abs(v) * 2, 1.5);
+    
+    // Trigger activity on scroll
+    if (Math.abs(v) > 0.5) {
+      const randomNode = Math.floor(Math.random() * this.nodes.length);
+      this.triggerActivityBurstAt(this.nodes[randomNode].position);
+    }
   }
 
   setPaused(v: boolean) {
     this.paused = v;
+  }
+
+  getQualityLevel(): number {
+    return this.qualityLevel;
   }
 
   private onResize = () => {
@@ -617,6 +916,18 @@ class NeuralParticlesService {
     this.composer.setSize(w, h);
     this.bloomComposer.setSize(w, h);
   };
+
+  unmount() {
+    if (!this.mounted) return;
+    
+    this.mounted = false;
+    window.removeEventListener('resize', this.onResize);
+    
+    this.scene.clear();
+    this.renderer.dispose();
+    this.composer.dispose();
+    this.bloomComposer.dispose();
+  }
 }
 
 export const neuralParticlesService = new NeuralParticlesService();
