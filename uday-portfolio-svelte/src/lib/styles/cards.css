@@ -183,11 +183,12 @@
 @media (max-width: 1100px) {
   .card-logos {
     gap: 2.2rem;
-    margin-bottom: 0.8rem;
+    justify-content: center;
+    margin-bottom: 2.8rem;
   }
 
   .card-logo {
-    height: 44px;     /* from 36 */
+    height: 60px;     /* from 36 */
     max-width: 96px;
   }
 
@@ -229,14 +230,15 @@
 
 .card-logos {
   display: flex;
+  justify-content: center;
   gap: 1.95rem;
   align-items: center;
-  margin-bottom: 0.6rem;
+  margin-bottom: 2.6rem;
 }
 
 .card-logo {
-  height: 36px;
-  max-width: 80px;
+  height: 76px;
+  max-width: 120px;
   object-fit: contain;
   flex-shrink: 0;
 
@@ -417,7 +419,7 @@
 
 .card-tags {
   margin-top: auto;
-  padding-top: 0.6rem;
+  padding-top: 2.6rem;
   width: 100%;
 
   position: relative;
