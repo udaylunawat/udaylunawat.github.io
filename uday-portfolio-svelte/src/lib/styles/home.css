@@ -166,6 +166,21 @@ section.home {
     line-height: 1.55;
     max-width: 34rem;
   }
+
+  html {
+    font-size: clamp(112%, 4.5vw, 125%);
+  }
+
+  h1 { font-size: clamp(2.2rem, 7.5vw, 2.8rem); }
+  h2 { font-size: clamp(1.7rem, 6.5vw, 2.3rem); }
+  h3 { font-size: clamp(1.4rem, 5.5vw, 1.9rem); }
+
+  .chip,
+  .ai-chip,
+  .ai-status-tag,
+  .secondary-btn {
+    font-size: 0.9rem;
+  }
 }
 
 /* ===============================
@@ -198,7 +213,7 @@ section.home {
 }
 
 /* Mobile needs less lift */
-@media (max-width: 768px) {
+@media (max-width: 1168px) {
   .home h1,
   .home .tagline {
     transform: translateY(-0.6rem);

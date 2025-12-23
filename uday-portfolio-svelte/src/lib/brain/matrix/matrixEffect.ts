@@ -6,8 +6,8 @@ export class MatrixEffect {
      PARAMETERS (TUNE HERE)
      ========================= */
 
-  private TOTAL_DURATION = 3_500; // ms
-  private GLITCH_DURATION = 800;
+  private TOTAL_DURATION = 3_000; // ms
+  private GLITCH_DURATION = 1;
   private TEXT_DELAY = 300;
   private FADE_OUT_DURATION = 600;
 
@@ -220,7 +220,7 @@ export class MatrixEffect {
 
     switch (this.phase) {
       case 'glitch':
-        this.drawGlitch();
+        // this.drawGlitch();
         break;
 
       case 'text':

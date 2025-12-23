@@ -11,7 +11,7 @@ import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPa
 const NODE_COUNT_DESKTOP = 70;
 const NODE_COUNT_MOBILE = 40;
 
-const NODE_DRIFT_SPEED = 5.6;
+const NODE_DRIFT_SPEED = 10.6;
 const NODE_BASE_SIZE = 3.2;
 const NODE_SIZE_VARIANCE = 4.0;
 
@@ -20,7 +20,7 @@ const DEPTH_LAYERS = 3;
 const DEPTH_RANGE = 300;
 
 // ---------- Twinkle ----------
-const TWINKLE_SPEED = 0.5;
+const TWINKLE_SPEED = 0.9;
 const TWINKLE_STRENGTH = 0.85;
 const TWINKLE_VARIANCE = 0.4;
 
@@ -103,6 +103,7 @@ class NeuralParticlesService {
 
   private composer!: EffectComposer;
   private bloomComposer!: EffectComposer;
+  private bloomPass!: UnrealBloomPass;
 
   private nodes: Node[] = [];
   private activeConnections: ActiveConnection[] = [];
@@ -388,12 +389,14 @@ class NeuralParticlesService {
           float twinkle = (twinkle1 + twinkle2 * 0.5) * ${TWINKLE_STRENGTH};
           
           float depthFactor = 1.0 - (a_depth / ${DEPTH_LAYERS}.0) * 0.5;
-          float activityGlow = a_activity * 1.5;
+          float activityGlow = pow(a_activity, 1.4) * 2.6;
           
-          v_alpha = 0.5 + twinkle * 0.4 + activityGlow * 0.3;
-          v_glow = 1.0 + twinkle + activityGlow;
-          
-          float finalSize = a_size * depthFactor * (1.0 + twinkle * 0.5 + activityGlow * 0.8);
+          v_alpha = 0.45 + twinkle * 0.4 + activityGlow * 0.5;
+          v_glow  = 1.2 + twinkle + activityGlow * 1.4;
+
+          float finalSize =
+            a_size * depthFactor *
+            (1.0 + twinkle * 0.6 + activityGlow * 1.4);
           gl_PointSize = finalSize;
           
           gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
@@ -558,7 +561,7 @@ class NeuralParticlesService {
       pos.setXYZ(idx * 2, from.x, from.y, from.z);
       pos.setXYZ(idx * 2 + 1, to.x, to.y, to.z);
       
-      const opacity = conn.strength * 0.4;
+      const opacity = conn.strength * (0.4 + this.scrollEnergy * 0.25);
       alpha.setX(idx * 2, opacity);
       alpha.setX(idx * 2 + 1, opacity);
       
@@ -789,7 +792,7 @@ class NeuralParticlesService {
   private initPost() {
     const renderPass = new RenderPass(this.scene, this.camera);
 
-    const bloomPass = new UnrealBloomPass(
+    this.bloomPass = new UnrealBloomPass(
       new THREE.Vector2(window.innerWidth, window.innerHeight),
       BLOOM_STRENGTH * this.qualityLevel,
       BLOOM_RADIUS,
@@ -801,7 +804,7 @@ class NeuralParticlesService {
 
     this.bloomComposer = new EffectComposer(this.renderer);
     this.bloomComposer.addPass(renderPass);
-    this.bloomComposer.addPass(bloomPass);
+    this.bloomComposer.addPass(this.bloomPass);
   }
 
   /* ========================= UPDATE ========================= */
@@ -828,7 +831,8 @@ class NeuralParticlesService {
       if (node.position.y < -h * 1.2) node.position.y = h * 1.2;
 
       // Decay activity
-      node.activity *= 0.97;
+      const activityDecay = this.scrollEnergy > 0.2 ? 0.985 : 0.97;
+      node.activity *= activityDecay;
 
       // Dampen velocity
       node.velocity.multiplyScalar(0.99);
@@ -879,6 +883,9 @@ class NeuralParticlesService {
     (this.nodePoints.material as THREE.ShaderMaterial).uniforms.u_time.value = t;
     (this.connectionLines.material as THREE.ShaderMaterial).uniforms.u_time.value = t;
 
+    const bloomBoost = Math.min(this.scrollEnergy * 0.6, 1.2);
+    this.bloomPass.strength = BLOOM_STRENGTH + bloomBoost;
+
     // Render
     this.renderer.clear();
     this.composer.render();
@@ -888,7 +895,7 @@ class NeuralParticlesService {
   /* ========================= API ========================= */
 
   setScrollVelocity(v: number) {
-    this.scrollEnergy = Math.min(Math.abs(v) * 2, 1.5);
+    this.scrollEnergy = Math.min(Math.abs(v) * 3.5, 2.5);
     
     // Trigger activity on scroll
     if (Math.abs(v) > 0.5) {

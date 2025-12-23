@@ -164,8 +164,49 @@ footer,
     min-height: auto;
   }
 
-  /* Kill any calc-based layout drift */
-  [style*="calc("] {
-    max-width: 100%;
+  /* Mobile-specific enhancements */
+  html {
+    font-size: clamp(112%, 4.5vw, 125%);
+  }
+
+  h1 { font-size: clamp(2.2rem, 7.5vw, 2.8rem); }
+  h2 { font-size: clamp(1.7rem, 6.5vw, 2.3rem); }
+  h3 { font-size: clamp(1.4rem, 5.5vw, 1.9rem); }
+
+  .chip,
+  .ai-chip,
+  .ai-status-tag,
+  .secondary-btn {
+    font-size: 0.9rem;
+  }
+}
+
+/* ===============================
+   MOBILE — FORCE HIDE NAV
+   =============================== */
+
+@media (max-width: 1100px) {
+  .main-nav {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+}
+
+
+@media (max-width: 768px) {
+  /* Remove cinematic left offsets */
+  section h2 {
+    margin-left: 0 !important;
+  }
+
+  section:not(.about) > .wrapper > *:not(h2) {
+    margin-left: 0 !important;
+  }
+
+  /* Tighten wrapper padding slightly */
+  section > .wrapper {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }

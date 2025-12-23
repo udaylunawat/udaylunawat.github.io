@@ -133,7 +133,7 @@ section:not(.home) {
 /* Desktop offset */
 @media (min-width: 800px) {
   section:not(.home) {
-    margin-left: 6rem;
+    margin-left: 2rem;
   }
 }
 

@@ -1,5 +1,3 @@
-
-
 /* ---------------- INTERACTIVE CONTROL PANEL ---------------- */
 
 /* Control Panel Base Styles - Initially hidden */
@@ -467,10 +465,6 @@ input[type="range"]::-moz-range-thumb:hover {
   display: flex;
   gap: 8px;
   align-items: center;
-}
-
-.color-control input[type="range"] {
-  flex: 1;
 }
 
 /* Vector Controls (Position/Rotation) */

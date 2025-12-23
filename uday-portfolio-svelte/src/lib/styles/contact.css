@@ -114,7 +114,7 @@
 
 
 
-/* --------------- CONTACT ---------------*/
+/* --------------- CONTACT --------------- */
 
 .contact .wrapper {
     padding: 1.618rem;
@@ -314,3 +314,23 @@
     pointer-events: none;
   }
   
+  /* ===============================
+     MOBILE-SPECIFIC ENHANCEMENTS (ADDED)
+     =============================== */
+
+@media (max-width: 768px) {
+  html {
+    font-size: clamp(112%, 4.5vw, 125%);
+  }
+
+  h1 { font-size: clamp(2.2rem, 7.5vw, 2.8rem); }
+  h2 { font-size: clamp(1.7rem, 6.5vw, 2.3rem); }
+  h3 { font-size: clamp(1.4rem, 5.5vw, 1.9rem); }
+
+  .chip,
+  .ai-chip,
+  .ai-status-tag,
+  .secondary-btn {
+    font-size: 0.9rem;
+  }
+}

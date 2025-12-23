@@ -144,7 +144,14 @@
        MODAL PAUSE
        ========================= */
 
+    let modalInitialized = false;
+
     const unsubscribe = modal.subscribe(m => {
+      if (!modalInitialized) {
+        modalInitialized = true;
+        return;
+      }
+
       backgroundService.setPaused(m.open);
       neuralParticlesService.setPaused(m.open);
     });
