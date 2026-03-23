@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://udaylunawat.github.io/sitemap.xml

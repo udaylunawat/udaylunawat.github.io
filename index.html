@@ -3,6 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Uday Lunawat — Senior ML Engineer specializing in LLMs, Agents, RAG, Computer Vision, and MLOps. 6+ years delivering production AI systems.">
+    <meta name="author" content="Uday Lunawat">
+    <link rel="canonical" href="https://udaylunawat.github.io/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://udaylunawat.github.io/">
+    <meta property="og:title" content="Uday Lunawat — Senior ML Engineer">
+    <meta property="og:description" content="Senior ML Engineer specializing in LLMs, Agents, RAG, Computer Vision, and MLOps. 6+ years delivering production AI systems.">
+    <meta property="og:image" content="https://udaylunawat.github.io/src/img/uday.webp">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@UdayLunawat">
+    <meta name="twitter:title" content="Uday Lunawat — Senior ML Engineer">
+    <meta name="twitter:description" content="Senior ML Engineer specializing in LLMs, Agents, RAG, Computer Vision, and MLOps.">
+    <meta name="twitter:image" content="https://udaylunawat.github.io/src/img/uday.webp">
+
+    <link rel="icon" type="image/svg+xml" href="/src/img/fractal2.png">
     <title>Uday Lunawat - Portfolio</title>
     <!-- Critical CSS preload -->
     <link rel="preload" href="src/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -27,7 +46,6 @@
     <link rel="preload" href="./src/modals.js" as="script" crossorigin>
     <link rel="preload" href="./src/scroll-animations.js" as="script" crossorigin>
     <link rel="preload" href="./src/particles-config.js" as="script" crossorigin>
-    <link rel="preload" href="./src/particles-controls.js" as="script" crossorigin>
     <!-- Prevent brief flash of navigation, modals and control UI before CSS/JS initialise -->
 <style>
   /* Hide potentially flashing UI until we explicitly reveal it */
@@ -56,8 +74,8 @@
 </style>
 <script>
   (function() {
-    const MIN_LOADER_TIME = 3000;   // 5000 ms = 5 seconds minimum
-    const MAX_LOADER_TIME = 4000;   // hard safety cap
+    const MIN_LOADER_TIME = 0;
+    const MAX_LOADER_TIME = 500;
     const startTime = performance.now ? performance.now() : Date.now();
 
     function reveal() {
@@ -148,117 +166,9 @@
 <div class="color-background" id="colorBackground">
 </div>
 
-<!-- Minimal Particles Control Panel Toggle Button -->
-<button id="particles-control-toggle" class="particles-control-toggle-btn" title="Particles Controls">
-  ✨
-</button>
-
-<!-- Minimal Particles Control Panel with Tabs -->
-<div id="particles-control-panel" class="particles-control-panel hidden">
-  <div class="particles-panel-header">
-    <h3>🎮 Controls</h3>
-    <button id="particles-panel-close" class="particles-panel-close">&times;</button>
-  </div>
-
-  <!-- Tab Navigation -->
-  <div class="control-tabs">
-    <button id="particles-tab" class="control-tab active" data-tab="particles">✨ Particles</button>
-    <button id="background-tab" class="control-tab" data-tab="background">🌊 Background</button>
-  </div>
-
-  <!-- Particles Tab Content -->
-  <div id="particles-content" class="particles-panel-content control-tab-panel active">
-    <div class="control-group">
-      <label>Particle Count</label>
-      <div class="single-control">
-        <input type="range" id="particles-number" min="1" max="100" value="15" step="1">
-        <span id="particles-number-display" class="value-display">15</span>
-      </div>
-    </div>
-
-    <div class="control-group">
-      <label>Particle Speed</label>
-      <div class="single-control">
-        <input type="range" id="particles-speed" min="0.5" max="10" value="3" step="0.5">
-        <span id="particles-speed-display" class="value-display">3</span>
-      </div>
-    </div>
-
-    <div class="control-group">
-      <label>Particle Size</label>
-      <div class="single-control">
-        <input type="range" id="particles-size" min="2" max="20" value="8" step="1">
-        <span id="particles-size-display" class="value-display">8</span>
-      </div>
-    </div>
-
-    <div class="control-group">
-      <label>Particle Opacity</label>
-      <div class="single-control">
-        <input type="range" id="particles-opacity" min="0.1" max="1.0" value="1.0" step="0.05">
-        <span id="particles-opacity-display" class="value-display">1.0</span>
-      </div>
-    </div>
-
-    <div class="control-group">
-      <label>Link Opacity</label>
-      <div class="single-control">
-        <input type="range" id="particles-link-opacity" min="0.1" max="1.0" value="0.4" step="0.05">
-        <span id="particles-link-opacity-display" class="value-display">0.4</span>
-      </div>
-    </div>
-
-    <div class="control-group">
-      <label>Particle Color</label>
-      <div class="single-control color-control">
-        <input type="color" id="particles-color" value="#ffffff" class="color-picker">
-        <span id="particles-color-display" class="value-display">#ffffff</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Background Tab Content -->
-  <div id="background-content" class="particles-panel-content control-tab-panel">
-    <div class="control-info">
-      <p>🎨 Background animation controls</p>
-    </div>
-
-    <div class="control-group">
-      <label>Animation Speed</label>
-      <div class="single-control">
-        <input type="range" id="background-speed" min="0.001" max="0.5" value="0.01" step="0.001">
-        <span id="background-speed-display" class="value-display">0.01</span>
-      </div>
-    </div>
-
-    <div class="control-group">
-      <label>Distortion</label>
-      <div class="single-control">
-        <input type="range" id="background-distortion" min="0" max="100" value="35" step="1">
-        <span id="background-distortion-display" class="value-display">35</span>
-      </div>
-    </div>
-
-    <div class="control-group">
-      <label>Wave Frequency</label>
-      <div class="single-control">
-        <input type="range" id="background-frequency" min="0.5" max="2.0" value="1.0" step="0.1">
-        <span id="background-frequency-display" class="value-display">1.0</span>
-      </div>
-    </div>
-
-    <div class="control-group">
-      <label>Animation Phase</label>
-      <div class="single-control">
-        <input type="range" id="background-phase" min="0" max="6.28" value="0" step="0.1">
-        <span id="background-phase-display" class="value-display">0</span>
-      </div>
-    </div>
-  </div>
-</div>
 
 <nav class="main-nav" id="menu">
-    <img class="nav-close-icon" id="close-icon" src="./src/img/close-icon.svg" alt="" onclick="hideMenu()">
+    <img class="nav-close-icon" id="close-icon" src="./src/img/close-icon.svg" alt="" loading="lazy" onclick="hideMenu()">
     <ul>
         <li><a href="#homeTitle" onclick="hideMenu()">Home</a></li>
         <li><a href="#about" onclick="hideMenu()">About</a></li>
@@ -292,7 +202,7 @@
     <div class="wrapper">
       <div class="text-box">
         <h2>
-          <img src="./src/img/icon-rocket.svg" alt="Rocket icon">
+          <img src="./src/img/icon-rocket.svg" alt="Rocket icon" loading="lazy">
           Passion
         </h2>
         <p>
@@ -357,7 +267,7 @@
       <div class="flex-container">
         <div class="flex-container">
 <div class="img-container">
-            <img src="./src/img/uday.webp" alt="Loading..." class="profile-photo">
+            <img src="./src/img/uday.webp" alt="Loading..." class="profile-photo" loading="lazy">
           </div>
           <div class="contact-col">
             <p>
@@ -373,7 +283,7 @@
               <a href="#" id="resume-link">
                 <button>
                   DOWNLOAD RESUME
-                  <img src="./src/img/pdf-icon.svg" alt="">
+                  <img src="./src/img/pdf-icon.svg" alt="" loading="lazy">
                 </button>
               </a>
             </div>
@@ -449,7 +359,7 @@
 
 <!------------ NAVIGATION ------------->
 
-<img class="nav-open-icon" id="open-icon" src="./src/img/menu-icon.svg" alt="" onclick="showMenu()">
+<img class="nav-open-icon" id="open-icon" src="./src/img/menu-icon.svg" alt="" loading="lazy" onclick="showMenu()">
 
 <script src="./src/navigation.js" type="module"></script>
 <script src="./src/modals.js" type="module"></script>
@@ -584,8 +494,6 @@
 <!-- Live GitHub stars fetcher -->
 <script src="./src/github-stars.js" defer></script>
 
-<!-- Particles controls -->
-<script src="./src/particles-controls.js" defer></script>
 
 <!-- Resume download -->
 <script>
