@@ -1,2 +1,4 @@
 .DS_Store
 images/archived_images
+node_modules/
+dist/
