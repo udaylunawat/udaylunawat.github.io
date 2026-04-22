@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Uday Lunawat — Senior ML Engineer specializing in LLMs, Agents, RAG, Computer Vision, and MLOps. 6+ years delivering production AI systems.">
+    <meta name="description" content="Uday Lunawat — Senior ML Engineer specializing in LLMs, Agents, RAG, Computer Vision, and MLOps.7+ years delivering production AI systems.">
     <meta name="author" content="Uday Lunawat">
     <link rel="canonical" href="https://udaylunawat.github.io/">
 
@@ -11,7 +11,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://udaylunawat.github.io/">
     <meta property="og:title" content="Uday Lunawat — Senior ML Engineer">
-    <meta property="og:description" content="Senior ML Engineer specializing in LLMs, Agents, RAG, Computer Vision, and MLOps. 6+ years delivering production AI systems.">
+    <meta property="og:description" content="Senior ML Engineer specializing in LLMs, Agents, RAG, Computer Vision, and MLOps. 7+ years delivering production AI systems.">
     <meta property="og:image" content="https://udaylunawat.github.io/src/img/uday.webp">
 
     <!-- Twitter Card -->
@@ -40,11 +40,6 @@
     <link rel="preload" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css"></noscript>
 
-    <!-- Critical JavaScript resources -->
-    <link rel="preload" href="./src/navigation.js" as="script" crossorigin>
-    <link rel="preload" href="./src/modals.js" as="script" crossorigin>
-    <link rel="preload" href="./src/scroll-animations.js" as="script" crossorigin>
-    <link rel="preload" href="./src/particles-config.js" as="script" crossorigin>
     <!-- Prevent brief flash of navigation, modals and control UI before CSS/JS initialise -->
 <style>
   /* Hide potentially flashing UI until we explicitly reveal it */
@@ -64,17 +59,11 @@
     background: #000;
   }
 
-  /* Before the app is ready, show only the loader, hide everything else */
-  body:not(.show-ui) > :not(.ai-loader) {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-  }
 </style>
 <script>
   (function() {
-    const MIN_LOADER_TIME = 0;
-    const MAX_LOADER_TIME = 500;
+    const MIN_LOADER_TIME = 520;
+    const MAX_LOADER_TIME = 900;
     const startTime = performance.now ? performance.now() : Date.now();
 
     function reveal() {
@@ -130,7 +119,7 @@
         <div class="ai-chipline">
           <div class="ai-chip">
             <span class="ai-chip-dot"></span>
-            <span>neural portfolio - Uday Lunawat</span>
+            <span>neural systems console - Uday Lunawat</span>
           </div>
           <span></span>
         </div>
@@ -140,7 +129,7 @@
 
       <div class="ai-status-line">
         <span class="ai-status-tag">BOOT</span>
-        <span id="ai-loader-status">linking workspace graph</span>
+        <span id="ai-loader-status">routing skill graph</span>
       </div>
 
       <div class="ai-progress-row">
@@ -152,7 +141,7 @@
 
       <div class="ai-hints">
         <span></span>
-        <code id="ai-loader-hint">hydrating /skills vector space</code>
+        <code id="ai-loader-hint">warming /agents /rag /mlops</code>
       </div>
     </div>
   </div>
@@ -167,14 +156,16 @@
 
 
 <nav class="main-nav" id="menu">
-    <img class="nav-close-icon" id="close-icon" src="./src/img/close-icon.svg" alt="" loading="lazy" onclick="hideMenu()">
+    <button class="nav-close-icon" id="close-icon" type="button" aria-label="Close navigation" aria-controls="menu" aria-expanded="true">
+      <img src="./src/img/close-icon.svg" alt="" loading="lazy">
+    </button>
     <ul>
-        <li><a href="#homeTitle" onclick="hideMenu()">Home</a></li>
-        <li><a href="#about" onclick="hideMenu()">About</a></li>
-        <li><a href="#credentials" onclick="hideMenu()">Experience</a></li>
-        <li><a href="#skills" onclick="hideMenu()">Skills</a></li>
-        <li><a href="#projects" onclick="hideMenu()">Projects</a></li>
-        <li><a href="#contact" onclick="hideMenu()">CONTAct /<span>resume</span></a></li>
+        <li><a href="#homeTitle">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#credentials">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">CONTAct /<span>resume</span></a></li>
     </ul>
 </nav>
 
@@ -183,15 +174,15 @@
 <header class="home" id="homeTitle">
     <div class="wrapper">
       <div class="home-grid">
-        <h4 id="homeTitle1">Loading...</h4>
+        <h4 id="homeTitle1">Senior Machine Learning Engineer</h4>
         <svg width="18.75rem" height="6.25rem">
           <line x1="9.375rem" y1="6.25rem" x2="9.375rem" y2="0" stroke="#ffffff37"/>
           <line x1="6.25rem" y1="3.125rem" x2="12.5rem" y2="3.125rem" stroke="#ffffff37"/>
         </svg>
-        <h4 id="homeTitle2">Loading...</h4>
+        <h4 id="homeTitle2">Software Engineer</h4>
       </div>
       <h1 id="homeName">Uday Lunawat</h1>
-      <p class="tagline">Loading...</p>
+      <p class="tagline">Building scalable, production-ready AI and software systems across Computer Vision, NLP, and Agentic AI.<br> 7+ years • Senior ML Engineer & SWE — production deployments, agentic orchestration, and CI/CD at scale.</p>
     </div>
   </header>
 
@@ -205,7 +196,7 @@
           Passion
         </h2>
         <p>
-          Loading...
+          Senior Machine Learning Engineer and Software Engineer with over 6 years delivering enterprise-grade AI and software solutions. I focus on moving models into production — writing reliable model code, robust APIs, and repeatable deployment pipelines.<br><br>My work spans Computer Vision, NLP, and agentic systems that automate analytics and workflows. I prefer shipping maintainable code and building observability into ML systems from day one.<br><br>I enjoy open-source tooling and pragmatic engineering: making complex systems simple to operate and measure.
         </p>
       </div>
     </div>
@@ -219,7 +210,109 @@
       <div class="experience-gallery">
         <div class="gallery-container">
           <div class="gallery-grid" id="experience-gallery-grid">
-            <!-- Content will be loaded dynamically from content.json -->
+            <div class="gallery-item experience-with-link" data-experience="fractal">
+              <div class="gallery-card">
+                <div class="img-container">
+                  <img class="symbolic-icon" src="./src/img/fractal2.png" alt="">
+                  <div class="card-title-marquee" data-title>
+                    <span class="marquee-inner">Senior Machine Learning / SWE</span>
+                  </div>
+                </div>
+                <div class="text-box">
+                  <div class="marquee-scroll-gallery">
+                    <div class="marquee-scroll-track">
+                      <span class="tag">LangGraph</span><span class="tag">LangChain</span><span class="tag">Multi-Agent</span><span class="tag">Python</span><span class="tag">LangGraph</span><span class="tag">LangChain</span><span class="tag">Multi-Agent</span><span class="tag">Python</span>
+                    </div>
+                  </div>
+                  <p>Led engineering for Fractal AI (India's First AI Unicorn Company), a multi-agent orchestration platform (LangGraph / LangChain). Owned tool onboarding and metadata lifecycle to productize agent behaviors for largest US telecom's business use.</p>
+                  <div class="marquee-scroll-gallery">
+                    <div class="marquee-scroll-track">
+                      <span class="badge">300+ agents onboarded</span><span class="badge">11,000+ automated workflows</span><span class="badge">300+ agents onboarded</span><span class="badge">11,000+ automated workflows</span>
+                    </div>
+                  </div>
+                  <h4 class="dates">Nov 2024 – Present · Pune</h4>
+                </div>
+              </div>
+            </div>
+            <div class="gallery-item experience-with-link" data-experience="hcl">
+              <div class="gallery-card">
+                <div class="img-container">
+                  <img class="symbolic-icon" src="./src/img/hcltech.jpeg" alt="">
+                  <div class="card-title-marquee" data-title>
+                    <span class="marquee-inner">Technical Lead ML Engineer</span>
+                  </div>
+                </div>
+                <div class="text-box">
+                  <div class="marquee-scroll-gallery">
+                    <div class="marquee-scroll-track">
+                      <span class="tag">Human-in-the-Loop</span><span class="tag">Label Studio</span><span class="tag">FastAPI</span><span class="tag">MLflow</span><span class="tag">Human-in-the-Loop</span><span class="tag">Label Studio</span><span class="tag">FastAPI</span><span class="tag">MLflow</span>
+                    </div>
+                  </div>
+                  <p>Implemented human-in-the-loop feedback and automated deployment flows; added Label Studio + FastAPI annotation pipelines, Trivy scanning, MLflow tracking and Seldon serving.</p>
+                  <h4 class="dates">2024 · Bangalore</h4>
+                </div>
+              </div>
+            </div>
+            <div class="gallery-item experience-with-link" data-experience="chugani">
+              <div class="gallery-card">
+                <div class="img-container">
+                  <img class="symbolic-icon" src="./src/img/pagers-icon.svg" alt="">
+                  <div class="card-title-marquee" data-title>
+                    <span class="marquee-inner">ML Engineer — Chugani</span>
+                  </div>
+                </div>
+                <div class="text-box">
+                  <div class="marquee-scroll-gallery">
+                    <div class="marquee-scroll-track">
+                      <span class="tag">MTCNN</span><span class="tag">FaceNet</span><span class="tag">Liveliness Detection</span><span class="tag">AWS</span><span class="tag">MTCNN</span><span class="tag">FaceNet</span><span class="tag">Liveliness Detection</span><span class="tag">AWS</span>
+                    </div>
+                  </div>
+                  <p>Built a real-time liveliness detection service (MTCNN + FaceNet), converted prototypes to modular MLOps pipelines, and established monitoring + retraining flows on AWS.</p>
+                  <h4 class="dates">2022 – 2023 · Remote</h4>
+                </div>
+              </div>
+            </div>
+            <div class="gallery-item experience-with-link" data-experience="yang">
+              <div class="gallery-card">
+                <div class="img-container">
+                  <img class="symbolic-icon" src="./src/img/planet-icon.svg" alt="">
+                  <div class="card-title-marquee" data-title>
+                    <span class="marquee-inner">ML & ETL Engineer — Yang</span>
+                  </div>
+                </div>
+                <div class="text-box">
+                  <div class="marquee-scroll-gallery">
+                    <div class="marquee-scroll-track">
+                      <span class="tag">AI + ETL</span><span class="tag">Smart Factory</span><span class="tag">IPQC System</span><span class="tag">Tableau</span><span class="tag">AI + ETL</span><span class="tag">Smart Factory</span><span class="tag">IPQC System</span><span class="tag">Tableau</span>
+                    </div>
+                  </div>
+                  <p>Delivered AI + ETL systems for smart-factory operations; shipped a 24/7 IPQC audit system (≈200 hours/week saved) and dashboards across 20+ vendor sites.</p>
+                  <h4 class="dates">2019 – 2022 · Remote</h4>
+                </div>
+              </div>
+            </div>
+            <div class="gallery-item experience-with-link" data-experience="tcs-infosys">
+              <div class="gallery-card">
+                <div class="img-container">
+                  <div class="logo-container">
+                    <img class="symbolic-icon" src="./src/img/Infosys_logo.svg.png" alt="">
+                    <img class="symbolic-icon" src="./src/img/tcs.webp" alt="">
+                  </div>
+                  <div class="card-title-marquee" data-title>
+                    <span class="marquee-inner">Internships - Junior ML Engineer and Data Analyst</span>
+                  </div>
+                </div>
+                <div class="text-box">
+                  <div class="marquee-scroll-gallery">
+                    <div class="marquee-scroll-track">
+                      <span class="tag">Data Analysis</span><span class="tag">Machine Learning</span><span class="tag">Internship</span><span class="tag">Python</span><span class="tag">Data Analysis</span><span class="tag">Machine Learning</span><span class="tag">Internship</span><span class="tag">Python</span>
+                    </div>
+                  </div>
+                  <p>Completed internships at Tata Consultancy Services and Infosys, gaining hands-on experience in machine learning, data analysis, and software development practices.</p>
+                  <h4 class="dates">2018 – 2019</h4>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -245,7 +338,139 @@
       <div class="infinite-gallery">
         <div class="gallery-container">
           <div class="gallery-grid" id="gallery-grid">
-            <!-- Content will be loaded dynamically from projects.json -->
+            <div class="gallery-item project-with-link" data-project="rockreveal-ai">
+              <div class="gallery-card">
+                <div class="img-container">
+                  <img class="symbolic-icon" src="./src/img/icon-rocket.svg" alt="RockReveal AI">
+                </div>
+                <div class="text-box">
+                  <div class="card-title-marquee" data-title>
+                    <span class="marquee-inner">RockReveal AI</span>
+                  </div>
+                  <div class="marquee-scroll-gallery">
+                    <div class="marquee-scroll-track">
+                      <span class="tag">Python</span><span class="tag">Telegram Bot</span><span class="tag">MLOps</span><span class="tag">W&B</span><span class="tag">Python</span><span class="tag">Telegram Bot</span><span class="tag">MLOps</span><span class="tag">W&B</span>
+                    </div>
+                  </div>
+                </div>
+                <p>Image classification deployed as a Telegram bot. Integrated Weights & Biases for experiment & artifact tracking and a simple MLOps workflow for continuous improvements.</p>
+                <div id="stats-rockreveal-ai" class="project-stats">⭐ — · 🍴 —</div>
+              </div>
+            </div>
+            <div class="gallery-item project-with-link" data-project="alpr">
+              <div class="gallery-card">
+                <div class="img-container">
+                  <img class="symbolic-icon" src="./src/img/vision-icon.svg" alt="Automatic License Plate Recognition (ALPR)">
+                </div>
+                <div class="text-box">
+                  <div class="card-title-marquee" data-title>
+                    <span class="marquee-inner">Automatic License Plate Recognition (ALPR)</span>
+                  </div>
+                  <div class="marquee-scroll-gallery">
+                    <div class="marquee-scroll-track">
+                      <span class="tag">Computer Vision</span><span class="tag">Deployment</span><span class="tag">Streamlit</span><span class="tag">Computer Vision</span><span class="tag">Deployment</span><span class="tag">Streamlit</span>
+                    </div>
+                  </div>
+                </div>
+                <p>High-accuracy ALPR system with end-to-end pipeline and a Streamlit web app for demo and deployment.</p>
+                <div id="stats-alpr" class="project-stats">⭐ — · 🍴 —</div>
+              </div>
+            </div>
+            <div class="gallery-item project-with-link" data-project="liveliness-detection">
+              <div class="gallery-card">
+                <div class="img-container">
+                  <img class="symbolic-icon" src="./src/img/pagers-icon.svg" alt="Real-Time Liveliness Detection">
+                </div>
+                <div class="text-box">
+                  <div class="card-title-marquee" data-title>
+                    <span class="marquee-inner">Real-Time Liveliness Detection</span>
+                  </div>
+                  <div class="marquee-scroll-gallery">
+                    <div class="marquee-scroll-track">
+                      <span class="tag">MTCNN</span><span class="tag">FaceNet</span><span class="tag">AWS</span><span class="tag">MTCNN</span><span class="tag">FaceNet</span><span class="tag">AWS</span>
+                    </div>
+                  </div>
+                </div>
+                <p>Anti-spoofing pipeline (MTCNN + FaceNet) optimized for low-latency deployment on AWS with pruning/quantization applied.</p>
+                <div id="stats-liveliness-detection" class="project-stats">⭐ — · 🍴 —</div>
+              </div>
+            </div>
+            <div class="gallery-item project-with-link" data-project="covid-xray">
+              <div class="gallery-card">
+                <div class="img-container">
+                  <img class="symbolic-icon" src="./src/img/planet-icon.svg" alt="Covid-19 X-ray Analysis">
+                </div>
+                <div class="text-box">
+                  <div class="card-title-marquee" data-title>
+                    <span class="marquee-inner">Covid-19 X-ray Analysis</span>
+                  </div>
+                  <div class="marquee-scroll-gallery">
+                    <div class="marquee-scroll-track">
+                      <span class="tag">Deep Learning</span><span class="tag">Healthcare</span><span class="tag">Deployment</span><span class="tag">Deep Learning</span><span class="tag">Healthcare</span><span class="tag">Deployment</span>
+                    </div>
+                  </div>
+                </div>
+                <p>Real-time deep learning classifier for X-ray images, with notebooks and deployment tooling for evaluation and demo.</p>
+                <div id="stats-covid-xray" class="project-stats">⭐ — · 🍴 —</div>
+              </div>
+            </div>
+            <div class="gallery-item project-with-link" data-project="agentic-data-analysis">
+              <div class="gallery-card">
+                <div class="img-container">
+                  <img class="symbolic-icon" src="./src/img/ai-agent.png" alt="Agentic Data Analysis (Google ADK)">
+                </div>
+                <div class="text-box">
+                  <div class="card-title-marquee" data-title>
+                    <span class="marquee-inner">Agentic Data Analysis (Google ADK)</span>
+                  </div>
+                  <div class="marquee-scroll-gallery">
+                    <div class="marquee-scroll-track">
+                      <span class="tag">Agentic</span><span class="tag">Google ADK</span><span class="tag">Data Analysis</span><span class="tag">Agentic</span><span class="tag">Google ADK</span><span class="tag">Data Analysis</span>
+                    </div>
+                  </div>
+                </div>
+                <p>Autonomous data-analysis agents that automate EDA, visualization, and report generation — implemented as a folder inside Data-Science-Projects.</p>
+                <div id="stats-agentic-data-analysis" class="project-stats">⭐ — · 🍴 —</div>
+              </div>
+            </div>
+            <div class="gallery-item project-with-link" data-project="pdf2podcast">
+              <div class="gallery-card">
+                <div class="img-container">
+                  <img class="symbolic-icon" src="./src/img/podcast-grey.png" alt="PDF2Podcast">
+                </div>
+                <div class="text-box">
+                  <div class="card-title-marquee" data-title>
+                    <span class="marquee-inner">PDF2Podcast</span>
+                  </div>
+                  <div class="marquee-scroll-gallery">
+                    <div class="marquee-scroll-track">
+                      <span class="tag">Generative AI</span><span class="tag">TTS</span><span class="tag">Productivity</span><span class="tag">Generative AI</span><span class="tag">TTS</span><span class="tag">Productivity</span>
+                    </div>
+                  </div>
+                </div>
+                <p>Extracts text from PDFs and converts to podcast-style audio using TTS + summarization, with demo scripts and deployment notes inside the parent repo.</p>
+                <div id="stats-pdf2podcast" class="project-stats">⭐ — · 🍴 —</div>
+              </div>
+            </div>
+            <div class="gallery-item project-with-link" data-project="other-ml-projects">
+              <div class="gallery-card">
+                <div class="img-container">
+                  <img class="symbolic-icon" src="./src/img/kernel-logo.svg" alt="Other ML / DS Projects">
+                </div>
+                <div class="text-box">
+                  <div class="card-title-marquee" data-title>
+                    <span class="marquee-inner">Other ML / DS Projects</span>
+                  </div>
+                  <div class="marquee-scroll-gallery">
+                    <div class="marquee-scroll-track">
+                      <span class="tag">Notebooks</span><span class="tag">ML Experiments</span><span class="tag">Data Pipelines</span><span class="tag">Notebooks</span><span class="tag">ML Experiments</span><span class="tag">Data Pipelines</span>
+                    </div>
+                  </div>
+                </div>
+                <p>Collection of notebooks and demos covering model prototyping, data pipelines, visualizations and small utilities.</p>
+                <div id="stats-other-ml-projects" class="project-stats">⭐ — · 🍴 —</div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -266,24 +491,22 @@
       <div class="flex-container">
         <div class="flex-container">
 <div class="img-container">
-            <img src="./src/img/uday.webp" alt="Loading..." class="profile-photo" loading="lazy">
+            <img src="./src/img/uday.webp" alt="Photo of Uday Lunawat" class="profile-photo" loading="lazy">
           </div>
           <div class="contact-col">
             <p>
-              Senior Machine Learning Engineer with experience in developing and deploying AI solutions for various industries. Passionate about using AI to solve real-world problems and create innovative products.
+              I am eager to join your team and contribute my expertise in Agentic GenAI, software engineering and production-grade ML delivery.<br><br>Find me at:
             </p>
-            <div class="flex-container">
-              <a href="https://www.linkedin.com/in/udaylunawat/"><button class="secondary-btn">LinkedIn</button></a>
-              <a href="https://github.com/udaylunawat"><button class="secondary-btn">GitHub</button></a>
-              <a href="https://twitter.com/UdayLunawat"><button class="secondary-btn">Twitter</button></a>
+            <div class="flex-container social-links">
+              <a class="secondary-btn" href="https://www.linkedin.com/in/udaylunawat/">LinkedIn</a>
+              <a class="secondary-btn" href="https://github.com/udaylunawat">GitHub</a>
+              <a class="secondary-btn" href="https://twitter.com/UdayLunawat">Twitter</a>
             </div>
 
             <div style="margin-top:12px;">
-              <a href="#" id="resume-link">
-                <button>
+              <a href="./src/Uday_Lunawat_Resume_Senior_ML_Engineer_V9.pdf" id="resume-link" class="primary-btn" download>
                   DOWNLOAD RESUME
                   <img src="./src/img/pdf-icon.svg" alt="" loading="lazy">
-                </button>
               </a>
             </div>
           </div>
@@ -358,7 +581,9 @@
 
 <!------------ NAVIGATION ------------->
 
-<img class="nav-open-icon" id="open-icon" src="./src/img/menu-icon.svg" alt="" loading="lazy" onclick="showMenu()">
+<button class="nav-open-icon" id="open-icon" type="button" aria-label="Open navigation" aria-controls="menu" aria-expanded="false">
+  <img src="./src/img/menu-icon.svg" alt="" loading="lazy">
+</button>
 
 <script src="./src/navigation.js" type="module"></script>
 <script src="./src/modals.js" type="module"></script>
@@ -367,10 +592,10 @@
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
 
 <!-- Particles configuration (must load before scroll-animations.js) -->
-<script src="./src/particles-config.js" defer></script>
+<script src="./src/particles-config.js" type="module"></script>
 
 <!-- Matrix effect for skills section -->
-<script src="./src/matrix-effect.js" defer></script>
+<script src="./src/matrix-effect.js" type="module"></script>
 
 <script src="./src/scroll-animations.js" type="module"></script>
 
@@ -472,9 +697,9 @@
 
 <script src="./src/background.js" type="module"></script>
 <!-- Tag cloud + tilt libraries (used by Skills UI) -->
-<script src="https://cdn.jsdelivr.net/npm/tagcloud@2.2.0/dist/TagCloud.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.3/dist/vanilla-tilt.min.js"></script>
-<script src="./src/content-loader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tagcloud@2.2.0/dist/TagCloud.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.3/dist/vanilla-tilt.min.js" defer></script>
+<script src="./src/content-loader.js" type="module"></script>
 
 <!-- Three UMD + helpers (same version) -->
 <!-- <script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script> -->
@@ -484,31 +709,13 @@
 <!-- <script type="module" src="./src/brainSkills.boot.js"></script> -->
 
 <!-- Utility functions -->
-<script src="./src/utils.js" defer></script>
-
-<!-- Particles configuration -->
-<script src="./src/particles-config.js" defer></script>
+<script src="./src/utils.js" type="module"></script>
 
 <!-- Live GitHub stars fetcher -->
-<script src="./src/github-stars.js" defer></script>
+<script src="./src/github-stars.js" type="module"></script>
 
 
-<!-- Resume download -->
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const resumeLink = document.getElementById('resume-link');
-  if (resumeLink) {
-    resumeLink.addEventListener('click', (e) => {
-      const link = document.createElement('a');
-      link.href = './src/Uday_Lunawat_Resume_Senior_ML_Engineer_V9.pdf';
-      link.download = 'Uday_Lunawat_Resume_Senior_ML_Engineer_V9.pdf';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    });
-  }
-});
-
   // Tap to activate neon for ~1.2s
   document.addEventListener('touchstart', (e) => {
     const el = e.target.closest('.brain-chip, .brain-cluster h4');

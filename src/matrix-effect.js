@@ -7,37 +7,30 @@ class MatrixEffect {
     this.overlay = null;
     this.typedElement = null;
 
-    // Matrix rain properties
     this.glyphs =
       'アカサタナハマヤラワガザダバパイキシチニヒミリヰギジヂビピウクスツヌフムユルグズヅブプエケセテネヘメレヱゲゼデベペオコソトノホモヨロゴゾドボポヴヵヶABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+-*/=%<>|&^~';
 
-    // Bigger glyphs for “larger” feel
-    this.fontSize = 26; // was 18
+    this.fontSize = 22;
+    this.backFontSize = 16;
     this.columns = 0;
+    this.backColumns = 0;
     this.drops = [];
+    this.backDrops = [];
     this.running = true;
 
-    // ASCII Brain art
     this.brain = [
-      '                 ___    ___                 ',
-      '            _.-"   `--`   "-._             ',
-      '         .-"   ._  .-.  _.   "-.           ',
-      '       ."    _( )\\/   \\/( )_    ".         ',
-      '      /    .-`  \\\\  _  //  `-.    \\        ',
-      '     /   .`      \\\\(_)//      `.   \\       ',
-      '    ;   /    _.-._>   <_.-._    \\   ;      ',
-      '    |  |   ."     .\\_/..     ".  |  |      ',
-      '    |  |  /  .-".  |  .-"-.  \\ |  |        ',
-      '    ;  ; |  /  _  \\ | /  _  \\ | ;  ;      ',
-      '     \\  \\\\ |  ( )  |||  ( )  | /  /       ',
-      '      \\  `.|\\     /|||\\     /|.`  /       ',
-      '       `-.  `"-.  |  .-"`  .-"            ',
-      '          `-._   _.-^ -._   _.-`          ',
-      '               `"         `"              '
+      '> INIT neural_skill_graph',
+      '  LOAD_MODEL        brain.glb                  OK',
+      '  INDEX_SKILLS      52 nodes / 6 clusters      OK',
+      '  TRACE_EDGES       frontal -> visual -> infra OK',
+      '  SYNC_MEMORY       project graph warm         OK',
+      '  ROUTE_INPUT       gestures + hover anchors   OK',
+      '  RENDER_PASS       hologram + particles       READY',
+      '',
+      'console.ready({ target: "skills", mode: "interactive" })'
     ];
 
-    // Animation state
-    this.animationDuration = 3000; // total time before auto-complete
+    this.animationDuration = 3600;
     this.startTime = 0;
     this.isAnimating = false;
     this.isComplete = false;
@@ -50,13 +43,12 @@ class MatrixEffect {
     this.col = 0;
     this.buffer = '';
 
-    // Glitch state
     this.lastGlitchTime = 0;
-    this.glitchInterval = 3500; // not auto-used anymore, kept for manual use
+    this.glitchInterval = 3500;
 
-    // Speed controls
-    this.rainSpeed = 0.70; // rows per frame; lower = slower
-    this.trailFade = 0.05; // alpha for fade; lower = longer trails
+    this.rainSpeed = 0.62;
+    this.backRainSpeed = 0.28;
+    this.trailFade = 0.07;
 
     this.init();
   }
@@ -74,7 +66,7 @@ class MatrixEffect {
       width: 100vw;
       height: 100vh;
       display: block;
-      filter: contrast(115%);
+      filter: contrast(108%);
       z-index: 9998;
       opacity: 0;
       transition: opacity 0.5s ease;
@@ -108,7 +100,6 @@ class MatrixEffect {
       if (this.running) requestAnimationFrame(this.animate);
     });
 
-    // 🔽 ADD THIS: start rain + typing as soon as everything is ready
     requestAnimationFrame(() => {
       this.start();
     });
@@ -120,15 +111,19 @@ class MatrixEffect {
     const style = document.createElement('style');
     style.textContent = `
       :root {
-        --bg: #050807;
-        --matrix: #00ff41;
-        --matrix-dim: rgba(0, 255, 65, 0.15);
-        --glow: 0 0 8px rgba(0, 255, 65, 0.6), 0 0 32px rgba(0, 255, 65, 0.35);
-        --scanline: rgba(255,255,255,0.04);
+        --bg: #020504;
+        --matrix: #58f2a6;
+        --matrix-hot: #effff7;
+        --matrix-cyan: #7bdfff;
+        --matrix-dim: rgba(88, 242, 166, 0.13);
+        --glow: 0 0 10px rgba(88, 242, 166, 0.36), 0 0 28px rgba(88, 242, 166, 0.18);
+        --scanline: rgba(255,255,255,0.025);
       }
 
       .matrix-active {
-        background: radial-gradient(1200px 800px at 50% 40%, #06110c 0%, var(--bg) 60%);
+        background:
+          radial-gradient(900px 600px at 50% 42%, rgba(15, 52, 35, 0.42) 0%, rgba(2, 5, 4, 0.1) 54%, var(--bg) 100%),
+          #020504;
         color: var(--matrix);
         overflow: hidden;
         font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -153,7 +148,7 @@ class MatrixEffect {
           transparent 4px
         );
         mix-blend-mode: overlay;
-        opacity: 0.25;
+        opacity: 0.14;
         z-index: 9999;
       }
 
@@ -162,7 +157,9 @@ class MatrixEffect {
         position: fixed;
         inset: 0;
         pointer-events: none;
-        background: radial-gradient(80% 70% at 50% 45%, transparent 60%, rgba(0,0,0,0.9) 100%);
+        background:
+          linear-gradient(to bottom, rgba(255,255,255,0.025), transparent 18%, transparent 82%, rgba(0,0,0,0.28)),
+          radial-gradient(78% 68% at 50% 45%, transparent 58%, rgba(0,0,0,0.88) 100%);
         z-index: 10000;
       }
 
@@ -191,17 +188,45 @@ class MatrixEffect {
       }
 
       .matrix-terminal {
+        position: relative;
         pointer-events: auto;
-        background: rgba(0, 20, 10, 0.28);
-        border: 1px solid rgba(0, 255, 65, 0.18);
-        border-radius: 16px;
-        padding: clamp(10px, 2.5vmin, 20px);
-        box-shadow: 0 0 0 1px rgba(0, 255, 65, 0.08),
-          0 10px 40px rgba(0,0,0,0.6);
-        backdrop-filter: blur(6px) saturate(120%);
-        width: min(900px, 100%);
+        background:
+          linear-gradient(180deg, rgba(10, 24, 18, 0.88), rgba(2, 8, 6, 0.82)),
+          rgba(2, 8, 6, 0.78);
+        border: 1px solid rgba(148, 255, 207, 0.18);
+        border-radius: 8px;
+        padding: clamp(14px, 2.7vmin, 24px);
+        box-shadow:
+          0 0 0 1px rgba(123, 223, 255, 0.04),
+          0 22px 64px rgba(0,0,0,0.62),
+          inset 0 1px 0 rgba(255,255,255,0.06);
+        backdrop-filter: blur(12px) saturate(112%);
+        width: min(820px, 100%);
         max-width: 100%;
         box-sizing: border-box;
+        overflow: hidden;
+      }
+
+      .matrix-terminal::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 1px;
+        background: linear-gradient(100deg, transparent 0%, rgba(123, 223, 255, 0.36) 42%, rgba(88, 242, 166, 0.42) 52%, transparent 72%);
+        background-size: 240% 100%;
+        mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        mask-composite: exclude;
+        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        animation: matrix-border-scan 3.4s ease-in-out infinite;
+        pointer-events: none;
+      }
+
+      @keyframes matrix-border-scan {
+        0%, 18% { background-position: 140% 0; opacity: 0; }
+        35%, 68% { opacity: 1; }
+        100% { background-position: -100% 0; opacity: 0; }
       }
 
       /* Bootstrap-friendly wrapper */
@@ -221,16 +246,19 @@ class MatrixEffect {
         align-items: center;
         gap: 10px;
         font-size: 12px;
-        letter-spacing: 0.12em;
+        letter-spacing: 0.16em;
         text-transform: uppercase;
-        opacity: 0.9;
-        margin-bottom: 10px;
+        color: rgba(239, 255, 247, 0.82);
+        margin-bottom: 14px;
       }
 
       @media (max-width: 576px) {
         .matrix-terminal-header {
           font-size: 10px;
           margin-bottom: 6px;
+        }
+        .matrix-terminal-meta {
+          display: none;
         }
       }
 
@@ -240,12 +268,18 @@ class MatrixEffect {
         border-radius: 50%;
         box-shadow: var(--glow);
         background: var(--matrix);
-        opacity: 0.85;
+        opacity: 0.78;
         animation: matrix-pulse 2.2s ease-in-out infinite;
       }
 
       .matrix-title {
-        filter: drop-shadow(0 0 8px rgba(0,255,65,0.45));
+        filter: drop-shadow(0 0 8px rgba(88,242,166,0.25));
+      }
+
+      .matrix-terminal-meta {
+        margin-left: auto;
+        color: rgba(123, 223, 255, 0.72);
+        letter-spacing: 0.12em;
       }
 
       @keyframes matrix-pulse {
@@ -254,34 +288,80 @@ class MatrixEffect {
 
       .matrix-typed {
         margin: 0;
-        line-height: 1.05;
-        font-size: clamp(10px, 2.1vmin, 17px);
-        text-shadow: var(--glow);
+        line-height: 1.55;
+        font-size: clamp(11px, 1.55vmin, 14px);
+        text-shadow: 0 0 12px rgba(88, 242, 166, 0.22);
         white-space: pre;
-        color: var(--matrix);
-        min-height: 220px;
-        max-height: 60vh;
+        color: rgba(198, 255, 225, 0.92);
+        min-height: 170px;
+        max-height: 42vh;
         overflow-y: auto;
+        padding: 12px;
+        border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 6px;
+        background:
+          linear-gradient(to bottom, rgba(255,255,255,0.025), transparent),
+          rgba(0, 0, 0, 0.18);
       }
 
       @media (max-width: 576px) {
         .matrix-typed {
-          min-height: 180px;
-          max-height: 50vh;
-          font-size: 11px;
+          min-height: 156px;
+          max-height: 38vh;
+          font-size: 10px;
+        }
+      }
+
+      .matrix-console-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .matrix-kv {
+        border: 1px solid rgba(255,255,255,0.07);
+        border-radius: 6px;
+        padding: 8px 9px;
+        background: rgba(255,255,255,0.025);
+      }
+
+      .matrix-kv span {
+        display: block;
+        color: rgba(255,255,255,0.42);
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
+
+      .matrix-kv strong {
+        display: block;
+        color: var(--matrix-hot);
+        font-size: 13px;
+        font-weight: 500;
+      }
+
+      @media (max-width: 576px) {
+        .matrix-console-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
         }
       }
 
       .matrix-status {
-        margin-top: 8px;
-        font-size: clamp(11px, 2vmin, 16px);
-        letter-spacing: 0.06em;
-        color: #8effc1;
-        text-shadow: var(--glow);
+        margin-top: 12px;
+        font-size: clamp(10px, 1.8vmin, 13px);
+        letter-spacing: 0.08em;
+        color: rgba(142, 255, 193, 0.88);
+        text-shadow: 0 0 10px rgba(88, 242, 166, 0.22);
         display: flex;
         align-items: center;
         gap: 12px;
         flex-wrap: wrap;
+      }
+
+      .matrix-status-label {
+        min-width: max-content;
       }
 
       .matrix-bar {
@@ -289,11 +369,11 @@ class MatrixEffect {
         position: relative;
         width: var(--w);
         max-width: 60vw;
-        height: 8px;
-        border: 1px solid rgba(0,255,65,0.4);
+        height: 6px;
+        border: 1px solid rgba(88,242,166,0.22);
         border-radius: 999px;
         overflow: hidden;
-        box-shadow: inset 0 0 12px rgba(0,255,65,0.25);
+        box-shadow: inset 0 0 10px rgba(88,242,166,0.16);
       }
 
       .matrix-bar > i {
@@ -302,26 +382,15 @@ class MatrixEffect {
         display: block;
         transform: translateX(-100%);
         background: linear-gradient(to right,
-          rgba(0,255,65,0.2),
-          rgba(0,255,65,0.85)
+          rgba(88,242,166,0.12),
+          rgba(123,223,255,0.76),
+          rgba(239,255,247,0.92)
         );
-        animation: matrix-load 7s linear infinite;
+        animation: matrix-load 3.6s cubic-bezier(.5,0,.2,1) infinite;
       }
 
       @keyframes matrix-load {
         to { transform: translateX(0%); }
-      }
-
-      .matrix-hint {
-        margin-top: 8px;
-        opacity: 0.7;
-        font-size: 11px;
-      }
-
-      @media (max-width: 576px) {
-        .matrix-hint {
-          font-size: 10px;
-        }
       }
 
       .matrix-cursor {
@@ -360,14 +429,20 @@ class MatrixEffect {
       <div class="matrix-terminal-header">
         <span class="matrix-dot"></span>
         <span class="matrix-title">NEURAL CONSOLE</span>
+        <span class="matrix-terminal-meta">TRACE/04</span>
       </div>
       <pre class="matrix-typed" id="matrix-typed"></pre>
+      <div class="matrix-console-grid">
+        <div class="matrix-kv"><span>nodes</span><strong>52</strong></div>
+        <div class="matrix-kv"><span>edges</span><strong>186</strong></div>
+        <div class="matrix-kv"><span>latency</span><strong>18ms</strong></div>
+        <div class="matrix-kv"><span>status</span><strong>READY</strong></div>
+      </div>
       <div class="matrix-status">
-        <span>Generating Latest Brain Scans</span>
+        <span class="matrix-status-label">deploying interactive brain graph</span>
         <div class="matrix-bar"><i></i></div>
         <span class="matrix-cursor" aria-hidden="true">▌</span>
       </div>
-      <div class="matrix-hint">Click to toggle rain. Press <kbd>G</kbd> to glitch.</div>
     `;
 
     this.overlay.appendChild(terminal);
@@ -385,11 +460,15 @@ class MatrixEffect {
     this.ctx.font = `${this.fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`;
 
     this.columns = Math.floor(this.canvas.width / this.fontSize);
+    this.backColumns = Math.floor(this.canvas.width / this.backFontSize);
     this.drops = new Array(this.columns);
+    this.backDrops = new Array(this.backColumns);
 
     for (let i = 0; i < this.columns; i++) {
-      // Start above screen so streams flow in smoothly
       this.drops[i] = -Math.random() * 40;
+    }
+    for (let i = 0; i < this.backColumns; i++) {
+      this.backDrops[i] = -Math.random() * 70;
     }
   }
 
@@ -420,32 +499,52 @@ class MatrixEffect {
     const delta = this.lastFrameTime ? (timestamp - this.lastFrameTime) / 16.67 : 1;
     this.lastFrameTime = timestamp;
 
-    // Smooth fading trails
-    this.ctx.fillStyle = `rgba(0, 0, 0, ${this.trailFade})`;
+    this.ctx.fillStyle = `rgba(1, 7, 5, ${this.trailFade})`;
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-    for (let i = 0; i < this.columns; i++) {
-      const char = this.glyphs[(Math.random() * this.glyphs.length) | 0];
-      const x = i * this.fontSize;
-      const y = this.drops[i] * this.fontSize;
+    this.drawRainLayer({
+      drops: this.backDrops,
+      fontSize: this.backFontSize,
+      speed: this.backRainSpeed,
+      delta,
+      head: 'rgba(123, 223, 255, 0.34)',
+      trail: 'rgba(88, 242, 166, 0.055)',
+      resetDepth: 70
+    });
 
-      // bright head
-      this.ctx.fillStyle = '#00ff41';
-      this.ctx.fillText(char, x, y);
-
-      // dim trail
-      this.ctx.fillStyle = 'rgba(0,255,65,0.15)';
-      this.ctx.fillText(char, x, y - this.fontSize);
-
-      if (y > this.canvas.height + this.fontSize * 2) {
-        this.drops[i] = -Math.random() * 30;
-      } else {
-        // slower, smoother movement
-        this.drops[i] += this.rainSpeed * delta;
-      }
-    }
+    this.drawRainLayer({
+      drops: this.drops,
+      fontSize: this.fontSize,
+      speed: this.rainSpeed,
+      delta,
+      head: 'rgba(198, 255, 225, 0.82)',
+      trail: 'rgba(88, 242, 166, 0.14)',
+      resetDepth: 34
+    });
 
     requestAnimationFrame(this.animate);
+  }
+
+  drawRainLayer({ drops, fontSize, speed, delta, head, trail, resetDepth }) {
+    this.ctx.font = `${fontSize}px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`;
+    for (let i = 0; i < drops.length; i++) {
+      const char = this.glyphs[(Math.random() * this.glyphs.length) | 0];
+      const x = i * fontSize;
+      const y = drops[i] * fontSize;
+
+      this.ctx.fillStyle = head;
+      this.ctx.fillText(char, x, y);
+
+      this.ctx.fillStyle = trail;
+      this.ctx.fillText(char, x, y - fontSize);
+      this.ctx.fillText(char, x, y - fontSize * 2);
+
+      if (y > this.canvas.height + fontSize * 2) {
+        drops[i] = -Math.random() * resetDepth;
+      } else {
+        drops[i] += speed * delta;
+      }
+    }
   }
 
   typeNext() {
@@ -467,9 +566,9 @@ class MatrixEffect {
       this.buffer += '\n';
       this.line++;
       this.col = 0;
-      setTimeout(() => this.typeNext(), 10);
+      setTimeout(() => this.typeNext(), 56);
     } else {
-      setTimeout(() => this.typeNext(), 2 + Math.random() * 2);
+      setTimeout(() => this.typeNext(), 8 + Math.random() * 10);
     }
   }
 
@@ -478,7 +577,7 @@ class MatrixEffect {
 
     const original = this.typedElement.textContent;
     const chars = original.split('');
-    const swaps = 8; // fewer swaps for subtle glitch
+    const swaps = 12;
 
     for (let i = 0; i < swaps; i++) {
       const idx = (Math.random() * chars.length) | 0;
@@ -489,7 +588,7 @@ class MatrixEffect {
 
     setTimeout(() => {
       if (this.typedElement) this.typedElement.textContent = original;
-    }, 70);
+    }, 55);
   }
 
   complete() {
@@ -508,7 +607,10 @@ class MatrixEffect {
     }
 
     this.canvas.style.opacity = '0';
-    if (this.overlay) this.overlay.style.opacity = '0';
+    if (this.overlay) {
+      this.overlay.style.opacity = '0';
+      this.overlay.style.transform = 'scale(0.985)';
+    }
 
     setTimeout(() => {
       document.body.classList.remove('matrix-active', 'scanlines', 'vignette');

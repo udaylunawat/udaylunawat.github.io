@@ -1,7 +1,7 @@
 // Particles configuration - moved from inline HTML for better caching
 function initParticles() {
   if (window.particlesJS) {
-    particlesJS("particles-js", {
+    window.particlesJS("particles-js", {
       "particles": {
         "number": { "value": 15 },
         "color": { "value": "#ffffff" },
