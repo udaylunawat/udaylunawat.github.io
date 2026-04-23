@@ -2747,6 +2747,25 @@ header.home, section.home {
   font-size: 1rem;
 }
 
+.preset-control select {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-height: 34px;
+  border: 1px solid rgba(88, 242, 166, 0.28);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.045);
+  color: rgba(235, 255, 245, 0.88);
+  font: inherit;
+  font-size: 0.82rem;
+  padding: 0.42rem 0.55rem;
+  outline: none;
+}
+
+.preset-control select:focus {
+  border-color: rgba(88, 242, 166, 0.72);
+  box-shadow: 0 0 0 2px rgba(88, 242, 166, 0.12);
+}
+
 /* Control Panel Header */
 .control-panel-header {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);

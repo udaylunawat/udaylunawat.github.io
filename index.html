@@ -270,6 +270,12 @@
     <section class="control-tab-panel" id="background-content" role="tabpanel" aria-labelledby="background-tab">
       <div class="control-section">
         <h4>Shader</h4>
+        <label class="control-group preset-control">
+          <span class="control-label"><svg class="control-icon" aria-hidden="true"><use href="#icon-color"></use></svg>Preset</span>
+          <select id="background-preset" aria-label="Background preset">
+            <option value="aurora">Aurora</option>
+          </select>
+        </label>
         <label class="control-group">
           <span class="control-label"><svg class="control-icon" aria-hidden="true"><use href="#icon-speed"></use></svg>Speed</span>
           <input id="background-speed" type="range" min="0" max="0.04" step="0.001" value="0.01">

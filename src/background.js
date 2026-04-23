@@ -9,15 +9,108 @@ function rgb(r, g, b) {
     return new THREE.Vector3(r, g, b);
 }
 
+const DEFAULT_BACKGROUND_PRESET = "aurora";
+
+const BACKGROUND_PRESETS = {
+    aurora: {
+        label: "Aurora",
+        bg: [8, 13, 20],
+        bgMain: [8, 13, 20],
+        color1: [88, 242, 166],
+        color2: [123, 223, 255],
+        distortion: 2.8,
+        timeSpeed: 0.006,
+        driftSpeed: 0.0025,
+        phase: 1.2,
+        frequency: 0.9,
+        colorOverride: true
+    },
+    neural: {
+        label: "Neural Green",
+        bg: [10, 15, 18],
+        bgMain: [10, 15, 18],
+        color1: [0, 255, 132],
+        color2: [24, 96, 70],
+        distortion: 3.5,
+        timeSpeed: 0.01,
+        driftSpeed: 0.005,
+        phase: 0,
+        frequency: 1,
+        colorOverride: false
+    },
+    midnight: {
+        label: "Midnight",
+        bg: [6, 9, 18],
+        bgMain: [6, 9, 18],
+        color1: [82, 142, 255],
+        color2: [25, 31, 72],
+        distortion: 2.2,
+        timeSpeed: 0.004,
+        driftSpeed: 0.0018,
+        phase: 2.6,
+        frequency: 0.7,
+        colorOverride: true
+    },
+    ember: {
+        label: "Ember",
+        bg: [18, 10, 12],
+        bgMain: [18, 10, 12],
+        color1: [255, 126, 86],
+        color2: [104, 39, 52],
+        distortion: 3,
+        timeSpeed: 0.008,
+        driftSpeed: 0.0036,
+        phase: 4.2,
+        frequency: 1.3,
+        colorOverride: true
+    },
+    prism: {
+        label: "Prism",
+        bg: [12, 12, 18],
+        bgMain: [12, 12, 18],
+        color1: [202, 255, 112],
+        color2: [255, 102, 196],
+        distortion: 4.4,
+        timeSpeed: 0.012,
+        driftSpeed: 0.006,
+        phase: 6.8,
+        frequency: 1.8,
+        colorOverride: true
+    },
+    calm: {
+        label: "Calm Slate",
+        bg: [18, 23, 30],
+        bgMain: [18, 23, 30],
+        color1: [180, 214, 220],
+        color2: [62, 88, 102],
+        distortion: 1.8,
+        timeSpeed: 0.002,
+        driftSpeed: 0.001,
+        phase: 0.8,
+        frequency: 0.5,
+        colorOverride: true
+    }
+};
+
+function getPreset(name = DEFAULT_BACKGROUND_PRESET) {
+    return BACKGROUND_PRESETS[name] || BACKGROUND_PRESETS[DEFAULT_BACKGROUND_PRESET];
+}
+
+function vectorFromColor(color) {
+    return rgb(color[0], color[1], color[2]);
+}
+
 // Global reference to mesh for controls
 let globalMesh = null;
+const defaultPreset = getPreset();
 
 const backgroundState = {
-    distortion: 3.5,
-    timeSpeed: 0.01,
-    driftSpeed: 0.005,
-    phase: 0,
-    frequency: 1,
+    preset: DEFAULT_BACKGROUND_PRESET,
+    distortion: defaultPreset.distortion,
+    timeSpeed: defaultPreset.timeSpeed,
+    driftSpeed: defaultPreset.driftSpeed,
+    phase: defaultPreset.phase,
+    frequency: defaultPreset.frequency,
     ready: false,
     paused: false
 };
@@ -45,6 +138,12 @@ window.colorControls = {
 window.backgroundControls = {
     getState: function() {
         return { ...backgroundState };
+    },
+    getPresets: function() {
+        return Object.entries(BACKGROUND_PRESETS).map(([value, preset]) => ({
+            value,
+            label: preset.label
+        }));
     },
     getUniforms: function() {
         if (!globalMesh) return null;
@@ -152,47 +251,68 @@ window.backgroundControls = {
         console.log('🌊 Background phase offset updated to:', phaseValue);
         return true;
     },
+    applyPreset: function(name) {
+        return applyBackgroundPreset(name);
+    },
     reset: function() {
         if (globalMesh) {
-            // Reset to original values
-            globalMesh.position.set(0, 0, 0);
-            globalMesh.rotation.x = 0.0;
-            globalMesh.rotation.y = 0.0;
-            globalMesh.rotation.z = 0.0;
-            globalMesh.scale.setScalar(1);
-
-            globalMesh.material.uniforms.u_bg.value = rgb(23, 27, 34);
-            globalMesh.material.uniforms.u_color1.value = rgb(23, 27, 34);
-            globalMesh.material.uniforms.u_color2.value = rgb(0, 17, 34);
-            globalMesh.material.uniforms.u_distortion.value = 3.5;
-            globalMesh.material.uniforms.u_frequency.value = 1;
-
-            // Reset animation speeds
-            backgroundState.distortion = 3.5;
-            backgroundState.timeSpeed = 0.01;
-            backgroundState.driftSpeed = 0.005;
-            backgroundState.phase = 0;
-            backgroundState.frequency = 1;
-            window.timeIncrement = backgroundState.timeSpeed;
-            window.posIncrement = backgroundState.driftSpeed;
-            window.phaseOffset = backgroundState.phase;
-
-            // Reset color overrides to let procedural animation work again
-            window.colorControls.unsetColorOverride();
-
-            console.log('🎨 Reset applied - animation will return to procedural mode');
+            applyBackgroundPreset(DEFAULT_BACKGROUND_PRESET);
+            console.log('🎨 Reset applied - default preset restored');
         } else {
             console.log('❌ Reset failed - mesh not ready');
         }
     }
 };
+
+function applyBackgroundPreset(name) {
+    const preset = getPreset(name);
+    const presetName = BACKGROUND_PRESETS[name] ? name : DEFAULT_BACKGROUND_PRESET;
+    const performanceMode = getPerformanceMode();
+    const adaptiveTimeSpeed = Math.min(preset.timeSpeed, 0.006);
+    const adaptiveDriftSpeed = Math.min(preset.driftSpeed, 0.0025);
+
+    backgroundState.preset = presetName;
+    backgroundState.distortion = performanceMode.adaptive ? Math.min(preset.distortion, 2.6) : preset.distortion;
+    backgroundState.timeSpeed = performanceMode.reducedMotion ? 0 : performanceMode.adaptive ? adaptiveTimeSpeed : preset.timeSpeed;
+    backgroundState.driftSpeed = performanceMode.reducedMotion ? 0 : performanceMode.adaptive ? adaptiveDriftSpeed : preset.driftSpeed;
+    backgroundState.phase = preset.phase;
+    backgroundState.frequency = performanceMode.adaptive ? Math.min(preset.frequency, 0.8) : preset.frequency;
+
+    window.timeIncrement = backgroundState.timeSpeed;
+    window.posIncrement = backgroundState.driftSpeed;
+    window.phaseOffset = backgroundState.phase;
+
+    if (preset.colorOverride) {
+        window.colorControls.setColorOverride(...preset.color1);
+    } else {
+        window.colorControls.unsetColorOverride();
+    }
+
+    if (!globalMesh) return false;
+
+    const uniforms = globalMesh.material.uniforms;
+    uniforms.u_bg.value = vectorFromColor(preset.bg);
+    uniforms.u_bgMain.value = vectorFromColor(preset.bgMain);
+    uniforms.u_color1.value = vectorFromColor(preset.color1);
+    uniforms.u_color2.value = vectorFromColor(preset.color2);
+    uniforms.u_distortion.value = backgroundState.distortion;
+    uniforms.u_frequency.value = backgroundState.frequency;
+    uniforms.u_time.value = (window.currentAnimationTime || 0) + backgroundState.phase;
+    globalMesh.position.set(0, 0, 0);
+    globalMesh.rotation.set(0, 0, 0);
+    globalMesh.scale.setScalar(1);
+
+    console.log('🎨 Background preset applied:', preset.label);
+    return true;
+}
+
 document.addEventListener("DOMContentLoaded", function(e) {
     const performanceMode = getPerformanceMode();
     if (performanceMode.adaptive) {
-        backgroundState.distortion = 2.6;
+        backgroundState.distortion = Math.min(backgroundState.distortion, 2.6);
         backgroundState.timeSpeed = performanceMode.reducedMotion ? 0 : 0.006;
         backgroundState.driftSpeed = performanceMode.reducedMotion ? 0 : 0.0025;
-        backgroundState.frequency = 0.8;
+        backgroundState.frequency = Math.min(backgroundState.frequency, 0.8);
     }
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
@@ -250,10 +370,10 @@ document.addEventListener("DOMContentLoaded", function(e) {
     let geometry = new THREE.PlaneGeometry(window.innerWidth, window.innerHeight, 100, 100);
     let material = new THREE.ShaderMaterial({
         uniforms: {
-            u_bg: {type: 'v3', value: rgb(23, 27, 34)},
-            u_bgMain: {type: 'v3', value: rgb(23, 27, 34)},
-            u_color1: {type: 'v3', value: rgb(23, 27, 34)},
-            u_color2: {type: 'v3', value: rgb(0, 17, 34)},
+            u_bg: {type: 'v3', value: vectorFromColor(defaultPreset.bg)},
+            u_bgMain: {type: 'v3', value: vectorFromColor(defaultPreset.bgMain)},
+            u_color1: {type: 'v3', value: vectorFromColor(defaultPreset.color1)},
+            u_color2: {type: 'v3', value: vectorFromColor(defaultPreset.color2)},
             u_time: {type: 'f', value: 10},
             u_randomisePosition: { type: 'v2', value: randomisePosition },
             u_distortion: {type: 'f', value: backgroundState.distortion},
@@ -273,6 +393,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
 
     // Make mesh globally available for controls
     globalMesh = mesh;
+    applyBackgroundPreset(DEFAULT_BACKGROUND_PRESET);
     backgroundState.ready = true;
     console.log('🎯 Mesh initialized and assigned to globalMesh');
 

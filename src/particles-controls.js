@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
     linkOpacityDisplay: document.getElementById("particles-link-opacity-display"),
     color: document.getElementById("particles-color"),
     colorDisplay: document.getElementById("particles-color-display"),
+    backgroundPreset: document.getElementById("background-preset"),
     backgroundSpeed: document.getElementById("background-speed"),
     backgroundSpeedDisplay: document.getElementById("background-speed-display"),
     distortion: document.getElementById("background-distortion"),
@@ -48,6 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   if (!elements.toggle || !elements.panel) return;
+  populateBackgroundPresets(elements);
 
   const readParticles = () => {
     const pJS = window.pJSDom?.[0]?.pJS;
@@ -97,6 +99,11 @@ document.addEventListener("DOMContentLoaded", () => {
     state.color = event.target.value;
     if (elements.colorDisplay) elements.colorDisplay.textContent = state.color;
     reloadParticles();
+  });
+
+  elements.backgroundPreset?.addEventListener("change", (event) => {
+    window.backgroundControls?.applyPreset?.(event.target.value);
+    syncBackgroundDisplays(elements);
   });
 
   bindBackgroundSlider(elements.backgroundSpeed, elements.backgroundSpeedDisplay, (value) => {
@@ -184,10 +191,24 @@ function syncParticleDisplays(elements) {
 
 function syncBackgroundDisplays(elements) {
   const state = window.backgroundControls?.getState?.() || {};
+  setControlValue(elements.backgroundPreset, null, state.preset ?? "aurora");
   setControlValue(elements.backgroundSpeed, elements.backgroundSpeedDisplay, state.timeSpeed ?? 0.01);
   setControlValue(elements.distortion, elements.distortionDisplay, Math.round((state.distortion ?? 3.5) * 10));
   setControlValue(elements.phase, elements.phaseDisplay, state.phase ?? 0);
   setControlValue(elements.frequency, elements.frequencyDisplay, state.frequency ?? 1);
+}
+
+function populateBackgroundPresets(elements) {
+  const select = elements.backgroundPreset;
+  const presets = window.backgroundControls?.getPresets?.();
+  if (!select || !presets?.length) return;
+
+  select.replaceChildren(...presets.map(({ value, label }) => {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = label;
+    return option;
+  }));
 }
 
 function setControlValue(input, output, value) {
