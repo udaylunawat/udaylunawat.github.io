@@ -48,8 +48,8 @@
   body:not(.show-ui) .nav-close-icon,
   body:not(.show-ui) #experience-modal,
   body:not(.show-ui) #project-modal,
-  body:not(.show-ui) .particles-control-toggle-btn,
-  body:not(.show-ui) .particles-control-panel {
+  body:not(.show-ui) .control-panel-toggle-btn,
+  body:not(.show-ui) .control-panel {
     opacity: 0 !important;
     visibility: hidden !important;
     pointer-events: none !important;
@@ -153,6 +153,84 @@
 
 <div class="color-background" id="colorBackground">
 </div>
+
+<button class="control-panel-toggle-btn" id="particles-control-toggle" type="button" aria-label="Open particles and background controls" aria-expanded="false" aria-controls="particles-control-panel">BG</button>
+
+<aside class="control-panel hidden" id="particles-control-panel" aria-label="Particles and background controls">
+  <div class="control-panel-header">
+    <h3>Scene Controls</h3>
+    <button class="control-panel-close" id="particles-panel-close" type="button" aria-label="Close controls">x</button>
+  </div>
+
+  <div class="control-tabs" role="tablist" aria-label="Scene control tabs">
+    <button class="control-tab active" id="particles-tab" type="button" role="tab" aria-selected="true" aria-controls="particles-content">Particles</button>
+    <button class="control-tab" id="background-tab" type="button" role="tab" aria-selected="false" aria-controls="background-content">Background</button>
+  </div>
+
+  <div class="control-panel-content">
+    <section class="control-tab-panel active" id="particles-content" role="tabpanel" aria-labelledby="particles-tab">
+      <div class="control-section">
+        <h4>Field</h4>
+        <label class="control-group">
+          Count
+          <input id="particles-number" type="range" min="6" max="60" step="1" value="15">
+          <span class="value-display" id="particles-number-display">15</span>
+        </label>
+        <label class="control-group">
+          Speed
+          <input id="particles-speed" type="range" min="0.2" max="5" step="0.1" value="1.4">
+          <span class="value-display" id="particles-speed-display">1.4</span>
+        </label>
+        <label class="control-group">
+          Size
+          <input id="particles-size" type="range" min="1" max="10" step="1" value="3">
+          <span class="value-display" id="particles-size-display">3</span>
+        </label>
+        <label class="control-group">
+          Opacity
+          <input id="particles-opacity" type="range" min="0.05" max="0.9" step="0.05" value="0.28">
+          <span class="value-display" id="particles-opacity-display">0.28</span>
+        </label>
+        <label class="control-group">
+          Links
+          <input id="particles-link-opacity" type="range" min="0" max="0.6" step="0.05" value="0.18">
+          <span class="value-display" id="particles-link-opacity-display">0.18</span>
+        </label>
+        <label class="control-group color-control">
+          Color
+          <input id="particles-color" type="color" value="#d7fff0">
+          <span class="color-display" id="particles-color-display">#d7fff0</span>
+        </label>
+      </div>
+    </section>
+
+    <section class="control-tab-panel" id="background-content" role="tabpanel" aria-labelledby="background-tab">
+      <div class="control-section">
+        <h4>Shader</h4>
+        <label class="control-group">
+          Speed
+          <input id="background-speed" type="range" min="0" max="0.04" step="0.001" value="0.01">
+          <span class="value-display" id="background-speed-display">0.01</span>
+        </label>
+        <label class="control-group">
+          Distortion
+          <input id="background-distortion" type="range" min="0" max="80" step="1" value="35">
+          <span class="value-display" id="background-distortion-display">35</span>
+        </label>
+        <label class="control-group">
+          Phase
+          <input id="background-phase" type="range" min="0" max="12" step="0.1" value="0">
+          <span class="value-display" id="background-phase-display">0</span>
+        </label>
+        <label class="control-group">
+          Frequency
+          <input id="background-frequency" type="range" min="0.2" max="3" step="0.1" value="1">
+          <span class="value-display" id="background-frequency-display">1</span>
+        </label>
+      </div>
+    </section>
+  </div>
+</aside>
 
 
 <nav class="main-nav" id="menu">
@@ -696,6 +774,7 @@
 </script>
 
 <script src="./src/background.js" type="module"></script>
+<script src="./src/particles-controls.js" type="module"></script>
 <!-- Tag cloud + tilt libraries (used by Skills UI) -->
 <script src="https://cdn.jsdelivr.net/npm/tagcloud@2.2.0/dist/TagCloud.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.3/dist/vanilla-tilt.min.js" defer></script>

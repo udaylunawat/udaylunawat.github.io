@@ -2643,6 +2643,64 @@ header.home, section.home {
   scale: 0.8;
 }
 
+.control-tabs {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem 1rem 0;
+}
+
+.control-tab {
+  flex: 1;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.72);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.82rem;
+  padding: 0.55rem 0.75rem;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.control-tab.active,
+.control-tab:hover {
+  border-color: rgba(88, 242, 166, 0.65);
+  background: rgba(88, 242, 166, 0.08);
+  color: #d9fff0;
+}
+
+.control-panel-content {
+  max-height: calc(85vh - 150px);
+  overflow-y: auto;
+  padding: 1.2rem 1.3rem 1.4rem;
+}
+
+.control-panel .control-tab-panel {
+  display: none;
+  min-height: 0;
+  padding: 0;
+  margin-left: 0;
+  z-index: auto;
+}
+
+.control-panel .control-tab-panel.active {
+  display: block;
+}
+
+.control-group {
+  display: block;
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.84rem;
+}
+
+.color-control {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.65rem;
+  align-items: center;
+}
+
 /* Control Panel Header */
 .control-panel-header {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);

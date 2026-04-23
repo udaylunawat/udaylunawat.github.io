@@ -91,7 +91,7 @@ window.backgroundControls = {
     },
     setAnimationSpeed: function(timeSpeed, posSpeed) {
         window.timeIncrement = timeSpeed;
-        window.posIncrement = posSpeed;
+        if (posSpeed !== undefined) window.posIncrement = posSpeed;
         console.log('🎨 Set animation speed:', timeSpeed, posSpeed);
     },
     updateBackgroundDistortion: function(distortionValue) {
@@ -133,6 +133,7 @@ window.backgroundControls = {
             globalMesh.material.uniforms.u_bg.value = rgb(23, 27, 34);
             globalMesh.material.uniforms.u_color1.value = rgb(23, 27, 34);
             globalMesh.material.uniforms.u_color2.value = rgb(0, 17, 34);
+            globalMesh.material.uniforms.u_distortion.value = 3.5;
 
             // Reset animation speeds
             window.timeIncrement = 0.01;
@@ -203,9 +204,9 @@ document.addEventListener("DOMContentLoaded", function(e) {
     let mesh = new THREE.Mesh(geometry, material);
     mesh.position.set(-200, 270, -280);
     mesh.scale.multiplyScalar(4);
-    mesh.rotationX = -1.0;
-    mesh.rotationY = 0.0;
-    mesh.rotationZ = 0.1;
+    mesh.rotation.x = -1.0;
+    mesh.rotation.y = 0.0;
+    mesh.rotation.z = 0.1;
     scene.add(mesh);
 
     // Make mesh globally available for controls
@@ -265,8 +266,8 @@ document.addEventListener("DOMContentLoaded", function(e) {
         }
 
         // Use controllable increment values
-        j = j + (window.posIncrement || 0.005);
-        t = t + (window.timeIncrement || 0.01);
+        j = j + (window.posIncrement ?? 0.005);
+        t = t + (window.timeIncrement ?? 0.01);
     };
     animate();
   
