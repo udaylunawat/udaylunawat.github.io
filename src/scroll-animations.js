@@ -5,13 +5,9 @@ import { getPerformanceMode } from './performance-mode.js';
 //
 const colorBackground = document.getElementById('colorBackground');
 const homeTitle = document.getElementById('homeTitle');
-const about = document.getElementById('about');
 let y = window.scrollY;
-let viewporHeight = window.innerHeight;
 let homeTitleFade = () => homeTitle.style.opacity = 'calc(1 - ' + y/300 + ')';
 homeTitleFade()
-let aboutFadeIn = () => about.style.opacity = 'calc(0 + ' + (y - viewporHeight/3)/50 + ')';
-// let aboutFadeOut = () => about.style.opacity = 'calc(1 - ' + (y - viewporHeight)/300 + ')';
 
 // Matrix effect state
 let matrixEffectTriggered = false;
@@ -84,12 +80,6 @@ window.onscroll = () => {
     y = window.scrollY;
     colorBackground.style.opacity = 'calc(0 + ' + y/4000 + ')';
     homeTitleFade();
-    if (y >= viewporHeight / 3) {
-        aboutFadeIn();
-        // if (y >= viewporHeight)
-        //     aboutFadeOut();
-    }
-    else about.style.opacity = 0;
 
     // Check for matrix effect trigger at 80% into skills section
     checkMatrixEffectTrigger();
