@@ -2606,16 +2606,16 @@ header.home, section.home {
   position: fixed;
   top: 20px;
   right: 20px;
-  background-color: rgba(23, 27, 34, 0.95);
+  background: linear-gradient(180deg, rgba(20, 25, 32, 0.97), rgba(14, 18, 24, 0.97));
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  width: 320px;
+  border-radius: 10px;
+  width: 340px;
   max-height: 85vh;
   overflow: hidden;
   z-index: 100;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.58), inset 0 1px 0 rgba(255, 255, 255, 0.04);
   transition: all 0.3s ease;
   opacity: 0;
   visibility: hidden;
@@ -2643,14 +2643,36 @@ header.home, section.home {
   scale: 0.8;
 }
 
+.control-icon-sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.control-icon {
+  width: 1em;
+  height: 1em;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+  flex: 0 0 auto;
+}
+
 .control-tabs {
   display: flex;
   gap: 0.5rem;
-  padding: 1rem 1rem 0;
+  padding: 0.9rem 1rem 0;
 }
 
 .control-tab {
   flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.03);
@@ -2672,7 +2694,7 @@ header.home, section.home {
 .control-panel-content {
   max-height: calc(85vh - 150px);
   overflow-y: auto;
-  padding: 1.2rem 1.3rem 1.4rem;
+  padding: 1rem 1.25rem 1.25rem;
 }
 
 .control-panel .control-tab-panel {
@@ -2688,8 +2710,11 @@ header.home, section.home {
 }
 
 .control-group {
-  display: block;
-  margin-bottom: 1rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.42rem 0.75rem;
+  align-items: center;
+  margin-bottom: 0.95rem;
   color: rgba(255, 255, 255, 0.76);
   font-size: 0.84rem;
 }
@@ -2697,14 +2722,26 @@ header.home, section.home {
 .color-control {
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 0.65rem;
+  gap: 0.42rem 0.75rem;
   align-items: center;
+}
+
+.control-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  letter-spacing: 0.02em;
+}
+
+.control-label .control-icon {
+  color: rgba(88, 242, 166, 0.9);
+  font-size: 1rem;
 }
 
 /* Control Panel Header */
 .control-panel-header {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 1.5rem 2rem;
+  padding: 1.15rem 1.35rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -2713,8 +2750,11 @@ header.home, section.home {
 
 .control-panel-header h3 {
   margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
   color: #00ff00;
-  font-size: 1.5rem;
+  font-size: 1.28rem;
   font-weight: 400;
 }
 
@@ -2752,7 +2792,7 @@ header.home, section.home {
   background: none;
   border: none;
   color: #fff;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 50%;
@@ -2914,13 +2954,13 @@ header.home, section.home {
 
 /* Control Panel Sections */
 .control-section {
-  margin-bottom: 2.5rem;
+  margin-bottom: 0;
 }
 
 .control-section h4 {
-  margin: 0 0 1.5rem 0;
+  margin: 0 0 1rem 0;
   color: #00ff00;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 300;
   border-bottom: 2px solid rgba(0, 255, 0, 0.2);
   padding-bottom: 0.5rem;
@@ -2936,6 +2976,7 @@ input[type="range"] {
   border-radius: 3px;
   outline: none;
   transition: background 0.3s ease;
+  grid-column: 1 / -1;
 }
 
 input[type="range"]:hover {
@@ -2978,13 +3019,32 @@ input[type="range"]::-moz-range-thumb:hover {
 /* Control Value Displays */
 .value-display, .color-display, .vector-display {
   font-family: 'Roboto Mono', monospace;
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.7);
-  margin-top: 0.5rem;
+  font-size: 0.76rem;
+  color: rgba(235, 255, 245, 0.78);
+  margin-top: 0;
   text-align: center;
-  padding: 0.25rem 0.5rem;
-  background-color: rgba(255, 255, 255, 0.02);
+  padding: 0.18rem 0.42rem;
+  background-color: rgba(255, 255, 255, 0.035);
   border-radius: 4px;
+  min-width: 2.4rem;
+  justify-self: end;
+}
+
+.color-display {
+  grid-column: 1 / -1;
+  justify-self: start;
+  min-width: 5.7rem;
+  text-align: left;
+}
+
+.color-control input[type="color"] {
+  width: 2.8rem;
+  height: 1.7rem;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 5px;
+  background: transparent;
+  cursor: pointer;
 }
 
 /* Vector Controls (Position/Rotation) */
@@ -3234,8 +3294,8 @@ input[type="range"]::-moz-range-thumb:hover {
   -webkit-backdrop-filter: blur(10px);
   border: 2px solid rgba(0, 255, 0, 0.3);
   border-radius: 50%;
-  width: 60px;
-  height: 60px;
+  width: 58px;
+  height: 58px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3244,6 +3304,11 @@ input[type="range"]::-moz-range-thumb:hover {
   transition: all 0.3s ease;
   font-size: 24px;
   box-shadow: 0 4px 20px rgba(0, 255, 0, 0.2);
+}
+
+.control-panel-toggle-btn .control-icon {
+  color: #7bdfff;
+  font-size: 1.3rem;
 }
 
 .control-panel-toggle-btn:hover {

@@ -47,13 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const pJS = window.pJSDom?.[0]?.pJS;
     if (!pJS?.particles) return;
 
-    state.count = pJS.particles.number?.value ?? state.count;
-    state.speed = pJS.particles.move?.speed ?? state.speed;
-    state.size = pJS.particles.size?.value ?? state.size;
-    state.opacity = pJS.particles.opacity?.value ?? state.opacity;
-    state.linkOpacity = pJS.particles.line_linked?.opacity ?? state.linkOpacity;
-    state.color = pJS.particles.color?.value ?? state.color;
     syncParticleDisplays(elements);
+    reloadParticles();
   };
 
   const checkReady = window.setInterval(() => {
@@ -159,7 +154,7 @@ function switchTab(elements, tab) {
 function bindParticleSlider(input, output, key, parser) {
   input?.addEventListener("input", (event) => {
     state[key] = parser(event.target.value);
-    if (output) output.textContent = String(state[key]);
+    if (output) output.textContent = formatControlValue(state[key]);
     reloadParticles();
   });
 }
@@ -167,7 +162,7 @@ function bindParticleSlider(input, output, key, parser) {
 function bindBackgroundSlider(input, output, update, parser = parseFloat) {
   input?.addEventListener("input", (event) => {
     const value = parser(event.target.value);
-    if (output) output.textContent = String(value);
+    if (output) output.textContent = formatControlValue(value);
     update(value);
   });
 }
@@ -190,7 +185,13 @@ function syncBackgroundDisplays(elements) {
 
 function setControlValue(input, output, value) {
   if (input) input.value = String(value);
-  if (output) output.textContent = String(value);
+  if (output) output.textContent = formatControlValue(value);
+}
+
+function formatControlValue(value) {
+  if (typeof value !== "number") return String(value);
+  if (Number.isInteger(value)) return String(value);
+  return String(Number(value.toFixed(3)));
 }
 
 function reloadParticles() {

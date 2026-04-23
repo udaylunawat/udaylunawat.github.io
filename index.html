@@ -154,17 +154,80 @@
 <div class="color-background" id="colorBackground">
 </div>
 
-<button class="control-panel-toggle-btn" id="particles-control-toggle" type="button" aria-label="Open particles and background controls" aria-expanded="false" aria-controls="particles-control-panel">BG</button>
+<svg class="control-icon-sprite" aria-hidden="true" focusable="false">
+  <symbol id="icon-sliders" viewBox="0 0 24 24">
+    <path d="M4 6h10M18 6h2M10 12h10M4 12h2M4 18h10M18 18h2" />
+    <circle cx="16" cy="6" r="2" />
+    <circle cx="8" cy="12" r="2" />
+    <circle cx="16" cy="18" r="2" />
+  </symbol>
+  <symbol id="icon-particles" viewBox="0 0 24 24">
+    <path d="M6 7l6 5 6-4M6 17l6-5 6 5" />
+    <circle cx="6" cy="7" r="2" />
+    <circle cx="12" cy="12" r="2" />
+    <circle cx="18" cy="8" r="2" />
+    <circle cx="6" cy="17" r="2" />
+    <circle cx="18" cy="17" r="2" />
+  </symbol>
+  <symbol id="icon-background" viewBox="0 0 24 24">
+    <path d="M4 16c4-8 8 8 16 0M4 8c4-8 8 8 16 0" />
+  </symbol>
+  <symbol id="icon-count" viewBox="0 0 24 24">
+    <circle cx="6" cy="7" r="2" />
+    <circle cx="17" cy="6" r="2" />
+    <circle cx="11" cy="13" r="2" />
+    <circle cx="18" cy="18" r="2" />
+    <circle cx="5" cy="18" r="2" />
+  </symbol>
+  <symbol id="icon-speed" viewBox="0 0 24 24">
+    <path d="M4 14a8 8 0 0 1 16 0M12 14l5-5" />
+    <path d="M8 20h8" />
+  </symbol>
+  <symbol id="icon-size" viewBox="0 0 24 24">
+    <path d="M4 9V4h5M20 15v5h-5M4 4l7 7M20 20l-7-7" />
+  </symbol>
+  <symbol id="icon-opacity" viewBox="0 0 24 24">
+    <path d="M12 3c4 4 7 7 7 11a7 7 0 0 1-14 0c0-4 3-7 7-11Z" />
+    <path d="M12 6v15" />
+  </symbol>
+  <symbol id="icon-link" viewBox="0 0 24 24">
+    <path d="M9 8l-2 2a4 4 0 0 0 6 6l2-2M15 16l2-2a4 4 0 0 0-6-6L9 10" />
+  </symbol>
+  <symbol id="icon-color" viewBox="0 0 24 24">
+    <path d="M12 3c5 0 9 3 9 7 0 3-2 5-5 5h-1.5c-1 0-1.5.6-1.5 1.4 0 .7.5 1.1.5 1.8 0 1.1-1 1.8-2.4 1.8C6.6 20 3 16.5 3 12c0-5 4-9 9-9Z" />
+    <circle cx="7.5" cy="11" r="1" />
+    <circle cx="10" cy="7.5" r="1" />
+    <circle cx="14" cy="7.5" r="1" />
+    <circle cx="16.5" cy="11" r="1" />
+  </symbol>
+  <symbol id="icon-wave" viewBox="0 0 24 24">
+    <path d="M3 12c3-6 6 6 9 0s6 6 9 0" />
+  </symbol>
+  <symbol id="icon-phase" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="7" />
+    <path d="M12 5v7l5 3" />
+  </symbol>
+</svg>
+
+<button class="control-panel-toggle-btn" id="particles-control-toggle" type="button" aria-label="Open particles and background controls" aria-expanded="false" aria-controls="particles-control-panel">
+  <svg class="control-icon" aria-hidden="true"><use href="#icon-sliders"></use></svg>
+</button>
 
 <aside class="control-panel hidden" id="particles-control-panel" aria-label="Particles and background controls">
   <div class="control-panel-header">
-    <h3>Scene Controls</h3>
-    <button class="control-panel-close" id="particles-panel-close" type="button" aria-label="Close controls">x</button>
+    <h3><svg class="control-icon" aria-hidden="true"><use href="#icon-sliders"></use></svg>Scene Controls</h3>
+    <button class="control-panel-close" id="particles-panel-close" type="button" aria-label="Close controls">
+      <span aria-hidden="true">x</span>
+    </button>
   </div>
 
   <div class="control-tabs" role="tablist" aria-label="Scene control tabs">
-    <button class="control-tab active" id="particles-tab" type="button" role="tab" aria-selected="true" aria-controls="particles-content">Particles</button>
-    <button class="control-tab" id="background-tab" type="button" role="tab" aria-selected="false" aria-controls="background-content">Background</button>
+    <button class="control-tab active" id="particles-tab" type="button" role="tab" aria-selected="true" aria-controls="particles-content">
+      <svg class="control-icon" aria-hidden="true"><use href="#icon-particles"></use></svg>Particles
+    </button>
+    <button class="control-tab" id="background-tab" type="button" role="tab" aria-selected="false" aria-controls="background-content">
+      <svg class="control-icon" aria-hidden="true"><use href="#icon-background"></use></svg>Background
+    </button>
   </div>
 
   <div class="control-panel-content">
@@ -172,32 +235,32 @@
       <div class="control-section">
         <h4>Field</h4>
         <label class="control-group">
-          Count
+          <span class="control-label"><svg class="control-icon" aria-hidden="true"><use href="#icon-count"></use></svg>Count</span>
           <input id="particles-number" type="range" min="6" max="60" step="1" value="15">
           <span class="value-display" id="particles-number-display">15</span>
         </label>
         <label class="control-group">
-          Speed
+          <span class="control-label"><svg class="control-icon" aria-hidden="true"><use href="#icon-speed"></use></svg>Speed</span>
           <input id="particles-speed" type="range" min="0.2" max="5" step="0.1" value="1.4">
           <span class="value-display" id="particles-speed-display">1.4</span>
         </label>
         <label class="control-group">
-          Size
+          <span class="control-label"><svg class="control-icon" aria-hidden="true"><use href="#icon-size"></use></svg>Size</span>
           <input id="particles-size" type="range" min="1" max="10" step="1" value="3">
           <span class="value-display" id="particles-size-display">3</span>
         </label>
         <label class="control-group">
-          Opacity
+          <span class="control-label"><svg class="control-icon" aria-hidden="true"><use href="#icon-opacity"></use></svg>Opacity</span>
           <input id="particles-opacity" type="range" min="0.05" max="0.9" step="0.05" value="0.28">
           <span class="value-display" id="particles-opacity-display">0.28</span>
         </label>
         <label class="control-group">
-          Links
+          <span class="control-label"><svg class="control-icon" aria-hidden="true"><use href="#icon-link"></use></svg>Links</span>
           <input id="particles-link-opacity" type="range" min="0" max="0.6" step="0.05" value="0.18">
           <span class="value-display" id="particles-link-opacity-display">0.18</span>
         </label>
         <label class="control-group color-control">
-          Color
+          <span class="control-label"><svg class="control-icon" aria-hidden="true"><use href="#icon-color"></use></svg>Color</span>
           <input id="particles-color" type="color" value="#d7fff0">
           <span class="color-display" id="particles-color-display">#d7fff0</span>
         </label>
@@ -208,22 +271,22 @@
       <div class="control-section">
         <h4>Shader</h4>
         <label class="control-group">
-          Speed
+          <span class="control-label"><svg class="control-icon" aria-hidden="true"><use href="#icon-speed"></use></svg>Speed</span>
           <input id="background-speed" type="range" min="0" max="0.04" step="0.001" value="0.01">
           <span class="value-display" id="background-speed-display">0.01</span>
         </label>
         <label class="control-group">
-          Distortion
+          <span class="control-label"><svg class="control-icon" aria-hidden="true"><use href="#icon-wave"></use></svg>Distortion</span>
           <input id="background-distortion" type="range" min="0" max="80" step="1" value="35">
           <span class="value-display" id="background-distortion-display">35</span>
         </label>
         <label class="control-group">
-          Phase
+          <span class="control-label"><svg class="control-icon" aria-hidden="true"><use href="#icon-phase"></use></svg>Phase</span>
           <input id="background-phase" type="range" min="0" max="12" step="0.1" value="0">
           <span class="value-display" id="background-phase-display">0</span>
         </label>
         <label class="control-group">
-          Frequency
+          <span class="control-label"><svg class="control-icon" aria-hidden="true"><use href="#icon-wave"></use></svg>Frequency</span>
           <input id="background-frequency" type="range" min="0.2" max="3" step="0.1" value="1">
           <span class="value-display" id="background-frequency-display">1</span>
         </label>
