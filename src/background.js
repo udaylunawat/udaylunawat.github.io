@@ -153,11 +153,11 @@ window.backgroundControls = {
     reset: function() {
         if (globalMesh) {
             // Reset to original values
-            globalMesh.position.set(-200, 270, -280);
-            globalMesh.rotation.x = -1.0;
+            globalMesh.position.set(0, 0, 0);
+            globalMesh.rotation.x = 0.0;
             globalMesh.rotation.y = 0.0;
-            globalMesh.rotation.z = 0.1;
-            globalMesh.scale.setScalar(4);
+            globalMesh.rotation.z = 0.0;
+            globalMesh.scale.setScalar(1);
 
             globalMesh.material.uniforms.u_bg.value = rgb(23, 27, 34);
             globalMesh.material.uniforms.u_color1.value = rgb(23, 27, 34);
@@ -185,20 +185,33 @@ window.backgroundControls = {
     }
 };
 document.addEventListener("DOMContentLoaded", function(e) {
-   
-    const renderer = new THREE.WebGLRenderer();
+
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     document.body.appendChild( renderer.domElement );
-    
+
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 100, 500 );
-  
+    const camera = new THREE.OrthographicCamera(
+        window.innerWidth / -2,
+        window.innerWidth / 2,
+        window.innerHeight / 2,
+        window.innerHeight / -2,
+        -1000,
+        1000
+    );
+
     // responsive resizing handler
     function onWindowResize() {
-        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.left = window.innerWidth / -2;
+        camera.right = window.innerWidth / 2;
+        camera.top = window.innerHeight / 2;
+        camera.bottom = window.innerHeight / -2;
         camera.updateProjectionMatrix();
-    
+
         renderer.setSize(window.innerWidth, window.innerHeight);
+        mesh.geometry.dispose();
+        mesh.geometry = new THREE.PlaneGeometry(window.innerWidth, window.innerHeight, 100, 100);
     }
     window.addEventListener("resize", onWindowResize, false);
 
@@ -206,23 +219,23 @@ document.addEventListener("DOMContentLoaded", function(e) {
     
     let vCheck = false;
 
-    camera.position.z = 5;
+    camera.position.z = 1;
 
     var randomisePosition = new THREE.Vector2(1, 2);
 
     var R = function(x, y, t) {
-        return( Math.floor(192 + 64*Math.cos( (x*x-y*y)/3000 + t )) );
+        return( Math.floor(28 + 18*Math.cos( (x*x-y*y)/3000 + t )) );
     }
-     
+
     var G = function(x, y, t) {
-        return( Math.floor(192 + 64*Math.sin( (x*x*Math.cos(t/4)+y*y*Math.sin(t/3))/3000 ) ) );
+        return( Math.floor(38 + 28*Math.sin( (x*x*Math.cos(t/4)+y*y*Math.sin(t/3))/3000 ) ) );
     }
-      
+
     var B = function(x, y, t) {
-        return( Math.floor(192 + 64*Math.sin( 5*Math.sin(t/9) + ((x-10)*(x-10)+(y-10)*(y-10))/110) ));
+        return( Math.floor(48 + 34*Math.sin( 5*Math.sin(t/9) + ((x-10)*(x-10)+(y-10)*(y-10))/110) ));
     }
     let sNoise = document.querySelector('#snoise-function').textContent
-    let geometry = new THREE.PlaneGeometry(window.innerWidth / 2, 400, 100, 100);
+    let geometry = new THREE.PlaneGeometry(window.innerWidth, window.innerHeight, 100, 100);
     let material = new THREE.ShaderMaterial({
         uniforms: {
             u_bg: {type: 'v3', value: rgb(23, 27, 34)},
@@ -239,11 +252,11 @@ document.addEventListener("DOMContentLoaded", function(e) {
     });
 
     let mesh = new THREE.Mesh(geometry, material);
-    mesh.position.set(-200, 270, -280);
-    mesh.scale.multiplyScalar(4);
-    mesh.rotation.x = -1.0;
+    mesh.position.set(0, 0, 0);
+    mesh.scale.setScalar(1);
+    mesh.rotation.x = 0.0;
     mesh.rotation.y = 0.0;
-    mesh.rotation.z = 0.1;
+    mesh.rotation.z = 0.0;
     scene.add(mesh);
 
     // Make mesh globally available for controls
