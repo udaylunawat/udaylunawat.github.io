@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
       readParticles();
     }
 
-    if (!backgroundReady && window.backgroundControls) {
+    if (!backgroundReady && window.backgroundControls?.getState?.().ready) {
       backgroundReady = true;
       syncBackgroundDisplays(elements);
     }
@@ -177,10 +177,11 @@ function syncParticleDisplays(elements) {
 }
 
 function syncBackgroundDisplays(elements) {
-  setControlValue(elements.backgroundSpeed, elements.backgroundSpeedDisplay, window.timeIncrement ?? 0.01);
-  setControlValue(elements.distortion, elements.distortionDisplay, 35);
-  setControlValue(elements.phase, elements.phaseDisplay, window.phaseOffset ?? 0);
-  setControlValue(elements.frequency, elements.frequencyDisplay, window.currentFrequency ?? 1);
+  const state = window.backgroundControls?.getState?.() || {};
+  setControlValue(elements.backgroundSpeed, elements.backgroundSpeedDisplay, state.timeSpeed ?? 0.01);
+  setControlValue(elements.distortion, elements.distortionDisplay, Math.round((state.distortion ?? 3.5) * 10));
+  setControlValue(elements.phase, elements.phaseDisplay, state.phase ?? 0);
+  setControlValue(elements.frequency, elements.frequencyDisplay, state.frequency ?? 1);
 }
 
 function setControlValue(input, output, value) {

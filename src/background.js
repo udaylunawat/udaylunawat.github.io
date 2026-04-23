@@ -11,6 +11,15 @@ function rgb(r, g, b) {
 // Global reference to mesh for controls
 let globalMesh = null;
 
+const backgroundState = {
+    distortion: 3.5,
+    timeSpeed: 0.01,
+    driftSpeed: 0.005,
+    phase: 0,
+    frequency: 1,
+    ready: false
+};
+
 // Global color control variables (accessible from outside modules)
 window.colorControls = {
     setColorOverride: function(r, g, b) {
@@ -32,6 +41,18 @@ window.colorControls = {
 
 // Control function for external access
 window.backgroundControls = {
+    getState: function() {
+        return { ...backgroundState };
+    },
+    getUniforms: function() {
+        if (!globalMesh) return null;
+        return {
+            distortion: globalMesh.material.uniforms.u_distortion.value,
+            frequency: globalMesh.material.uniforms.u_frequency.value,
+            time: globalMesh.material.uniforms.u_time.value,
+            randomiseX: globalMesh.material.uniforms.u_randomisePosition.value.x
+        };
+    },
     setBackgroundColor: function(r, g, b) {
         if (globalMesh && globalMesh.material.uniforms.u_bg) {
             globalMesh.material.uniforms.u_bg.value = rgb(r, g, b);
@@ -90,12 +111,17 @@ window.backgroundControls = {
         }
     },
     setAnimationSpeed: function(timeSpeed, posSpeed) {
+        backgroundState.timeSpeed = timeSpeed;
         window.timeIncrement = timeSpeed;
-        if (posSpeed !== undefined) window.posIncrement = posSpeed;
-        console.log('🎨 Set animation speed:', timeSpeed, posSpeed);
+        if (posSpeed !== undefined) {
+            backgroundState.driftSpeed = posSpeed;
+            window.posIncrement = posSpeed;
+        }
+        console.log('🎨 Set animation speed:', backgroundState.timeSpeed, backgroundState.driftSpeed);
     },
     updateBackgroundDistortion: function(distortionValue) {
         if (globalMesh && globalMesh.material.uniforms.u_distortion) {
+            backgroundState.distortion = distortionValue;
             globalMesh.material.uniforms.u_distortion.value = distortionValue;
             console.log('🌊 Background distortion updated via shader uniform:', distortionValue);
             return true;
@@ -105,20 +131,23 @@ window.backgroundControls = {
         }
     },
     updateBackgroundFrequency: function(frequencyValue) {
-        // Update time increment based on frequency
-        window.timeIncrement = frequencyValue * 0.01; // Scale frequency to animation speed
-        console.log('🌊 Background frequency updated - new time increment:', window.timeIncrement);
+        backgroundState.frequency = frequencyValue;
+        backgroundState.driftSpeed = 0.001 + (frequencyValue * 0.008);
+        window.posIncrement = backgroundState.driftSpeed;
+        if (globalMesh && globalMesh.material.uniforms.u_frequency) {
+            globalMesh.material.uniforms.u_frequency.value = frequencyValue;
+        }
+        console.log('🌊 Background frequency updated - new drift increment:', window.posIncrement);
         return true;
     },
     updateBackgroundPhase: function(phaseValue) {
-        // Set initial time offset for the animation phase
+        backgroundState.phase = phaseValue;
         window.phaseOffset = phaseValue;
-        console.log('🌊 Background phase offset updated to:', phaseValue);
 
-        // Immediately update the current time with the phase offset
-        if (typeof window.currentAnimationTime !== 'undefined') {
-            window.baseTime = window.phaseOffset;
+        if (globalMesh && globalMesh.material.uniforms.u_time) {
+            globalMesh.material.uniforms.u_time.value = (window.currentAnimationTime || 0) + phaseValue;
         }
+        console.log('🌊 Background phase offset updated to:', phaseValue);
         return true;
     },
     reset: function() {
@@ -134,10 +163,17 @@ window.backgroundControls = {
             globalMesh.material.uniforms.u_color1.value = rgb(23, 27, 34);
             globalMesh.material.uniforms.u_color2.value = rgb(0, 17, 34);
             globalMesh.material.uniforms.u_distortion.value = 3.5;
+            globalMesh.material.uniforms.u_frequency.value = 1;
 
             // Reset animation speeds
-            window.timeIncrement = 0.01;
-            window.posIncrement = 0.005;
+            backgroundState.distortion = 3.5;
+            backgroundState.timeSpeed = 0.01;
+            backgroundState.driftSpeed = 0.005;
+            backgroundState.phase = 0;
+            backgroundState.frequency = 1;
+            window.timeIncrement = backgroundState.timeSpeed;
+            window.posIncrement = backgroundState.driftSpeed;
+            window.phaseOffset = backgroundState.phase;
 
             // Reset color overrides to let procedural animation work again
             window.colorControls.unsetColorOverride();
@@ -195,7 +231,8 @@ document.addEventListener("DOMContentLoaded", function(e) {
             u_color2: {type: 'v3', value: rgb(0, 17, 34)},
             u_time: {type: 'f', value: 10},
             u_randomisePosition: { type: 'v2', value: randomisePosition },
-            u_distortion: {type: 'f', value: 3.5}
+            u_distortion: {type: 'f', value: backgroundState.distortion},
+            u_frequency: {type: 'f', value: backgroundState.frequency}
         },
         fragmentShader: sNoise + document.querySelector('#fragment-shader').textContent,
         vertexShader: sNoise + document.querySelector('#vertex-shader').textContent,
@@ -211,6 +248,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
 
     // Make mesh globally available for controls
     globalMesh = mesh;
+    backgroundState.ready = true;
     console.log('🎯 Mesh initialized and assigned to globalMesh');
 
     renderer.render( scene, camera );
@@ -220,9 +258,9 @@ document.addEventListener("DOMContentLoaded", function(e) {
     let y = randomInteger(0, 32);
 
     // Initialize animation speeds and control variables
-    window.timeIncrement = 0.01;
-    window.posIncrement = 0.005;
-    window.phaseOffset = 0; // Initialize phase offset
+    window.timeIncrement = backgroundState.timeSpeed;
+    window.posIncrement = backgroundState.driftSpeed;
+    window.phaseOffset = backgroundState.phase; // Initialize phase offset
 
     // Override color functions to use control values
     let originalR = R, originalG = G, originalB = B;
@@ -249,6 +287,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
         );
 
         // Apply phase offset to the time value
+        window.currentAnimationTime = t;
         mesh.material.uniforms.u_time.value = t + (window.phaseOffset || 0);
         if(t % 0.1 == 0) {
             if(vCheck == false) {
@@ -266,8 +305,8 @@ document.addEventListener("DOMContentLoaded", function(e) {
         }
 
         // Use controllable increment values
-        j = j + (window.posIncrement ?? 0.005);
-        t = t + (window.timeIncrement ?? 0.01);
+        j = j + backgroundState.driftSpeed;
+        t = t + backgroundState.timeSpeed;
     };
     animate();
   

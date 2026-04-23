@@ -779,6 +779,7 @@
     uniform float u_time;
     uniform vec2 u_randomisePosition;
     uniform float u_distortion;
+    uniform float u_frequency;
 
     varying float vDistortion;
     varying float xDistortion;
@@ -786,8 +787,8 @@
 
     void main() {
         vUv = uv;
-        vDistortion = snoise(vUv.xx * u_distortion * 0.3 - u_randomisePosition * 0.15);
-        xDistortion = snoise(vUv.yy * u_distortion * 0.1 - u_randomisePosition * 0.05);
+        vDistortion = snoise(vUv.xx * u_distortion * 0.3 * u_frequency - u_randomisePosition * 0.15);
+        xDistortion = snoise(vUv.yy * u_distortion * 0.1 * u_frequency - u_randomisePosition * 0.05);
         vec3 pos = position;
         pos.z += (vDistortion * u_distortion * 3.5);
         pos.x += (xDistortion * u_distortion * 2.5);
@@ -809,6 +810,7 @@
     uniform vec3 u_color1;
     uniform vec3 u_color2;
     uniform float u_time;
+    uniform float u_frequency;
 
     varying vec2 vUv;
     varying float vDistortion;
@@ -819,8 +821,8 @@
         vec3 c2 = rgb(u_color2.r, u_color2.g, u_color2.b);
         vec3 bgMain = rgb(u_bgMain.r, u_bg.g, u_bg.b);
 
-        float noise1 = snoise(vUv + u_time * 0.08);
-        float noise2 = snoise(vUv * 2. + u_time * 0.1);
+        float noise1 = snoise(vUv * u_frequency + u_time * 0.08);
+        float noise2 = snoise(vUv * 2.0 * u_frequency + u_time * 0.1);
 
         vec3 color = bg;
         color = mix(color, c1, noise1 * 0.6);
