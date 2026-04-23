@@ -815,7 +815,7 @@ header.home, section.home {
 
 .about {
     margin-top: -40vh;
-    opacity: 0.76;
+    opacity: 0;
 }
 .about .wrapper, .about .text-box {
     height: 100%;
@@ -846,10 +846,6 @@ header.home, section.home {
 .about .text-box p {
     width: 100%;
 }
-.about.about-preview .text-box > p {
-    opacity: 0;
-    visibility: hidden;
-}
 .about .img-container {
     text-align: right;
     max-width: var(--g6);
@@ -862,9 +858,6 @@ header.home, section.home {
 @media screen and (min-width: 700px) {
     section.about {
         height: 100vh;
-    }
-    .about {
-        margin-top: -105vh;
     }
     .about .wrapper .text-box {
         display: flex;
