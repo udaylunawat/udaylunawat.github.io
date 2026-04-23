@@ -8,9 +8,15 @@ const homeTitle = document.getElementById('homeTitle');
 const about = document.getElementById('about');
 let y = window.scrollY;
 let viewporHeight = window.innerHeight;
+const aboutPreviewOpacity = 0.76;
 let homeTitleFade = () => homeTitle.style.opacity = 'calc(1 - ' + y/300 + ')';
 homeTitleFade()
-let aboutFadeIn = () => about.style.opacity = 'calc(0 + ' + (y - viewporHeight/3)/50 + ')';
+let aboutFadeIn = () => {
+    about.classList.remove('about-preview');
+    about.style.opacity = Math.min(1, aboutPreviewOpacity + (y - viewporHeight / 3) / 360);
+};
+if (y >= viewporHeight / 3) aboutFadeIn();
+else about.classList.add('about-preview');
 // let aboutFadeOut = () => about.style.opacity = 'calc(1 - ' + (y - viewporHeight)/300 + ')';
 
 // Matrix effect state
@@ -89,7 +95,10 @@ window.onscroll = () => {
         // if (y >= viewporHeight)
         //     aboutFadeOut();
     }
-    else about.style.opacity = 0;
+    else {
+        about.classList.add('about-preview');
+        about.style.opacity = aboutPreviewOpacity;
+    }
 
     // Check for matrix effect trigger at 80% into skills section
     checkMatrixEffectTrigger();
@@ -331,71 +340,19 @@ async function startMatrixEffect() {
     const brainHost = document.getElementById('brain-host');
     if (!brainHost) return;
 
-    // Ensure brain is marked hidden while matrix runs (matrix.complete will remove this)
-    brainHost.classList.add('matrix-hidden');
-
-    // Create and start the matrix effect (if available)
-    if (window.MatrixEffect) {
-        // instantiate the effect so the console + rain actually appear
-        try {
-            matrixEffect = new window.MatrixEffect(document.body);
-            // when matrix completes, reveal the brain (preloaded or mount now)
-            matrixEffect.onComplete = async () => {
-                try {
-                    const preloaded = window.preloadedBrain || await preloadBrain();
-                    if (!revealBrainInstance(preloaded)) {
-                        // fallback: import + mount now (autoReveal default true)
-                        const mod = await import('./brainSkills.deep.js');
-                        await mod.mountBrainDeepSkills({ container: brainHost, options: getBrainOptions(true) });
-                        brainLoaded = true;
-                    }
-                } catch (err) {
-                    console.error('Error revealing brain after matrix complete:', err);
-                } finally {
-                    // cleanup reference so we can re-run if needed
-                    matrixEffect = null;
-                    document.body.classList.remove('show-loader', 'loading-block');
-                }
-            };
-        } catch (err) {
-            console.error('Failed to start MatrixEffect:', err);
-            matrixEffect = null;
+    try {
+        const preloaded = window.preloadedBrain || await preloadBrain();
+        if (!revealBrainInstance(preloaded)) {
+            const mod = await import('./brainSkills.deep.js');
+            await mod.mountBrainDeepSkills({ container: brainHost, options: getBrainOptions(true) });
+            brainLoaded = true;
         }
-
-        // small delay so user sees transition; MatrixEffect starts itself in its init()
-        setTimeout(() => {
-          // safety: if MatrixEffect failed to instantiate, still try to reveal
-          if (!matrixEffect && !brainLoaded) {
-            (async () => {
-              try {
-                const preloaded = window.preloadedBrain || await preloadBrain();
-                if (!revealBrainInstance(preloaded)) {
-                  const mod = await import('./brainSkills.deep.js');
-                  await mod.mountBrainDeepSkills({ container: brainHost, options: getBrainOptions(true) });
-                  brainLoaded = true;
-                }
-              } catch (err) {
-                console.error('Fallback reveal error:', err);
-              } finally {
-                document.body.classList.remove('show-loader', 'loading-block');
-              }
-            })();
-          }
-        }, 100);
-    } else {
-        // If MatrixEffect not present, directly reveal the brain as fallback
-        try {
-            const preloaded = window.preloadedBrain || await preloadBrain();
-            if (!revealBrainInstance(preloaded)) {
-                const mod = await import('./brainSkills.deep.js');
-                await mod.mountBrainDeepSkills({ container: brainHost, options: getBrainOptions(true) });
-                brainLoaded = true;
-            }
-        } catch (err) {
-            console.error('Error mounting/revealing brain (no MatrixEffect):', err);
-        } finally {
-            document.body.classList.remove('show-loader', 'loading-block');
-        }
+    } catch (err) {
+        console.error('Error mounting/revealing brain:', err);
+    } finally {
+        brainHost.classList.remove('matrix-hidden');
+        document.body.classList.remove('matrix-active', 'scanlines', 'vignette', 'show-loader', 'loading-block');
+        matrixEffect = null;
     }
 }
 
