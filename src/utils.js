@@ -19,18 +19,3 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   });
 });
-
-// Resume download functionality
-document.addEventListener('DOMContentLoaded', function() {
-  const resumeLink = document.getElementById('resume-link');
-  if (resumeLink) {
-    resumeLink.addEventListener('click', (e) => {
-      const link = document.createElement('a');
-      link.href = './src/Uday_Lunawat_Resume_Senior_ML_Engineer_V9.pdf';
-      link.download = 'Uday_Lunawat_Resume_Senior_ML_Engineer_V9.pdf';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    });
-  }
-});

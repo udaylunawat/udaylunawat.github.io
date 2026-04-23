@@ -13,6 +13,8 @@ export function showMenu() {
     menu.style.zIndex = 22;
     openIcon.style.display = 'none';
     closeIcon.style.display = 'block';
+    openIcon.setAttribute('aria-expanded', 'true');
+    closeIcon.setAttribute('aria-expanded', 'true');
   }
 }
 
@@ -26,6 +28,8 @@ export function hideMenu() {
     menu.style.zIndex = -1;
     closeIcon.style.display = 'none';
     openIcon.style.display = 'block';
+    openIcon.setAttribute('aria-expanded', 'false');
+    closeIcon.setAttribute('aria-expanded', 'false');
   }
 }
 
@@ -41,6 +45,10 @@ function initNavigation() {
   if (closeIcon) {
     closeIcon.onclick = hideMenu;
   }
+
+  document.querySelectorAll('.main-nav a[href^="#"]').forEach((link) => {
+    link.addEventListener('click', hideMenu);
+  });
 
   console.log('Navigation system initialized');
 }

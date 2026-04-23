@@ -59,12 +59,12 @@ export class ModalManager {
     // Attach click handlers to experience cards
     const experienceCards = document.querySelectorAll('.experience-with-link');
     experienceCards.forEach(card => {
-      card.style.cursor = 'pointer';
-      card.addEventListener('click', (e) => {
-        e.preventDefault();
-        const experienceId = card.getAttribute('data-experience') || 'fractal';
-        this.openModal('experience', experienceId);
-      });
+      const experienceId = card.getAttribute('data-experience') || 'fractal';
+      if (experienceId && !card.hasClickHandler) {
+        card.hasClickHandler = true;
+        card.style.cursor = 'pointer';
+        this.attachCardClickHandler(card, experienceId, 'experience');
+      }
     });
   }
 
