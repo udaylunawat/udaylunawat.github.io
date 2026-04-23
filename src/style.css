@@ -814,8 +814,8 @@ header.home, section.home {
 /* --------------- ABOUT ---------------*/
 
 .about {
-    margin-top: 0;
-    opacity: 1;
+    margin-top: -40vh;
+    opacity: 0.76;
 }
 .about .wrapper, .about .text-box {
     height: 100%;
@@ -846,6 +846,10 @@ header.home, section.home {
 .about .text-box p {
     width: 100%;
 }
+.about.about-preview .text-box > p {
+    opacity: 0;
+    visibility: hidden;
+}
 .about .img-container {
     text-align: right;
     max-width: var(--g6);
@@ -857,7 +861,10 @@ header.home, section.home {
 
 @media screen and (min-width: 700px) {
     section.about {
-        min-height: 100vh;
+        height: 100vh;
+    }
+    .about {
+        margin-top: -105vh;
     }
     .about .wrapper .text-box {
         display: flex;
@@ -872,7 +879,7 @@ header.home, section.home {
 
 @media screen and (min-width: 1500px) {
     .about {
-        min-height: 100vh;
+        height: 100vh;
     }
     .about .text-box p {
         font-size: 1.4em;
@@ -1923,37 +1930,51 @@ header.home, section.home {
 }
 
 .experience-gallery .gallery-container {
-    overflow: visible !important;
-    scrollbar-width: none;
+    overflow: visible;
 }
 
 .experience-gallery .gallery-grid {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important;
-    width: 100% !important;
-    max-width: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    width: 100%;
     gap: 1.25rem;
-    padding: 1rem 0 0;
+    padding: 1rem 2rem 0;
 }
 
 .experience-gallery .gallery-item {
-    flex: none !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: none !important;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
 }
 
-@media screen and (max-width: 700px) {
-    .experience-gallery .gallery-grid {
-        grid-template-columns: 1fr !important;
-        gap: 1rem;
-        padding: 0;
+@media screen and (max-width: 640px) {
+    .experience-gallery .gallery-container {
+        overflow-x: auto;
+        overflow-y: visible;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(88, 242, 166, 0.65) rgba(255, 255, 255, 0.08);
+        padding-bottom: 0.65rem;
     }
 
-    .experience-gallery .gallery-card {
-        max-height: none;
-        min-height: 330px;
-        overflow: visible;
+    .experience-gallery .gallery-container::-webkit-scrollbar {
+        display: block;
+        height: 6px;
+    }
+
+    .experience-gallery .gallery-container::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .experience-gallery .gallery-container::-webkit-scrollbar-thumb {
+        background: rgba(88, 242, 166, 0.65);
+        border-radius: 99px;
+    }
+
+    .experience-gallery .gallery-grid {
+        grid-template-columns: repeat(5, 240px);
+        gap: 1rem;
+        padding: 0 1rem;
+        width: max-content;
     }
 }
 
