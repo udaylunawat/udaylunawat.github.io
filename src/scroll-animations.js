@@ -1,3 +1,5 @@
+import { getPerformanceMode } from './performance-mode.js';
+
 //
 // ANIMATED BACKGROUND FADE ANIMATION
 //
@@ -19,6 +21,64 @@ let brainLoaded = false;
 // hold preloaded brain instance (if mounted hidden)
 window.preloadedBrain = null;
 window.preloadedBrainPromise = null;
+const performanceMode = getPerformanceMode();
+
+function getBrainOptions(autoReveal = false) {
+    if (!performanceMode.adaptive) {
+        return { autoReveal, disableNeuralPulse: false, pixelRatioMax: 2 };
+    }
+
+    return {
+        autoReveal,
+        disableNeuralPulse: true,
+        pixelRatioMax: 1.25,
+        particles: {
+            count: 140,
+            opacity: 0.24,
+            firingRate: 0.004,
+            linksPerNode: 2
+        },
+        mobile: {
+            particlesCount: 80,
+            labelScale: 1.12
+        }
+    };
+}
+
+function preloadBrain() {
+    const brainHost = document.getElementById('brain-host');
+    if (!brainHost) return Promise.resolve(null);
+
+    if (!window.preloadedBrainPromise) {
+        window.preloadedBrainPromise = import('./brainSkills.deep.js')
+            .then(mod => mod.mountBrainDeepSkills({
+                container: brainHost,
+                options: getBrainOptions(false)
+            }))
+            .then(brain => {
+                window.preloadedBrain = brain;
+                console.log('Brain preloaded near viewport.');
+                return brain;
+            })
+            .catch(err => {
+                console.warn('Brain lazy preload failed:', err);
+                window.preloadedBrain = null;
+                window.preloadedBrainPromise = null;
+                return null;
+            });
+    }
+
+    return window.preloadedBrainPromise;
+}
+
+function revealBrainInstance(brain) {
+    if (!brain) return false;
+    brain.container.classList.add('brain-visible');
+    brain.container.style.opacity = '1';
+    try { brain.tuneForViewport(); } catch (e) {}
+    brainLoaded = true;
+    return true;
+}
 
 window.onscroll = () => {
     y = window.scrollY;
@@ -231,10 +291,23 @@ function checkMatrixEffectTrigger() {
 
 // New: robust IntersectionObserver to trigger matrix when ~80% of #skills is visible
 let skillsObserver = null;
+let brainPreloadObserver = null;
 function createSkillsObserver() {
     if (skillsObserver) return;
     const skillsSection = document.getElementById('skills');
     if (!skillsSection) return;
+
+    if (!brainPreloadObserver) {
+        brainPreloadObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    preloadBrain();
+                    if (brainPreloadObserver) brainPreloadObserver.disconnect();
+                }
+            });
+        }, { rootMargin: performanceMode.adaptive ? '350px 0px' : '900px 0px', threshold: 0 });
+        brainPreloadObserver.observe(skillsSection);
+    }
 
     skillsObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -269,16 +342,11 @@ async function startMatrixEffect() {
             // when matrix completes, reveal the brain (preloaded or mount now)
             matrixEffect.onComplete = async () => {
                 try {
-                    if (window.preloadedBrain) {
-                        const b = window.preloadedBrain;
-                        b.container.classList.add('brain-visible');
-                        b.container.style.opacity = '1';
-                        try { b.tuneForViewport(); } catch (e) {}
-                        brainLoaded = true;
-                    } else {
+                    const preloaded = window.preloadedBrain || await preloadBrain();
+                    if (!revealBrainInstance(preloaded)) {
                         // fallback: import + mount now (autoReveal default true)
                         const mod = await import('./brainSkills.deep.js');
-                        await mod.mountBrainDeepSkills({ container: brainHost });
+                        await mod.mountBrainDeepSkills({ container: brainHost, options: getBrainOptions(true) });
                         brainLoaded = true;
                     }
                 } catch (err) {
@@ -300,15 +368,10 @@ async function startMatrixEffect() {
           if (!matrixEffect && !brainLoaded) {
             (async () => {
               try {
-                if (window.preloadedBrain) {
-                  const b = window.preloadedBrain;
-                  b.container.classList.add('brain-visible');
-                  b.container.style.opacity = '1';
-                  try { b.tuneForViewport(); } catch (e) {}
-                  brainLoaded = true;
-                } else {
+                const preloaded = window.preloadedBrain || await preloadBrain();
+                if (!revealBrainInstance(preloaded)) {
                   const mod = await import('./brainSkills.deep.js');
-                  await mod.mountBrainDeepSkills({ container: brainHost });
+                  await mod.mountBrainDeepSkills({ container: brainHost, options: getBrainOptions(true) });
                   brainLoaded = true;
                 }
               } catch (err) {
@@ -322,15 +385,10 @@ async function startMatrixEffect() {
     } else {
         // If MatrixEffect not present, directly reveal the brain as fallback
         try {
-            if (window.preloadedBrain) {
-                const b = window.preloadedBrain;
-                b.container.classList.add('brain-visible');
-                b.container.style.opacity = '1';
-                try { b.tuneForViewport(); } catch (e) {}
-                brainLoaded = true;
-            } else {
+            const preloaded = window.preloadedBrain || await preloadBrain();
+            if (!revealBrainInstance(preloaded)) {
                 const mod = await import('./brainSkills.deep.js');
-                await mod.mountBrainDeepSkills({ container: brainHost });
+                await mod.mountBrainDeepSkills({ container: brainHost, options: getBrainOptions(true) });
                 brainLoaded = true;
             }
         } catch (err) {
@@ -349,21 +407,5 @@ document.addEventListener('DOMContentLoaded', () => {
     // Create observer for skills trigger (more reliable than manual bounding checks)
     createSkillsObserver();
 
-    // Preload + mount the brain hidden so it's ready to show instantly when matrix triggers.
-    const brainHost = document.getElementById('brain-host');
-    if (brainHost) {
-        // ensure only one preload
-        if (!window.preloadedBrainPromise) {
-            window.preloadedBrainPromise = import('./brainSkills.deep.js')
-                .then(mod => mod.mountBrainDeepSkills({ container: brainHost, options: { autoReveal: false, disableNeuralPulse: false } }))
-                .then(brain => {
-                    window.preloadedBrain = brain;
-                    console.log('Brain preloaded and mounted hidden.');
-                })
-                .catch(err => {
-                    console.warn('Brain preload failed:', err);
-                    window.preloadedBrain = null;
-                });
-        }
-    }
+    window.performanceMode = performanceMode;
 });

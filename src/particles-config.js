@@ -1,42 +1,70 @@
+import { getPerformanceMode } from './performance-mode.js';
+
 // Particles configuration - moved from inline HTML for better caching
 function initParticles() {
   if (window.particlesJS) {
+    const performanceMode = getPerformanceMode();
+    const particleDefaults = performanceMode.adaptive
+      ? {
+          count: 8,
+          opacity: 0.42,
+          opacityMin: 0.12,
+          size: 4,
+          sizeMin: 1,
+          speed: 1.2,
+          linkOpacity: 0.16,
+          linkDistance: 210,
+          twinkleFrequency: 0.15
+        }
+      : {
+          count: 15,
+          opacity: 1.0,
+          opacityMin: 0.3,
+          size: 8,
+          sizeMin: 2,
+          speed: 3,
+          linkOpacity: 0.4,
+          linkDistance: 300,
+          twinkleFrequency: 0.3
+        };
+
+    window.particlesRuntimeDefaults = particleDefaults;
     window.particlesJS("particles-js", {
       "particles": {
-        "number": { "value": 15 },
+        "number": { "value": particleDefaults.count },
         "color": { "value": "#ffffff" },
         "shape": { "type": "circle" },
         "opacity": {
-          "value": 1.0,
+          "value": particleDefaults.opacity,
           "random": true,
           "anim": {
             "enable": true,
             "speed": 1.5,
-            "opacity_min": 0.3,
+            "opacity_min": particleDefaults.opacityMin,
             "sync": false
           }
         },
         "size": {
-          "value": 8,
+          "value": particleDefaults.size,
           "random": true,
           "anim": {
             "enable": true,
             "speed": 3,
-            "size_min": 2,
+            "size_min": particleDefaults.sizeMin,
             "sync": false
           }
         },
         "line_linked": {
           "enable": true,
-          "distance": 300,
+          "distance": particleDefaults.linkDistance,
           "color": "#ffffff",
-          "opacity": 0.4,
+          "opacity": particleDefaults.linkOpacity,
           "width": 1,
           "path": { "enable": true, "type": "particles" }
         },
         "move": {
           "enable": true,
-          "speed": 3,
+          "speed": particleDefaults.speed,
           "direction": "none",
           "random": false,
           "straight": false,
@@ -57,7 +85,7 @@ function initParticles() {
           },
           "particles": {
             "enable": true,
-            "frequency": 0.3,
+            "frequency": particleDefaults.twinkleFrequency,
             "opacity": 1.0,
             "color": "#ffffff",
             "wave": {
@@ -81,7 +109,7 @@ function initParticles() {
           }
         }
       },
-      "retina_detect": true
+      "retina_detect": !performanceMode.adaptive
     });
   }
 }

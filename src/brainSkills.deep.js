@@ -689,7 +689,8 @@ class BrainConfig {
         speed: 0.5,       // interpreted as px per frame at 60 fps
         pauseOnHover: true,
         enabled: true
-      }
+      },
+      pixelRatioMax: 2
     };
   }
 
@@ -759,7 +760,7 @@ class BrainVisualization {
       powerPreference: 'high-performance'
     });
     this.renderer.setClearColor(0x000000, 0);
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, this.cfg.pixelRatioMax || 2));
     this.renderer.setSize(this.container.clientWidth, this.container.clientHeight, false);
     if (this.THREE.sRGBEncoding) {
       this.renderer.outputEncoding = this.THREE.sRGBEncoding;
@@ -1565,7 +1566,7 @@ class BrainVisualization {
     const w = Math.max(1, Math.floor(rect.width));
     const h = Math.max(1, Math.floor(rect.height));
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = Math.min(window.devicePixelRatio || 1, this.cfg.pixelRatioMax || 2);
     this.renderer.setPixelRatio(dpr);
     this.renderer.setSize(w, h, false);
 

@@ -10,7 +10,7 @@ export default defineConfig({
         main: 'index.html',
       },
     },
-    cssCodeSplit: false,
+    cssCodeSplit: true,
     minify: 'esbuild',
     assetsDir: 'assets',
   },

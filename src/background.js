@@ -1,4 +1,5 @@
 import * as THREE from 'https://cdn.skypack.dev/three@v0.122.0';
+import { getPerformanceMode } from './performance-mode.js';
 
 function randomInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -17,7 +18,8 @@ const backgroundState = {
     driftSpeed: 0.005,
     phase: 0,
     frequency: 1,
-    ready: false
+    ready: false,
+    paused: false
 };
 
 // Global color control variables (accessible from outside modules)
@@ -185,10 +187,17 @@ window.backgroundControls = {
     }
 };
 document.addEventListener("DOMContentLoaded", function(e) {
+    const performanceMode = getPerformanceMode();
+    if (performanceMode.adaptive) {
+        backgroundState.distortion = 2.6;
+        backgroundState.timeSpeed = performanceMode.reducedMotion ? 0 : 0.006;
+        backgroundState.driftSpeed = performanceMode.reducedMotion ? 0 : 0.0025;
+        backgroundState.frequency = 0.8;
+    }
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setSize( window.innerWidth, window.innerHeight );
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, performanceMode.adaptive ? 1.25 : 2));
     document.body.appendChild( renderer.domElement );
 
     const scene = new THREE.Scene();
@@ -214,6 +223,9 @@ document.addEventListener("DOMContentLoaded", function(e) {
         mesh.geometry = new THREE.PlaneGeometry(window.innerWidth, window.innerHeight, 100, 100);
     }
     window.addEventListener("resize", onWindowResize, false);
+    document.addEventListener("visibilitychange", () => {
+        backgroundState.paused = document.hidden;
+    });
 
     // 
     
@@ -290,8 +302,13 @@ document.addEventListener("DOMContentLoaded", function(e) {
         return window.colorControls.controlColorB !== null ? window.colorControls.controlColorB : originalB(x, y, t);
     }
 
-    const animate = function () {
+    let lastFrameTime = 0;
+    const animate = function (now = 0) {
         requestAnimationFrame( animate );
+        if (backgroundState.paused) return;
+        if (performanceMode.adaptive && now - lastFrameTime < 33) return;
+        lastFrameTime = now;
+
         renderer.render( scene, camera );
         mesh.material.uniforms.u_randomisePosition.value = new THREE.Vector2(j, j);
 

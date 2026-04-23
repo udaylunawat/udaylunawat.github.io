@@ -1,3 +1,5 @@
+import { scheduleIdle } from './performance-mode.js';
+
 // GitHub stars fetcher with rate limit handling and caching
 // Dynamically loads repository mappings from project HTML files
 let repoMap = {};
@@ -474,15 +476,22 @@ const STATIC_FALLBACK_DATA = {
   "Data-Science-Projects": { stargazers_count: 45, forks_count: 1 }
 };
 
+function applyStaticFallbackStats() {
+  for (const key in repoMap) {
+    const repo = repoMap[key];
+    updateDomForKey(key, STATIC_FALLBACK_DATA[repo]);
+  }
+}
 
-
-async function updateStars() {
+async function updateStars({ showLoading = false } = {}) {
   const owner = "udaylunawat";
 
   // First, set all elements to loading state
-  console.log('Setting loading state for all GitHub stats...');
-  for (const key in repoMap) {
-    updateDomForKey(key, null, true); // Show loading state
+  if (showLoading) {
+    console.log('Setting loading state for all GitHub stats...');
+    for (const key in repoMap) {
+      updateDomForKey(key, null, true); // Show loading state
+    }
   }
 
   // Try to load from cache first
@@ -575,8 +584,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     // First load repository mappings from project HTML files
     await loadRepoMappings();
 
-    // Then update stars with the loaded mappings
-    await updateStars();
+    // Paint static numbers first; refresh live values later without blocking first load.
+    applyStaticFallbackStats();
+    scheduleIdle(() => updateStars({ showLoading: false }), 2500);
   } catch (error) {
     console.error('GitHub stars initialization failed:', error);
   }

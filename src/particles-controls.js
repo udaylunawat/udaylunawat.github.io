@@ -1,13 +1,19 @@
+import { getPerformanceMode } from './performance-mode.js';
+
 let particlesReady = false;
 let backgroundReady = false;
 
+const particleDefaults = window.particlesRuntimeDefaults || (getPerformanceMode().adaptive
+  ? { count: 8, speed: 1.2, size: 4, opacity: 0.42, linkOpacity: 0.16, color: "#d7fff0" }
+  : { count: 15, speed: 1.4, size: 3, opacity: 0.28, linkOpacity: 0.18, color: "#d7fff0" });
+
 const state = {
-  count: 15,
-  speed: 1.4,
-  size: 3,
-  opacity: 0.28,
-  linkOpacity: 0.18,
-  color: "#d7fff0",
+  count: particleDefaults.count,
+  speed: particleDefaults.speed,
+  size: particleDefaults.size,
+  opacity: particleDefaults.opacity,
+  linkOpacity: particleDefaults.linkOpacity,
+  color: particleDefaults.color,
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -260,6 +266,6 @@ function buildParticlesConfig() {
         bubble: { distance: 120, size: 18, duration: 1.6, opacity: 0.65 },
       },
     },
-    retina_detect: true,
+    retina_detect: !getPerformanceMode().adaptive,
   };
 }
