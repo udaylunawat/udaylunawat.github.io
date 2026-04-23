@@ -191,7 +191,7 @@ function syncParticleDisplays(elements) {
 
 function syncBackgroundDisplays(elements) {
   const state = window.backgroundControls?.getState?.() || {};
-  setControlValue(elements.backgroundPreset, null, state.preset ?? "aurora");
+  setControlValue(elements.backgroundPreset, null, state.preset ?? "neural");
   setControlValue(elements.backgroundSpeed, elements.backgroundSpeedDisplay, state.timeSpeed ?? 0.01);
   setControlValue(elements.distortion, elements.distortionDisplay, Math.round((state.distortion ?? 3.5) * 10));
   setControlValue(elements.phase, elements.phaseDisplay, state.phase ?? 0);

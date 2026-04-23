@@ -9,7 +9,7 @@ function rgb(r, g, b) {
     return new THREE.Vector3(r, g, b);
 }
 
-const DEFAULT_BACKGROUND_PRESET = "aurora";
+const DEFAULT_BACKGROUND_PRESET = "neural";
 
 const BACKGROUND_PRESETS = {
     aurora: {
