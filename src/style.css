@@ -860,10 +860,26 @@ header.home, section.home {
 }
 
 @media screen and (min-width: 700px) {
+    .home .wrapper {
+        padding-bottom: 4rem;
+    }
+    .home .wrapper .home-grid {
+        align-self: flex-end;
+        justify-items: end;
+        margin-top: 2rem;
+        margin-bottom: auto;
+    }
+    .home h1 {
+        margin-top: 0;
+    }
+    .home .tagline {
+        margin-bottom: 0;
+        max-width: min(64rem, calc(100vw - 13rem));
+    }
     section.about {
         height: 100vh;
     }
-    .about {
+    .about.about-preview {
         margin-top: -105vh;
     }
     .about .wrapper .text-box {
@@ -1929,52 +1945,19 @@ header.home, section.home {
     }
 }
 
-.experience-gallery .gallery-container {
-    overflow: visible;
+@media screen and (min-width: 1200px) and (max-width: 1399px) {
+    .experience-gallery .gallery-item {
+        flex: 0 0 360px;
+        min-width: 320px;
+        max-width: 390px;
+    }
 }
 
-.experience-gallery .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    width: 100%;
-    gap: 1.25rem;
-    padding: 1rem 2rem 0;
-}
-
-.experience-gallery .gallery-item {
-    width: 100%;
-    min-width: 0;
-    max-width: none;
-}
-
-@media screen and (max-width: 640px) {
-    .experience-gallery .gallery-container {
-        overflow-x: auto;
-        overflow-y: visible;
-        scrollbar-width: thin;
-        scrollbar-color: rgba(88, 242, 166, 0.65) rgba(255, 255, 255, 0.08);
-        padding-bottom: 0.65rem;
-    }
-
-    .experience-gallery .gallery-container::-webkit-scrollbar {
-        display: block;
-        height: 6px;
-    }
-
-    .experience-gallery .gallery-container::-webkit-scrollbar-track {
-        background: rgba(255, 255, 255, 0.08);
-    }
-
-    .experience-gallery .gallery-container::-webkit-scrollbar-thumb {
-        background: rgba(88, 242, 166, 0.65);
-        border-radius: 99px;
-    }
-
-    .experience-gallery .gallery-grid {
-        grid-template-columns: repeat(5, 240px);
-        gap: 1rem;
-        padding: 0 1rem;
-        width: max-content;
+@media screen and (min-width: 1400px) {
+    .experience-gallery .gallery-item {
+        flex: 0 0 390px;
+        min-width: 350px;
+        max-width: 420px;
     }
 }
 
