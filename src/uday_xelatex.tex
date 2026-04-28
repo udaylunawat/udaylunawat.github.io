@@ -1,0 +1,183 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+%===============================================================================
+% FINAL SYSTEM-LOCKED RESUME: GOOGLE FDE OPTIMIZED
+%===============================================================================
+
+\documentclass[11pt, a4paper]{awesome-cv}
+
+\usepackage{microtype}
+\usepackage{enumitem}
+\setlist[itemize]{topsep=1pt,itemsep=1pt,parsep=0pt,partopsep=0pt}
+
+\geometry{left=1.3cm, top=.7cm, right=1.3cm, bottom=1.3cm, footskip=0cm}
+
+\fontdir[fonts/]
+\colorlet{awesome}{awesome-darknight}
+\setbool{acvSectionColorHighlight}{false} 
+\renewcommand{\acvHeaderSocialSep}{\quad|\quad}
+\usepackage{hyperref}
+
+%-------------------------------------------------------------------------------
+% HEADER
+%-------------------------------------------------------------------------------
+\name{}{\href{udaylunawat.github.io}{Uday Lunawat}}
+\position{\textbf{Senior Applied AI \& Agent Systems Engineer | RAG, Multi-Agent Systems, LLMOps}}
+\mobile{\href{https://wa.me/917020901969}{(+91) 7020901969}}
+\email{udaylunawat@gmail.com}
+\homepage{udaylunawat.github.io}
+\github{udaylunawat}
+\linkedin{uday-lunawat}
+\twitter{udaylunawat}
+
+\begin{document}
+\makecvheader[C]
+
+%===============================================================================
+% SUMMARY
+%===============================================================================
+\vspace{-1.2em}
+\cvsection{Summary}
+
+\begin{cvparagraph}
+Senior Applied AI \& Agent Systems Engineer with \textbf{7 years of experience} building \textbf{production-grade systems around pretrained models (LLMs \& CV)}. Expertise in \textbf{Retrieval-Augmented Generation (RAG)}, prompt engineering, fine-tuning workflows, and \textbf{multi-agent orchestration} \\ using LangGraph.
+
+Proven track record of delivering \textbf{customer-facing AI solutions} by integrating models with tools, memory, and APIs. Led development of an enterprise AI platform supporting \textbf{400+ production agents and 17,000+ deployments}, with strong focus on \textbf{evaluation and reliability}.
+\end{cvparagraph}
+
+\vspace{-1.3em}
+
+%===============================================================================
+% WORK EXPERIENCE
+%===============================================================================
+\cvsection{Work Experience}
+\vspace{-0.5em}
+\begin{cventries}
+
+\cventry
+{\underline{Tech}: Python, GCP, LangGraph, FastAPI, Jenkins, OIDC, SQLModel, Docker, Alembic}
+{Senior AI Platform Engineer (GenAI, LLMOps, CI/CD) – \underline{\href{https://fractal.ai/}{Fractal Analytics}}}
+{\textbf{Nov 2024 – Present}}
+{Pune}
+{
+\begin{cvitems}
+    \item {\textbf{Customer-Facing AI Systems:} Delivered agent-based AI solutions for enterprise stakeholders, integrating LLMs with tools, APIs, and \\ business workflows to solve real-world telecom use cases.}
+    \item {\textbf{Pretrained Model Systems:} Built production systems around LLMs (OpenAI, Claude, Gemini) using prompt engineering, structured outputs, and tool augmentation.}
+    \item {\textbf{Multi-Agent Systems:} Built stateful orchestration workflows (\textbf{LangGraph}) using ReAct and hierarchical delegation \\ for complex multi-step reasoning tasks.}
+    \item {\textbf{Evaluation \& Observability:} Built evaluation pipelines (Langfuse, semantic validation) with LLM-native metrics to guide optimization \\ and system improvements.}
+    \item {\textbf{Scale:} Platform supports \textbf{400+ production agents} and \textbf{17,000+ deployments}, reducing onboarding time to \textbf{<90 seconds}.}
+    \item {\textbf{LLM FinOps:} Implemented cost-aware execution (token budgeting, adaptive context while maintaining accuracy SLAs.}
+    \item {\textbf{Reliability Engineering:} Designed fault-tolerant systems (retries, fallbacks, partial recovery) improving success rate of multi-step workflows.}
+    \item {\textbf{Security \& Governance:} Enforced Zero-Trust architecture (OIDC, RBAC, secrets isolation) for multi-tenant deployments.}
+    \item {\textbf{Leadership:} Led a team of 7 engineers; drove architecture, reviews, and enterprise adoption.}
+\end{cvitems}
+}
+
+\vspace{1.0em}
+
+\cventry
+{\underline{Tech}: Python, GCP, MLflow, Seldon Core, TensorFlow, Label Studio, Flask}
+{Senior Machine Learning Engineer – \underline{\href{https://www.hcltech.com/}{HCL}}}
+{\textbf{Apr 2024 – Jun 2024}}
+{Bengaluru}
+{
+\begin{cvitems}
+  \item {Architected \textbf{human-in-the-loop (HITL)} evaluation frameworks integrating feedback loops into model validation.}
+  \item {Developed scalable annotation pipelines using Label Studio and microservices.}
+  \item {Deployed ML inference systems with Docker and Cloud Run ensuring reliability and observability.}
+\end{cvitems}
+}
+
+\vspace{1.0em}
+
+\cventry
+{\underline{Tech}: Python, AWS, MLflow, IaC, nbdev, Quantization}
+{Machine Learning Engineer – \underline{Chugani}}
+{\textbf{Feb 2022 – May 2023}}
+{Bengaluru}
+{
+\begin{cvitems}
+  \item {Built real-time liveness detection system achieving \textbf{150ms latency} via model optimization and quantization.}
+  \item {Implemented MLflow for experiment tracking and modernized ML infrastructure using IaC.}
+  \item {Refactored legacy ML pipelines into modular, documented Python packages using \textbf{nbdev}, improving maintainability, reuse, and collaboration.}
+\end{cvitems}
+}
+
+\vspace{1.0em}
+
+\cventry
+{\underline{Tech}: Python, Airflow, AWS, ETL, Tableau}
+{Machine Learning Engineer – \underline{Yang}}
+{\textbf{Apr 2019 – Jan 2022}}
+{Bengaluru}
+{
+\begin{cvitems}
+  \item {Built automated AI audit system processing real-time factory data streams for quality control.}
+  \item {Delivered dashboards across 20+ vendor sites saving \textbf{200+ hours/week}.}
+\end{cvitems}
+}
+
+\vspace{1.0em}
+
+\cventry{} {Systems Engineer Intern –\underline{\href{https://www.infosys.com/}{Infosys}}} {\textbf{Oct 2018 – Mar 2019}} {} {}
+\vspace{-2.0em}
+\cventry{} {Analytics Intern – \underline{\href{https://www.tcs.com/}{TCS}}} {\textbf{Jan 2018 – July 2018}} {} {}
+
+\end{cventries}
+
+\vspace{-3.5em}
+
+%===============================================================================
+% SKILLS
+%===============================================================================
+%-------------------------------------------------------------------------------
+%	SKILLS
+%-------------------------------------------------------------------------------
+\cvsection{Skills}
+
+\newenvironment{mylist}[1]
+  {\begin{description}[labelwidth=#1,align=left,labelsep=0.6em,itemsep=-0.2em]}
+  {\end{description}}
+
+\begin{cventries}
+\small
+\vspace{-2.9em}
+
+\cventry
+    {}
+    {}
+    {}
+    {}
+    {
+      \begin{mylist}{3.2cm}
+        \item[Languages :] \textbf{Python}, SQL, Bash, Groovy
+        \item[LLM \& GenAI :] Hugging Face Transformers, RAG, Prompt Engineering, Fine-tuning (LoRA/PEFT), LangGraph, LangChain
+        \item[Agent Systems :] Multi-Agent Systems, ReAct, Self-Reflection, Tool Augmentation, MCP, Workflow Orchestration
+        \item[Cloud \& Systems :] AWS, GCP, Docker, Kubernetes, FastAPI, Microservices, Terraform, CI/CD
+        \item[MLOps \& Serving :] MLflow, Seldon Core, Model Serving, Experiment Tracking, Feature Pipelines
+        \item[Evaluation \& FinOps :] LLM Metrics, Tracing (Langfuse), Cost Optimization
+        \item[Data \& ML :] Pandas, NumPy, TensorFlow, PyTorch
+        \item[AI Tooling :] OpenAI, Gemini, Claude APIs, GitHub Copilot, Claude Code
+        \item[Certifications :] \href{https://verify.skilljar.com/c/x4j737hk74bn}{\textbf{Anthropic Claude Certified Architect}}, \href{https://github.com/udaylunawat/Data-Science-Projects}{AppliedAI Course}, \href{https://drive.google.com/file/d/1jT354cGLbs9ZUIO4jf71Qiy5wZDAVQKI/view?usp=sharing}{Pyspark and Data Engineering}
+      \end{mylist}
+    }
+
+\end{cventries}
+\vspace{-1.5em}
+
+%===============================================================================
+% EDUCATION
+%===============================================================================
+\cvsection{Education}
+\vspace{-0.4em}
+
+\begin{cventries}
+\cventry{} {B.Tech. in Information Technology RCOEM, Nagpur} {\textbf{Apr 2014 – June 2018}} {} {}
+\end{cventries}
+\vspace{-3.6em}
+\begin{cventries}
+\cventry{} {Diploma in Computer Engineering} {\textbf{Apr 2011 – June 2014}} {} {}
+\end{cventries}
+
+\end{document}

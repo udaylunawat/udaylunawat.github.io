@@ -1186,7 +1186,7 @@ import ContactForm from '../components/ContactForm.astro';
 
     <div class="prose prose-invert max-w-none mb-16">
       <p class="text-lg text-muted leading-relaxed">
-        Senior Machine Learning Engineer and Software Engineer with over 6 years delivering enterprise-grade AI and software solutions. I focus on moving models into production — writing reliable model code, robust APIs, and repeatable deployment pipelines.
+        Senior Machine Learning Engineer and Software Engineer with over 7 years delivering enterprise-grade AI and software solutions. I focus on moving models into production — writing reliable model code, robust APIs, and repeatable deployment pipelines.
       </p>
       <p class="text-lg text-muted leading-relaxed">
         My work spans Computer Vision, NLP, and agentic systems that automate analytics and workflows. I prefer shipping maintainable code and building observability into ML systems from day one.
