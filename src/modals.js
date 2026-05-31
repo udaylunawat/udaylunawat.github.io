@@ -315,6 +315,10 @@ export class ModalManager {
         }
       },
       experience: {
+        "google": {
+          title: "FDE — Google",
+          content: '<p>Joined Google as an FDE in Mumbai, focused on building and delivering production software and AI systems.</p>'
+        },
         "fractal": {
           title: "Senior Machine Learning Engineer & SWE — Fractal AI",
           content: '<p>Led engineering for a multi-agent orchestration platform...</p>'

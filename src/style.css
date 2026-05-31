@@ -191,6 +191,26 @@
 body {
     background-color: rgb(23, 27, 34);
     overflow-x: hidden;
+    max-width: 100%;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y proximity;
+    overflow-x: hidden;
+}
+
+header.home,
+section {
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+        scroll-snap-type: none;
+    }
 }
 
 .color-background {
@@ -833,7 +853,6 @@ header.home, section.home {
 /* --------------- ABOUT ---------------*/
 
 .about {
-    margin-top: -40vh;
     opacity: 0.76;
 }
 .about .wrapper, .about .text-box {
@@ -904,9 +923,6 @@ header.home, section.home {
     }
     section.about {
         height: 100vh;
-    }
-    .about.about-preview {
-        margin-top: -105vh;
     }
     .about .wrapper .text-box {
         display: flex;

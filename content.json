@@ -11,9 +11,18 @@
   },
   "experience": [
     {
+      "id": "google",
+      "title": "FDE — Google",
+      "dates": "June 2026 – Present · Mumbai",
+      "tags": ["FDE", "Google", "AI Systems", "Software Engineering"],
+      "description": "Joined Google as an FDE, focused on building and delivering production software and AI systems.",
+      "badges": [],
+      "logo": "./src/img/google-logo.svg"
+    },
+    {
       "id": "fractal",
       "title": "Senior Machine Learning / SWE",
-      "dates": "Nov 2024 – Present · Pune",
+      "dates": "Nov 2024 – June 2026 · Pune",
       "tags": ["LangGraph", "LangChain", "Multi-Agent", "Python"],
       "description": "Led engineering for Fractal AI (India's First AI Unicorn Company), a multi-agent orchestration platform (LangGraph / LangChain). Owned tool onboarding and metadata lifecycle to productize agent behaviors for largest US telecom's business use.",
       "badges": ["300+ agents onboarded", "11,000+ automated workflows"],

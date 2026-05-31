@@ -12,6 +12,7 @@ export default defineConfig({
         valkyrie: 'valkyrie.html',
         'experience-chugani': 'experience/chugani.html',
         'experience-fractal': 'experience/fractal.html',
+        'experience-google': 'experience/google.html',
         'experience-hcl': 'experience/hcl.html',
         'experience-tcs-infosys': 'experience/tcs-infosys.html',
         'experience-yang': 'experience/yang.html',

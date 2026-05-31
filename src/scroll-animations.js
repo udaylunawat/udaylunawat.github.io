@@ -9,13 +9,14 @@ const about = document.getElementById('about');
 let y = window.scrollY;
 let viewporHeight = window.innerHeight;
 const aboutPreviewOpacity = 0.76;
-let aboutRevealScroll = viewporHeight / 6;
+let aboutRevealScroll = 0;
 const syncViewportMetrics = () => {
     viewporHeight = window.innerHeight;
-    aboutRevealScroll = viewporHeight / 6;
+    aboutRevealScroll = Math.max(0, about.offsetTop - viewporHeight * 0.7);
 };
-let homeTitleFade = () => homeTitle.style.opacity = 'calc(1 - ' + y/300 + ')';
-homeTitleFade()
+let homeTitleFade = () => homeTitle.style.opacity = Math.max(0, 1 - y / (viewporHeight * 0.55));
+syncViewportMetrics();
+homeTitleFade();
 let aboutFadeIn = () => {
     about.classList.remove('about-preview');
     about.style.opacity = Math.min(1, aboutPreviewOpacity + (y - aboutRevealScroll) / 360);
@@ -110,6 +111,7 @@ window.onscroll = () => {
 }
 
 window.addEventListener('resize', syncViewportMetrics);
+window.addEventListener('load', syncViewportMetrics);
 
 //
 // SCROLL-INTO-VIEW ANIMATIONS
