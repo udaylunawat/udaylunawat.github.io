@@ -32,6 +32,7 @@
       "id": "hcl",
       "title": "Technical Lead ML Engineer",
       "dates": "2024 · Bangalore",
+      "hidden": true,
       "tags": ["Human-in-the-Loop", "Label Studio", "FastAPI", "MLflow"],
       "description": "Implemented human-in-the-loop feedback and automated deployment flows; added Label Studio + FastAPI annotation pipelines, Trivy scanning, MLflow tracking and Seldon serving.",
       "badges": [],

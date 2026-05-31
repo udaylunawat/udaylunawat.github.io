@@ -192,22 +192,26 @@ body {
     background-color: rgb(23, 27, 34);
     overflow-x: hidden;
     max-width: 100%;
+    scroll-snap-type: y mandatory;
 }
 
 html {
     scroll-behavior: smooth;
-    scroll-snap-type: y proximity;
+    scroll-snap-type: y mandatory;
     overflow-x: hidden;
 }
 
 header.home,
 section {
     scroll-snap-align: start;
-    scroll-snap-stop: normal;
+    scroll-snap-stop: always;
+    min-height: 100vh;
+    min-height: 100svh;
 }
 
 @media (prefers-reduced-motion: reduce) {
-    html {
+    html,
+    body {
         scroll-behavior: auto;
         scroll-snap-type: none;
     }
@@ -508,7 +512,6 @@ button img,
 section {
     position: relative;
     z-index: 2;
-    scroll-behavior: smooth;
 }
 section {
     padding: 4.201rem 1.618rem;

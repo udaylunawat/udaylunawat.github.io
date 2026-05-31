@@ -371,7 +371,8 @@ export class ModalManager {
       const path = type === 'project' ? './projects.json' : './content.json';
       const response = await fetch(path);
       const data = await response.json();
-      this.lists[type] = type === 'project' ? data.projects : data.experience;
+      const list = type === 'project' ? data.projects : data.experience;
+      this.lists[type] = list.filter(item => !item.hidden);
       return this.lists[type];
     } catch (error) {
       console.error(`Error loading ${type} list:`, error);
